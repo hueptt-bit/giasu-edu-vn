@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng ký dạy | giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p950:#061529; --p900:#0D2D6B; --p800:#1239A0; --p700:#1565C0;
+  --p600:#1976D2; --p500:#1E88E5; --p400:#42A5F5; --p300:#90CAF9;
+  --p200:#BBDEFB; --p100:#E3F2FD; --p50:#F0F8FF;
+  --s700:#C46200; --s600:#E65100; --s500:#F57C00; --s400:#FFA726;
+  --s300:#FFCC80; --s200:#FFE0B2; --s100:#FFF3E0;
+  --n900:#0F172A; --n800:#1E293B; --n700:#334155; --n600:#475569;
+  --n500:#64748B; --n400:#94A3B8; --n300:#CBD5E1; --n200:#E2E8F0;
+  --n100:#F1F5F9; --n50:#F8FAFC;
+  --green:#16A34A; --green-bg:#DCFCE7; --green-light:#F0FDF4;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.1),0 4px 12px rgba(0,0,0,.06);
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px; --r-2xl:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:var(--n800);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
+svg{display:block;}
+
+/* ── NAVBAR ── */
+.navbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--n200);}
+.nav-inner{display:flex;align-items:center;height:64px;max-width:1200px;margin:0 auto;padding:0 24px;}
+.nav-logo{display:flex;align-items:center;gap:9px;margin-right:40px;flex-shrink:0;}
+
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px;line-height:1;}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.5;letter-spacing:-.2px;}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-link{padding:6px 13px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:var(--n600);transition:all .15s;}
+.nav-link:hover{background:var(--n100);color:var(--n800);}
+.nav-link.active{color:var(--p700);font-weight:600;background:var(--p50);}
+.nav-actions{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.btn-ghost{height:36px;padding:0 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--n700);background:transparent;border:1.5px solid var(--n200);transition:all .15s;}
+.btn-ghost:hover{background:var(--n50);}
+.btn-primary-nav{height:36px;padding:0 18px;border-radius:var(--r-sm);font-size:13px;font-weight:700;color:#fff;background:var(--p700);transition:all .15s;}
+.btn-primary-nav:hover{background:var(--p800);}
+
+/* ── HERO ── */
+.hero{padding:80px 0 72px;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 700px 500px at 110% -10%,rgba(21,101,192,.6),transparent 60%),
+             radial-gradient(ellipse 400px 400px at -5% 110%,rgba(13,45,107,.8),transparent 70%),
+             linear-gradient(155deg,#061529 0%,#0D2D6B 40%,#1239A0 70%,#1565C0 100%);}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:50px 50px;}
+.hero-glow{position:absolute;top:-100px;right:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(245,124,0,.15) 0%,transparent 65%);pointer-events:none;}
+.hero-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 420px;gap:64px;align-items:center;position:relative;}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 6px;border-radius:20px;background:rgba(245,124,0,.15);border:1px solid rgba(245,124,0,.25);font-size:11.5px;font-weight:600;color:var(--s300);margin-bottom:24px;}
+.hero-badge-dot{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--s500),var(--s400));display:flex;align-items:center;justify-content:center;}
+.hero-badge-dot svg{width:10px;height:10px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.hero-h1{font-size:50px;font-weight:900;color:#fff;line-height:1.08;letter-spacing:-2px;margin-bottom:18px;}
+.hero-h1 .accent{display:block;color:transparent;background:linear-gradient(90deg,var(--s400) 0%,#fff 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-p{font-size:15.5px;color:rgba(255,255,255,.5);line-height:1.78;max-width:460px;margin-bottom:32px;}
+.hero-cta-row{display:flex;gap:10px;margin-bottom:44px;}
+.btn-hero-main{height:50px;padding:0 28px;border-radius:var(--r-lg);font-size:14.5px;font-weight:700;color:var(--n900);background:#fff;display:inline-flex;align-items:center;gap:8px;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.2);}
+.btn-hero-main svg{width:15px;height:15px;stroke:var(--s600);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.btn-hero-main:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.28);}
+.btn-hero-sec{height:50px;padding:0 22px;border-radius:var(--r-lg);font-size:14px;font-weight:600;color:rgba(255,255,255,.7);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);transition:all .2s;}
+.btn-hero-sec:hover{background:rgba(255,255,255,.12);color:#fff;}
+
+/* Hero income card */
+.hero-stats{display:flex;gap:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);}
+.hero-stat-num{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.5px;}
+.hero-stat-label{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;}
+
+/* Earnings mockup card */
+.earnings-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;overflow:hidden;}
+.ec-header{padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;}
+.ec-header-title{font-size:12px;font-weight:600;color:rgba(255,255,255,.45);}
+.ec-badge{height:22px;padding:0 10px;border-radius:20px;background:rgba(245,124,0,.2);color:var(--s300);font-size:10.5px;font-weight:700;border:1px solid rgba(245,124,0,.25);display:flex;align-items:center;}
+.ec-body{padding:20px;}
+.ec-total-label{font-size:11px;color:rgba(255,255,255,.35);margin-bottom:4px;}
+.ec-total-num{font-size:38px;font-weight:900;color:#fff;letter-spacing:-1.5px;line-height:1;margin-bottom:4px;}
+.ec-total-num em{font-size:16px;font-weight:600;color:rgba(255,255,255,.4);font-style:normal;letter-spacing:0;}
+.ec-total-change{font-size:12px;color:var(--green);font-weight:600;display:flex;align-items:center;gap:4px;margin-bottom:20px;}
+.ec-total-change svg{width:12px;height:12px;stroke:currentColor;stroke-width:2.5;fill:none;}
+.ec-chart{height:60px;display:flex;align-items:flex-end;gap:5px;margin-bottom:20px;}
+.ec-bar{flex:1;border-radius:4px 4px 0 0;background:rgba(255,255,255,.1);transition:background .15s;}
+.ec-bar.hi{background:linear-gradient(to top,var(--s600),var(--s400));}
+.ec-bar.mid{background:rgba(245,124,0,.4);}
+.ec-divider{height:1px;background:rgba(255,255,255,.07);margin-bottom:16px;}
+.ec-rows{display:flex;flex-direction:column;gap:10px;}
+.ec-row{display:flex;align-items:center;justify-content:space-between;}
+.ec-row-left{display:flex;align-items:center;gap:10px;}
+.ec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.ec-row-label{font-size:12px;color:rgba(255,255,255,.45);}
+.ec-row-val{font-size:13px;font-weight:700;color:#fff;}
+.ec-row-val.green{color:var(--green);}
+.ec-footer{padding:14px 20px;background:rgba(21,101,192,.15);border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;}
+.ec-footer-text{font-size:12px;color:rgba(255,255,255,.4);}
+.ec-footer-btn{height:30px;padding:0 14px;border-radius:8px;background:var(--p600);color:#fff;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:'Inter',sans-serif;}
+
+/* ── BENEFITS ── */
+.benefits{padding:88px 0;background:var(--n50);border-top:1px solid var(--n200);}
+.benefits-inner{max-width:1200px;margin:0 auto;padding:0 24px;}
+.benefits-header{text-align:center;margin-bottom:52px;}
+.benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.benefit-card{background:#fff;border-radius:var(--r-2xl);border:1.5px solid var(--n200);padding:32px;transition:all .22s;}
+.benefit-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:transparent;}
+.benefit-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.benefit-icon svg{width:26px;height:26px;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.benefit-tag{display:inline-flex;height:22px;padding:0 10px;border-radius:20px;font-size:10.5px;font-weight:700;margin-bottom:14px;align-items:center;}
+.benefit-title{font-size:18px;font-weight:800;color:var(--n900);letter-spacing:-.3px;margin-bottom:10px;}
+.benefit-desc{font-size:13.5px;color:var(--n600);line-height:1.72;margin-bottom:20px;}
+.benefit-list{display:flex;flex-direction:column;gap:8px;}
+.benefit-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--n700);}
+.benefit-item svg{width:15px;height:15px;flex-shrink:0;margin-top:1px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── INCOME SECTION ── */
+.income{padding:88px 0;background:#fff;border-top:1px solid var(--n200);}
+.income-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 480px;gap:80px;align-items:center;}
+.income-left{}
+.income-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;}
+.income-tag{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:var(--r-lg);border:1.5px solid var(--n200);font-size:13px;font-weight:600;color:var(--n700);background:#fff;}
+.income-tag svg{width:15px;height:15px;stroke:var(--p600);stroke-width:2;fill:none;stroke-linecap:round;}
+.income-right{}
+.income-calc{background:var(--n50);border-radius:var(--r-2xl);border:1.5px solid var(--n200);overflow:hidden;}
+.ic-header{padding:20px 24px;border-bottom:1px solid var(--n200);display:flex;align-items:center;gap:10px;}
+.ic-header-icon{width:36px;height:36px;border-radius:10px;background:var(--s100);display:flex;align-items:center;justify-content:center;}
+.ic-header-icon svg{width:18px;height:18px;stroke:var(--s600);stroke-width:2;fill:none;stroke-linecap:round;}
+.ic-header-text{font-size:14px;font-weight:700;color:var(--n900);}
+.ic-header-sub{font-size:12px;color:var(--n500);}
+.ic-body{padding:24px;}
+.ic-row{margin-bottom:20px;}
+.ic-label{font-size:12px;font-weight:600;color:var(--n600);margin-bottom:8px;display:flex;justify-content:space-between;}
+.ic-label span{font-weight:700;color:var(--p700);}
+.ic-slider{width:100%;height:6px;border-radius:3px;background:var(--n200);appearance:none;outline:none;cursor:pointer;}
+.ic-slider::-webkit-slider-thumb{appearance:none;width:20px;height:20px;border-radius:50%;background:var(--p700);box-shadow:0 2px 6px rgba(21,101,192,.3);cursor:pointer;}
+.ic-select{width:100%;height:40px;border-radius:var(--r-md);border:1.5px solid var(--n200);padding:0 12px;font-size:13.5px;font-family:'Inter',sans-serif;color:var(--n800);background:#fff;outline:none;cursor:pointer;}
+.ic-result{background:linear-gradient(135deg,var(--p900),var(--p700));border-radius:var(--r-xl);padding:20px;margin-top:4px;}
+.ic-result-label{font-size:11.5px;color:rgba(255,255,255,.5);margin-bottom:4px;}
+.ic-result-num{font-size:36px;font-weight:900;color:#fff;letter-spacing:-1.5px;line-height:1;}
+.ic-result-num em{font-size:16px;font-weight:600;font-style:normal;color:rgba(255,255,255,.45);}
+.ic-result-sub{font-size:12px;color:rgba(255,255,255,.4);margin-top:6px;}
+.ic-note{font-size:11.5px;color:var(--n400);margin-top:14px;text-align:center;}
+
+/* ── TUTOR TESTIMONIALS ── */
+.testimonials{padding:80px 0;background:var(--n50);border-top:1px solid var(--n200);}
+.testimonials-inner{max-width:1200px;margin:0 auto;padding:0 24px;}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px;}
+.test-card{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);padding:24px;}
+.test-top{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.test-av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#fff;flex-shrink:0;}
+.test-name{font-size:14px;font-weight:700;color:var(--n900);}
+.test-role{font-size:12px;color:var(--n500);}
+.test-income{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;background:var(--green-bg);color:var(--green);font-size:11.5px;font-weight:700;border:1px solid #86efac;margin-bottom:14px;}
+.test-income svg{width:11px;height:11px;stroke:currentColor;stroke-width:2.5;fill:none;}
+.test-quote{font-size:13.5px;color:var(--n700);line-height:1.7;font-style:italic;}
+
+/* ── FORM SECTION ── */
+.form-section{padding:88px 0;background:#fff;border-top:1px solid var(--n200);}
+.form-inner{max-width:800px;margin:0 auto;padding:0 24px;}
+.form-header{text-align:center;margin-bottom:48px;}
+
+/* Step indicator */
+.step-indicator{display:flex;align-items:center;justify-content:center;margin-bottom:44px;}
+.step-item{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;}
+.step-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--n200);color:var(--n400);background:#fff;transition:all .2s;flex-shrink:0;}
+.step-circle.active{background:var(--p700);border-color:var(--p700);color:#fff;box-shadow:0 0 0 4px var(--p100);}
+.step-circle.done{background:var(--green);border-color:var(--green);color:#fff;}
+.step-circle.done svg{width:14px;height:14px;stroke:#fff;stroke-width:2.5;fill:none;}
+.step-label{font-size:11px;font-weight:600;color:var(--n400);white-space:nowrap;}
+.step-label.active{color:var(--p700);}
+.step-connector{width:80px;height:2px;background:var(--n200);margin:0 8px;margin-top:-20px;flex-shrink:0;}
+.step-connector.done{background:var(--green);}
+
+/* Form card */
+.form-card{background:#fff;border-radius:var(--r-2xl);border:1.5px solid var(--n200);overflow:hidden;}
+.form-card-header{padding:24px 32px;border-bottom:1px solid var(--n200);background:var(--n50);display:flex;align-items:center;gap:14px;}
+.fch-icon{width:40px;height:40px;border-radius:12px;background:var(--p50);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.fch-icon svg{width:20px;height:20px;stroke:var(--p700);stroke-width:1.8;fill:none;stroke-linecap:round;}
+.fch-title{font-size:15px;font-weight:700;color:var(--n900);}
+.fch-sub{font-size:12.5px;color:var(--n500);}
+.form-body{padding:32px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.form-row.single{grid-template-columns:1fr;}
+.form-row.three{grid-template-columns:1fr 1fr 1fr;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-label{font-size:12.5px;font-weight:600;color:var(--n700);}
+.form-label span{color:var(--p600);margin-left:2px;}
+.form-input{height:44px;border-radius:var(--r-md);border:1.5px solid var(--n200);padding:0 14px;font-size:14px;font-family:'Inter',sans-serif;color:var(--n800);outline:none;transition:border-color .15s;background:#fff;}
+.form-input:focus{border-color:var(--p400);}
+.form-input::placeholder{color:var(--n400);}
+.form-select{height:44px;border-radius:var(--r-md);border:1.5px solid var(--n200);padding:0 14px;font-size:14px;font-family:'Inter',sans-serif;color:var(--n800);outline:none;background:#fff;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;}
+.form-select:focus{border-color:var(--p400);}
+.form-textarea{border-radius:var(--r-md);border:1.5px solid var(--n200);padding:12px 14px;font-size:14px;font-family:'Inter',sans-serif;color:var(--n800);outline:none;resize:vertical;min-height:100px;transition:border-color .15s;background:#fff;width:100%;}
+.form-textarea:focus{border-color:var(--p400);}
+.form-textarea::placeholder{color:var(--n400);}
+.form-hint{font-size:11.5px;color:var(--n400);}
+
+/* Subject chips */
+.chip-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.chip{height:32px;padding:0 13px;border-radius:20px;font-size:12.5px;font-weight:600;border:1.5px solid var(--n200);color:var(--n600);background:#fff;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;}
+.chip:hover{border-color:var(--p300);color:var(--p700);background:var(--p50);}
+.chip.selected{border-color:var(--p700);color:var(--p700);background:var(--p50);}
+
+/* Form footer */
+.form-footer{padding:20px 32px;border-top:1px solid var(--n200);background:var(--n50);display:flex;align-items:center;justify-content:space-between;}
+.form-progress{font-size:12.5px;color:var(--n500);}
+.form-progress strong{color:var(--n800);}
+.form-nav{display:flex;gap:8px;}
+.btn-back{height:42px;padding:0 20px;border-radius:var(--r-md);font-size:13.5px;font-weight:600;color:var(--n600);background:#fff;border:1.5px solid var(--n200);transition:all .15s;}
+.btn-back:hover{background:var(--n50);}
+.btn-next{height:42px;padding:0 24px;border-radius:var(--r-md);font-size:13.5px;font-weight:700;color:#fff;background:var(--p700);display:flex;align-items:center;gap:7px;transition:all .15s;}
+.btn-next svg{width:14px;height:14px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.btn-next:hover{background:var(--p800);}
+
+/* Guarantee strip */
+.guarantee{margin-top:24px;display:flex;justify-content:center;gap:28px;}
+.guarantee-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--n400);}
+.guarantee-item svg{width:14px;height:14px;stroke:var(--green);stroke-width:2;fill:none;stroke-linecap:round;}
+
+/* ── FOOTER ── */
+.footer{background:var(--n900);border-top:1px solid rgba(255,255,255,.06);padding:28px 0;}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
+.footer-logo{display:flex;align-items:center;gap:8px;}
+.footer-logo-text{font-size:14px;font-weight:800;color:#fff;}
+.footer-logo-text em{font-weight:500;font-style:normal;color:#fff;opacity:.55;}
+.footer-copy{font-size:12px;color:var(--n600);}
+.footer-links{display:flex;gap:20px;}
+.footer-link{font-size:12px;color:var(--n600);transition:color .15s;}
+.footer-link:hover{color:var(--n400);}
+
+/* ── STEP PANELS ── */
+.step-panel{display:none;}
+.step-panel.active{display:block;}
+
+/* Upload area */
+.upload-area{border:2px dashed var(--n200);border-radius:var(--r-xl);padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:var(--n50);}
+.upload-area:hover{border-color:var(--p400);background:var(--p50);}
+.upload-area.has-file{border-color:var(--green);background:var(--green-light);}
+.upload-icon{width:48px;height:48px;border-radius:14px;background:var(--p50);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+.upload-icon svg{width:22px;height:22px;stroke:var(--p600);stroke-width:1.8;fill:none;stroke-linecap:round;}
+.upload-title{font-size:14px;font-weight:700;color:var(--n800);margin-bottom:4px;}
+.upload-sub{font-size:12px;color:var(--n400);}
+.upload-sub strong{color:var(--p700);cursor:pointer;}
+.upload-preview{display:flex;align-items:center;gap:10px;background:#fff;border-radius:var(--r-md);padding:10px 14px;border:1px solid var(--n200);margin-top:10px;text-align:left;}
+.upload-preview svg{width:18px;height:18px;stroke:var(--green);stroke-width:2;fill:none;flex-shrink:0;}
+.upload-preview-name{font-size:13px;font-weight:600;color:var(--n800);flex:1;}
+.upload-preview-rm{font-size:12px;color:var(--n400);cursor:pointer;flex-shrink:0;}
+.upload-preview-rm:hover{color:var(--p700);}
+
+/* Avatar upload */
+.avatar-upload{display:flex;align-items:center;gap:20px;}
+.avatar-circle{width:88px;height:88px;border-radius:50%;background:var(--n100);border:2px dashed var(--n300);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .2s;overflow:hidden;}
+.avatar-circle:hover{border-color:var(--p400);background:var(--p50);}
+.avatar-circle svg{width:28px;height:28px;stroke:var(--n400);stroke-width:1.8;fill:none;}
+.avatar-circle img{width:100%;height:100%;object-fit:cover;}
+.avatar-upload-right{}
+.avatar-upload-title{font-size:13.5px;font-weight:700;color:var(--n800);margin-bottom:4px;}
+.avatar-upload-hint{font-size:12px;color:var(--n500);margin-bottom:8px;}
+.avatar-btn{height:34px;padding:0 14px;border-radius:var(--r-sm);font-size:12.5px;font-weight:600;color:var(--p700);background:var(--p50);border:1.5px solid var(--p200);cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;}
+.avatar-btn:hover{background:var(--p100);}
+
+/* Day × Time grid */
+.schedule-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+.sched-day{display:flex;flex-direction:column;align-items:center;gap:5px;}
+.sched-day-label{font-size:11px;font-weight:700;color:var(--n500);margin-bottom:2px;}
+.sched-slot{width:100%;aspect-ratio:1;border-radius:var(--r-sm);border:1.5px solid var(--n200);background:#fff;cursor:pointer;font-size:10px;font-weight:600;color:var(--n400);transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.sched-slot:hover{border-color:var(--p300);background:var(--p50);color:var(--p700);}
+.sched-slot.on{border-color:var(--p700);background:var(--p700);color:#fff;}
+.sched-legend{display:flex;gap:16px;margin-top:10px;font-size:11.5px;color:var(--n400);}
+.sched-legend-item{display:flex;align-items:center;gap:5px;}
+
+/* District chips */
+.district-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+.district-chip{height:28px;padding:0 10px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--n200);color:var(--n600);background:#fff;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;}
+.district-chip.on{border-color:var(--p700);color:var(--p700);background:var(--p50);}
+
+/* Step 4 — summary cards */
+.confirm-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.confirm-card{background:var(--n50);border-radius:var(--r-lg);border:1.5px solid var(--n200);padding:16px 18px;}
+.confirm-card-title{font-size:11px;font-weight:700;color:var(--n400);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px;}
+.confirm-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;font-size:13px;}
+.confirm-row:last-child{margin-bottom:0;}
+.confirm-label{color:var(--n500);flex-shrink:0;}
+.confirm-value{font-weight:600;color:var(--n800);text-align:right;}
+.confirm-subjects{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.confirm-tag{height:22px;padding:0 9px;border-radius:20px;font-size:11.5px;font-weight:600;background:var(--p50);color:var(--p700);border:1px solid var(--p200);}
+.confirm-docs{display:flex;flex-direction:column;gap:5px;margin-top:6px;}
+.confirm-doc-item{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--n700);}
+.confirm-doc-item svg{width:14px;height:14px;stroke:var(--green);stroke-width:2;fill:none;flex-shrink:0;}
+
+/* Terms checkbox */
+.terms-box{background:var(--n50);border-radius:var(--r-lg);border:1.5px solid var(--n200);padding:16px 18px;margin-bottom:16px;}
+.terms-check-row{display:flex;align-items:flex-start;gap:10px;}
+.terms-check-row input[type=checkbox]{width:17px;height:17px;margin-top:2px;accent-color:var(--p700);cursor:pointer;flex-shrink:0;}
+.terms-check-label{font-size:13px;color:var(--n700);line-height:1.6;}
+.terms-check-label a{color:var(--p700);font-weight:600;}
+
+/* Success overlay */
+.success-overlay{display:none;position:fixed;inset:0;background:rgba(13,45,107,.92);z-index:999;align-items:center;justify-content:center;}
+.success-overlay.show{display:flex;}
+.success-box{background:#fff;border-radius:var(--r-2xl);padding:48px 40px;max-width:440px;width:90%;text-align:center;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.success-icon{width:72px;height:72px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.success-icon svg{width:34px;height:34px;stroke:var(--green);stroke-width:2.5;fill:none;}
+.success-title{font-size:22px;font-weight:800;color:var(--n900);letter-spacing:-.4px;margin-bottom:8px;}
+.success-sub{font-size:14px;color:var(--n500);line-height:1.7;margin-bottom:24px;}
+.success-timeline{background:var(--n50);border-radius:var(--r-lg);padding:16px;margin-bottom:24px;text-align:left;}
+.success-step{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--n700);padding:7px 0;border-bottom:1px solid var(--n100);}
+.success-step:last-child{border-bottom:none;}
+.success-step-num{width:22px;height:22px;border-radius:50%;background:var(--p100);color:var(--p700);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.success-btn{width:100%;height:46px;border-radius:var(--r-lg);background:var(--p700);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;}
+.success-btn:hover{background:var(--p800);}
+
+/* SHARED */
+.section-eyebrow{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--p700);margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.section-eyebrow::before{content:'';width:18px;height:2.5px;background:linear-gradient(90deg,var(--s500),var(--s400));border-radius:2px;flex-shrink:0;}
+.section-title{font-size:34px;font-weight:800;color:var(--n900);letter-spacing:-1px;line-height:1.18;margin-bottom:10px;}
+.section-sub{font-size:15px;color:var(--n500);line-height:1.7;max-width:600px;}
+.text-center .section-sub{margin:0 auto;}
+.text-center{text-align:center;}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+      </svg>
+      <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="ui-trang-chu.html">Trang chủ</a>
+      <a class="nav-link" href="ui-tim-gia-su.html">Tìm gia sư</a>
+      <a class="nav-link" href="ui-dang-tin.html">Đăng tin</a>
+      <a class="nav-link active" href="ui-dang-ky-day.html">Đăng ký dạy</a>
+      <a class="nav-link" href="ui-blog.html">Blog</a>
+      <a class="nav-link" href="ui-gioi-thieu.html">Về chúng tôi</a>
+    </div>
+    <div class="nav-actions">
+      <a href="ui-auth.html" class="btn-ghost">Đăng nhập</a>
+      <a href="ui-auth.html" class="btn-primary-nav">Đăng ký miễn phí</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">
+        <div class="hero-badge-dot"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        Thu nhập trung bình 12–25 triệu / tháng
+      </div>
+      <h1 class="hero-h1">
+        Dạy những gì bạn giỏi<br>
+        <span class="accent">Kiếm thu nhập xứng đáng</span>
+      </h1>
+      <p class="hero-p">Dù là sinh viên muốn kiếm thêm, giáo viên muốn mở rộng, hay chuyên gia muốn chia sẻ kiến thức — giasu.edu.vn giúp bạn kết nối với hàng nghìn học viên đang chờ.</p>
+      <div class="hero-cta-row">
+        <a href="#form-section" class="btn-hero-main">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Đăng ký làm gia sư
+        </a>
+        <button class="btn-hero-sec">Xem điều kiện →</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-num">12K+</div><div class="hero-stat-label">Gia sư đang hoạt động</div></div>
+        <div><div class="hero-stat-num">45K+</div><div class="hero-stat-label">Học viên đang tìm</div></div>
+        <div><div class="hero-stat-num">4.8★</div><div class="hero-stat-label">Đánh giá gia sư TB</div></div>
+      </div>
+    </div>
+
+    <!-- EARNINGS MOCKUP -->
+    <div class="earnings-card">
+      <div class="ec-header">
+        <span class="ec-header-title">Thu nhập tháng 4/2026</span>
+        <span class="ec-badge">+18% so với tháng trước</span>
+      </div>
+      <div class="ec-body">
+        <div class="ec-total-label">Tổng thu nhập</div>
+        <div class="ec-total-num">18.400<em>K</em></div>
+        <div class="ec-total-change">
+          <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          Tăng 2.8 triệu so với tháng 3
+        </div>
+        <div class="ec-chart">
+          <div class="ec-bar" style="height:35%;"></div>
+          <div class="ec-bar mid" style="height:50%;"></div>
+          <div class="ec-bar" style="height:40%;"></div>
+          <div class="ec-bar mid" style="height:60%;"></div>
+          <div class="ec-bar" style="height:45%;"></div>
+          <div class="ec-bar mid" style="height:70%;"></div>
+          <div class="ec-bar hi" style="height:85%;"></div>
+          <div class="ec-bar hi" style="height:100%;"></div>
+        </div>
+        <div class="ec-divider"></div>
+        <div class="ec-rows">
+          <div class="ec-row">
+            <div class="ec-row-left">
+              <div class="ec-dot" style="background:var(--p400);"></div>
+              <span class="ec-row-label">Buổi dạy tháng này</span>
+            </div>
+            <span class="ec-row-val">46 buổi</span>
+          </div>
+          <div class="ec-row">
+            <div class="ec-row-left">
+              <div class="ec-dot" style="background:var(--s400);"></div>
+              <span class="ec-row-label">Học sinh đang học</span>
+            </div>
+            <span class="ec-row-val">8 học sinh</span>
+          </div>
+          <div class="ec-row">
+            <div class="ec-row-left">
+              <div class="ec-dot" style="background:var(--green);"></div>
+              <span class="ec-row-label">Đánh giá nhận được</span>
+            </div>
+            <span class="ec-row-val green">★ 4.9 / 5.0</span>
+          </div>
+        </div>
+      </div>
+      <div class="ec-footer">
+        <span class="ec-footer-text">Dashboard gia sư · Thời gian thực</span>
+        <button class="ec-footer-btn">Xem chi tiết</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BENEFITS ── -->
+<section class="benefits">
+  <div class="benefits-inner">
+    <div class="benefits-header">
+      <div class="section-eyebrow" style="justify-content:center;">Dành cho bạn</div>
+      <div class="section-title text-center">Ai cũng có thể trở thành gia sư</div>
+      <div class="section-sub text-center">Không quan trọng bạn là ai — quan trọng là bạn có kiến thức muốn chia sẻ.</div>
+    </div>
+    <div class="benefits-grid">
+
+      <!-- Sinh viên -->
+      <div class="benefit-card">
+        <div class="benefit-icon" style="background:var(--p50);">
+          <svg viewBox="0 0 24 24" style="stroke:var(--p700);"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <div class="benefit-tag" style="background:var(--p50);color:var(--p700);border:1px solid var(--p200);">Sinh viên & mới ra trường</div>
+        <div class="benefit-title">Kiếm thêm linh hoạt</div>
+        <div class="benefit-desc">Dạy ngoài giờ học, chọn lịch theo ý muốn. Thu nhập thêm 5–15 triệu/tháng chỉ với 10–20 tiếng dạy.</div>
+        <div class="benefit-list">
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Lịch dạy hoàn toàn tự do
+          </div>
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Không cần kinh nghiệm dạy trước
+          </div>
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Dạy trực tuyến từ bất cứ đâu
+          </div>
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Hỗ trợ tạo hồ sơ chuyên nghiệp
+          </div>
+        </div>
+      </div>
+
+      <!-- Giáo viên -->
+      <div class="benefit-card">
+        <div class="benefit-icon" style="background:var(--s100);">
+          <svg viewBox="0 0 24 24" style="stroke:var(--s600);"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="benefit-tag" style="background:var(--s100);color:var(--s700);border:1px solid var(--s300);">Giáo viên có kinh nghiệm</div>
+        <div class="benefit-title">Mở rộng lớp học</div>
+        <div class="benefit-desc">Tiếp cận hàng nghìn học sinh trên toàn quốc, không giới hạn địa lý. Dạy thêm online song song với lớp chính.</div>
+        <div class="benefit-list">
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Phụ huynh tìm đúng chuyên môn của bạn
+          </div>
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Công cụ quản lý lớp học tích hợp
+          </div>
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Hồ sơ nổi bật cho gia sư được xác minh
+          </div>
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Thanh toán đúng hạn, bảo đảm quyền lợi
+          </div>
+        </div>
+      </div>
+
+      <!-- Chuyên gia -->
+      <div class="benefit-card">
+        <div class="benefit-icon" style="background:var(--green-bg);">
+          <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="benefit-tag" style="background:var(--green-bg);color:var(--green);border:1px solid #86efac;">Chuyên gia & người đi làm</div>
+        <div class="benefit-title">Chia sẻ & xây dựng thương hiệu</div>
+        <div class="benefit-desc">Biến chuyên môn thành nguồn thu nhập thụ động. Dạy kỹ năng nghề, lập trình, ngoại ngữ — mức giá cao hơn thị trường.</div>
+        <div class="benefit-list">
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Tự đặt mức giá, tối đa 500K/giờ
+          </div>
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Xây dựng personal brand qua profile
+          </div>
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Học viên doanh nghiệp trả premium
+          </div>
+          <div class="benefit-item">
+            <svg viewBox="0 0 24 24" style="stroke:var(--green);"><polyline points="20 6 9 17 4 12"/></svg>
+            Không giới hạn số học sinh cùng lúc
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── INCOME CALCULATOR ── -->
+<section class="income">
+  <div class="income-inner">
+    <div class="income-left">
+      <div class="section-eyebrow">Thu nhập dự kiến</div>
+      <div class="section-title">Bạn có thể kiếm được bao nhiêu?</div>
+      <div class="section-sub">Tính thu nhập dự kiến dựa trên số giờ dạy và mức giá của bạn. Hầu hết gia sư hoàn vốn hồ sơ ngay trong tuần đầu.</div>
+      <div class="income-tags">
+        <div class="income-tag"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Thanh toán mỗi 7 ngày</div>
+        <div class="income-tag"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Không phí ẩn</div>
+        <div class="income-tag"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Phí hoa hồng chỉ 10%</div>
+        <div class="income-tag"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Hoàn tiền nếu bị huỷ</div>
+      </div>
+    </div>
+    <div class="income-right">
+      <div class="income-calc">
+        <div class="ic-header">
+          <div class="ic-header-icon">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <div class="ic-header-text">Máy tính thu nhập</div>
+            <div class="ic-header-sub">Kéo để điều chỉnh · Kết quả ước tính</div>
+          </div>
+        </div>
+        <div class="ic-body">
+          <div class="ic-row">
+            <div class="ic-label">Số buổi dạy / tuần <span id="sessions-val">8 buổi</span></div>
+            <input class="ic-slider" type="range" min="2" max="20" value="8" id="sessions-slider">
+          </div>
+          <div class="ic-row">
+            <div class="ic-label">Mức giá / giờ (nghìn đồng) <span id="rate-val">250K</span></div>
+            <input class="ic-slider" type="range" min="100" max="500" step="25" value="250" id="rate-slider">
+          </div>
+          <div class="ic-row">
+            <label class="ic-label">Loại học sinh chủ yếu</label>
+            <select class="ic-select" id="type-select">
+              <option value="1">Học sinh K-12 (dạy 1–1)</option>
+              <option value="1.2">Luyện thi ĐH / Chứng chỉ</option>
+              <option value="1.5">Kỹ năng nghề / Ngoại ngữ</option>
+            </select>
+          </div>
+          <div class="ic-result">
+            <div class="ic-result-label">Thu nhập ước tính / tháng</div>
+            <div class="ic-result-num" id="result-num">14.400<em>K</em></div>
+            <div class="ic-result-sub" id="result-sub">≈ 8 buổi/tuần × 250K × 4 tuần × 90%</div>
+          </div>
+          <div class="ic-note">* Sau phí nền tảng 10%. Kết quả thực tế có thể cao hơn khi có học sinh cố định.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonials">
+  <div class="testimonials-inner">
+    <div class="section-eyebrow">Gia sư nói gì</div>
+    <div class="section-title">Họ đã thay đổi cuộc sống với giasu.edu.vn</div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-top">
+          <div class="test-av" style="background:linear-gradient(135deg,var(--p700),var(--p400));">TH</div>
+          <div>
+            <div class="test-name">Nguyễn Thanh Hà</div>
+            <div class="test-role">Gia sư Toán THPT · 6 năm · Hà Nội</div>
+          </div>
+        </div>
+        <div class="test-income">
+          <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          Hiện kiếm được 22 triệu/tháng
+        </div>
+        <div class="test-quote">"Trước đây tôi dạy kèm qua giới thiệu, mỗi tháng được 4–5 học sinh. Từ khi có profile trên giasu.edu.vn, lịch dạy kín hoàn toàn trong vòng 2 tuần đầu."</div>
+      </div>
+      <div class="test-card">
+        <div class="test-top">
+          <div class="test-av" style="background:linear-gradient(135deg,#065F46,#16A34A);">MK</div>
+          <div>
+            <div class="test-name">Trần Minh Khoa</div>
+            <div class="test-role">Gia sư IELTS · Band 8.5 · TP.HCM</div>
+          </div>
+        </div>
+        <div class="test-income">
+          <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          Hiện kiếm được 18 triệu/tháng
+        </div>
+        <div class="test-quote">"Là kỹ sư đi làm ban ngày, tôi chỉ dạy IELTS buổi tối và cuối tuần. Nền tảng tự động khớp lịch, tôi chỉ cần chuẩn bị bài và dạy tốt."</div>
+      </div>
+      <div class="test-card">
+        <div class="test-top">
+          <div class="test-av" style="background:linear-gradient(135deg,var(--s600),var(--s400));">LA</div>
+          <div>
+            <div class="test-name">Lê Thị An</div>
+            <div class="test-role">Gia sư Python & React · Đà Nẵng</div>
+          </div>
+        </div>
+        <div class="test-income">
+          <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          Hiện kiếm được 25 triệu/tháng
+        </div>
+        <div class="test-quote">"Tôi đặt giá 300K/giờ và vẫn có queue học sinh chờ. Chất lượng học viên rất tốt, họ thực sự muốn học nghiêm túc."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FORM ── -->
+<section class="form-section" id="form-section">
+  <div class="form-inner">
+    <div class="form-header">
+      <div class="section-eyebrow" style="justify-content:center;">Bắt đầu ngay hôm nay</div>
+      <div class="section-title text-center">Đăng ký làm gia sư</div>
+      <div class="section-sub text-center">Miễn phí · Duyệt trong 24h · Bắt đầu nhận học sinh ngay tuần sau</div>
+    </div>
+
+    <!-- STEP INDICATOR -->
+    <div class="step-indicator">
+      <div class="step-item">
+        <div class="step-circle active">1</div>
+        <div class="step-label active">Cá nhân</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <div class="step-circle">2</div>
+        <div class="step-label">Chuyên môn</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <div class="step-circle">3</div>
+        <div class="step-label">Hồ sơ</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <div class="step-circle">4</div>
+        <div class="step-label">Xác nhận</div>
+      </div>
+    </div>
+
+    <!-- STEP 1 — Cá nhân -->
+    <div class="step-panel active" id="step-panel-1">
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="fch-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <div class="fch-title">Thông tin cá nhân</div>
+          <div class="fch-sub">Điền thông tin để tạo hồ sơ gia sư</div>
+        </div>
+      </div>
+      <div class="form-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Họ và tên<span>*</span></label>
+            <input class="form-input" type="text" placeholder="Nguyễn Văn A">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Số điện thoại<span>*</span></label>
+            <input class="form-input" type="tel" placeholder="0901 234 567">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email<span>*</span></label>
+            <input class="form-input" type="email" placeholder="email@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tỉnh / Thành phố<span>*</span></label>
+            <select class="form-select">
+              <option value="">Chọn tỉnh thành...</option>
+              <option>Hà Nội</option>
+              <option>TP. Hồ Chí Minh</option>
+              <option>Đà Nẵng</option>
+              <option>Hải Phòng</option>
+              <option>Cần Thơ</option>
+              <option>Tỉnh thành khác</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Bạn là<span>*</span></label>
+            <select class="form-select">
+              <option value="">Chọn đối tượng...</option>
+              <option>Sinh viên đang học đại học</option>
+              <option>Mới tốt nghiệp (dưới 2 năm)</option>
+              <option>Giáo viên / Giảng viên</option>
+              <option>Chuyên gia / Người đi làm</option>
+              <option>Gia sư chuyên nghiệp</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hình thức dạy<span>*</span></label>
+            <select class="form-select">
+              <option value="">Chọn hình thức...</option>
+              <option>Chỉ dạy trực tuyến (online)</option>
+              <option>Chỉ dạy tại nhà học sinh</option>
+              <option>Cả hai hình thức</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="form-group">
+            <label class="form-label">Giới thiệu bản thân <span style="color:var(--n400);font-weight:400;">(không bắt buộc)</span></label>
+            <textarea class="form-textarea" placeholder="Mô tả ngắn về kinh nghiệm và phong cách giảng dạy của bạn. Phụ huynh và học sinh sẽ đọc phần này để quyết định chọn gia sư..."></textarea>
+            <span class="form-hint">0 / 300 ký tự · Viết ít nhất 80 ký tự để hồ sơ nổi bật hơn</span>
+          </div>
+        </div>
+
+        <!-- Môn dạy -->
+        <div class="form-row single" style="margin-bottom:8px;">
+          <div class="form-group">
+            <label class="form-label">Môn học / Lĩnh vực dạy<span>*</span></label>
+            <span class="form-hint" style="margin-bottom:8px;">Chọn tất cả môn bạn có thể dạy</span>
+            <div class="chip-group" id="subject-chips">
+              <button class="chip selected" type="button">Toán</button>
+              <button class="chip" type="button">Ngữ văn</button>
+              <button class="chip selected" type="button">Tiếng Anh</button>
+              <button class="chip" type="button">Vật lý</button>
+              <button class="chip" type="button">Hóa học</button>
+              <button class="chip" type="button">Sinh học</button>
+              <button class="chip" type="button">Lịch sử</button>
+              <button class="chip" type="button">IELTS / TOEIC</button>
+              <button class="chip" type="button">Tiếng Nhật</button>
+              <button class="chip" type="button">Tiếng Hàn</button>
+              <button class="chip" type="button">Tiếng Trung</button>
+              <button class="chip" type="button">Lập trình</button>
+              <button class="chip" type="button">Excel / Office</button>
+              <button class="chip" type="button">UI/UX Design</button>
+              <button class="chip" type="button">Kế toán</button>
+              <button class="chip" type="button">Âm nhạc</button>
+              <button class="chip" type="button" onclick="toggleDkyMonKhac(this)">✏️ Khác...</button>
+            </div>
+            <input type="text" id="dky-mon-khac" class="form-input" placeholder="Nhập môn học hoặc kỹ năng bạn có thể dạy..." style="display:none;margin-top:8px;">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <div class="form-progress">Bước <strong>1</strong> / 4 · Thông tin cá nhân</div>
+        <div class="form-nav">
+          <button class="btn-next" onclick="goToStep(2)">
+            Tiếp theo
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    </div><!-- /step-panel-1 -->
+
+    <!-- ═══════════════════════════════════════════
+         STEP 2 — Chuyên môn
+    ════════════════════════════════════════════ -->
+    <div class="step-panel" id="step-panel-2">
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="fch-icon" style="background:var(--s100);">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div>
+          <div class="fch-title">Chuyên môn giảng dạy</div>
+          <div class="fch-sub">Cho chúng tôi biết thêm về kinh nghiệm và lịch dạy của bạn</div>
+        </div>
+      </div>
+      <div class="form-body">
+
+        <!-- Cấp độ -->
+        <div class="form-row single" style="margin-bottom:20px;">
+          <div class="form-group">
+            <label class="form-label">Cấp độ giảng dạy<span>*</span></label>
+            <span class="form-hint" style="margin-bottom:8px;">Chọn tất cả cấp bạn có thể dạy</span>
+            <div class="chip-group" id="level-chips">
+              <button class="chip selected" type="button">Tiểu học</button>
+              <button class="chip selected" type="button">THCS</button>
+              <button class="chip" type="button">THPT</button>
+              <button class="chip" type="button">Đại học</button>
+              <button class="chip" type="button">Người đi làm</button>
+              <button class="chip" type="button">Luyện thi đại học</button>
+              <button class="chip" type="button">IELTS / TOEIC</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kinh nghiệm + Học vấn -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Kinh nghiệm giảng dạy<span>*</span></label>
+            <select class="form-select">
+              <option value="">Chọn mức kinh nghiệm...</option>
+              <option>Dưới 1 năm</option>
+              <option>1 – 2 năm</option>
+              <option selected>3 – 5 năm</option>
+              <option>Trên 5 năm</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Trình độ học vấn<span>*</span></label>
+            <select class="form-select">
+              <option value="">Chọn trình độ...</option>
+              <option>Đang học đại học / cao đẳng</option>
+              <option>Tốt nghiệp đại học</option>
+              <option>Thạc sĩ</option>
+              <option>Tiến sĩ</option>
+              <option>Giáo viên có chứng chỉ</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tên trường + Chuyên ngành -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Trường đại học / cao đẳng</label>
+            <input class="form-input" type="text" placeholder="VD: Đại học Bách khoa Hà Nội">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Chuyên ngành</label>
+            <input class="form-input" type="text" placeholder="VD: Toán ứng dụng, Sư phạm Toán...">
+          </div>
+        </div>
+
+        <!-- Mức giá -->
+        <div class="form-row single" style="margin-bottom:20px;">
+          <div class="form-group">
+            <label class="form-label" style="display:flex;justify-content:space-between;">
+              Mức giá dạy / giờ<span>*</span>
+              <span style="font-weight:700;color:var(--p700);" id="price-display">200.000đ/giờ</span>
+            </label>
+            <input class="ic-slider" type="range" min="50" max="600" step="25" value="200" id="price-slider" style="margin-top:10px;" oninput="updatePrice(this.value)">
+            <div style="display:flex;justify-content:space-between;margin-top:4px;">
+              <span class="form-hint">50.000đ</span>
+              <span class="form-hint">600.000đ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lịch dạy -->
+        <div class="form-row single" style="margin-bottom:0;">
+          <div class="form-group">
+            <label class="form-label">Lịch có thể dạy<span>*</span></label>
+            <span class="form-hint" style="margin-bottom:12px;">Nhấn ô để chọn ca trống — phụ huynh sẽ dựa vào đây để đặt lịch</span>
+            <div style="overflow-x:auto;">
+              <div style="min-width:420px;">
+                <!-- Day labels -->
+                <div style="display:grid;grid-template-columns:52px repeat(7,1fr);gap:5px;margin-bottom:5px;">
+                  <div></div>
+                  <div style="text-align:center;font-size:11px;font-weight:700;color:var(--n500);">T2</div>
+                  <div style="text-align:center;font-size:11px;font-weight:700;color:var(--n500);">T3</div>
+                  <div style="text-align:center;font-size:11px;font-weight:700;color:var(--n500);">T4</div>
+                  <div style="text-align:center;font-size:11px;font-weight:700;color:var(--n500);">T5</div>
+                  <div style="text-align:center;font-size:11px;font-weight:700;color:var(--n500);">T6</div>
+                  <div style="text-align:center;font-size:11px;font-weight:700;color:var(--n500);">T7</div>
+                  <div style="text-align:center;font-size:11px;font-weight:700;color:var(--n500);">CN</div>
+                </div>
+                <!-- Sáng row -->
+                <div style="display:grid;grid-template-columns:52px repeat(7,1fr);gap:5px;margin-bottom:5px;" id="sched-morning">
+                  <div style="font-size:11px;font-weight:600;color:var(--n400);display:flex;align-items:center;">Sáng</div>
+                  <button class="sched-slot" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                </div>
+                <!-- Chiều row -->
+                <div style="display:grid;grid-template-columns:52px repeat(7,1fr);gap:5px;margin-bottom:5px;">
+                  <div style="font-size:11px;font-weight:600;color:var(--n400);display:flex;align-items:center;">Chiều</div>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                </div>
+                <!-- Tối row -->
+                <div style="display:grid;grid-template-columns:52px repeat(7,1fr);gap:5px;">
+                  <div style="font-size:11px;font-weight:600;color:var(--n400);display:flex;align-items:center;">Tối</div>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot on" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot" type="button" onclick="this.classList.toggle('on')"></button>
+                  <button class="sched-slot" type="button" onclick="this.classList.toggle('on')"></button>
+                </div>
+              </div>
+            </div>
+            <div class="sched-legend">
+              <div class="sched-legend-item"><div style="width:14px;height:14px;border-radius:4px;background:var(--p700);"></div> Có thể dạy</div>
+              <div class="sched-legend-item"><div style="width:14px;height:14px;border-radius:4px;background:#fff;border:1.5px solid var(--n200);"></div> Không rảnh</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-footer">
+        <div class="form-progress">Bước <strong>2</strong> / 4 · Chuyên môn</div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="goToStep(1)">← Quay lại</button>
+          <button class="btn-next" onclick="goToStep(3)">
+            Tiếp theo
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    </div><!-- /step-panel-2 -->
+
+    <!-- ═══════════════════════════════════════════
+         STEP 3 — Hồ sơ
+    ════════════════════════════════════════════ -->
+    <div class="step-panel" id="step-panel-3">
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="fch-icon" style="background:#F3E8FF;">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div>
+          <div class="fch-title">Hồ sơ & Tài liệu</div>
+          <div class="fch-sub">Ảnh và giấy tờ xác minh giúp hồ sơ được duyệt nhanh hơn</div>
+        </div>
+      </div>
+      <div class="form-body">
+
+        <!-- Avatar -->
+        <div class="form-row single" style="margin-bottom:24px;">
+          <div class="form-group">
+            <label class="form-label">Ảnh đại diện<span>*</span></label>
+            <span class="form-hint" style="margin-bottom:12px;">Ảnh rõ mặt, nền sáng — phụ huynh tin tưởng hơn khi thấy ảnh thật</span>
+            <div class="avatar-upload">
+              <div class="avatar-circle" id="avatar-preview" onclick="document.getElementById('avatar-input').click()">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="avatar-upload-right">
+                <div class="avatar-upload-title">Tải ảnh lên</div>
+                <div class="avatar-upload-hint">JPG, PNG · Tối đa 5MB · Tỉ lệ vuông tốt nhất</div>
+                <button class="avatar-btn" type="button" onclick="document.getElementById('avatar-input').click()">Chọn ảnh</button>
+                <input type="file" id="avatar-input" accept="image/*" style="display:none;" onchange="previewAvatar(this)">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video giới thiệu -->
+        <div class="form-row single" style="margin-bottom:24px;">
+          <div class="form-group">
+            <label class="form-label">Video giới thiệu <span style="color:var(--n400);font-weight:400;">(không bắt buộc — tăng 3× tỉ lệ được chọn)</span></label>
+            <input class="form-input" type="url" placeholder="https://youtube.com/watch?v=... hoặc link video Google Drive">
+            <span class="form-hint">Video 1–3 phút, giới thiệu bản thân và phong cách dạy học của bạn</span>
+          </div>
+        </div>
+
+        <!-- Bằng cấp / Chứng chỉ -->
+        <div class="form-row single" style="margin-bottom:24px;">
+          <div class="form-group">
+            <label class="form-label">Bằng cấp / Chứng chỉ<span>*</span></label>
+            <span class="form-hint" style="margin-bottom:10px;">Bằng tốt nghiệp, chứng chỉ IELTS, chứng chỉ sư phạm... — tối đa 5 file</span>
+            <div class="upload-area" onclick="document.getElementById('cert-input').click()">
+              <div class="upload-icon">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+              </div>
+              <div class="upload-title">Kéo thả file hoặc <strong>chọn từ máy tính</strong></div>
+              <div class="upload-sub">PDF, JPG, PNG · Tối đa 10MB mỗi file</div>
+              <input type="file" id="cert-input" multiple accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="showCertFiles(this)">
+            </div>
+            <div id="cert-file-list" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;">
+              <div class="upload-preview">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="upload-preview-name">Bang_tot_nghiep_DH_Bach_Khoa.pdf</span>
+                <span class="upload-preview-rm">✕</span>
+              </div>
+              <div class="upload-preview">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="upload-preview-name">Chung_chi_IELTS_7.5.pdf</span>
+                <span class="upload-preview-rm">✕</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CCCD -->
+        <div class="form-row" style="margin-bottom:0;">
+          <div class="form-group">
+            <label class="form-label">CCCD / CMND — Mặt trước<span>*</span></label>
+            <div class="upload-area" style="padding:20px;" onclick="document.getElementById('cccd-front').click()">
+              <div class="upload-icon" style="width:36px;height:36px;border-radius:10px;margin-bottom:8px;">
+                <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              </div>
+              <div class="upload-title" style="font-size:13px;">Mặt trước</div>
+              <div class="upload-sub">Ảnh rõ nét, đủ 4 góc</div>
+              <input type="file" id="cccd-front" accept="image/*" style="display:none;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">CCCD / CMND — Mặt sau<span>*</span></label>
+            <div class="upload-area" style="padding:20px;" onclick="document.getElementById('cccd-back').click()">
+              <div class="upload-icon" style="width:36px;height:36px;border-radius:10px;margin-bottom:8px;">
+                <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              </div>
+              <div class="upload-title" style="font-size:13px;">Mặt sau</div>
+              <div class="upload-sub">Ảnh rõ nét, đủ 4 góc</div>
+              <input type="file" id="cccd-back" accept="image/*" style="display:none;">
+            </div>
+          </div>
+        </div>
+        <span class="form-hint" style="margin-top:6px;display:block;">🔒 Thông tin CCCD chỉ dùng cho xác minh danh tính, không hiển thị công khai.</span>
+
+        <!-- Selfie cầm CCCD -->
+        <div class="form-row single" style="margin-top:20px;margin-bottom:0;">
+          <div class="form-group">
+            <label class="form-label">Ảnh selfie cầm CCCD/CMND<span>*</span></label>
+            <span class="form-hint" style="margin-bottom:10px;">Chụp ảnh bạn đang cầm CCCD mở về phía camera — xác minh danh tính trực tiếp</span>
+            <div class="upload-area" onclick="document.getElementById('selfie-input').click()" id="selfie-area">
+              <div class="upload-icon">
+                <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
+              <div class="upload-title">Chọn ảnh selfie</div>
+              <div class="upload-sub">JPG, PNG · Ảnh rõ mặt, CCCD đọc được chữ · Tối đa 10MB</div>
+              <input type="file" id="selfie-input" accept="image/*" style="display:none;" onchange="previewSelfie(this)">
+            </div>
+            <div id="selfie-preview-row" style="display:none;margin-top:8px;">
+              <div class="upload-preview">
+                <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span class="upload-preview-name" id="selfie-fname">selfie.jpg</span>
+                <span class="upload-preview-rm" onclick="clearSelfie()">✕</span>
+              </div>
+            </div>
+            <div style="margin-top:10px;background:var(--s100);border:1px solid var(--s200);border-radius:var(--r-md);padding:10px 14px;display:flex;gap:8px;align-items:flex-start;">
+              <span style="font-size:15px;flex-shrink:0;">💡</span>
+              <span style="font-size:12px;color:var(--n600);line-height:1.6;">Hướng dẫn chụp: Cầm CCCD ở phía trước ngực, mặt trước thẻ hướng về camera, đảm bảo đọc rõ số CCCD và ảnh trên thẻ.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-footer">
+        <div class="form-progress">Bước <strong>3</strong> / 4 · Hồ sơ & Tài liệu</div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="goToStep(2)">← Quay lại</button>
+          <button class="btn-next" onclick="goToStep(4)">
+            Xem lại & Nộp
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    </div><!-- /step-panel-3 -->
+
+    <!-- ═══════════════════════════════════════════
+         STEP 4 — Xác nhận & Nộp
+    ════════════════════════════════════════════ -->
+    <div class="step-panel" id="step-panel-4">
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="fch-icon" style="background:var(--green-bg);">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+          <div class="fch-title">Xác nhận thông tin</div>
+          <div class="fch-sub">Kiểm tra lại trước khi gửi đăng ký — bạn có thể sửa sau khi nộp</div>
+        </div>
+      </div>
+      <div class="form-body">
+
+        <div class="confirm-grid">
+          <!-- Cá nhân -->
+          <div class="confirm-card">
+            <div class="confirm-card-title">👤 Cá nhân</div>
+            <div class="confirm-row"><span class="confirm-label">Họ tên</span><span class="confirm-value">Nguyễn Văn An</span></div>
+            <div class="confirm-row"><span class="confirm-label">Điện thoại</span><span class="confirm-value">0901 234 567</span></div>
+            <div class="confirm-row"><span class="confirm-label">Email</span><span class="confirm-value">antt@gmail.com</span></div>
+            <div class="confirm-row"><span class="confirm-label">Tỉnh thành</span><span class="confirm-value">Hà Nội</span></div>
+            <div class="confirm-row"><span class="confirm-label">Hình thức</span><span class="confirm-value">Online & Tại nhà</span></div>
+          </div>
+          <!-- Chuyên môn -->
+          <div class="confirm-card">
+            <div class="confirm-card-title">⭐ Chuyên môn</div>
+            <div class="confirm-row"><span class="confirm-label">Kinh nghiệm</span><span class="confirm-value">3 – 5 năm</span></div>
+            <div class="confirm-row"><span class="confirm-label">Học vấn</span><span class="confirm-value">Tốt nghiệp ĐH</span></div>
+            <div class="confirm-row"><span class="confirm-label">Mức giá</span><span class="confirm-value" style="color:var(--p700);">200.000đ/giờ</span></div>
+            <div class="confirm-row" style="flex-direction:column;align-items:flex-start;gap:6px;">
+              <span class="confirm-label">Môn dạy</span>
+              <div class="confirm-subjects">
+                <span class="confirm-tag">Toán</span>
+                <span class="confirm-tag">Tiếng Anh</span>
+                <span class="confirm-tag">IELTS / TOEIC</span>
+              </div>
+            </div>
+          </div>
+          <!-- Hồ sơ -->
+          <div class="confirm-card" style="grid-column:1 / -1;">
+            <div class="confirm-card-title">📎 Tài liệu đã nộp</div>
+            <div class="confirm-docs">
+              <div class="confirm-doc-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Ảnh đại diện · 1 ảnh
+              </div>
+              <div class="confirm-doc-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Bằng cấp / chứng chỉ · 2 file (Bang_tot_nghiep, Chung_chi_IELTS)
+              </div>
+              <div class="confirm-doc-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>CCCD mặt trước & mặt sau
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="terms-box">
+          <div class="terms-check-row" style="margin-bottom:10px;">
+            <input type="checkbox" id="terms1" checked>
+            <label class="terms-check-label" for="terms1">Tôi xác nhận thông tin cung cấp là chính xác và đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a> của giasu.edu.vn.</label>
+          </div>
+          <div class="terms-check-row">
+            <input type="checkbox" id="terms2" checked>
+            <label class="terms-check-label" for="terms2">Tôi đồng ý nhận thông báo về học sinh phù hợp và cập nhật từ nền tảng qua email / Zalo.</label>
+          </div>
+        </div>
+
+        <!-- Processing note -->
+        <div style="background:var(--p50);border:1.5px solid var(--p100);border-radius:var(--r-lg);padding:14px 16px;display:flex;gap:10px;align-items:flex-start;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--p600)" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div style="font-size:13px;color:var(--n700);line-height:1.6;">Sau khi gửi, đội ngũ sẽ xét duyệt hồ sơ trong vòng <strong>24 giờ</strong>. Kết quả sẽ được thông báo qua email và Zalo đã đăng ký.</div>
+        </div>
+
+      </div>
+      <div class="form-footer">
+        <div class="form-progress">Bước <strong>4</strong> / 4 · Xác nhận</div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="goToStep(3)">← Quay lại</button>
+          <button class="btn-next" style="background:var(--green);gap:8px;" onclick="submitForm()">
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round;"><polyline points="20 6 9 17 4 12"/></svg>
+            Gửi đăng ký
+          </button>
+        </div>
+      </div>
+    </div>
+    </div><!-- /step-panel-4 -->
+
+    <!-- GUARANTEE -->
+    <div class="guarantee">
+      <div class="guarantee-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Miễn phí đăng ký, không phí ẩn
+      </div>
+      <div class="guarantee-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Duyệt hồ sơ trong 24 giờ
+      </div>
+      <div class="guarantee-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Hỗ trợ setup hồ sơ miễn phí
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="36" height="22" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+      </svg>
+      <span class="footer-logo-text">giasu<em>.edu.vn</em></span>
+    </div>
+    <span class="footer-copy">© 2026 giasu.edu.vn · Nền tảng gia sư trực tuyến #1 Việt Nam</span>
+    <div class="footer-links">
+      <a class="footer-link" href="#">Chính sách</a>
+      <a class="footer-link" href="#">Điều khoản</a>
+      <a class="footer-link" href="#">Liên hệ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Chip toggle (subject + level) ──
+document.querySelectorAll('#subject-chips .chip, #level-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => chip.classList.toggle('selected'));
+});
+
+// ── Income calculator ──
+const sessionsSlider = document.getElementById('sessions-slider');
+const rateSlider = document.getElementById('rate-slider');
+const typeSelect = document.getElementById('type-select');
+const sessionsVal = document.getElementById('sessions-val');
+const rateVal = document.getElementById('rate-val');
+const resultNum = document.getElementById('result-num');
+const resultSub = document.getElementById('result-sub');
+
+function updateCalc() {
+  const sessions = +sessionsSlider.value;
+  const rate = +rateSlider.value;
+  const multiplier = +typeSelect.value;
+  const monthly = Math.round(sessions * rate * 4 * 0.9 * multiplier / 100) * 100;
+  sessionsVal.textContent = sessions + ' buổi';
+  rateVal.textContent = rate + 'K';
+  resultNum.innerHTML = monthly.toLocaleString('vi') + '<em>K</em>';
+  resultSub.textContent = `≈ ${sessions} buổi/tuần × ${rate}K × 4 tuần × 90%`;
+}
+sessionsSlider.addEventListener('input', updateCalc);
+rateSlider.addEventListener('input', updateCalc);
+typeSelect.addEventListener('change', updateCalc);
+updateCalc();
+
+function toggleDkyMonKhac(btn) {
+  btn.classList.toggle('selected');
+  const input = document.getElementById('dky-mon-khac');
+  const show = btn.classList.contains('selected');
+  input.style.display = show ? 'block' : 'none';
+  if (show) input.focus();
+}
+
+// ── Price slider (Step 2) ──
+function updatePrice(val) {
+  const num = parseInt(val);
+  document.getElementById('price-display').textContent = (num * 1000).toLocaleString('vi') + 'đ/giờ';
+}
+
+// ── Avatar preview ──
+function previewAvatar(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const el = document.getElementById('avatar-preview');
+    el.innerHTML = `<img src="${e.target.result}" alt="avatar">`;
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+// ── Cert file list ──
+function showCertFiles(input) {
+  if (!input.files) return;
+  const list = document.getElementById('cert-file-list');
+  Array.from(input.files).forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'upload-preview';
+    div.innerHTML = `<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="20 6 9 17 4 12"/></svg><span class="upload-preview-name">${f.name}</span><span class="upload-preview-rm" onclick="this.parentElement.remove()">✕</span>`;
+    list.appendChild(div);
+  });
+}
+
+// ── Step navigation ──
+function goToStep(n) {
+  // Hide all panels
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  // Show target
+  document.getElementById('step-panel-' + n).classList.add('active');
+
+  // Update step indicator
+  const circles = document.querySelectorAll('.step-circle');
+  const connectors = document.querySelectorAll('.step-connector');
+  const labels = document.querySelectorAll('.step-label');
+
+  circles.forEach((c, i) => {
+    c.classList.remove('active', 'done');
+    labels[i].classList.remove('active');
+    if (i + 1 < n) {
+      c.classList.add('done');
+      c.innerHTML = '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
+    } else if (i + 1 === n) {
+      c.classList.add('active');
+      c.innerHTML = String(n);
+      labels[i].classList.add('active');
+    } else {
+      c.innerHTML = String(i + 1);
+    }
+  });
+  connectors.forEach((c, i) => {
+    c.classList.toggle('done', i + 1 < n);
+  });
+
+  // Scroll to form
+  document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Selfie preview ──
+function previewSelfie(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const row = document.getElementById('selfie-preview-row');
+  const fname = document.getElementById('selfie-fname');
+  const fsize = document.getElementById('selfie-fsize');
+  if (fname) fname.textContent = file.name;
+  if (fsize) fsize.textContent = (file.size / 1024 / 1024).toFixed(1) + ' MB';
+  const reader = new FileReader();
+  reader.onload = e => {
+    const thumb = document.getElementById('selfie-thumb');
+    if (thumb) thumb.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  if (row) row.style.display = 'flex';
+  const area = document.getElementById('selfie-area');
+  if (area) area.style.display = 'none';
+}
+function clearSelfie() {
+  document.getElementById('selfie-preview-row').style.display = 'none';
+  document.getElementById('selfie-area').style.display = 'flex';
+  document.getElementById('selfie-input').value = '';
+}
+
+// ── Submit ──
+function submitForm() {
+  document.getElementById('success-overlay').classList.add('show');
+}
+function closeSuccess() {
+  document.getElementById('success-overlay').classList.remove('show');
+}
+</script>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="success-overlay">
+  <div class="success-box">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="success-title">Đã gửi đăng ký! 🎉</div>
+    <div class="success-sub">Hồ sơ của bạn đang được xét duyệt. Chúng tôi sẽ liên hệ trong vòng 24 giờ qua email và Zalo.</div>
+    <div class="success-timeline">
+      <div class="success-step">
+        <div class="success-step-num" style="background:var(--green-bg);color:var(--green);">✓</div>
+        <span><strong>Ngay bây giờ</strong> — Hồ sơ đã được nhận</span>
+      </div>
+      <div class="success-step">
+        <div class="success-step-num">2</div>
+        <span><strong>Trong 24h</strong> — Đội ngũ xét duyệt thông tin & tài liệu</span>
+      </div>
+      <div class="success-step">
+        <div class="success-step-num">3</div>
+        <span><strong>Sau duyệt</strong> — Hồ sơ hiển thị, bắt đầu nhận học sinh</span>
+      </div>
+    </div>
+    <button class="success-btn" onclick="closeSuccess()">Về trang chủ →</button>
+  </div>
+</div>
+</body>
+</html>

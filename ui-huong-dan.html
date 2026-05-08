@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hướng dẫn sử dụng | giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p950:#061529; --p900:#0D2D6B; --p800:#1239A0; --p700:#1565C0;
+  --p600:#1976D2; --p500:#1E88E5; --p400:#42A5F5; --p300:#90CAF9;
+  --p200:#BBDEFB; --p100:#E3F2FD; --p50:#F0F8FF;
+  --s700:#C46200; --s600:#E65100; --s500:#F57C00; --s400:#FFA726;
+  --s300:#FFCC80; --s200:#FFE0B2; --s100:#FFF3E0;
+  --n900:#0F172A; --n800:#1E293B; --n700:#334155; --n600:#475569;
+  --n500:#64748B; --n400:#94A3B8; --n300:#CBD5E1; --n200:#E2E8F0;
+  --n100:#F1F5F9; --n50:#F8FAFC;
+  --green:#16A34A; --green-bg:#DCFCE7;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.1),0 4px 12px rgba(0,0,0,.06);
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px; --r-2xl:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:var(--n800);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
+svg{display:block;}
+
+/* ── NAVBAR ── */
+.navbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--n200);}
+.nav-inner{display:flex;align-items:center;height:64px;max-width:1200px;margin:0 auto;padding:0 24px;}
+.nav-logo{display:flex;align-items:center;gap:9px;margin-right:40px;flex-shrink:0;}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px;line-height:1;}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.5;letter-spacing:-.2px;}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-link{padding:6px 13px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:var(--n600);transition:all .15s;}
+.nav-link:hover{background:var(--n100);color:var(--n800);}
+.nav-link.active{color:var(--p700);font-weight:600;background:var(--p50);}
+.nav-actions{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.btn-ghost{height:36px;padding:0 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--n700);background:transparent;border:1.5px solid var(--n200);transition:all .15s;}
+.btn-ghost:hover{background:var(--n50);}
+.btn-primary-nav{height:36px;padding:0 18px;border-radius:var(--r-sm);font-size:13px;font-weight:700;color:#fff;background:var(--p700);box-shadow:0 1px 6px rgba(21,101,192,.3);transition:all .15s;}
+.btn-primary-nav:hover{background:var(--p800);}
+
+/* ── HERO ── */
+.hero{padding:80px 0 0;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 700px 500px at 110% -10%,rgba(21,101,192,.6),transparent 60%),
+             radial-gradient(ellipse 400px 400px at -5% 110%,rgba(13,45,107,.8),transparent 70%),
+             linear-gradient(155deg,#061529 0%,#0D2D6B 40%,#1239A0 70%,#1565C0 100%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;}
+.hero-inner{max-width:960px;margin:0 auto;padding:0 24px 64px;text-align:center;position:relative;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 6px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:11.5px;font-weight:600;color:rgba(255,255,255,.55);margin-bottom:28px;}
+.hero-eyebrow-dot{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--p600),var(--p400));display:flex;align-items:center;justify-content:center;}
+.hero-eyebrow-dot svg{width:10px;height:10px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.hero-h1{font-size:58px;font-weight:900;color:#fff;line-height:1.06;letter-spacing:-2.5px;margin-bottom:20px;}
+.hero-h1 span{color:transparent;background:linear-gradient(90deg,#fff 0%,var(--s400) 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-p{font-size:16px;color:rgba(255,255,255,.5);line-height:1.75;max-width:500px;margin:0 auto 40px;}
+
+/* Persona tabs (inside hero bottom) */
+.persona-tabs{display:inline-flex;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:4px;gap:4px;margin-bottom:-1px;}
+.ptab{height:42px;padding:0 24px;border-radius:10px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.45);background:transparent;transition:all .2s;display:flex;align-items:center;gap:8px;}
+.ptab svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.ptab.active{background:#fff;color:var(--p800);box-shadow:0 2px 12px rgba(0,0,0,.2);}
+.ptab:not(.active):hover{color:rgba(255,255,255,.75);background:rgba(255,255,255,.08);}
+
+/* ── PANEL WRAPPER ── */
+.panels{background:#fff;}
+
+/* ── STEPS SECTION ── */
+.steps-section{max-width:1100px;margin:0 auto;padding:72px 24px 0;}
+.steps-header{text-align:center;margin-bottom:56px;}
+.section-eyebrow{font-size:11.5px;font-weight:700;color:var(--p700);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;}
+.section-title{font-size:38px;font-weight:900;color:var(--n900);letter-spacing:-1.2px;line-height:1.1;margin-bottom:14px;}
+.section-sub{font-size:15px;color:var(--n500);line-height:1.7;max-width:560px;margin:0 auto;}
+
+/* Timeline steps */
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+.steps-grid::before{content:'';position:absolute;top:36px;left:calc(12.5% + 16px);right:calc(12.5% + 16px);height:2px;background:linear-gradient(to right,var(--p200),var(--p300),var(--p200));z-index:0;}
+.step-item{position:relative;z-index:1;text-align:center;padding:0 16px;}
+.step-num{width:72px;height:72px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;position:relative;}
+.step-num-bg{position:absolute;inset:0;border-radius:50%;background:var(--p50);border:2px solid var(--p200);}
+.step-num-icon{position:relative;z-index:1;}
+.step-num-icon svg{width:28px;height:28px;stroke:var(--p700);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.step-num-badge{position:absolute;top:-4px;right:-4px;width:22px;height:22px;border-radius:50%;background:var(--p700);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;z-index:2;}
+.step-title{font-size:15px;font-weight:700;color:var(--n800);margin-bottom:8px;}
+.step-desc{font-size:13px;color:var(--n500);line-height:1.65;}
+.step-item.highlight .step-num-bg{background:linear-gradient(135deg,var(--s100),var(--s200));border-color:var(--s300);}
+.step-item.highlight .step-num-icon svg{stroke:var(--s600);}
+.step-item.highlight .step-num-badge{background:var(--s500);}
+.step-item.highlight .step-title{color:var(--s700);}
+
+/* ── DETAIL SECTIONS (alternating) ── */
+.detail-section{padding:80px 0;border-bottom:1px solid var(--n100);}
+.detail-section:last-of-type{border-bottom:none;}
+.detail-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.detail-inner.reverse{direction:rtl;}
+.detail-inner.reverse > *{direction:ltr;}
+.detail-text .section-eyebrow{margin-bottom:10px;}
+.detail-text .section-title{font-size:32px;margin-bottom:14px;}
+.detail-text .section-sub{max-width:100%;margin:0 0 28px;}
+.detail-checklist{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+.check-item{display:flex;align-items:flex-start;gap:12px;}
+.check-icon{width:22px;height:22px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.check-icon svg{width:11px;height:11px;stroke:var(--green);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.check-text{font-size:13.5px;color:var(--n600);line-height:1.6;}
+.check-text strong{color:var(--n800);font-weight:600;}
+.detail-cta{height:44px;padding:0 22px;border-radius:var(--r-md);background:var(--p700);color:#fff;font-size:13.5px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:all .2s;box-shadow:0 2px 10px rgba(21,101,192,.3);}
+.detail-cta svg{width:14px;height:14px;stroke:#fff;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.detail-cta:hover{background:var(--p800);transform:translateY(-1px);box-shadow:0 6px 20px rgba(21,101,192,.35);}
+.detail-cta.amber{background:var(--s500);box-shadow:0 2px 10px rgba(245,124,0,.3);}
+.detail-cta.amber:hover{background:var(--s700);box-shadow:0 6px 20px rgba(245,124,0,.35);}
+
+/* Visual card (right side placeholder) */
+.visual-card{border-radius:var(--r-2xl);overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--n200);}
+.vc-header{padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--n100);}
+.vc-header-dots{display:flex;gap:5px;}
+.vc-dot{width:10px;height:10px;border-radius:50%;}
+.vc-title{font-size:12px;font-weight:600;color:var(--n400);}
+.vc-body{padding:20px;}
+
+/* Search result card */
+.vc-search-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;background:var(--n50);border:1px solid var(--n200);margin-bottom:16px;}
+.vc-search-bar svg{width:14px;height:14px;stroke:var(--n400);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.vc-search-text{font-size:13px;color:var(--n500);}
+.vc-tutor-card{border-radius:var(--r-md);border:1.5px solid var(--n200);overflow:hidden;margin-bottom:10px;transition:border-color .15s;}
+.vc-tutor-card:hover{border-color:var(--p300);}
+.vc-tc-banner{height:64px;position:relative;}
+.vc-tc-banner.b1{background:linear-gradient(135deg,#0D2D6B,#1565C0);}
+.vc-tc-banner.b2{background:linear-gradient(135deg,#1a5276,#2980b9);}
+.vc-tc-banner.b3{background:linear-gradient(135deg,#512DA8,#7B1FA2);}
+.vc-tc-body{padding:8px 12px 12px;display:flex;align-items:flex-start;gap:10px;}
+.vc-tc-avatar{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#fff;flex-shrink:0;margin-top:-20px;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+.vc-tc-info{flex:1;min-width:0;}
+.vc-tc-name{font-size:13px;font-weight:700;color:var(--n800);margin-bottom:2px;}
+.vc-tc-sub{font-size:11.5px;color:var(--n500);}
+.vc-tc-price{font-size:12px;font-weight:700;color:var(--p700);}
+.vc-stars{color:var(--s500);font-size:10px;}
+
+/* Calendar visual */
+.vc-cal{background:#fff;}
+.vc-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.vc-cal-month{font-size:13px;font-weight:700;color:var(--n800);}
+.vc-cal-nav{width:26px;height:26px;border-radius:6px;border:1px solid var(--n200);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.vc-cal-nav svg{width:12px;height:12px;stroke:var(--n500);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.vc-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;}
+.vc-cal-day-label{font-size:10.5px;font-weight:600;color:var(--n400);padding:4px 0;}
+.vc-cal-day{height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--n600);cursor:pointer;transition:all .15s;}
+.vc-cal-day:hover{background:var(--p50);color:var(--p700);}
+.vc-cal-day.available{color:var(--p700);font-weight:600;}
+.vc-cal-day.selected{background:var(--p700);color:#fff;font-weight:700;}
+.vc-cal-day.unavail{color:var(--n300);}
+.vc-cal-day.today{border:1.5px solid var(--p300);}
+.vc-slot-row{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;}
+.vc-slot{height:28px;padding:0 10px;border-radius:6px;font-size:11.5px;font-weight:600;color:var(--p700);background:var(--p50);border:1px solid var(--p200);cursor:pointer;display:flex;align-items:center;transition:all .15s;}
+.vc-slot:hover,.vc-slot.selected{background:var(--p700);color:#fff;border-color:var(--p700);}
+.vc-slot.full{color:var(--n400);background:var(--n50);border-color:var(--n200);cursor:default;}
+
+/* Payment card */
+.vc-payment{display:flex;flex-direction:column;gap:10px;}
+.vc-pay-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:var(--n50);border:1px solid var(--n100);}
+.vc-pay-label{font-size:12.5px;color:var(--n600);}
+.vc-pay-value{font-size:13px;font-weight:700;color:var(--n800);}
+.vc-pay-total{background:linear-gradient(135deg,var(--p900),var(--p700));padding:12px 14px;border-radius:10px;display:flex;align-items:center;justify-content:space-between;}
+.vc-pay-total .vc-pay-label{color:rgba(255,255,255,.6);}
+.vc-pay-total .vc-pay-value{color:#fff;font-size:15px;}
+.vc-pay-method{display:flex;gap:6px;margin-top:4px;}
+.vc-pay-badge{height:26px;padding:0 10px;border-radius:6px;border:1.5px solid var(--n200);font-size:11px;font-weight:600;color:var(--n600);display:flex;align-items:center;gap:5px;background:#fff;}
+.vc-pay-badge svg{width:12px;height:12px;stroke:var(--n400);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.vc-pay-btn{height:40px;border-radius:10px;background:var(--s500);color:#fff;font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;cursor:pointer;transition:background .15s;}
+.vc-pay-btn svg{width:14px;height:14px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.vc-pay-btn:hover{background:var(--s700);}
+
+/* ── TRIAL BANNER ── */
+.trial-banner{margin:0 0 48px;background:linear-gradient(135deg,var(--s100),var(--s200));border:1.5px solid var(--s300);border-radius:var(--r-xl);padding:28px 32px;display:flex;align-items:center;gap:24px;}
+.trial-icon{width:56px;height:56px;border-radius:var(--r-lg);background:#fff;box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.trial-icon svg{width:26px;height:26px;stroke:var(--s500);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.trial-body{flex:1;}
+.trial-title{font-size:16px;font-weight:800;color:var(--s700);margin-bottom:4px;}
+.trial-desc{font-size:13.5px;color:var(--s700);opacity:.8;line-height:1.6;}
+.trial-badge{flex-shrink:0;background:var(--s500);color:#fff;font-size:13px;font-weight:800;padding:8px 18px;border-radius:10px;white-space:nowrap;}
+
+/* ── FAQ ── */
+.faq-section{padding:72px 0 80px;background:var(--n50);}
+.faq-inner{max-width:760px;margin:0 auto;padding:0 24px;}
+.faq-header{text-align:center;margin-bottom:44px;}
+.faq-list{display:flex;flex-direction:column;gap:8px;}
+.faq-item{border-radius:var(--r-md);border:1.5px solid var(--n200);background:#fff;overflow:hidden;transition:border-color .2s;}
+.faq-item.open{border-color:var(--p200);}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;gap:16px;}
+.faq-q-text{font-size:14.5px;font-weight:600;color:var(--n800);line-height:1.4;}
+.faq-icon{width:28px;height:28px;border-radius:8px;background:var(--n100);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.faq-icon svg{width:14px;height:14px;stroke:var(--n500);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s;}
+.faq-item.open .faq-icon{background:var(--p50);}
+.faq-item.open .faq-icon svg{stroke:var(--p700);transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease;}
+.faq-a-inner{padding:0 22px 18px;font-size:14px;color:var(--n600);line-height:1.75;border-top:1px solid var(--n100);}
+.faq-item.open .faq-a{max-height:400px;}
+
+/* ── CTA SECTION ── */
+.cta-section{padding:80px 24px;text-align:center;background:#fff;}
+.cta-inner{max-width:640px;margin:0 auto;}
+.cta-title{font-size:38px;font-weight:900;color:var(--n900);letter-spacing:-1.2px;line-height:1.1;margin-bottom:14px;}
+.cta-title span{color:var(--p700);}
+.cta-sub{font-size:15px;color:var(--n500);margin-bottom:36px;line-height:1.7;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-cta-primary{height:50px;padding:0 28px;border-radius:var(--r-lg);background:var(--p700);color:#fff;font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:9px;transition:all .2s;box-shadow:0 4px 16px rgba(21,101,192,.35);}
+.btn-cta-primary svg{width:16px;height:16px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.btn-cta-primary:hover{background:var(--p800);transform:translateY(-2px);box-shadow:0 8px 24px rgba(21,101,192,.4);}
+.btn-cta-sec{height:50px;padding:0 24px;border-radius:var(--r-lg);border:2px solid var(--n200);color:var(--n700);font-size:14px;font-weight:600;background:#fff;transition:all .2s;}
+.btn-cta-sec:hover{border-color:var(--n300);background:var(--n50);}
+.cta-note{margin-top:20px;font-size:12.5px;color:var(--n400);display:flex;align-items:center;justify-content:center;gap:6px;}
+.cta-note svg{width:13px;height:13px;stroke:var(--green);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── TUTOR STEPS VISUAL ── */
+.tutor-journey{border-radius:var(--r-2xl);border:1.5px solid var(--n200);overflow:hidden;background:#fff;box-shadow:var(--shadow-lg);}
+.tj-header{padding:18px 22px;background:linear-gradient(135deg,var(--p950),var(--p900));display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.06);}
+.tj-header-icon{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;}
+.tj-header-icon svg{width:16px;height:16px;stroke:rgba(255,255,255,.7);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.tj-header-text{font-size:13px;font-weight:700;color:rgba(255,255,255,.8);}
+.tj-body{padding:20px 22px;display:flex;flex-direction:column;gap:0;}
+.tj-step{display:flex;gap:14px;position:relative;}
+.tj-step:not(:last-child)::after{content:'';position:absolute;left:16px;top:36px;bottom:-8px;width:2px;background:linear-gradient(to bottom,var(--p200),transparent);}
+.tj-step-dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--p200);background:var(--p50);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;}
+.tj-step-dot svg{width:14px;height:14px;stroke:var(--p700);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.tj-step-dot.done{background:var(--green-bg);border-color:var(--green);}
+.tj-step-dot.done svg{stroke:var(--green);}
+.tj-step-dot.amber{background:var(--s100);border-color:var(--s300);}
+.tj-step-dot.amber svg{stroke:var(--s500);}
+.tj-step-body{flex:1;padding-bottom:20px;}
+.tj-step-title{font-size:13.5px;font-weight:700;color:var(--n800);margin-bottom:4px;}
+.tj-step-desc{font-size:12.5px;color:var(--n500);line-height:1.6;}
+.tj-step-tag{display:inline-block;margin-top:6px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:5px;}
+.tj-step-tag.green{background:var(--green-bg);color:var(--green);}
+.tj-step-tag.amber{background:var(--s100);color:var(--s700);}
+.tj-step-tag.blue{background:var(--p50);color:var(--p700);}
+.tj-earnings{margin:4px 0 0;padding:12px 14px;border-radius:10px;background:var(--n50);border:1px solid var(--n100);display:flex;align-items:center;justify-content:space-between;}
+.tj-earn-label{font-size:12px;color:var(--n500);}
+.tj-earn-value{font-size:13px;font-weight:800;color:var(--n800);}
+
+/* ── PANEL SHOW/HIDE ── */
+.persona-panel{display:none;}
+.persona-panel.active{display:block;}
+
+/* ── FOOTER ── */
+.footer{background:var(--p950);padding:32px 0;}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.footer-logo{display:flex;align-items:center;gap:10px;}
+.footer-logo-text{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.footer-logo-text em{font-weight:500;font-style:normal;opacity:.4;}
+.footer-copy{font-size:12.5px;color:rgba(255,255,255,.3);}
+.footer-links{display:flex;gap:20px;}
+.footer-link{font-size:12.5px;color:rgba(255,255,255,.35);transition:color .15s;}
+.footer-link:hover{color:rgba(255,255,255,.7);}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+      </svg>
+      <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="ui-trang-chu.html">Trang chủ</a>
+      <a class="nav-link" href="ui-tim-gia-su.html">Tìm gia sư</a>
+      <a class="nav-link" href="ui-dang-tin.html">Đăng tin</a>
+      <a class="nav-link" href="ui-dang-ky-day.html">Đăng ký dạy</a>
+      <a class="nav-link" href="ui-blog.html">Blog</a>
+      <a class="nav-link" href="ui-gioi-thieu.html">Về chúng tôi</a>
+    </div>
+    <div class="nav-actions">
+      <a href="ui-auth.html" class="btn-ghost">Đăng nhập</a>
+      <a href="ui-auth.html" class="btn-primary-nav">Bắt đầu miễn phí</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-dot">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      Bắt đầu trong vài phút
+    </div>
+    <h1 class="hero-h1">Học và dạy thật <span>đơn giản</span></h1>
+    <p class="hero-p">Từ tìm kiếm đến buổi học đầu tiên — chỉ vài bước. Hướng dẫn chi tiết dành cho học viên và gia sư.</p>
+
+    <!-- Persona toggle tabs -->
+    <div class="persona-tabs">
+      <button class="ptab active" id="tab-student" onclick="switchTab('student')">
+        <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Tôi muốn học
+      </button>
+      <button class="ptab" id="tab-tutor" onclick="switchTab('tutor')">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Tôi muốn dạy
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="panels">
+
+  <!-- ══════════════════════════════════
+       PANEL: HỌC VIÊN / PHỤ HUYNH
+  ══════════════════════════════════ -->
+  <div class="persona-panel active" id="panel-student">
+
+    <!-- Steps overview -->
+    <div class="steps-section">
+      <div class="steps-header">
+        <div class="section-eyebrow">Học viên & Phụ huynh</div>
+        <div class="section-title">4 bước để bắt đầu học</div>
+        <div class="section-sub">Chỉ cần vài phút để tìm được gia sư phù hợp và đặt buổi học thử hoàn toàn miễn phí.</div>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-item">
+          <div class="step-num">
+            <div class="step-num-bg"></div>
+            <div class="step-num-icon">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="step-num-badge">1</div>
+          </div>
+          <div class="step-title">Tìm gia sư</div>
+          <div class="step-desc">Lọc theo môn học, mức giá, hình thức dạy và khu vực bạn muốn.</div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">
+            <div class="step-num-bg"></div>
+            <div class="step-num-icon">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="step-num-badge">2</div>
+          </div>
+          <div class="step-title">Xem hồ sơ</div>
+          <div class="step-desc">Đọc đánh giá thực từ học viên, xem bằng cấp được xác minh và video giới thiệu.</div>
+        </div>
+
+        <div class="step-item highlight">
+          <div class="step-num">
+            <div class="step-num-bg"></div>
+            <div class="step-num-icon">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="step-num-badge">3</div>
+          </div>
+          <div class="step-title">Học thử miễn phí</div>
+          <div class="step-desc">1 buổi 60 phút hoàn toàn miễn phí. Không hài lòng? Chọn gia sư khác không mất gì.</div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">
+            <div class="step-num-bg"></div>
+            <div class="step-num-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="step-num-badge">4</div>
+          </div>
+          <div class="step-title">Đặt lịch học</div>
+          <div class="step-desc">Chọn khung giờ theo lịch trống của gia sư, thanh toán an toàn và học thôi!</div>
+        </div>
+      </div>
+
+      <!-- Trial highlight -->
+      <div style="margin-top:48px;">
+        <div class="trial-banner">
+          <div class="trial-icon">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="trial-body">
+            <div class="trial-title">Buổi học thử miễn phí — không điều kiện</div>
+            <div class="trial-desc">60 phút học thử với bất kỳ gia sư nào. Nếu chưa hài lòng, bạn có thể chọn gia sư khác và học thử lại — hoàn toàn miễn phí cho đến khi tìm được người phù hợp.</div>
+          </div>
+          <div class="trial-badge">MIỄN PHÍ 100%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail 1: Search & Filter -->
+    <section class="detail-section">
+      <div class="detail-inner">
+        <div class="detail-text">
+          <div class="section-eyebrow">Bước 1</div>
+          <div class="section-title">Tìm đúng gia sư bạn cần</div>
+          <div class="section-sub">Hệ thống lọc thông minh giúp thu hẹp từ hơn 12.000 gia sư xuống còn vài người thực sự phù hợp với bạn.</div>
+          <div class="detail-checklist">
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Lọc theo môn học & cấp độ</strong> — Từ Toán tiểu học đến IELTS nâng cao, đều có gia sư chuyên sâu.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Chọn hình thức học</strong> — Dạy tại nhà, học tại nhà gia sư, hoặc học online qua video call.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Khu vực & học phí</strong> — Lọc theo quận/huyện và khoảng ngân sách mình có.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Gia sư đã xác minh</strong> — Chỉ xem hồ sơ đã được kiểm duyệt bằng cấp và CCCD.</div>
+            </div>
+          </div>
+          <a href="#" class="detail-cta">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Tìm gia sư ngay
+          </a>
+        </div>
+        <div class="visual-card">
+          <div class="vc-header">
+            <div class="vc-header-dots">
+              <div class="vc-dot" style="background:#FF5F57;"></div>
+              <div class="vc-dot" style="background:#FFBD2E;"></div>
+              <div class="vc-dot" style="background:#28CA42;"></div>
+            </div>
+            <div class="vc-title">giasu.edu.vn — Tìm gia sư</div>
+          </div>
+          <div class="vc-body">
+            <div class="vc-search-bar">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <div class="vc-search-text">Toán lớp 9 · Hà Nội · Online</div>
+            </div>
+            <!-- Tutor cards -->
+            <div class="vc-tutor-card">
+              <div class="vc-tc-banner b1"></div>
+              <div class="vc-tc-body">
+                <div class="vc-tc-avatar" style="background:linear-gradient(135deg,#1565C0,#42A5F5);">N</div>
+                <div class="vc-tc-info">
+                  <div class="vc-tc-name">Nguyễn Minh Tuấn</div>
+                  <div class="vc-tc-sub">Toán • 7 năm kinh nghiệm • ★★★★★</div>
+                </div>
+                <div class="vc-tc-price">180k/h</div>
+              </div>
+            </div>
+            <div class="vc-tutor-card">
+              <div class="vc-tc-banner b2"></div>
+              <div class="vc-tc-body">
+                <div class="vc-tc-avatar" style="background:linear-gradient(135deg,#2980b9,#74b9ff);">P</div>
+                <div class="vc-tc-info">
+                  <div class="vc-tc-name">Phạm Thị Lan</div>
+                  <div class="vc-tc-sub">Toán • 4 năm kinh nghiệm • ★★★★½</div>
+                </div>
+                <div class="vc-tc-price">120k/h</div>
+              </div>
+            </div>
+            <div class="vc-tutor-card">
+              <div class="vc-tc-banner b3"></div>
+              <div class="vc-tc-body">
+                <div class="vc-tc-avatar" style="background:linear-gradient(135deg,#7B1FA2,#CE93D8);">T</div>
+                <div class="vc-tc-info">
+                  <div class="vc-tc-name">Trần Đức Anh</div>
+                  <div class="vc-tc-sub">Toán • 10 năm kinh nghiệm • ★★★★★</div>
+                </div>
+                <div class="vc-tc-price">250k/h</div>
+              </div>
+            </div>
+            <div style="text-align:center;margin-top:10px;font-size:12px;color:var(--n400);">Hiển thị 3 / 247 kết quả</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detail 2: Booking & Calendar -->
+    <section class="detail-section" style="background:var(--n50);">
+      <div class="detail-inner reverse">
+        <div class="detail-text">
+          <div class="section-eyebrow">Bước 3 & 4</div>
+          <div class="section-title">Đặt lịch linh hoạt, thanh toán an toàn</div>
+          <div class="section-sub">Xem lịch trống của gia sư theo thời gian thực, chọn khung giờ phù hợp và thanh toán ngay — tất cả trên một màn hình.</div>
+          <div class="detail-checklist">
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Lịch thời gian thực</strong> — Gia sư cập nhật lịch tự động, không bao giờ bị trùng buổi.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Thanh toán đa dạng</strong> — MoMo, VNPay, thẻ ATM nội địa, thẻ quốc tế Visa/Mastercard.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Tiền được giữ ký quỹ</strong> — Tiền chỉ chuyển đến gia sư sau khi buổi học hoàn thành.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Nhắc lịch tự động</strong> — SMS và thông báo app trước buổi học 24h và 1h.</div>
+            </div>
+          </div>
+          <a href="#" class="detail-cta">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Đặt buổi học thử
+          </a>
+        </div>
+        <div class="visual-card">
+          <div class="vc-header">
+            <div class="vc-header-dots">
+              <div class="vc-dot" style="background:#FF5F57;"></div>
+              <div class="vc-dot" style="background:#FFBD2E;"></div>
+              <div class="vc-dot" style="background:#28CA42;"></div>
+            </div>
+            <div class="vc-title">Đặt lịch — Nguyễn Minh Tuấn</div>
+          </div>
+          <div class="vc-body">
+            <div class="vc-cal">
+              <div class="vc-cal-header">
+                <div class="vc-cal-month">Tháng 5, 2026</div>
+                <div style="display:flex;gap:4px;">
+                  <div class="vc-cal-nav"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+                  <div class="vc-cal-nav"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+                </div>
+              </div>
+              <div class="vc-cal-grid">
+                <div class="vc-cal-day-label">T2</div><div class="vc-cal-day-label">T3</div><div class="vc-cal-day-label">T4</div><div class="vc-cal-day-label">T5</div><div class="vc-cal-day-label">T6</div><div class="vc-cal-day-label">T7</div><div class="vc-cal-day-label">CN</div>
+                <div class="vc-cal-day unavail">28</div><div class="vc-cal-day unavail">29</div><div class="vc-cal-day unavail">30</div><div class="vc-cal-day available">1</div><div class="vc-cal-day available">2</div><div class="vc-cal-day unavail">3</div><div class="vc-cal-day unavail">4</div>
+                <div class="vc-cal-day available">5</div><div class="vc-cal-day today available">6</div><div class="vc-cal-day available">7</div><div class="vc-cal-day selected">8</div><div class="vc-cal-day available">9</div><div class="vc-cal-day unavail">10</div><div class="vc-cal-day unavail">11</div>
+                <div class="vc-cal-day available">12</div><div class="vc-cal-day available">13</div><div class="vc-cal-day unavail">14</div><div class="vc-cal-day available">15</div><div class="vc-cal-day available">16</div><div class="vc-cal-day unavail">17</div><div class="vc-cal-day unavail">18</div>
+              </div>
+              <div class="vc-slot-row">
+                <div class="vc-slot full">08:00</div>
+                <div class="vc-slot selected">09:00</div>
+                <div class="vc-slot">14:00</div>
+                <div class="vc-slot">16:00</div>
+                <div class="vc-slot full">19:00</div>
+                <div class="vc-slot">20:00</div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:0 20px 20px;">
+            <div class="vc-payment">
+              <div class="vc-pay-row">
+                <div class="vc-pay-label">1 buổi học thử (60 phút)</div>
+                <div class="vc-pay-value" style="color:var(--green);font-weight:800;">MIỄN PHÍ</div>
+              </div>
+              <div class="vc-pay-row">
+                <div class="vc-pay-label">Phương thức thanh toán</div>
+                <div class="vc-pay-method">
+                  <div class="vc-pay-badge">
+                    <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    MoMo
+                  </div>
+                  <div class="vc-pay-badge">VNPay</div>
+                </div>
+              </div>
+            </div>
+            <button class="vc-pay-btn" style="margin-top:12px;">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Đặt buổi học thử — Miễn phí
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /panel-student -->
+
+  <!-- ══════════════════════════════════
+       PANEL: GIA SƯ
+  ══════════════════════════════════ -->
+  <div class="persona-panel" id="panel-tutor">
+
+    <!-- Steps overview -->
+    <div class="steps-section">
+      <div class="steps-header">
+        <div class="section-eyebrow">Dành cho Gia sư</div>
+        <div class="section-title">Bắt đầu nhận học viên trong 48h</div>
+        <div class="section-sub">Đăng ký đơn giản, được xét duyệt nhanh và hiển thị hồ sơ ngay sau khi được duyệt. Hoàn toàn miễn phí để đăng ký.</div>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-item">
+          <div class="step-num">
+            <div class="step-num-bg"></div>
+            <div class="step-num-icon">
+              <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+            <div class="step-num-badge">1</div>
+          </div>
+          <div class="step-title">Điền hồ sơ</div>
+          <div class="step-desc">Điền thông tin cá nhân, môn dạy, kinh nghiệm và tải lên bằng cấp cần xác minh.</div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">
+            <div class="step-num-bg"></div>
+            <div class="step-num-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
+            <div class="step-num-badge">2</div>
+          </div>
+          <div class="step-title">Xét duyệt</div>
+          <div class="step-desc">Đội ngũ kiểm duyệt xác minh thông tin trong vòng 24–48 giờ làm việc.</div>
+        </div>
+
+        <div class="step-item highlight">
+          <div class="step-num">
+            <div class="step-num-bg"></div>
+            <div class="step-num-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="step-num-badge">3</div>
+          </div>
+          <div class="step-title">Lên trang tìm kiếm</div>
+          <div class="step-desc">Hồ sơ được hiển thị cho hàng nghìn phụ huynh và học viên đang tìm gia sư mỗi ngày.</div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">
+            <div class="step-num-bg"></div>
+            <div class="step-num-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="step-num-badge">4</div>
+          </div>
+          <div class="step-title">Nhận thu nhập</div>
+          <div class="step-desc">Nhận tiền tự động sau mỗi buổi dạy, không cần chờ hay đòi. Rút về tài khoản ngân hàng bất cứ lúc nào.</div>
+        </div>
+      </div>
+
+      <!-- Tutor journey visual -->
+      <div style="margin-top:48px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start;padding-bottom:56px;">
+        <div>
+          <div class="section-eyebrow">Thu nhập thực tế</div>
+          <div class="section-title" style="font-size:30px;">Dạy theo lịch của bạn, thu nhập không giới hạn</div>
+          <div class="section-sub" style="max-width:100%;margin:0 0 24px;">Bạn tự đặt học phí, tự chọn môn dạy và tự quyết định giờ dạy. Nền tảng hỗ trợ bạn tiếp cận học viên — phần còn lại là của bạn.</div>
+          <div class="detail-checklist">
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Tự đặt học phí</strong> — Bạn định giá dựa trên kinh nghiệm và thị trường, không bị nền tảng áp giá.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Hoa hồng thấp nhất thị trường</strong> — Chỉ 12% trên mỗi buổi dạy, thấp hơn mọi nền tảng tương tự.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Dashboard quản lý đầy đủ</strong> — Theo dõi lịch dạy, thu nhập, đánh giá và học viên ngay trên một trang.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="check-text"><strong>Thanh toán đúng hạn</strong> — Tiền chuyển về trong 24h sau khi buổi học kết thúc, tự động, không cần nhắc.</div>
+            </div>
+          </div>
+          <a href="#" class="detail-cta amber">
+            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Đăng ký làm gia sư — Miễn phí
+          </a>
+        </div>
+
+        <div class="tutor-journey">
+          <div class="tj-header">
+            <div class="tj-header-icon">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div>
+              <div class="tj-header-text">Hồ sơ của bạn — giasu.edu.vn</div>
+              <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;">Đã xác minh ✓</div>
+            </div>
+          </div>
+          <div class="tj-body">
+            <div class="tj-step">
+              <div class="tj-step-dot done">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="tj-step-body">
+                <div class="tj-step-title">Điền thông tin & tải bằng cấp</div>
+                <div class="tj-step-desc">Hoàn thành 100% hồ sơ, tải lên ảnh bằng đại học hoặc chứng chỉ liên quan.</div>
+                <div class="tj-step-tag green">Hoàn thành</div>
+              </div>
+            </div>
+            <div class="tj-step">
+              <div class="tj-step-dot done">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="tj-step-body">
+                <div class="tj-step-title">Xét duyệt — 18 giờ</div>
+                <div class="tj-step-desc">Kiểm tra CCCD, bằng cấp và lịch sử. Thông báo kết quả qua email và SMS.</div>
+                <div class="tj-step-tag green">Đã duyệt</div>
+              </div>
+            </div>
+            <div class="tj-step">
+              <div class="tj-step-dot amber">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div class="tj-step-body">
+                <div class="tj-step-title">Hồ sơ đang hiển thị</div>
+                <div class="tj-step-desc">Xuất hiện trong tìm kiếm của học viên · 247 lượt xem tuần này.</div>
+                <div class="tj-step-tag amber">Đang hoạt động</div>
+              </div>
+            </div>
+            <div class="tj-step">
+              <div class="tj-step-dot">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div class="tj-step-body" style="padding-bottom:0;">
+                <div class="tj-step-title">Thu nhập tháng 5</div>
+                <div class="tj-earnings">
+                  <div>
+                    <div class="tj-earn-label">Đã dạy 18 buổi</div>
+                    <div class="tj-earn-label">Học viên: 4 người</div>
+                  </div>
+                  <div style="text-align:right;">
+                    <div class="tj-earn-value">5.280.000 ₫</div>
+                    <div class="tj-step-tag blue" style="margin-top:4px;">Đã rút về TK</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-tutor -->
+
+  <!-- ══ FAQ ══ -->
+  <div class="faq-section">
+    <div class="faq-inner">
+      <div class="faq-header">
+        <div class="section-eyebrow">Câu hỏi thường gặp</div>
+        <div class="section-title">Mọi điều bạn muốn biết</div>
+        <div class="section-sub">Không tìm thấy câu trả lời? Nhắn cho chúng tôi qua chat hoặc email support@giasu.edu.vn.</div>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">
+            <div class="faq-q-text">Buổi học thử có thực sự miễn phí không? Có điều kiện gì không?</div>
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Hoàn toàn miễn phí, không điều kiện. Mỗi học viên được 1 buổi học thử 60 phút với mỗi gia sư. Nếu bạn chưa hài lòng sau buổi thử đầu tiên, bạn có thể chọn gia sư khác và học thử lại — vẫn miễn phí. Chúng tôi không yêu cầu bạn nhập thông tin thẻ để đặt buổi thử.</div>
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">
+            <div class="faq-q-text">Nếu gia sư hủy buổi học hoặc không xuất hiện, tôi có được hoàn tiền không?</div>
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Có. Toàn bộ tiền được giữ ký quỹ và chỉ chuyển cho gia sư sau khi buổi học diễn ra thành công. Nếu gia sư hủy hoặc không xuất hiện, tiền được hoàn lại 100% trong vòng 1–3 ngày làm việc, tùy phương thức thanh toán bạn đã dùng.</div>
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">
+            <div class="faq-q-text">Gia sư có thể tự đặt học phí không? Nền tảng lấy hoa hồng bao nhiêu?</div>
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Gia sư hoàn toàn tự chủ về học phí — bạn đặt mức giá bạn muốn và có thể thay đổi bất cứ lúc nào. Nền tảng thu 12% hoa hồng trên mỗi buổi dạy (không tính buổi học thử). Ví dụ: nếu học phí là 200.000đ/buổi, bạn nhận về 176.000đ.</div>
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">
+            <div class="faq-q-text">Mất bao lâu để hồ sơ gia sư được duyệt?</div>
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Thường là 24–48 giờ làm việc (không tính thứ 7 và CN). Đội ngũ kiểm duyệt sẽ xác minh CCCD, bằng cấp và thông tin bạn cung cấp. Kết quả được gửi qua email và SMS. Nếu cần bổ sung tài liệu, chúng tôi sẽ liên hệ trực tiếp.</div>
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">
+            <div class="faq-q-text">Học online trên giasu.edu.vn diễn ra như thế nào?</div>
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Sau khi đặt lịch thành công, bạn nhận được link phòng họp online tích hợp trực tiếp trên nền tảng — không cần cài thêm app hay phần mềm nào. Phòng học hỗ trợ video, âm thanh, bảng vẽ ảo, chia sẻ màn hình và chat văn bản. Buổi học được ghi lại để bạn xem lại sau (có thể tắt nếu không muốn).</div>
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">
+            <div class="faq-q-text">Tôi có thể đổi gia sư sau khi đã đặt lịch không?</div>
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Có, bạn có thể hủy hoặc đổi lịch trước buổi học ít nhất 4 giờ để được hoàn tiền đầy đủ. Hủy trong vòng 1–4 giờ trước buổi học chỉ được hoàn 50%. Hủy dưới 1 giờ hoặc không xuất hiện không được hoàn tiền (ngoại trừ trường hợp khẩn cấp có bằng chứng).</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta-section">
+    <div class="cta-inner">
+      <div class="cta-title">Sẵn sàng <span>bắt đầu</span> chưa?</div>
+      <div class="cta-sub">Hơn 12.000 gia sư đang chờ kết nối với bạn. Buổi học thử đầu tiên hoàn toàn miễn phí, không cần thẻ tín dụng.</div>
+      <div class="cta-btns">
+        <button class="btn-cta-primary">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Tìm gia sư ngay
+        </button>
+        <button class="btn-cta-sec">Đăng ký làm gia sư →</button>
+      </div>
+      <div class="cta-note">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        Thanh toán an toàn · Gia sư đã xác minh · Hoàn tiền nếu không hài lòng
+      </div>
+    </div>
+  </div>
+
+</div><!-- /panels -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="36" height="22" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+      </svg>
+      <span class="footer-logo-text">giasu<em>.edu.vn</em></span>
+    </div>
+    <div class="footer-copy">© 2026 giasu.edu.vn. All rights reserved.</div>
+    <div class="footer-links">
+      <a class="footer-link" href="#">Hướng dẫn</a>
+      <a class="footer-link" href="#">Điều khoản</a>
+      <a class="footer-link" href="#">Bảo mật</a>
+      <a class="footer-link" href="#">Liên hệ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function switchTab(tab) {
+  // Update tab buttons
+  document.getElementById('tab-student').classList.toggle('active', tab === 'student');
+  document.getElementById('tab-tutor').classList.toggle('active', tab === 'tutor');
+  // Update panels
+  document.getElementById('panel-student').classList.toggle('active', tab === 'student');
+  document.getElementById('panel-tutor').classList.toggle('active', tab === 'tutor');
+  // Scroll to content
+  document.querySelector('.panels').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function toggleFaq(item) {
+  const isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  // Open clicked (if was closed)
+  if (!isOpen) item.classList.add('open');
+}
+
+// Auto-open first FAQ
+document.querySelector('.faq-item').classList.add('open');
+</script>
+
+</body>
+</html>

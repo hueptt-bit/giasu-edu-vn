@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng tin tìm gia sư — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════ TOKENS ═══════════════ */
+:root {
+  --p950:#061529;--p900:#0D2D6B;--p800:#1239A0;--p700:#1565C0;
+  --p600:#1976D2;--p500:#1E88E5;--p400:#42A5F5;--p300:#90CAF9;
+  --p200:#BBDEFB;--p100:#E3F2FD;--p50:#F0F8FF;
+  --s700:#C46200;--s600:#E65100;--s500:#F57C00;--s400:#FFA726;
+  --s300:#FFCC80;--s100:#FFF3E0;
+  --n900:#0F172A;--n800:#1E293B;--n700:#334155;--n600:#475569;
+  --n500:#64748B;--n400:#94A3B8;--n300:#CBD5E1;--n200:#E2E8F0;
+  --n100:#F1F5F9;--n50:#F8FAFC;
+  --green:#16A34A;--green-bg:#DCFCE7;--green-light:#F0FDF4;
+  --red:#DC2626;--red-bg:#FEE2E2;
+  --purple:#7C3AED;--purple-bg:#EDE9FE;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-2xl:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:var(--n800);background:var(--n50);-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
+
+/* ═══════════════ DEMO BAR ═══════════════ */
+.demo-bar{background:#fff;border-bottom:1px solid var(--n200);padding:10px 24px;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:200;flex-wrap:wrap;}
+.demo-bar-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--n400);margin-right:2px;}
+.demo-btns{display:flex;gap:3px;background:var(--n100);border-radius:10px;padding:3px;}
+.demo-btn{height:28px;padding:0 12px;border-radius:8px;font-size:12px;font-weight:600;color:var(--n500);background:transparent;border:none;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.demo-btn.active{background:#fff;color:var(--p700);box-shadow:0 1px 4px rgba(0,0,0,.1);}
+.demo-divider{width:1px;height:20px;background:var(--n200);flex-shrink:0;margin:0 2px;}
+/* Persona switcher */
+.persona-btns{display:flex;gap:3px;background:var(--n100);border-radius:10px;padding:3px;}
+.persona-btn{height:28px;padding:0 12px;border-radius:8px;font-size:12px;font-weight:600;color:var(--n500);background:transparent;border:none;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.persona-btn.active-ph{background:var(--s500);color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+.persona-btn.active-gs{background:var(--p700);color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+/* Persona banners */
+.persona-banner{border-radius:var(--r-xl);border:1.5px solid;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.persona-banner-gs{background:var(--p50);border-color:var(--p200);}
+.persona-banner-ph{background:var(--s100);border-color:var(--s300);}
+.pb-icon{width:42px;height:42px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.persona-banner-gs .pb-icon{background:var(--p700);}
+.persona-banner-ph .pb-icon{background:var(--s500);}
+.pb-icon svg{width:20px;height:20px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.pb-body{flex:1;min-width:0;}
+.pb-title{font-size:14px;font-weight:800;margin-bottom:2px;}
+.persona-banner-gs .pb-title{color:var(--p800);}
+.persona-banner-ph .pb-title{color:var(--s700);}
+.pb-sub{font-size:12.5px;line-height:1.5;}
+.persona-banner-gs .pb-sub{color:var(--p700);opacity:.8;}
+.persona-banner-ph .pb-sub{color:var(--s700);opacity:.8;}
+.pb-cta{height:36px;padding:0 18px;border-radius:var(--r-md);font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+.persona-banner-gs .pb-cta{background:var(--p700);color:#fff;}
+.persona-banner-gs .pb-cta:hover{background:var(--p800);}
+.persona-banner-ph .pb-cta{background:var(--s500);color:#fff;}
+.persona-banner-ph .pb-cta:hover{background:var(--s600);}
+
+/* ═══════════════ NAVBAR ═══════════════ */
+.navbar{background:#fff;border-bottom:1px solid var(--n200);position:sticky;top:49px;z-index:100;}
+.container{max-width:1200px;margin:0 auto;padding:0 32px;}
+.nav-inner{display:flex;align-items:center;height:66px;}
+.nav-logo{display:flex;align-items:center;gap:10px;margin-right:44px;flex-shrink:0;}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px;}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.5;}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-link{padding:7px 14px;border-radius:var(--r-sm);font-size:14px;font-weight:500;color:var(--n600);transition:all .15s;}
+.nav-link:hover{background:var(--n100);color:var(--n800);}
+.nav-link.active{color:var(--p700);font-weight:600;background:var(--p50);}
+.nav-actions{display:flex;align-items:center;gap:10px;}
+.btn-ghost{height:38px;padding:0 18px;border-radius:var(--r-md);font-size:14px;font-weight:600;color:var(--p700);background:transparent;border:1.5px solid var(--n200);transition:all .15s;}
+.btn-ghost:hover{border-color:var(--p300);background:var(--p50);}
+.btn-primary-nav{height:38px;padding:0 20px;border-radius:var(--r-md);font-size:14px;font-weight:700;color:#fff;background:var(--p700);transition:all .15s;}
+.btn-primary-nav:hover{background:var(--p800);}
+
+/* ═══════════════ HERO ═══════════════ */
+.hero{background:linear-gradient(155deg,var(--p950) 0%,var(--p900) 40%,var(--p800) 70%,var(--p700) 100%);padding:52px 0 44px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;}
+.hero-inner{position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--s400);flex-shrink:0;}
+.hero-title{font-size:38px;font-weight:800;color:#fff;letter-spacing:-.8px;line-height:1.18;margin-bottom:12px;}
+.hero-title em{font-style:normal;color:var(--s400);}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.65);max-width:520px;line-height:1.6;margin-bottom:28px;}
+.hero-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.btn-amber{height:46px;padding:0 28px;border-radius:var(--r-lg);font-size:15px;font-weight:700;color:#fff;background:var(--s500);display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+.btn-amber:hover{background:var(--s600);transform:translateY(-1px);}
+.btn-ghost-white{height:46px;padding:0 24px;border-radius:var(--r-lg);font-size:15px;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);display:inline-flex;align-items:center;gap:8px;transition:all .15s;}
+.btn-ghost-white:hover{background:rgba(255,255,255,.15);}
+.hero-stats{display:flex;gap:32px;margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,.1);}
+.hero-stat-num{font-size:24px;font-weight:800;color:#fff;}
+.hero-stat-label{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;}
+
+/* ═══════════════ MAIN LAYOUT ═══════════════ */
+.main{max-width:1200px;margin:0 auto;padding:36px 32px;}
+.layout{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start;}
+
+/* ═══════════════ SIDEBAR FILTER ═══════════════ */
+.sidebar{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);padding:20px;position:sticky;top:calc(49px + 66px + 20px);}
+.sidebar-title{font-size:13px;font-weight:700;color:var(--n900);margin-bottom:16px;display:flex;align-items:center;gap:7px;}
+.sidebar-title svg{width:15px;height:15px;stroke:var(--p700);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.filter-section{margin-bottom:18px;}
+.filter-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--n400);margin-bottom:8px;}
+.filter-select{width:100%;height:38px;border:1.5px solid var(--n200);border-radius:var(--r-md);padding:0 12px;font-size:13px;font-family:'Inter',sans-serif;color:var(--n700);background:#fff;appearance:none;cursor:pointer;transition:border-color .15s;}
+.filter-select:focus{outline:none;border-color:var(--p400);}
+.filter-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.filter-chip{padding:5px 11px;border-radius:20px;font-size:12px;font-weight:500;border:1.5px solid var(--n200);color:var(--n600);background:#fff;cursor:pointer;transition:all .15s;}
+.filter-chip:hover{border-color:var(--p300);color:var(--p700);}
+.filter-chip.active{border-color:var(--p700);color:var(--p700);background:var(--p50);font-weight:600;}
+.filter-divider{height:1px;background:var(--n100);margin:16px 0;}
+.btn-filter-reset{width:100%;height:36px;border-radius:var(--r-md);font-size:13px;font-weight:600;color:var(--n500);background:var(--n100);border:none;cursor:pointer;transition:all .15s;margin-top:4px;}
+.btn-filter-reset:hover{background:var(--n200);}
+.btn-post-sidebar{width:100%;height:42px;border-radius:var(--r-lg);font-size:14px;font-weight:700;color:#fff;background:var(--s500);border:none;cursor:pointer;transition:all .15s;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:7px;}
+.btn-post-sidebar:hover{background:var(--s600);}
+.btn-post-sidebar svg{width:15px;height:15px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ═══════════════ MAIN CONTENT ═══════════════ */
+.content-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap;}
+.content-title{font-size:18px;font-weight:800;color:var(--n900);}
+.content-count{font-size:13px;color:var(--n500);font-weight:500;}
+.sort-row{display:flex;align-items:center;gap:8px;}
+.sort-label{font-size:12px;color:var(--n500);}
+.sort-select{height:34px;padding:0 10px;border:1.5px solid var(--n200);border-radius:var(--r-sm);font-size:12.5px;font-family:'Inter',sans-serif;color:var(--n700);background:#fff;cursor:pointer;}
+
+/* ═══════════════ TIN CARD ═══════════════ */
+.tin-list{display:flex;flex-direction:column;gap:14px;}
+.tin-card{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);padding:20px 22px;transition:all .2s;cursor:pointer;}
+.tin-card:hover{border-color:var(--p300);box-shadow:0 4px 16px rgba(13,45,107,.08);}
+.tin-card.featured{border-color:var(--s300);background:linear-gradient(135deg,#fff 0%,var(--s100) 100%);}
+.tin-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px;}
+.tin-avatar{width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#fff;}
+.tin-meta{flex:1;min-width:0;}
+.tin-title{font-size:15.5px;font-weight:700;color:var(--n900);margin-bottom:4px;line-height:1.3;}
+.tin-poster{font-size:12.5px;color:var(--n500);display:flex;align-items:center;gap:10px;}
+.tin-poster span{display:flex;align-items:center;gap:4px;}
+.tin-poster svg{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.tin-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.tin-badge.new{background:var(--green-bg);color:var(--green);}
+.tin-badge.hot{background:var(--red-bg);color:var(--red);}
+.tin-badge.featured-badge{background:var(--s100);color:var(--s600);}
+.tin-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.tin-tag{padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;background:var(--p50);color:var(--p700);border:1px solid var(--p100);}
+.tin-tag.loc{background:var(--n100);color:var(--n600);border-color:var(--n200);}
+.tin-tag.lich{background:#F0FDF4;color:#15803D;border-color:#BBF7D0;}
+.tin-tag.budget{background:var(--s100);color:var(--s600);border-color:var(--s300);}
+.tin-desc{font-size:13.5px;color:var(--n600);line-height:1.6;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.tin-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.tin-stats{display:flex;align-items:center;gap:16px;}
+.tin-stat{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--n500);}
+.tin-stat svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.tin-stat strong{color:var(--n700);font-weight:700;}
+.tin-time{font-size:12px;color:var(--n400);}
+.btn-apply{height:36px;padding:0 18px;border-radius:var(--r-md);font-size:13px;font-weight:700;color:#fff;background:var(--p700);border:none;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.btn-apply:hover{background:var(--p800);}
+.btn-apply svg{width:13px;height:13px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.btn-applied{height:36px;padding:0 18px;border-radius:var(--r-md);font-size:13px;font-weight:700;color:var(--green);background:var(--green-bg);border:none;cursor:default;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+
+/* ═══════════════ FORM ĐĂNG TIN (PANEL) ═══════════════ */
+.post-panel{background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--p200);padding:28px;margin-bottom:24px;display:none;}
+.post-panel.active{display:block;}
+.post-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
+.post-panel-title{font-size:17px;font-weight:800;color:var(--n900);display:flex;align-items:center;gap:8px;}
+.post-panel-title svg{width:18px;height:18px;stroke:var(--s500);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.btn-close-panel{width:32px;height:32px;border-radius:50%;background:var(--n100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--n500);transition:all .15s;}
+.btn-close-panel:hover{background:var(--n200);}
+.btn-close-panel svg{width:16px;height:16px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-grid.full{grid-template-columns:1fr;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-label{font-size:12.5px;font-weight:700;color:var(--n700);}
+.form-label span{color:var(--n400);font-weight:400;}
+.form-input,.form-select,.form-textarea{border:1.5px solid var(--n200);border-radius:var(--r-md);font-family:'Inter',sans-serif;font-size:13.5px;color:var(--n800);transition:border-color .15s;background:#fff;}
+.form-input{height:42px;padding:0 14px;}
+.form-select{height:42px;padding:0 14px;appearance:none;cursor:pointer;}
+.form-textarea{padding:12px 14px;resize:vertical;min-height:90px;line-height:1.5;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--p400);box-shadow:0 0 0 3px rgba(66,165,245,.12);}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--n400);}
+.form-row{display:flex;gap:12px;}
+.form-row .form-group{flex:1;}
+.chip-group{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;}
+.chip-opt{padding:6px 12px;border-radius:20px;font-size:12.5px;font-weight:500;border:1.5px solid var(--n200);color:var(--n600);background:#fff;cursor:pointer;transition:all .15s;user-select:none;}
+.chip-opt:hover{border-color:var(--p300);color:var(--p700);}
+.chip-opt.active{border-color:var(--p700);color:var(--p700);background:var(--p50);font-weight:600;}
+.post-divider{height:1px;background:var(--n100);margin:18px 0;}
+.btn-submit-post{height:44px;padding:0 28px;border-radius:var(--r-lg);font-size:14px;font-weight:700;color:#fff;background:var(--s500);border:none;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:8px;}
+.btn-submit-post:hover{background:var(--s600);}
+.btn-submit-post svg{width:15px;height:15px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.btn-cancel-post{height:44px;padding:0 20px;border-radius:var(--r-lg);font-size:14px;font-weight:600;color:var(--n500);background:var(--n100);border:none;cursor:pointer;transition:all .15s;}
+.btn-cancel-post:hover{background:var(--n200);}
+
+/* ═══════════════ APPLY MODAL ═══════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.active{display:flex;}
+.modal{background:#fff;border-radius:var(--r-2xl);width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.2);}
+.modal-header{padding:24px 24px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.modal-title{font-size:18px;font-weight:800;color:var(--n900);}
+.modal-sub{font-size:13px;color:var(--n500);margin-top:4px;}
+.btn-close-modal{width:32px;height:32px;border-radius:50%;background:var(--n100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.btn-close-modal svg{width:16px;height:16px;stroke:var(--n500);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.modal-tin-ref{margin:16px 24px 0;background:var(--p50);border:1px solid var(--p100);border-radius:var(--r-lg);padding:12px 14px;display:flex;align-items:center;gap:10px;}
+.modal-tin-ref-icon{width:36px;height:36px;border-radius:10px;background:var(--p700);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.modal-tin-ref-icon svg{width:16px;height:16px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.modal-tin-ref-name{font-size:13px;font-weight:700;color:var(--n900);}
+.modal-tin-ref-meta{font-size:12px;color:var(--n500);margin-top:1px;}
+.modal-body{padding:20px 24px 24px;}
+.modal-field{margin-bottom:16px;}
+.modal-field-label{font-size:12.5px;font-weight:700;color:var(--n700);margin-bottom:6px;}
+.modal-textarea{width:100%;border:1.5px solid var(--n200);border-radius:var(--r-md);padding:12px 14px;font-family:'Inter',sans-serif;font-size:13.5px;color:var(--n800);resize:vertical;min-height:110px;transition:border-color .15s;line-height:1.5;}
+.modal-textarea:focus{outline:none;border-color:var(--p400);box-shadow:0 0 0 3px rgba(66,165,245,.12);}
+.modal-textarea::placeholder{color:var(--n400);}
+.price-row{display:flex;align-items:center;gap:8px;}
+.price-input{flex:1;height:42px;border:1.5px solid var(--n200);border-radius:var(--r-md);padding:0 14px;font-family:'Inter',sans-serif;font-size:13.5px;color:var(--n800);transition:border-color .15s;}
+.price-input:focus{outline:none;border-color:var(--p400);box-shadow:0 0 0 3px rgba(66,165,245,.12);}
+.price-unit{font-size:13px;font-weight:600;color:var(--n500);white-space:nowrap;}
+.modal-notice{background:var(--p50);border:1px solid var(--p100);border-radius:var(--r-md);padding:10px 14px;font-size:12.5px;color:var(--p700);line-height:1.5;margin-bottom:20px;}
+.modal-actions{display:flex;gap:10px;}
+.btn-modal-submit{flex:1;height:44px;border-radius:var(--r-lg);font-size:14px;font-weight:700;color:#fff;background:var(--p700);border:none;cursor:pointer;transition:all .15s;}
+.btn-modal-submit:hover{background:var(--p800);}
+.btn-modal-cancel{height:44px;padding:0 20px;border-radius:var(--r-lg);font-size:14px;font-weight:600;color:var(--n500);background:var(--n100);border:none;cursor:pointer;transition:all .15s;}
+.btn-modal-cancel:hover{background:var(--n200);}
+
+/* ═══════════════ CHI TIẾT TIN (detail panel) ═══════════════ */
+.detail-panel{display:none;}
+.detail-panel.active{display:block;}
+.detail-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--p700);cursor:pointer;margin-bottom:16px;padding:6px 0;}
+.detail-back svg{width:15px;height:15px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.detail-card{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);padding:24px;}
+.detail-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;}
+.detail-avatar{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;flex-shrink:0;}
+.detail-title{font-size:19px;font-weight:800;color:var(--n900);margin-bottom:5px;}
+.detail-poster{font-size:13px;color:var(--n500);}
+.detail-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
+.detail-desc-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--n400);margin-bottom:6px;}
+.detail-desc{font-size:14px;color:var(--n700);line-height:1.7;margin-bottom:20px;}
+.detail-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:var(--n50);border-radius:var(--r-lg);padding:16px;margin-bottom:20px;}
+.detail-info-item{display:flex;flex-direction:column;gap:3px;}
+.detail-info-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--n400);}
+.detail-info-value{font-size:13.5px;font-weight:600;color:var(--n800);}
+.detail-actions{display:flex;gap:10px;}
+.btn-apply-lg{height:44px;padding:0 28px;border-radius:var(--r-lg);font-size:14px;font-weight:700;color:#fff;background:var(--p700);border:none;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:8px;}
+.btn-apply-lg:hover{background:var(--p800);}
+.btn-apply-lg svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.btn-save{height:44px;padding:0 18px;border-radius:var(--r-lg);font-size:14px;font-weight:600;color:var(--n600);background:var(--n100);border:none;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:7px;}
+.btn-save svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+/* Applicant list (for poster view) */
+.applicant-section{margin-top:24px;border-top:1px solid var(--n100);padding-top:20px;}
+.applicant-section-title{font-size:14px;font-weight:700;color:var(--n900);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+.applicant-count{font-size:12px;font-weight:600;color:var(--p700);background:var(--p50);padding:2px 10px;border-radius:20px;}
+.applicant-card{background:var(--n50);border:1px solid var(--n200);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;}
+.applicant-av{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+.applicant-av img{width:100%;height:100%;object-fit:cover;}
+.applicant-info{flex:1;min-width:0;}
+.applicant-name{font-size:13.5px;font-weight:700;color:var(--n900);}
+.applicant-meta{font-size:12px;color:var(--n500);margin-top:2px;}
+.applicant-msg{font-size:13px;color:var(--n700);margin-top:6px;line-height:1.5;background:#fff;border-radius:8px;padding:8px 10px;border:1px solid var(--n200);}
+.applicant-price{font-size:13px;font-weight:700;color:var(--s600);margin-top:6px;}
+.applicant-actions{display:flex;gap:7px;margin-top:8px;}
+.btn-accept{height:30px;padding:0 14px;border-radius:8px;font-size:12px;font-weight:700;color:#fff;background:var(--green);border:none;cursor:pointer;}
+.btn-reject{height:30px;padding:0 14px;border-radius:8px;font-size:12px;font-weight:700;color:var(--n500);background:var(--n200);border:none;cursor:pointer;}
+.btn-chat-small{height:30px;padding:0 14px;border-radius:8px;font-size:12px;font-weight:600;color:var(--p700);background:var(--p50);border:1px solid var(--p100);cursor:pointer;}
+
+/* ═══════════════ APPLICANT NOTIFY ═══════════════ */
+.uv-notify-wrap{margin-top:24px;border-top:1px solid var(--n100);padding-top:20px;display:flex;gap:16px;align-items:flex-start;}
+.uv-notify-icon{width:44px;height:44px;border-radius:var(--r-md);background:var(--p900);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.uv-notify-icon svg{width:20px;height:20px;stroke:#fff;}
+.uv-notify-body{flex:1;}
+.uv-notify-title{font-size:14px;font-weight:700;color:var(--n900);margin-bottom:6px;}
+.uv-notify-sub{font-size:12.5px;color:var(--n600);line-height:1.6;margin-bottom:14px;}
+.uv-notify-avatars{display:flex;align-items:center;gap:4px;margin-bottom:14px;}
+.uv-notify-avatars img{width:32px;height:32px;border-radius:50%;border:2px solid #fff;object-fit:cover;margin-left:-6px;}
+.uv-notify-avatars img:first-child{margin-left:0;}
+.uv-notify-more{width:32px;height:32px;border-radius:50%;background:var(--n200);color:var(--n600);font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:-6px;border:2px solid #fff;}
+.uv-notify-btn{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 18px;border-radius:var(--r-lg);background:var(--p900);color:#fff;font-size:13px;font-weight:700;text-decoration:none;transition:background .15s;}
+.uv-notify-btn:hover{background:var(--p800);}
+.uv-notify-btn svg{width:14px;height:14px;stroke:#fff;}
+
+/* ═══════════════ GUEST BANNER ═══════════════ */
+.guest-banner{background:#fff;border:1.5px solid var(--n200);border-radius:var(--r-xl);padding:20px 22px;margin-bottom:20px;display:none;}
+.gb-heading{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.gb-heading-icon{width:36px;height:36px;border-radius:var(--r-md);background:var(--n100);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.gb-heading-icon svg{width:17px;height:17px;stroke:var(--n500);stroke-width:2;fill:none;}
+.gb-heading-text{font-size:14px;font-weight:700;color:var(--n700);}
+.gb-heading-sub{font-size:12.5px;color:var(--n500);margin-top:1px;}
+.gb-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.gb-card{border:1.5px solid var(--n200);border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s;}
+.gb-card-gs{border-color:var(--p200);background:var(--p50);}
+.gb-card-ph{border-color:var(--s300);background:var(--s100);}
+.gb-card-icon{width:36px;height:36px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.gb-card-gs .gb-card-icon{background:var(--p700);}
+.gb-card-ph .gb-card-icon{background:var(--s500);}
+.gb-card-icon svg{width:17px;height:17px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.gb-card-title{font-size:13.5px;font-weight:800;color:var(--n900);}
+.gb-card-gs .gb-card-title{color:var(--p800);}
+.gb-card-ph .gb-card-title{color:var(--s700);}
+.gb-card-desc{font-size:12px;color:var(--n600);line-height:1.5;}
+.gb-card-perks{display:flex;flex-direction:column;gap:5px;}
+.gb-card-perk{font-size:11.5px;font-weight:600;color:var(--n600);display:flex;align-items:center;gap:5px;}
+.gb-card-perk-ok{color:var(--green);}
+.gb-card-actions{display:flex;gap:7px;margin-top:2px;}
+.gb-card-btn{flex:1;height:34px;border-radius:var(--r-md);font-size:12.5px;font-weight:700;border:none;cursor:pointer;transition:background .15s;}
+.gb-card-gs .gb-card-btn-primary{background:var(--p700);color:#fff;}
+.gb-card-gs .gb-card-btn-primary:hover{background:var(--p800);}
+.gb-card-ph .gb-card-btn-primary{background:var(--s500);color:#fff;}
+.gb-card-ph .gb-card-btn-primary:hover{background:#E65100;}
+.gb-card-btn-ghost{background:#fff;color:var(--n600);border:1.5px solid var(--n200);}
+.gb-card-btn-ghost:hover{border-color:var(--n400);}
+
+/* ═══════════════ LOGIN GATE MODAL ═══════════════ */
+.login-gate{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;padding:20px;}
+.login-gate.lg-open{display:flex;}
+.lg-box{background:#fff;border-radius:var(--r-2xl);padding:32px;max-width:400px;width:100%;position:relative;}
+.lg-close-btn{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:var(--n100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--n500);}
+.lg-close-btn svg{width:14px;height:14px;stroke:currentColor;stroke-width:2.5;fill:none;}
+.lg-icon{width:52px;height:52px;border-radius:var(--r-lg);background:var(--p50);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.lg-icon svg{width:22px;height:22px;stroke:var(--p700);stroke-width:2;fill:none;}
+.lg-title{font-size:18px;font-weight:800;color:var(--n900);margin-bottom:6px;}
+.lg-sub{font-size:13px;color:var(--n600);line-height:1.55;margin-bottom:18px;}
+.lg-perks{display:flex;flex-direction:column;gap:9px;margin-bottom:24px;}
+.lg-perk{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--n700);}
+.lg-check{width:20px;height:20px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:var(--green);font-weight:700;}
+.lg-actions{display:flex;gap:10px;}
+.lg-btn-login{flex:1;height:44px;border-radius:var(--r-lg);background:var(--p900);color:#fff;font-size:13.5px;font-weight:700;border:none;cursor:pointer;}
+.lg-btn-reg{flex:1;height:44px;border-radius:var(--r-lg);background:var(--s500);color:#fff;font-size:13.5px;font-weight:700;border:none;cursor:pointer;}
+
+/* Auth toggle */
+.persona-btn.active-in{background:var(--green);color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+.persona-btn.active-out{background:var(--n600);color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+
+/* ═══════════════ EMPTY / LOAD MORE ═══════════════ */
+.load-more{text-align:center;margin-top:20px;}
+.btn-load{height:42px;padding:0 28px;border-radius:var(--r-lg);font-size:13.5px;font-weight:600;color:var(--p700);background:#fff;border:1.5px solid var(--n200);cursor:pointer;transition:all .15s;}
+.btn-load:hover{border-color:var(--p300);background:var(--p50);}
+</style>
+</head>
+<body>
+
+<!-- DEMO BAR -->
+<div class="demo-bar">
+  <span class="demo-bar-label">Góc nhìn:</span>
+  <div class="persona-btns">
+    <button class="persona-btn" id="pbtn-ph" onclick="setPersona('ph')">👨‍👩‍👧 Phụ huynh / HV</button>
+    <button class="persona-btn active-gs" id="pbtn-gs" onclick="setPersona('gs')">👨‍🏫 Gia sư</button>
+  </div>
+  <div class="demo-divider"></div>
+  <span class="demo-bar-label">Trạng thái:</span>
+  <div class="persona-btns">
+    <button class="persona-btn active-in" id="abtn-in" onclick="setAuth(true)">🔓 Đã đăng nhập</button>
+    <button class="persona-btn" id="abtn-out" onclick="setAuth(false)">🔒 Chưa đăng nhập</button>
+  </div>
+  <div class="demo-divider"></div>
+  <span class="demo-bar-label">Màn hình:</span>
+  <div class="demo-btns">
+    <button class="demo-btn active" id="dbtn-list"    onclick="demoSwitch('list')">Danh sách</button>
+    <button class="demo-btn"        id="dbtn-post"    onclick="demoSwitch('post')" style="opacity:.35;" title="Chỉ dành cho Phụ huynh/HV">Đăng tin mới</button>
+    <button class="demo-btn"        id="dbtn-detail"  onclick="demoSwitch('detail')">Chi tiết tin</button>
+    <button class="demo-btn"        id="dbtn-uvien"   onclick="demoSwitch('uvien')" style="opacity:.35;" title="Chỉ dành cho Phụ huynh/HV">Xem ứng viên</button>
+    <button class="demo-btn"        id="dbtn-apply"   onclick="demoSwitch('apply')">Modal ứng tuyển</button>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+          <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+          <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+          <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+        </svg>
+        <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+      </a>
+      <div class="nav-links">
+        <a href="ui-trang-chu.html" class="nav-link">Trang chủ</a>
+        <a href="ui-tim-gia-su.html" class="nav-link">Tìm gia sư</a>
+        <a href="ui-dang-tin.html" class="nav-link active">Đăng tin</a>
+        <a href="ui-dang-ky-day.html" class="nav-link">Đăng ký dạy</a>
+        <a href="ui-blog.html" class="nav-link">Blog</a>
+        <a href="ui-gioi-thieu.html" class="nav-link">Về chúng tôi</a>
+      </div>
+      <div class="nav-actions">
+        <a href="ui-auth.html" class="btn-ghost">Đăng nhập</a>
+        <a href="ui-auth.html" class="btn-primary-nav">Đăng ký miễn phí</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-badge"><span class="hero-badge-dot"></span>Mới — Tính năng đăng tin tuyển gia sư</div>
+      <h1 class="hero-title">Đăng tin tìm gia sư —<br>gia sư <em>chủ động apply</em></h1>
+      <p class="hero-sub">Mô tả nhu cầu của bạn, gia sư phù hợp sẽ gửi hồ sơ ứng tuyển. Bạn chọn người phù hợp nhất.</p>
+      <div class="hero-actions">
+        <button class="btn-amber" onclick="showPostForm()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Đăng tin ngay
+        </button>
+        <button class="btn-ghost-white">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Xem các tin đăng
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">1.240+</div>
+          <div class="hero-stat-label">Tin đang tuyển</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">8.500+</div>
+          <div class="hero-stat-label">Gia sư sẵn sàng apply</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">≤ 24h</div>
+          <div class="hero-stat-label">Thời gian nhận ứng viên</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <button class="btn-post-sidebar" id="sidebar-post-btn" onclick="showPostForm()" style="display:none;">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Đăng tin tìm gia sư
+      </button>
+      <div class="sidebar-title">
+        <svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Bộ lọc
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-label">Môn học</div>
+        <select class="filter-select" id="sidebarMon" onchange="handleMonKhac('sidebarMon','sidebarMonKhac')">
+          <option value="">Tất cả môn</option>
+          <optgroup label="📚 Học thuật">
+            <option>Toán</option>
+            <option>Tiếng Anh</option>
+            <option>Ngữ văn</option>
+            <option>Vật lý</option>
+            <option>Hoá học</option>
+            <option>Sinh học</option>
+            <option>Lịch sử</option>
+            <option>Địa lý</option>
+            <option>Tin học</option>
+          </optgroup>
+          <optgroup label="💡 Kỹ năng hot">
+            <option>Lập trình / Code</option>
+            <option>Thiết kế đồ hoạ</option>
+            <option>UI/UX Design</option>
+            <option>Marketing</option>
+            <option>Excel / Văn phòng</option>
+            <option>Kế toán</option>
+            <option>Kỹ năng mềm</option>
+          </optgroup>
+          <optgroup label="🌐 Ngoại ngữ">
+            <option>IELTS / TOEIC</option>
+            <option>Tiếng Nhật</option>
+            <option>Tiếng Hàn</option>
+            <option>Tiếng Trung</option>
+            <option>Tiếng Pháp</option>
+          </optgroup>
+          <optgroup label="🎨 Nghệ thuật">
+            <option>Âm nhạc / Nhạc cụ</option>
+            <option>Hội hoạ / Mỹ thuật</option>
+          </optgroup>
+          <option value="khac">✏️ Khác...</option>
+        </select>
+        <input type="text" id="sidebarMonKhac" class="filter-select" placeholder="Nhập môn học..." style="display:none;margin-top:8px;cursor:text;">
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-label">Cấp học</div>
+        <div class="filter-chips">
+          <span class="filter-chip active" onclick="toggleChip(this)">Tất cả</span>
+          <span class="filter-chip" onclick="toggleChip(this)">Tiểu học</span>
+          <span class="filter-chip" onclick="toggleChip(this)">THCS</span>
+          <span class="filter-chip" onclick="toggleChip(this)">THPT</span>
+          <span class="filter-chip" onclick="toggleChip(this)">Đại học</span>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-label">Hình thức</div>
+        <div class="filter-chips">
+          <span class="filter-chip active" onclick="toggleChip(this)">Tất cả</span>
+          <span class="filter-chip" onclick="toggleChip(this)">Online</span>
+          <span class="filter-chip" onclick="toggleChip(this)">Tại nhà</span>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-label">Khu vực</div>
+        <select class="filter-select">
+          <option>Tất cả tỉnh/thành</option>
+          <option>Hà Nội</option>
+          <option>TP. Hồ Chí Minh</option>
+          <option>Đà Nẵng</option>
+          <option>Hải Phòng</option>
+          <option>Cần Thơ</option>
+        </select>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-label">Ngân sách / buổi</div>
+        <div class="filter-chips">
+          <span class="filter-chip active" onclick="toggleChip(this)">Tất cả</span>
+          <span class="filter-chip" onclick="toggleChip(this)">&lt; 100k</span>
+          <span class="filter-chip" onclick="toggleChip(this)">100–200k</span>
+          <span class="filter-chip" onclick="toggleChip(this)">&gt; 200k</span>
+        </div>
+      </div>
+
+      <div class="filter-divider"></div>
+      <button class="btn-filter-reset">Xoá bộ lọc</button>
+    </aside>
+
+    <!-- CONTENT -->
+    <div>
+
+      <!-- FORM ĐĂNG TIN (ẩn mặc định) -->
+      <div class="post-panel" id="postPanel">
+        <div class="post-panel-header">
+          <div class="post-panel-title">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Đăng tin tìm gia sư
+          </div>
+          <button class="btn-close-panel" onclick="hidePostForm()">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group" style="grid-column:1/-1;">
+            <label class="form-label">Tiêu đề tin <span>(ngắn gọn, rõ ý)</span></label>
+            <input type="text" class="form-input" placeholder="VD: Cần gia sư Toán lớp 9 khu Cầu Giấy, Hà Nội">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Môn học</label>
+            <select class="form-select" id="postFormMon" onchange="handleMonKhac('postFormMon','postFormMonKhac')">
+              <option value="">Chọn môn...</option>
+              <optgroup label="📚 Học thuật">
+                <option>Toán</option>
+                <option>Tiếng Anh</option>
+                <option>Ngữ văn</option>
+                <option>Vật lý</option>
+                <option>Hoá học</option>
+                <option>Sinh học</option>
+                <option>Lịch sử</option>
+                <option>Địa lý</option>
+                <option>Tin học</option>
+              </optgroup>
+              <optgroup label="💡 Kỹ năng hot">
+                <option>Lập trình / Code</option>
+                <option>Thiết kế đồ hoạ</option>
+                <option>UI/UX Design</option>
+                <option>Marketing</option>
+                <option>Excel / Văn phòng</option>
+                <option>Kế toán</option>
+                <option>Kỹ năng mềm</option>
+              </optgroup>
+              <optgroup label="🌐 Ngoại ngữ">
+                <option>IELTS / TOEIC</option>
+                <option>Tiếng Nhật</option>
+                <option>Tiếng Hàn</option>
+                <option>Tiếng Trung</option>
+                <option>Tiếng Pháp</option>
+              </optgroup>
+              <optgroup label="🎨 Nghệ thuật">
+                <option>Âm nhạc / Nhạc cụ</option>
+                <option>Hội hoạ / Mỹ thuật</option>
+              </optgroup>
+              <option value="khac">✏️ Khác...</option>
+            </select>
+            <input type="text" id="postFormMonKhac" class="form-input" placeholder="Nhập tên môn học hoặc kỹ năng..." style="display:none;margin-top:8px;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Lớp / Cấp học</label>
+            <select class="form-select">
+              <option>Chọn lớp...</option>
+              <optgroup label="Tiểu học"><option>Lớp 1</option><option>Lớp 2</option><option>Lớp 3</option><option>Lớp 4</option><option>Lớp 5</option></optgroup>
+              <optgroup label="THCS"><option>Lớp 6</option><option>Lớp 7</option><option>Lớp 8</option><option>Lớp 9</option></optgroup>
+              <optgroup label="THPT"><option>Lớp 10</option><option>Lớp 11</option><option>Lớp 12</option></optgroup>
+              <optgroup label="Khác"><option>Đại học / Cao đẳng</option><option>Người đi làm</option></optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hình thức học</label>
+            <div class="chip-group">
+              <span class="chip-opt active" onclick="toggleChipOpt(this)">Online</span>
+              <span class="chip-opt" onclick="toggleChipOpt(this)">Tại nhà</span>
+              <span class="chip-opt" onclick="toggleChipOpt(this)">Linh hoạt</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Số buổi / tuần</label>
+            <select class="form-select">
+              <option>Chọn...</option>
+              <option>1 buổi/tuần</option>
+              <option>2 buổi/tuần</option>
+              <option>3 buổi/tuần</option>
+              <option>4+ buổi/tuần</option>
+              <option>Thương lượng</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Thời lượng mỗi buổi</label>
+            <select class="form-select">
+              <option>Chọn...</option>
+              <option>60 phút</option>
+              <option>90 phút</option>
+              <option>120 phút</option>
+              <option>Thương lượng</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Khu vực <span>(nếu học tại nhà)</span></label>
+            <input type="text" class="form-input" placeholder="VD: Cầu Giấy, Hà Nội">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ngân sách <span>(đồng/buổi)</span></label>
+            <input type="text" class="form-input" placeholder="VD: 150.000 — 200.000">
+          </div>
+          <div class="form-group" style="grid-column:1/-1;">
+            <label class="form-label">Mô tả chi tiết <span>(mục tiêu, yêu cầu với gia sư...)</span></label>
+            <textarea class="form-textarea" placeholder="VD: Con tôi đang học lớp 9, cần ôn thi chuyên Toán. Yêu cầu gia sư có kinh nghiệm luyện thi chuyên, kiên nhẫn và có thể dạy buổi tối trong tuần..."></textarea>
+          </div>
+        </div>
+
+        <div class="post-divider"></div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <button class="btn-submit-post">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Đăng tin
+          </button>
+          <button class="btn-cancel-post" onclick="hidePostForm()">Huỷ</button>
+          <span style="font-size:12px;color:var(--n400);margin-left:4px;">Tin sẽ hiện trong vòng 5 phút sau khi duyệt</span>
+        </div>
+      </div>
+
+      <!-- LISTING VIEW -->
+      <div id="listView">
+
+        <!-- Guest banner (chưa đăng nhập) — trung lập, không assume persona -->
+        <div class="guest-banner" id="guestBanner">
+          <div class="gb-heading">
+            <div class="gb-heading-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+              <div class="gb-heading-text">Bạn chưa đăng nhập</div>
+              <div class="gb-heading-sub">Tạo tài khoản miễn phí — chọn bạn là ai để bắt đầu</div>
+            </div>
+          </div>
+          <div class="gb-cards">
+            <!-- Card: Gia sư -->
+            <div class="gb-card gb-card-gs">
+              <div class="gb-card-icon">
+                <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <div class="gb-card-title">Tôi là gia sư</div>
+              <div class="gb-card-desc">Tìm học sinh phù hợp, ứng tuyển các tin đăng và nhận thông báo cơ hội mới.</div>
+              <div class="gb-card-perks">
+                <div class="gb-card-perk"><span class="gb-card-perk-ok">✓</span> Ứng tuyển không giới hạn</div>
+                <div class="gb-card-perk"><span class="gb-card-perk-ok">✓</span> Hồ sơ xác minh, phụ huynh tin tưởng hơn</div>
+                <div class="gb-card-perk"><span class="gb-card-perk-ok">✓</span> Thông báo tin mới phù hợp</div>
+              </div>
+              <div class="gb-card-actions">
+                <button class="gb-card-btn gb-card-btn-primary" onclick="openLoginGate('apply')">Đăng ký miễn phí →</button>
+                <button class="gb-card-btn gb-card-btn-ghost" onclick="openLoginGate('apply')">Đăng nhập</button>
+              </div>
+            </div>
+            <!-- Card: Phụ huynh / Học viên -->
+            <div class="gb-card gb-card-ph">
+              <div class="gb-card-icon">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="gb-card-title">Tôi cần tìm gia sư</div>
+              <div class="gb-card-desc">Đăng tin mô tả yêu cầu — gia sư đã xác minh sẽ chủ động gửi hồ sơ đến bạn.</div>
+              <div class="gb-card-perks">
+                <div class="gb-card-perk"><span class="gb-card-perk-ok">✓</span> Đăng tin hoàn toàn miễn phí</div>
+                <div class="gb-card-perk"><span class="gb-card-perk-ok">✓</span> Nhận hồ sơ trong vòng 24 giờ</div>
+                <div class="gb-card-perk"><span class="gb-card-perk-ok">✓</span> Quản lý ứng viên trong Dashboard</div>
+              </div>
+              <div class="gb-card-actions">
+                <button class="gb-card-btn gb-card-btn-primary" onclick="openLoginGate('post')">Đăng ký miễn phí →</button>
+                <button class="gb-card-btn gb-card-btn-ghost" onclick="openLoginGate('post')">Đăng nhập</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Persona: Gia sư banner -->
+        <div class="persona-banner persona-banner-gs" id="gs-banner">
+          <div class="pb-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div class="pb-body">
+            <div class="pb-title">Bạn đang tìm việc dạy học phù hợp</div>
+            <div class="pb-sub">Duyệt tin từ phụ huynh và học viên, lọc theo môn dạy · khu vực · hình thức, rồi gửi hồ sơ ứng tuyển trực tiếp. Phụ huynh sẽ xem hồ sơ và liên hệ nếu quan tâm.</div>
+          </div>
+          <button class="pb-cta" onclick="demoSwitch('detail')">Xem ví dụ tin</button>
+        </div>
+
+        <!-- Persona: Phụ huynh/HV banner -->
+        <div class="persona-banner persona-banner-ph" id="ph-banner" style="display:none;">
+          <div class="pb-icon">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="pb-body">
+            <div class="pb-title">Đăng tin để gia sư chủ động tìm đến bạn</div>
+            <div class="pb-sub">Mô tả yêu cầu, lịch học và ngân sách — gia sư phù hợp sẽ gửi đề xuất, bạn chủ động chọn người mình ưng nhất.</div>
+          </div>
+          <button class="pb-cta" onclick="demoSwitch('post')">Đăng tin ngay</button>
+        </div>
+
+        <div class="content-header">
+          <div>
+            <div class="content-title" id="listing-title">Tin tuyển gia sư</div>
+            <div class="content-count" id="listing-count">Tìm thấy 1.240 tin · đang hiển thị 6</div>
+          </div>
+          <div class="sort-row">
+            <span class="sort-label">Sắp xếp:</span>
+            <select class="sort-select">
+              <option>Mới nhất</option>
+              <option>Nhiều ứng viên nhất</option>
+              <option>Budget cao nhất</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tin-list">
+
+          <!-- Tin 1 -->
+          <div class="tin-card featured" onclick="demoSwitch('detail')">
+            <div class="tin-top">
+              <div class="tin-avatar" style="background:linear-gradient(135deg,#1565C0,#42A5F5);">H</div>
+              <div class="tin-meta">
+                <div class="tin-title">Cần gia sư Toán lớp 9 — ôn thi chuyên Toán Hà Nội</div>
+                <div class="tin-poster">
+                  <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Chị Hương (Phụ huynh)</span>
+                  <span><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Cầu Giấy, Hà Nội</span>
+                </div>
+              </div>
+              <span class="tin-badge hot">🔥 Hot</span>
+            </div>
+            <div class="tin-tags">
+              <span class="tin-tag">📐 Toán</span>
+              <span class="tin-tag">Lớp 9</span>
+              <span class="tin-tag loc">📍 Cầu Giấy, HN</span>
+              <span class="tin-tag lich">📅 3 buổi/tuần</span>
+              <span class="tin-tag budget">💰 180–220k/buổi</span>
+              <span class="tin-tag" style="background:#F0FDF4;color:#15803D;border-color:#BBF7D0;">🏠 Tại nhà</span>
+            </div>
+            <div class="tin-desc">Con tôi đang học lớp 9, cần ôn thi chuyên Toán THPT. Yêu cầu gia sư có kinh nghiệm luyện thi chuyên, kiên nhẫn. Học vào buổi tối các ngày trong tuần, thứ 7 linh hoạt...</div>
+            <div class="tin-footer">
+              <div class="tin-stats">
+                <div class="tin-stat"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><strong>12</strong> ứng viên</div>
+                <div class="tin-stat"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><strong>248</strong> lượt xem</div>
+              </div>
+              <span class="tin-time">2 giờ trước</span>
+              <button class="btn-apply" onclick="event.stopPropagation();openApplyModal()">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Ứng tuyển
+              </button>
+            </div>
+          </div>
+
+          <!-- Tin 2 -->
+          <div class="tin-card" onclick="demoSwitch('detail')">
+            <div class="tin-top">
+              <div class="tin-avatar" style="background:linear-gradient(135deg,#F57C00,#FFA726);">M</div>
+              <div class="tin-meta">
+                <div class="tin-title">Cần gia sư Tiếng Anh giao tiếp — học online, linh hoạt giờ</div>
+                <div class="tin-poster">
+                  <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Minh Anh (Học viên, lớp 10)</span>
+                  <span><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Online</span>
+                </div>
+              </div>
+              <span class="tin-badge new">✨ Mới</span>
+            </div>
+            <div class="tin-tags">
+              <span class="tin-tag">🗣️ Tiếng Anh</span>
+              <span class="tin-tag">Lớp 10</span>
+              <span class="tin-tag loc">💻 Online</span>
+              <span class="tin-tag lich">📅 2 buổi/tuần</span>
+              <span class="tin-tag budget">💰 100–150k/buổi</span>
+            </div>
+            <div class="tin-desc">Tôi muốn cải thiện Tiếng Anh giao tiếp, đặc biệt phần Speaking và Listening. Mục tiêu đạt IELTS 6.0 trong 6 tháng. Ưu tiên gia sư có kinh nghiệm luyện IELTS, bằng cấp liên quan...</div>
+            <div class="tin-footer">
+              <div class="tin-stats">
+                <div class="tin-stat"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><strong>7</strong> ứng viên</div>
+                <div class="tin-stat"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><strong>134</strong> lượt xem</div>
+              </div>
+              <span class="tin-time">5 giờ trước</span>
+              <button class="btn-apply" onclick="event.stopPropagation();openApplyModal()">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Ứng tuyển
+              </button>
+            </div>
+          </div>
+
+          <!-- Tin 3 -->
+          <div class="tin-card" onclick="demoSwitch('detail')">
+            <div class="tin-top">
+              <div class="tin-avatar" style="background:linear-gradient(135deg,#7C3AED,#A78BFA);">T</div>
+              <div class="tin-meta">
+                <div class="tin-title">Tìm gia sư Vật lý + Hoá học lớp 11, khu vực Đống Đa</div>
+                <div class="tin-poster">
+                  <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Anh Tuấn (Phụ huynh)</span>
+                  <span><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Đống Đa, Hà Nội</span>
+                </div>
+              </div>
+            </div>
+            <div class="tin-tags">
+              <span class="tin-tag">⚛️ Vật lý</span>
+              <span class="tin-tag">🧪 Hoá học</span>
+              <span class="tin-tag">Lớp 11</span>
+              <span class="tin-tag loc">📍 Đống Đa, HN</span>
+              <span class="tin-tag lich">📅 4 buổi/tuần</span>
+              <span class="tin-tag budget">💰 200–250k/buổi</span>
+            </div>
+            <div class="tin-desc">Con trai tôi đang học khối A, cần ôn tập Vật lý và Hoá học. Ưu tiên gia sư sinh viên đại học bách khoa hoặc y dược có điểm thi cao...</div>
+            <div class="tin-footer">
+              <div class="tin-stats">
+                <div class="tin-stat"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><strong>4</strong> ứng viên</div>
+                <div class="tin-stat"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><strong>89</strong> lượt xem</div>
+              </div>
+              <span class="tin-time">1 ngày trước</span>
+              <button class="btn-apply" onclick="event.stopPropagation();openApplyModal()">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Ứng tuyển
+              </button>
+            </div>
+          </div>
+
+          <!-- Tin 4 -->
+          <div class="tin-card" onclick="demoSwitch('detail')">
+            <div class="tin-top">
+              <div class="tin-avatar" style="background:linear-gradient(135deg,#16A34A,#4ADE80);">L</div>
+              <div class="tin-meta">
+                <div class="tin-title">Gia sư Toán Tiểu học cho bé lớp 3, khu Thanh Xuân</div>
+                <div class="tin-poster">
+                  <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Chị Lan (Phụ huynh)</span>
+                  <span><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Thanh Xuân, HN</span>
+                </div>
+              </div>
+              <span class="tin-badge new">✨ Mới</span>
+            </div>
+            <div class="tin-tags">
+              <span class="tin-tag">📐 Toán</span>
+              <span class="tin-tag">Lớp 3</span>
+              <span class="tin-tag loc">📍 Thanh Xuân, HN</span>
+              <span class="tin-tag lich">📅 2 buổi/tuần</span>
+              <span class="tin-tag budget">💰 80–100k/buổi</span>
+              <span class="tin-tag" style="background:#F0FDF4;color:#15803D;border-color:#BBF7D0;">🏠 Tại nhà</span>
+            </div>
+            <div class="tin-desc">Bé nhà tôi cần gia sư kiên nhẫn, vui vẻ, có kinh nghiệm dạy trẻ nhỏ. Mục tiêu giúp bé nắm vững kiến thức lớp 3, tự tin trong học tập...</div>
+            <div class="tin-footer">
+              <div class="tin-stats">
+                <div class="tin-stat"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><strong>3</strong> ứng viên</div>
+                <div class="tin-stat"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><strong>56</strong> lượt xem</div>
+              </div>
+              <span class="tin-time">1 ngày trước</span>
+              <span class="btn-applied">✓ Đã ứng tuyển</span>
+            </div>
+          </div>
+
+          <!-- Tin 5 -->
+          <div class="tin-card" onclick="demoSwitch('detail')">
+            <div class="tin-top">
+              <div class="tin-avatar" style="background:linear-gradient(135deg,#DC2626,#F87171);">N</div>
+              <div class="tin-meta">
+                <div class="tin-title">Cần gia sư Ngữ văn lớp 12 luyện thi THPT Quốc gia</div>
+                <div class="tin-poster">
+                  <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Ngọc Anh (Học viên, lớp 12)</span>
+                  <span><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Online hoặc Q.Đống Đa</span>
+                </div>
+              </div>
+            </div>
+            <div class="tin-tags">
+              <span class="tin-tag">📝 Ngữ văn</span>
+              <span class="tin-tag">Lớp 12</span>
+              <span class="tin-tag loc">💻 Online / Đống Đa</span>
+              <span class="tin-tag lich">📅 3 buổi/tuần</span>
+              <span class="tin-tag budget">💰 150–180k/buổi</span>
+            </div>
+            <div class="tin-desc">Tôi cần ôn luyện Ngữ văn thi THPT Quốc gia, tập trung vào kỹ năng làm bài nghị luận văn học và xã hội. Yêu cầu gia sư có kinh nghiệm dạy lớp 12...</div>
+            <div class="tin-footer">
+              <div class="tin-stats">
+                <div class="tin-stat"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><strong>6</strong> ứng viên</div>
+                <div class="tin-stat"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><strong>112</strong> lượt xem</div>
+              </div>
+              <span class="tin-time">2 ngày trước</span>
+              <button class="btn-apply" onclick="event.stopPropagation();openApplyModal()">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Ứng tuyển
+              </button>
+            </div>
+          </div>
+
+        </div><!-- /tin-list -->
+
+        <div class="load-more">
+          <button class="btn-load">Xem thêm tin tuyển →</button>
+        </div>
+      </div><!-- /listView -->
+
+      <!-- CHI TIẾT TIN -->
+      <div class="detail-panel" id="detailPanel">
+        <div class="detail-back" onclick="demoSwitch('list')">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          Quay lại danh sách
+        </div>
+        <div class="detail-card">
+          <div class="detail-header">
+            <div class="detail-avatar" style="background:linear-gradient(135deg,#1565C0,#42A5F5);">H</div>
+            <div>
+              <div class="detail-title">Cần gia sư Toán lớp 9 — ôn thi chuyên Toán Hà Nội</div>
+              <div class="detail-poster">Chị Hương (Phụ huynh) · Đăng 2 giờ trước · 248 lượt xem</div>
+            </div>
+          </div>
+
+          <div class="detail-tags">
+            <span class="tin-tag">📐 Toán</span>
+            <span class="tin-tag">Lớp 9</span>
+            <span class="tin-tag loc">📍 Cầu Giấy, Hà Nội</span>
+            <span class="tin-tag lich">📅 3 buổi/tuần · 90 phút/buổi</span>
+            <span class="tin-tag budget">💰 180–220k/buổi</span>
+            <span class="tin-tag" style="background:#F0FDF4;color:#15803D;border-color:#BBF7D0;">🏠 Tại nhà</span>
+          </div>
+
+          <div class="detail-info-grid">
+            <div class="detail-info-item">
+              <div class="detail-info-label">Bắt đầu</div>
+              <div class="detail-info-value">Càng sớm càng tốt</div>
+            </div>
+            <div class="detail-info-item">
+              <div class="detail-info-label">Thời gian học</div>
+              <div class="detail-info-value">Tối T2, T4, T6 (19:00–20:30)</div>
+            </div>
+            <div class="detail-info-item">
+              <div class="detail-info-label">Số ứng viên</div>
+              <div class="detail-info-value">12 ứng viên</div>
+            </div>
+            <div class="detail-info-item">
+              <div class="detail-info-label">Trạng thái</div>
+              <div class="detail-info-value" style="color:var(--green);">🟢 Đang tuyển</div>
+            </div>
+          </div>
+
+          <div class="detail-desc-label">Mô tả chi tiết</div>
+          <div class="detail-desc">Con tôi đang học lớp 9, cần ôn thi chuyên Toán THPT Hà Nội. Yêu cầu gia sư có kinh nghiệm luyện thi chuyên, kiên nhẫn và có phương pháp giảng dạy rõ ràng. Học vào buổi tối các ngày trong tuần, thứ 7 linh hoạt theo lịch đôi bên.<br><br>Ưu tiên gia sư từng học chuyên Toán, hoặc sinh viên/cựu sinh viên toán ĐH Khoa học Tự nhiên, Sư phạm Hà Nội. Gia sư nữ được ưu tiên.</div>
+
+          <div class="detail-actions" id="detailActions-tutor">
+            <button class="btn-apply-lg" onclick="openApplyModal()">
+              <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Gửi hồ sơ ứng tuyển
+            </button>
+            <button class="btn-save">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              Lưu tin
+            </button>
+          </div>
+
+          <!-- Applicant notification (uvien demo state) — redirect to dashboard -->
+          <div class="applicant-section" id="applicantSection" style="display:none;">
+            <div class="uv-notify-wrap">
+              <div class="uv-notify-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <div class="uv-notify-body">
+                <div class="uv-notify-title">Tin của bạn đã nhận được <strong>12 ứng viên</strong></div>
+                <div class="uv-notify-sub">Thông tin chi tiết ứng viên (hồ sơ, lời nhắn, mức phí đề xuất) được bảo mật và chỉ hiển thị trong Dashboard của bạn — nơi bạn có thể xem xét, chấp nhận hoặc nhắn tin trực tiếp.</div>
+                <div class="uv-notify-avatars">
+                  <img src="https://i.pravatar.cc/36?img=11" alt="">
+                  <img src="https://i.pravatar.cc/36?img=25" alt="">
+                  <img src="https://i.pravatar.cc/36?img=33" alt="">
+                  <div class="uv-notify-more">+9</div>
+                </div>
+                <a class="uv-notify-btn" href="./ui-dashboard-phu-huynh.html" target="_blank">
+                  Xem ứng viên trong Dashboard
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /detail-card -->
+      </div><!-- /detailPanel -->
+
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</div><!-- /main -->
+
+<!-- LOGIN GATE MODAL -->
+<div class="login-gate" id="loginGateModal">
+  <div class="lg-box">
+    <button class="lg-close-btn" onclick="closeLoginGate()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="lg-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>
+    <div class="lg-title" id="lg-title">Đăng nhập để tiếp tục</div>
+    <div class="lg-sub" id="lg-sub">Bạn cần tài khoản giasu.edu.vn để sử dụng tính năng này.</div>
+    <div class="lg-perks" id="lg-perks">
+      <div class="lg-perk"><div class="lg-check">✓</div><span>Miễn phí, đăng ký chỉ 30 giây</span></div>
+      <div class="lg-perk"><div class="lg-check">✓</div><span>Bảo mật thông tin cá nhân</span></div>
+      <div class="lg-perk"><div class="lg-check">✓</div><span>Không bị làm phiền bởi quảng cáo</span></div>
+    </div>
+    <div class="lg-actions">
+      <button class="lg-btn-login" onclick="window.location.href='./ui-auth.html'">Đăng nhập</button>
+      <button class="lg-btn-reg" onclick="window.location.href='./ui-auth.html'">Đăng ký miễn phí →</button>
+    </div>
+  </div>
+</div>
+
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="applyModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Gửi hồ sơ ứng tuyển</div>
+        <div class="modal-sub">Phụ huynh sẽ nhận được hồ sơ và liên hệ lại với bạn</div>
+      </div>
+      <button class="btn-close-modal" onclick="closeApplyModal()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="modal-tin-ref">
+      <div class="modal-tin-ref-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </div>
+      <div>
+        <div class="modal-tin-ref-name">Cần gia sư Toán lớp 9 — ôn thi chuyên Toán Hà Nội</div>
+        <div class="modal-tin-ref-meta">Chị Hương · Cầu Giấy, HN · 180–220k/buổi</div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-field">
+        <div class="modal-field-label">Lời nhắn đến phụ huynh</div>
+        <textarea class="modal-textarea" placeholder="Giới thiệu bản thân, kinh nghiệm liên quan, lý do bạn phù hợp với yêu cầu này...&#10;&#10;VD: Tôi là sinh viên năm 4 khoa Toán ĐH KHTN, đã dạy 15+ học sinh lớp 9 ôn chuyên. Tôi có thể linh hoạt theo lịch của bé và cam kết đồng hành đến khi thi."></textarea>
+      </div>
+      <div class="modal-field">
+        <div class="modal-field-label">Mức phí đề xuất <span style="color:var(--n400);font-weight:400;">(đồng/buổi)</span></div>
+        <div class="price-row">
+          <input type="text" class="price-input" placeholder="VD: 200.000">
+          <span class="price-unit">đồng / buổi</span>
+        </div>
+      </div>
+      <div class="modal-notice">
+        💡 Hồ sơ của bạn bao gồm ảnh đại diện, rating, số buổi đã dạy và bằng cấp đã xác minh. Phụ huynh sẽ xem hồ sơ đầy đủ trước khi liên hệ.
+      </div>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" onclick="closeApplyModal()">Huỷ</button>
+        <button class="btn-modal-submit">Gửi hồ sơ ứng tuyển</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── DEMO SWITCHER ── */
+function demoSwitch(mode) {
+  ['list','post','detail','uvien','apply'].forEach(m => {
+    document.getElementById('dbtn-'+m).classList.toggle('active', m === mode);
+  });
+
+  const listView    = document.getElementById('listView');
+  const detailPanel = document.getElementById('detailPanel');
+  const postPanel   = document.getElementById('postPanel');
+  const applySection = document.getElementById('applicantSection');
+  const detailActions = document.getElementById('detailActions-tutor');
+
+  // Reset all
+  listView.style.display    = 'none';
+  detailPanel.classList.remove('active');
+  postPanel.classList.remove('active');
+  closeApplyModal();
+
+  if (mode === 'list') {
+    listView.style.display = 'block';
+    hidePostForm();
+  } else if (mode === 'post') {
+    listView.style.display = 'block';
+    postPanel.classList.add('active');
+    postPanel.scrollIntoView({behavior:'smooth',block:'start'});
+  } else if (mode === 'detail') {
+    detailPanel.classList.add('detail-panel');
+    detailPanel.classList.add('active');
+    applySection.style.display = 'none';
+    detailActions.style.display = 'flex';
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else if (mode === 'uvien') {
+    detailPanel.classList.add('active');
+    applySection.style.display = 'block';
+    detailActions.style.display = 'none';
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else if (mode === 'apply') {
+    detailPanel.classList.add('active');
+    applySection.style.display = 'none';
+    detailActions.style.display = 'flex';
+    openApplyModal();
+  }
+}
+
+/* ── AUTH STATE ── */
+let isLoggedIn = true;
+
+function setAuth(loggedIn) {
+  isLoggedIn = loggedIn;
+  const btnIn  = document.getElementById('abtn-in');
+  const btnOut = document.getElementById('abtn-out');
+  btnIn.className  = 'persona-btn' + (loggedIn ? ' active-in' : '');
+  btnOut.className = 'persona-btn' + (!loggedIn ? ' active-out' : '');
+
+  // Re-apply persona to refresh banners
+  const currentPersona = document.getElementById('pbtn-gs').classList.contains('active-gs') ? 'gs' : 'ph';
+  _applyPersonaBanners(currentPersona);
+}
+
+function openLoginGate(action) {
+  const title = document.getElementById('lg-title');
+  const sub   = document.getElementById('lg-sub');
+  const perks = document.getElementById('lg-perks');
+
+  if (action === 'apply') {
+    title.textContent = 'Đăng nhập để ứng tuyển';
+    sub.textContent   = 'Tạo tài khoản gia sư miễn phí để gửi hồ sơ và nhận thông báo tin mới phù hợp với bạn.';
+    perks.innerHTML   = `
+      <div class="lg-perk"><div class="lg-check">✓</div><span>Ứng tuyển không giới hạn số lượng tin</span></div>
+      <div class="lg-perk"><div class="lg-check">✓</div><span>Hồ sơ xác minh — phụ huynh tin tưởng hơn</span></div>
+      <div class="lg-perk"><div class="lg-check">✓</div><span>Chat trực tiếp khi được chọn</span></div>`;
+  } else if (action === 'post') {
+    title.textContent = 'Đăng nhập để đăng tin';
+    sub.textContent   = 'Tạo tài khoản để đăng tin tìm gia sư miễn phí và quản lý ứng viên trong Dashboard.';
+    perks.innerHTML   = `
+      <div class="lg-perk"><div class="lg-check">✓</div><span>Đăng tin hoàn toàn miễn phí</span></div>
+      <div class="lg-perk"><div class="lg-check">✓</div><span>Nhận hồ sơ từ gia sư đã xác minh</span></div>
+      <div class="lg-perk"><div class="lg-check">✓</div><span>Quản lý ứng viên dễ dàng trong Dashboard</span></div>`;
+  }
+  document.getElementById('loginGateModal').classList.add('lg-open');
+}
+
+function closeLoginGate() {
+  document.getElementById('loginGateModal').classList.remove('lg-open');
+}
+document.getElementById('loginGateModal').addEventListener('click', function(e) {
+  if (e.target === this) closeLoginGate();
+});
+
+/* ── POST FORM ── */
+function showPostForm() {
+  if (!isLoggedIn) { openLoginGate('post'); return; }
+  document.getElementById('postPanel').classList.add('active');
+  document.getElementById('postPanel').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function hidePostForm() {
+  document.getElementById('postPanel').classList.remove('active');
+}
+
+/* ── APPLY MODAL ── */
+function openApplyModal() {
+  if (!isLoggedIn) { openLoginGate('apply'); return; }
+  document.getElementById('applyModal').classList.add('active');
+}
+function closeApplyModal() {
+  document.getElementById('applyModal').classList.remove('active');
+}
+document.getElementById('applyModal').addEventListener('click', function(e) {
+  if (e.target === this) closeApplyModal();
+});
+
+/* ── FILTER CHIPS ── */
+function toggleChip(el) {
+  el.parentElement.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+function toggleChipOpt(el) {
+  el.classList.toggle('active');
+}
+
+/* ── PERSONA SWITCHER ── */
+function _applyPersonaBanners(p) {
+  const guestBanner = document.getElementById('guestBanner');
+  const gsBanner    = document.getElementById('gs-banner');
+  const phBanner    = document.getElementById('ph-banner');
+
+  if (!isLoggedIn) {
+    // Chưa đăng nhập → banner trung lập, không biết persona, ẩn persona banners
+    guestBanner.style.display = 'block';
+    if (gsBanner) gsBanner.style.display = 'none';
+    if (phBanner) phBanner.style.display = 'none';
+  } else {
+    // Đã đăng nhập → ẩn guest banner, hiện persona banner tương ứng
+    guestBanner.style.display = 'none';
+    if (gsBanner) gsBanner.style.display = p === 'gs' ? 'flex' : 'none';
+    if (phBanner) phBanner.style.display = p === 'ph' ? 'flex' : 'none';
+  }
+}
+
+function setPersona(p) {
+  const btnPh = document.getElementById('pbtn-ph');
+  const btnGs = document.getElementById('pbtn-gs');
+  btnPh.className = 'persona-btn' + (p === 'ph' ? ' active-ph' : '');
+  btnGs.className = 'persona-btn' + (p === 'gs' ? ' active-gs' : '');
+
+  // Sidebar post button
+  const sidebarPostBtn = document.getElementById('sidebar-post-btn');
+  if (sidebarPostBtn) sidebarPostBtn.style.display = p === 'ph' ? 'flex' : 'none';
+
+  // Banners (respects isLoggedIn)
+  _applyPersonaBanners(p);
+
+  // Content title & count
+  const listingTitle = document.getElementById('listing-title');
+  const listingCount = document.getElementById('listing-count');
+  if (listingTitle) {
+    listingTitle.textContent = p === 'gs'
+      ? 'Cơ hội dạy học đang tuyển'
+      : 'Tin đã đăng trên hệ thống';
+  }
+  if (listingCount) {
+    listingCount.textContent = p === 'gs'
+      ? '1.240 tin phù hợp với bạn · đang hiển thị 6'
+      : 'Tìm thấy 1.240 tin · đang hiển thị 6';
+  }
+
+  // Dim/undim demo buttons that aren't relevant per persona
+  const postDemoBtn  = document.getElementById('dbtn-post');
+  const uvienDemoBtn = document.getElementById('dbtn-uvien');
+  if (postDemoBtn)  postDemoBtn.style.opacity  = p === 'ph' ? '1' : '.3';
+  if (uvienDemoBtn) uvienDemoBtn.style.opacity = p === 'ph' ? '1' : '.3';
+
+  // Always show listing when persona changes
+  demoSwitch('list');
+}
+
+/* ── MON KHAC ── */
+function handleMonKhac(selId, inputId) {
+  const input = document.getElementById(inputId);
+  input.style.display = document.getElementById(selId).value === 'khac' ? 'block' : 'none';
+  if (input.style.display === 'block') input.focus();
+}
+
+/* Init */
+setPersona('gs');
+</script>
+</body>
+</html>

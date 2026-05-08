@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thông báo — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p950:#061529;--p900:#0D2D6B;--p800:#1239A0;--p700:#1565C0;
+  --p600:#1976D2;--p500:#1E88E5;--p400:#42A5F5;--p300:#90CAF9;
+  --p200:#BBDEFB;--p100:#E3F2FD;--p50:#F0F8FF;
+  --s700:#C46200;--s600:#E65100;--s500:#F57C00;--s400:#FFA726;
+  --s300:#FFCC80;--s200:#FFE0B2;--s100:#FFF3E0;
+  --n900:#0F172A;--n800:#1E293B;--n700:#334155;--n600:#475569;
+  --n500:#64748B;--n400:#94A3B8;--n300:#CBD5E1;--n200:#E2E8F0;
+  --n100:#F1F5F9;--n50:#F8FAFC;
+  --green:#16A34A;--green-bg:#DCFCE7;
+  --red:#DC2626;--red-bg:#FEF2F2;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.1),0 4px 12px rgba(0,0,0,.06);
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-2xl:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:var(--n800);background:var(--n50);-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
+
+/* ═══ NAVBAR ═══ */
+.navbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--n200);
+}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;display:flex;align-items:center;height:64px;gap:0;}
+.nav-logo{display:flex;align-items:center;gap:9px;margin-right:40px;flex-shrink:0;}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px;}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.5;}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-link{padding:7px 14px;border-radius:var(--r-sm);font-size:14px;font-weight:500;color:var(--n600);transition:all .15s;}
+.nav-link:hover{background:var(--n100);color:var(--n800);}
+.nav-link.active{color:var(--p700);font-weight:600;background:var(--p50);}
+.nav-actions{display:flex;align-items:center;gap:10px;margin-left:auto;}
+.nav-icon-btn{
+  width:38px;height:38px;border-radius:var(--r-sm);background:transparent;
+  border:1.5px solid var(--n200);display:flex;align-items:center;justify-content:center;
+  color:var(--n600);cursor:pointer;transition:all .15s;position:relative;
+}
+.nav-icon-btn:hover{background:var(--n100);border-color:var(--n300);}
+.nav-icon-btn svg{width:18px;height:18px;}
+.nav-badge{
+  position:absolute;top:-4px;right:-4px;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--s500);color:#fff;font-size:9px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid #fff;
+}
+.nav-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#1565C0,#42A5F5);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;cursor:pointer;flex-shrink:0;
+}
+.nav-back{
+  display:flex;align-items:center;gap:6px;
+  height:34px;padding:0 14px;border-radius:var(--r-sm);
+  background:var(--n100);color:var(--n700);font-size:13px;font-weight:600;
+  border:none;cursor:pointer;transition:all .15s;
+}
+.nav-back:hover{background:var(--n200);}
+.nav-back svg{width:14px;height:14px;}
+
+/* ═══ PAGE LAYOUT ═══ */
+.page-wrap{max-width:1000px;margin:0 auto;padding:32px 40px 60px;display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:start;}
+
+/* ═══ SIDEBAR FILTERS ═══ */
+.filter-card{background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);padding:16px;position:sticky;top:88px;}
+.filter-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--n400);margin-bottom:10px;padding:0 4px;}
+.filter-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 10px;border-radius:var(--r-md);
+  font-size:13.5px;font-weight:500;color:var(--n600);
+  cursor:pointer;transition:all .15s;
+}
+.filter-item:hover{background:var(--n50);color:var(--n800);}
+.filter-item.active{background:var(--p50);color:var(--p700);font-weight:700;}
+.filter-item .fi-left{display:flex;align-items:center;gap:9px;}
+.filter-item .fi-icon{font-size:16px;line-height:1;}
+.filter-badge{
+  font-size:11px;font-weight:700;
+  background:var(--s100);color:var(--s600);
+  padding:1px 7px;border-radius:20px;
+}
+.filter-badge.blue{background:var(--p100);color:var(--p700);}
+.filter-divider{height:1px;background:var(--n100);margin:10px 0;}
+
+/* ═══ NOTIFICATION FEED ═══ */
+.feed-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.feed-title{font-size:19px;font-weight:800;color:var(--n900);}
+.feed-subtitle{font-size:12.5px;color:var(--n500);margin-top:2px;}
+.mark-all-btn{
+  height:34px;padding:0 14px;border-radius:var(--r-md);
+  background:var(--n100);color:var(--n700);font-size:12.5px;font-weight:600;
+  border:none;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.mark-all-btn:hover{background:var(--n200);}
+
+.notif-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--n400);margin-bottom:8px;margin-top:20px;}
+.notif-group-label:first-of-type{margin-top:0;}
+
+.notif-item{
+  display:flex;align-items:flex-start;gap:13px;
+  padding:15px 16px;
+  background:#fff;border-radius:var(--r-lg);border:1.5px solid var(--n200);
+  margin-bottom:8px;cursor:pointer;transition:all .15s;position:relative;
+}
+.notif-item:hover{border-color:var(--p300);background:var(--p50);}
+.notif-item.unread{border-color:var(--p200);background:#fff;}
+.notif-item.unread::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:60%;background:var(--p700);border-radius:0 2px 2px 0;
+}
+.notif-dot{
+  position:absolute;top:14px;right:14px;
+  width:8px;height:8px;border-radius:50%;background:var(--p700);
+}
+
+.notif-icon{
+  width:42px;height:42px;border-radius:var(--r-md);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.notif-icon.blue{background:var(--p100);}
+.notif-icon.green{background:var(--green-bg);}
+.notif-icon.orange{background:var(--s100);}
+.notif-icon.red{background:var(--red-bg);}
+.notif-icon.purple{background:#F5F3FF;}
+.notif-icon.gray{background:var(--n100);}
+
+.notif-avatar{
+  width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:800;color:#fff;flex-shrink:0;
+}
+
+.notif-body{flex:1;min-width:0;}
+.notif-head{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+.notif-title{font-size:13.5px;font-weight:600;color:var(--n900);line-height:1.4;}
+.notif-item.unread .notif-title{font-weight:700;}
+.notif-desc{font-size:12.5px;color:var(--n500);line-height:1.5;margin-top:2px;}
+.notif-time{font-size:11.5px;color:var(--n400);margin-top:4px;font-weight:500;}
+
+.notif-action{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:8px;
+  height:28px;padding:0 12px;border-radius:8px;
+  font-size:12px;font-weight:700;cursor:pointer;border:none;transition:all .15s;
+}
+.notif-action.primary{background:var(--p700);color:#fff;}
+.notif-action.primary:hover{background:var(--p800);}
+.notif-action.ghost{background:var(--n100);color:var(--n700);}
+.notif-action.ghost:hover{background:var(--n200);}
+
+.notif-actions-row{display:flex;gap:6px;margin-top:8px;}
+
+/* empty state */
+.empty-state{
+  text-align:center;padding:60px 24px;
+  background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);
+}
+.empty-icon{font-size:48px;margin-bottom:16px;}
+.empty-title{font-size:16px;font-weight:700;color:var(--n700);margin-bottom:6px;}
+.empty-desc{font-size:13px;color:var(--n500);}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="ui-trang-chu.html" class="nav-logo">
+      <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+      </svg>
+      <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="ui-trang-chu.html" class="nav-link">Trang chủ</a>
+      <a href="ui-tim-gia-su.html" class="nav-link">Tìm gia sư</a>
+      <a href="ui-dang-tin.html" class="nav-link">Đăng tin</a>
+      <a href="ui-dang-ky-day.html" class="nav-link">Đăng ký dạy</a>
+      <a href="ui-blog.html" class="nav-link">Blog</a>
+      <a href="ui-gioi-thieu.html" class="nav-link">Về chúng tôi</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" title="Thông báo" style="background:var(--p50);border-color:var(--p200);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--p700)" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="nav-badge">5</span>
+      </button>
+      <a href="ui-dashboard-gia-su.html" class="nav-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Dashboard
+      </a>
+      <div class="nav-avatar">A</div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ PAGE ═══ -->
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="filter-card">
+      <div class="filter-title">Lọc thông báo</div>
+
+      <div class="filter-item active" onclick="setFilter('all',this)">
+        <div class="fi-left"><span class="fi-icon">🔔</span> Tất cả</div>
+        <span class="filter-badge blue">12</span>
+      </div>
+      <div class="filter-item" onclick="setFilter('unread',this)">
+        <div class="fi-left"><span class="fi-icon">🔵</span> Chưa đọc</div>
+        <span class="filter-badge">5</span>
+      </div>
+
+      <div class="filter-divider"></div>
+
+      <div class="filter-item" onclick="setFilter('schedule',this)">
+        <div class="fi-left"><span class="fi-icon">📅</span> Lịch dạy</div>
+        <span class="filter-badge blue">3</span>
+      </div>
+      <div class="filter-item" onclick="setFilter('message',this)">
+        <div class="fi-left"><span class="fi-icon">💬</span> Tin nhắn</div>
+        <span class="filter-badge blue">2</span>
+      </div>
+      <div class="filter-item" onclick="setFilter('payment',this)">
+        <div class="fi-left"><span class="fi-icon">💰</span> Thanh toán</div>
+      </div>
+      <div class="filter-item" onclick="setFilter('system',this)">
+        <div class="fi-left"><span class="fi-icon">⚙️</span> Hệ thống</div>
+      </div>
+
+      <div class="filter-divider"></div>
+
+      <div class="filter-item" onclick="setFilter('all',this);markAllRead()" style="color:var(--n500);">
+        <div class="fi-left"><span class="fi-icon">✅</span> Đánh dấu đã đọc</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- FEED -->
+  <main>
+    <div class="feed-header">
+      <div>
+        <div class="feed-title">Thông báo</div>
+        <div class="feed-subtitle" id="feed-subtitle">12 thông báo · 5 chưa đọc</div>
+      </div>
+      <button class="mark-all-btn" onclick="markAllRead()">✓ Đánh dấu tất cả đã đọc</button>
+    </div>
+
+    <div id="notif-feed">
+
+      <!-- GROUP: HÔM NAY -->
+      <div class="notif-group-label">Hôm nay</div>
+
+      <!-- 1. Đặt lịch mới — unread -->
+      <div class="notif-item unread" data-type="schedule" onclick="readItem(this)">
+        <div class="notif-dot"></div>
+        <div class="notif-avatar" style="background:linear-gradient(135deg,#E65100,#FFA726);">M</div>
+        <div class="notif-body">
+          <div class="notif-title">Phụ huynh Nguyễn Thị Mai đặt lịch học mới</div>
+          <div class="notif-desc">Môn Toán lớp 10 · Thứ 3, Thứ 5 lúc 19:00 · 8 buổi/tháng</div>
+          <div class="notif-actions-row">
+            <button class="notif-action primary" onclick="event.stopPropagation()">✓ Chấp nhận</button>
+            <button class="notif-action ghost" onclick="event.stopPropagation()">Xem chi tiết</button>
+          </div>
+          <div class="notif-time">Hôm nay · 09:15</div>
+        </div>
+      </div>
+
+      <!-- 2. Tin nhắn mới — unread -->
+      <div class="notif-item unread" data-type="message" onclick="readItem(this)">
+        <div class="notif-dot"></div>
+        <div class="notif-avatar" style="background:linear-gradient(135deg,#1565C0,#42A5F5);">H</div>
+        <div class="notif-body">
+          <div class="notif-title">Tin nhắn mới từ Trần Văn Hùng</div>
+          <div class="notif-desc">"Thầy ơi, buổi học tối nay 7h vẫn diễn ra bình thường chứ ạ?"</div>
+          <div class="notif-actions-row">
+            <button class="notif-action primary" onclick="event.stopPropagation()">💬 Trả lời</button>
+          </div>
+          <div class="notif-time">Hôm nay · 08:42</div>
+        </div>
+      </div>
+
+      <!-- 3. Sắp hết hạn — unread -->
+      <div class="notif-item unread" data-type="schedule" onclick="readItem(this)">
+        <div class="notif-dot"></div>
+        <div class="notif-icon orange">⚠️</div>
+        <div class="notif-body">
+          <div class="notif-title">Khoá học sắp hết hạn — Tiếng Anh IELTS</div>
+          <div class="notif-desc">Học viên Lê Minh Châu còn <strong>2 buổi cuối</strong>. Nhắc phụ huynh gia hạn để duy trì tiến độ.</div>
+          <div class="notif-actions-row">
+            <button class="notif-action primary" onclick="event.stopPropagation()">📨 Nhắc gia hạn</button>
+            <button class="notif-action ghost" onclick="event.stopPropagation()">Xem khoá học</button>
+          </div>
+          <div class="notif-time">Hôm nay · 08:00</div>
+        </div>
+      </div>
+
+      <!-- GROUP: HÔM QUA -->
+      <div class="notif-group-label">Hôm qua</div>
+
+      <!-- 4. Thanh toán — unread -->
+      <div class="notif-item unread" data-type="payment" onclick="readItem(this)">
+        <div class="notif-dot"></div>
+        <div class="notif-icon green">💰</div>
+        <div class="notif-body">
+          <div class="notif-title">Thanh toán 1.200.000đ đã xác nhận</div>
+          <div class="notif-desc">Khoá học Toán THPT · 8 buổi · Phụ huynh Nguyễn Văn Nam. Tiền sẽ vào ví trong 24 giờ.</div>
+          <div class="notif-time">Hôm qua · 18:30</div>
+        </div>
+      </div>
+
+      <!-- 5. Đánh giá 5 sao — unread -->
+      <div class="notif-item unread" data-type="system" onclick="readItem(this)">
+        <div class="notif-dot"></div>
+        <div class="notif-icon purple">⭐</div>
+        <div class="notif-body">
+          <div class="notif-title">Bạn nhận được đánh giá 5⭐ mới</div>
+          <div class="notif-desc">"Thầy dạy rất nhiệt tình, con tôi tiến bộ rõ rệt sau 2 tháng học. Sẽ tiếp tục gia hạn!" — Trần Thị Hoa</div>
+          <div class="notif-actions-row">
+            <button class="notif-action ghost" onclick="event.stopPropagation()">Xem đánh giá</button>
+          </div>
+          <div class="notif-time">Hôm qua · 16:00</div>
+        </div>
+      </div>
+
+      <!-- 6. Tin nhắn — read -->
+      <div class="notif-item" data-type="message" onclick="readItem(this)">
+        <div class="notif-avatar" style="background:linear-gradient(135deg,#7C3AED,#A78BFA);">N</div>
+        <div class="notif-body">
+          <div class="notif-title">Phụ huynh Lê Văn Nam hỏi về lịch học</div>
+          <div class="notif-desc">"Tuần sau có buổi nào trống không thầy? Muốn học thêm 1 buổi Vật lý."</div>
+          <div class="notif-time">Hôm qua · 14:22</div>
+        </div>
+      </div>
+
+      <!-- 7. Nhắc lịch dạy — read -->
+      <div class="notif-item" data-type="schedule" onclick="readItem(this)">
+        <div class="notif-icon blue">📅</div>
+        <div class="notif-body">
+          <div class="notif-title">Nhắc nhở: Buổi học Toán tối nay lúc 19:00</div>
+          <div class="notif-desc">Học viên Nguyễn Minh Khoa · Toán THPT · Online qua Zoom · Liên kết phòng đã gửi qua email.</div>
+          <div class="notif-time">Hôm qua · 12:00</div>
+        </div>
+      </div>
+
+      <!-- GROUP: TUẦN TRƯỚC -->
+      <div class="notif-group-label">Tuần trước</div>
+
+      <!-- 8. Xác minh tài khoản — read -->
+      <div class="notif-item" data-type="system" onclick="readItem(this)">
+        <div class="notif-icon green">✅</div>
+        <div class="notif-body">
+          <div class="notif-title">Tài khoản đã được xác minh thành công</div>
+          <div class="notif-desc">Hồ sơ của bạn đã được kiểm duyệt. Bây giờ bạn có thể nhận lớp và xuất hiện trong kết quả tìm kiếm của phụ huynh.</div>
+          <div class="notif-time">3 ngày trước · 10:15</div>
+        </div>
+      </div>
+
+      <!-- 9. Yêu cầu mới — read -->
+      <div class="notif-item" data-type="schedule" onclick="readItem(this)">
+        <div class="notif-avatar" style="background:linear-gradient(135deg,#0D9488,#5EEAD4);">T</div>
+        <div class="notif-body">
+          <div class="notif-title">Yêu cầu học mới từ phụ huynh Phạm Thị Thanh</div>
+          <div class="notif-desc">Môn Hoá học lớp 11 · 2 buổi/tuần · Đã hết hạn xử lý. Yêu cầu đã tự động huỷ.</div>
+          <div class="notif-time">4 ngày trước · 09:00</div>
+        </div>
+      </div>
+
+      <!-- 10. Hoa hồng — read -->
+      <div class="notif-item" data-type="payment" onclick="readItem(this)">
+        <div class="notif-icon orange">💸</div>
+        <div class="notif-body">
+          <div class="notif-title">Thu nhập tháng 4 đã được tổng kết</div>
+          <div class="notif-desc">Tổng thu nhập: <strong>4.800.000đ</strong> từ 32 buổi dạy · Phí nền tảng: 480.000đ · Nhận về: 4.320.000đ. Xem chi tiết trong mục Thu nhập.</div>
+          <div class="notif-time">5 ngày trước</div>
+        </div>
+      </div>
+
+      <!-- 11. Hệ thống — read -->
+      <div class="notif-item" data-type="system" onclick="readItem(this)">
+        <div class="notif-icon gray">📢</div>
+        <div class="notif-body">
+          <div class="notif-title">Cập nhật tính năng: Quản lý lịch dạy mới</div>
+          <div class="notif-desc">Chúng tôi vừa ra mắt tính năng lịch dạy mới với giao diện trực quan hơn. Khám phá ngay trong mục Lịch dạy của bạn.</div>
+          <div class="notif-time">6 ngày trước</div>
+        </div>
+      </div>
+
+      <!-- 12. Huy hiệu — read -->
+      <div class="notif-item" data-type="system" onclick="readItem(this)">
+        <div class="notif-icon purple">🏅</div>
+        <div class="notif-body">
+          <div class="notif-title">Bạn đạt danh hiệu "Gia sư xuất sắc tháng 4"</div>
+          <div class="notif-desc">Dựa trên điểm đánh giá 4.8⭐ và 32 buổi dạy đúng giờ. Huy hiệu đã được gắn vào hồ sơ công khai của bạn.</div>
+          <div class="notif-time">7 ngày trước</div>
+        </div>
+      </div>
+
+    </div><!-- /#notif-feed -->
+  </main>
+
+</div><!-- /.page-wrap -->
+
+<script>
+let unreadCount = 5;
+let totalCount = 12;
+
+function updateSubtitle() {
+  document.getElementById('feed-subtitle').textContent =
+    totalCount + ' thông báo · ' + unreadCount + ' chưa đọc';
+}
+
+function readItem(el) {
+  if (el.classList.contains('unread')) {
+    el.classList.remove('unread');
+    const dot = el.querySelector('.notif-dot');
+    if (dot) dot.remove();
+    unreadCount = Math.max(0, unreadCount - 1);
+    updateSubtitle();
+    // Update sidebar badge
+    const badge = document.querySelector('.nav-badge');
+    if (badge) badge.textContent = unreadCount > 0 ? unreadCount : '';
+    // Update filter badge
+    const filterBadge = document.querySelector('.filter-item.active .filter-badge');
+    // noop for now
+  }
+}
+
+function markAllRead() {
+  document.querySelectorAll('.notif-item.unread').forEach(el => readItem(el));
+  unreadCount = 0;
+  updateSubtitle();
+  const badge = document.querySelector('.nav-badge');
+  if (badge) badge.style.display = 'none';
+}
+
+let currentFilter = 'all';
+function setFilter(type, el) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-item').forEach(f => f.classList.remove('active'));
+  el.classList.add('active');
+
+  document.querySelectorAll('.notif-item').forEach(item => {
+    if (type === 'all') {
+      item.style.display = '';
+    } else if (type === 'unread') {
+      item.style.display = item.classList.contains('unread') ? '' : 'none';
+    } else {
+      item.style.display = item.dataset.type === type ? '' : 'none';
+    }
+  });
+
+  // Hide/show group labels based on visible items
+  document.querySelectorAll('.notif-group-label').forEach(label => {
+    let next = label.nextElementSibling;
+    let hasVisible = false;
+    while (next && !next.classList.contains('notif-group-label')) {
+      if (next.style.display !== 'none') hasVisible = true;
+      next = next.nextElementSibling;
+    }
+    label.style.display = hasVisible ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

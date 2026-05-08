@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tìm gia sư — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p900:#0D2D6B;--p800:#1239A0;--p700:#1565C0;--p600:#1976D2;--p500:#1E88E5;
+  --p400:#42A5F5;--p300:#90CAF9;--p200:#BBDEFB;--p100:#E3F2FD;--p50:#F0F8FF;
+  --s700:#C46200;--s600:#E65100;--s500:#F57C00;--s400:#FFA726;--s300:#FFCC80;--s100:#FFF3E0;
+  --n900:#0F172A;--n800:#1E293B;--n700:#334155;--n600:#475569;--n500:#64748B;
+  --n400:#94A3B8;--n300:#CBD5E1;--n200:#E2E8F0;--n100:#F1F5F9;--n50:#F8FAFC;
+  --green:#16A34A;--green-bg:#DCFCE7;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-2xl:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:var(--n800);background:var(--n50);-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
+
+/* ── NAVBAR ── */
+.navbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--n200);}
+.nav-inner{display:flex;align-items:center;height:68px;max-width:1400px;margin:0 auto;padding:0 32px;}
+.nav-logo{display:flex;align-items:center;gap:10px;margin-right:40px;flex-shrink:0;}
+.nav-logo-icon{width:36px;height:36px;border-radius:9px;background:var(--p700);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(21,101,192,.3);}
+.nav-logo-icon svg{width:20px;height:20px;fill:white;}
+.nav-logo-text{font-size:17px;font-weight:800;color:var(--p900);letter-spacing:-.3px;}
+.nav-logo-text em{color:var(--s500);font-style:normal;}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-link{padding:7px 14px;border-radius:var(--r-sm);font-size:14px;font-weight:500;color:var(--n600);transition:all .15s;white-space:nowrap;}
+.nav-link:hover{background:var(--n100);color:var(--n800);}
+.nav-link.active{color:var(--p700);font-weight:600;background:var(--p50);}
+.nav-actions{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.btn-ghost{height:38px;padding:0 18px;border-radius:var(--r-sm);font-size:13.5px;font-weight:600;color:var(--n700);background:transparent;border:1.5px solid var(--n200);transition:all .15s;}
+.btn-ghost:hover{background:var(--n50);}
+.btn-primary{height:38px;padding:0 20px;border-radius:var(--r-sm);font-size:13.5px;font-weight:700;color:#fff;background:var(--p700);box-shadow:0 2px 8px rgba(21,101,192,.28);transition:all .15s;}
+.btn-primary:hover{background:var(--p800);transform:translateY(-1px);}
+
+/* ── STATE SWITCHER BAR ── */
+.state-bar{
+  background:#fff;border-bottom:1px solid var(--n200);
+  position:sticky;top:68px;z-index:100;
+}
+.state-bar-inner{
+  max-width:1400px;margin:0 auto;padding:0 32px;
+  display:flex;align-items:center;gap:0;
+  height:52px;
+}
+.state-bar-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--n400);margin-right:12px;flex-shrink:0;}
+.state-btns{display:flex;gap:4px;background:var(--n100);border-radius:var(--r-md);padding:3px;}
+.state-btn{
+  height:34px;padding:0 18px;border-radius:var(--r-sm);
+  font-size:13px;font-weight:600;color:var(--n500);
+  background:transparent;transition:all .15s;white-space:nowrap;
+}
+.state-btn:hover{color:var(--n700);}
+.state-btn.active{background:#fff;color:var(--p700);box-shadow:0 1px 4px rgba(0,0,0,.1);}
+.state-desc{margin-left:16px;font-size:12px;color:var(--n400);font-style:italic;}
+
+/* ── PAGE LAYOUT ── */
+.page-wrap{max-width:1400px;margin:0 auto;padding:24px 32px;display:grid;grid-template-columns:288px 1fr;gap:24px;align-items:start;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);
+  overflow:hidden;position:sticky;top:136px;
+}
+.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--n200);display:flex;align-items:center;justify-content:space-between;}
+.sidebar-title{font-size:15px;font-weight:800;color:var(--n900);}
+.sidebar-clear{font-size:12px;font-weight:600;color:var(--p700);cursor:pointer;}
+.sidebar-clear:hover{text-decoration:underline;}
+
+.filter-section{border-bottom:1px solid var(--n200);}
+.filter-section:last-of-type{border-bottom:none;}
+.filter-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;cursor:pointer;
+}
+.filter-head:hover{background:var(--n50);}
+.filter-name{font-size:13px;font-weight:700;color:var(--n800);}
+.filter-toggle{color:var(--n400);font-size:18px;line-height:1;transition:transform .2s;user-select:none;}
+.filter-toggle.open{transform:rotate(180deg);}
+.filter-body{padding:4px 20px 16px;}
+
+/* Checkboxes */
+.check-item{display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer;}
+.check-item input[type=checkbox]{
+  width:16px;height:16px;border-radius:4px;accent-color:var(--p700);cursor:pointer;flex-shrink:0;
+}
+.check-label{font-size:13.5px;color:var(--n700);flex:1;}
+.check-count{font-size:11px;color:var(--n400);font-weight:500;}
+
+/* Radios */
+.radio-item{display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer;}
+.radio-item input[type=radio]{width:16px;height:16px;accent-color:var(--p700);cursor:pointer;flex-shrink:0;}
+.radio-label{font-size:13.5px;color:var(--n700);}
+
+/* Select */
+.filter-select{
+  width:100%;height:38px;border:1.5px solid var(--n200);border-radius:var(--r-sm);
+  padding:0 12px;font-size:13.5px;color:var(--n700);
+  font-family:'Inter',sans-serif;background:#fff;cursor:pointer;
+  appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394A3B8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+}
+.filter-select:focus{outline:none;border-color:var(--p700);box-shadow:0 0 0 3px rgba(21,101,192,.1);}
+
+/* Price range */
+.price-range-display{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;
+}
+.price-val{font-size:13px;font-weight:700;color:var(--p700);}
+.range-track{position:relative;height:6px;background:var(--n200);border-radius:3px;margin:8px 0;}
+.range-fill{position:absolute;left:18%;right:25%;height:100%;background:var(--p700);border-radius:3px;}
+.range-thumb{position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;border:2.5px solid var(--p700);top:50%;transform:translateY(-50%);box-shadow:0 2px 6px rgba(0,0,0,.12);cursor:pointer;}
+.range-thumb.left{left:calc(18% - 9px);}
+.range-thumb.right{right:calc(25% - 9px);}
+
+/* Star filter */
+.star-item{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;}
+.star-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--p700);flex-shrink:0;}
+.star-stars{color:#F59E0B;font-size:13px;letter-spacing:.5px;}
+.star-label{font-size:13px;color:var(--n600);}
+
+/* Toggle switch */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:2px 0;}
+.toggle-label{font-size:13.5px;color:var(--n700);}
+.toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0;}
+.toggle-wrap input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-slider{
+  position:absolute;inset:0;border-radius:12px;background:var(--n200);
+  cursor:pointer;transition:background .2s;
+}
+.toggle-slider::after{
+  content:'';position:absolute;left:3px;top:3px;
+  width:18px;height:18px;border-radius:50%;
+  background:#fff;transition:transform .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,.2);
+}
+.toggle-wrap input:checked + .toggle-slider{background:var(--p700);}
+.toggle-wrap input:checked + .toggle-slider::after{transform:translateX(20px);}
+
+/* Apply button */
+.sidebar-apply{
+  padding:16px 20px;border-top:1px solid var(--n200);
+}
+.btn-apply{
+  width:100%;height:44px;border-radius:var(--r-md);
+  background:linear-gradient(135deg,var(--s500),var(--s600));
+  color:#fff;font-size:14px;font-weight:700;
+  box-shadow:0 4px 14px rgba(245,124,0,.35);
+  transition:all .2s;
+}
+.btn-apply:hover{background:linear-gradient(135deg,var(--s600),var(--s700));transform:translateY(-1px);}
+
+/* ── MAIN CONTENT ── */
+.main-content{min-height:600px;}
+
+/* ── STATE 1: EMPTY (chưa tìm kiếm) ── */
+#state-empty{}
+
+/* Big search hero inside main */
+.search-hero{
+  background:linear-gradient(135deg,var(--p900),var(--p700));
+  border-radius:var(--r-2xl);padding:40px 36px;margin-bottom:24px;
+  position:relative;overflow:hidden;
+}
+.search-hero::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:240px;height:240px;border-radius:50%;
+  background:rgba(255,255,255,.07);
+}
+.search-hero::after{
+  content:'';position:absolute;bottom:-40px;left:10%;
+  width:180px;height:180px;border-radius:50%;
+  background:rgba(255,255,255,.05);
+}
+.sh-title{font-size:26px;font-weight:900;color:#fff;margin-bottom:6px;position:relative;z-index:1;letter-spacing:-.5px;}
+.sh-sub{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:24px;position:relative;z-index:1;}
+.sh-searchbox{
+  display:flex;align-items:stretch;
+  background:rgba(255,255,255,.97);
+  border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:0 12px 40px rgba(0,0,0,.25);
+  position:relative;z-index:1;
+}
+.sh-sf{
+  flex:1;padding:12px 16px;border-right:1px solid var(--n200);
+  display:flex;flex-direction:column;gap:1px;
+  position:relative;cursor:pointer;transition:background .15s;
+}
+.sh-sf:hover{background:rgba(255,255,255,.08);}
+.sh-sf:last-of-type{border-right:none;}
+.sh-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--n400);}
+.sh-val{font-size:14px;font-weight:500;color:var(--n800);}
+.sh-val.ph{color:var(--n400);font-weight:400;}
+
+/* Interactive hero inputs */
+.sh-input,.sh-select{
+  background:transparent;border:none;outline:none;
+  font-size:14px;font-weight:500;color:var(--n800);
+  width:100%;font-family:'Inter',sans-serif;
+  cursor:pointer;padding:0;
+  appearance:none;-webkit-appearance:none;
+}
+.sh-input::placeholder{color:var(--n400);font-weight:400;}
+.sh-sf-caret{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  color:rgba(100,116,139,.6);pointer-events:none;line-height:1;
+}
+.sh-sf-caret svg{width:12px;height:12px;display:block;}
+
+/* Subject autocomplete dropdown */
+.sh-subdrop{
+  position:absolute;top:calc(100% + 6px);left:-1px;
+  min-width:260px;
+  background:#fff;border:1.5px solid var(--p300);
+  border-radius:var(--r-md);
+  box-shadow:0 16px 48px rgba(0,0,0,.18);
+  z-index:500;overflow:hidden;
+  display:none;
+}
+.sh-subdrop.open{display:block;}
+.sh-drop-item{
+  padding:10px 16px;font-size:13.5px;color:var(--n700);
+  cursor:pointer;transition:background .1s;
+  display:flex;align-items:center;gap:8px;
+}
+.sh-drop-item:hover,.sh-drop-item.selected{background:var(--p50);color:var(--p700);font-weight:600;}
+.sh-drop-item .di-icon{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* City / format custom dropdown */
+.sh-custom-drop{
+  position:absolute;top:calc(100% + 6px);left:-1px;
+  min-width:220px;
+  background:#fff;border:1.5px solid var(--p300);
+  border-radius:var(--r-md);
+  box-shadow:0 16px 48px rgba(0,0,0,.18);
+  z-index:500;overflow:hidden;
+  display:none;
+}
+.sh-custom-drop.open{display:block;}
+.sh-cd-item{
+  padding:10px 16px;font-size:13.5px;color:var(--n700);
+  cursor:pointer;transition:background .1s;
+}
+.sh-cd-item:hover,.sh-cd-item.active{background:var(--p50);color:var(--p700);font-weight:600;}
+
+.btn-sh-search{
+  flex-shrink:0;padding:0 24px;
+  background:linear-gradient(135deg,var(--s500),var(--s600));
+  color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;gap:8px;
+  transition:all .15s;
+}
+.btn-sh-search:hover{background:linear-gradient(135deg,var(--s600),var(--s700));}
+
+/* Popular tags below search */
+.sh-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;position:relative;z-index:1;}
+.sh-tag-label{font-size:12px;color:rgba(255,255,255,.5);}
+.sh-tag{padding:5px 13px;border-radius:30px;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.18);cursor:pointer;transition:all .15s;}
+.sh-tag:hover{background:rgba(255,255,255,.22);color:#fff;}
+
+/* Popular subjects in empty state */
+.empty-section-title{font-size:17px;font-weight:800;color:var(--n900);margin-bottom:16px;}
+.empty-subjects{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.empty-scard{
+  background:#fff;border:1.5px solid var(--n200);border-radius:var(--r-lg);
+  padding:18px 14px;text-align:center;cursor:pointer;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.empty-scard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--sc-c,var(--p700));transform:scaleX(0);transform-origin:center;transition:transform .25s;}
+.empty-scard:hover::after{transform:scaleX(1);}
+.empty-scard:hover{border-color:transparent;box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-2px);}
+.es-icon{width:48px;height:48px;border-radius:12px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;background:var(--sc-bg,var(--p50));}
+.es-icon svg{width:26px;height:26px;}
+.es-name{font-size:13px;font-weight:700;color:var(--n800);}
+.es-count{font-size:11px;color:var(--n400);margin-top:2px;}
+
+/* Featured tutors in empty state */
+.featured-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+/* ── TUTOR CARD (universal, no clip) ── */
+.tcard{
+  background:#fff;
+  border-radius:var(--r-xl);
+  border:1.5px solid var(--n200);
+  transition:all .25s;
+  display:flex;flex-direction:column;
+  /* NO overflow:hidden on entire card */
+}
+.tcard:hover{box-shadow:0 12px 40px rgba(0,0,0,.1),0 4px 12px rgba(0,0,0,.06);border-color:var(--p300);transform:translateY(-3px);}
+
+.tcard-cover{
+  height:88px;
+  border-radius:var(--r-xl) var(--r-xl) 0 0;
+  overflow:hidden; /* overflow:hidden ONLY on the cover */
+  position:relative;flex-shrink:0;
+}
+.tc-a{background:linear-gradient(135deg,#1239A0 0%,#1565C0 60%,#1976D2 100%);}
+.tc-a::before{content:'';position:absolute;bottom:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.1);}
+.tc-b{background:linear-gradient(135deg,#065F46,#059669 55%,#10B981);}
+.tc-b::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;border-radius:0 0 0 80px;background:rgba(255,255,255,.12);}
+.tc-c{background:linear-gradient(135deg,#5B21B6,#7C3AED 60%,#8B5CF6);}
+.tc-c::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.05) 10px,rgba(255,255,255,.05) 20px);}
+.tc-d{background:linear-gradient(135deg,#92400E,#D97706 55%,#F59E0B);}
+.tc-d::before{content:'';position:absolute;bottom:-20px;left:-20px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.12);}
+
+.tcard-badges{position:absolute;top:10px;right:10px;display:flex;gap:4px;flex-direction:column;align-items:flex-end;z-index:1;}
+.badge-pro{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:30px;font-size:10px;font-weight:700;background:linear-gradient(135deg,var(--s500),var(--s600));color:#fff;box-shadow:0 2px 8px rgba(245,124,0,.4);}
+.badge-verified{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:30px;font-size:10px;font-weight:700;background:rgba(255,255,255,.95);color:var(--p700);}
+.badge-new{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:30px;font-size:10px;font-weight:700;background:#16A34A;color:#fff;}
+
+/* Avatar OUTSIDE cover, overlaps via negative margin */
+.tcard-av-wrap{padding:0 16px;}
+.tcard-av{
+  width:60px;height:60px;border-radius:50%;
+  border:3px solid #fff;
+  object-fit:cover;
+  box-shadow:0 4px 16px rgba(0,0,0,.18);
+  margin-top:-30px;
+  display:block;
+  position:relative;z-index:2;
+}
+
+.tcard-body{padding:8px 16px 18px;flex:1;display:flex;flex-direction:column;}
+.tcard-name{font-size:15px;font-weight:800;color:var(--n900);margin-bottom:2px;}
+.tcard-subject{font-size:12.5px;color:var(--n500);margin-bottom:10px;}
+.tcard-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:11px;}
+.tag{padding:3px 9px;border-radius:30px;font-size:11px;font-weight:600;background:var(--n100);color:var(--n600);border:1px solid var(--n200);}
+.tag.online{background:var(--p50);color:var(--p700);border-color:var(--p200);}
+.tag.home{background:#FFF7ED;color:#C2410C;border-color:#FED7AA;}
+.tcard-rating{display:flex;align-items:center;gap:5px;margin-bottom:14px;}
+.stars{color:#F59E0B;font-size:12px;letter-spacing:.5px;}
+.r-score{font-size:13px;font-weight:800;color:var(--n900);}
+.r-count{font-size:11.5px;color:var(--n400);}
+.tcard-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--n100);padding-top:12px;margin-top:auto;}
+.price-num{font-size:16px;font-weight:900;color:var(--p800);}
+.price-unit{font-size:10.5px;color:var(--n400);}
+.btn-view{height:34px;padding:0 14px;border-radius:var(--r-sm);font-size:12.5px;font-weight:700;color:#fff;background:var(--p700);transition:all .15s;}
+.btn-view:hover{background:var(--p800);}
+
+/* ── STATE 2: RESULTS ── */
+#state-results{display:none;}
+.results-header{background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);padding:16px 20px;margin-bottom:20px;}
+.results-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.results-count{font-size:15px;font-weight:700;color:var(--n900);}
+.results-count span{color:var(--p700);}
+.sort-wrap{display:flex;align-items:center;gap:8px;}
+.sort-label{font-size:13px;color:var(--n500);}
+.sort-select{
+  height:36px;padding:0 32px 0 12px;border:1.5px solid var(--n200);border-radius:var(--r-sm);
+  font-size:13px;font-weight:600;color:var(--n800);font-family:'Inter',sans-serif;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2394A3B8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+  appearance:none;cursor:pointer;
+}
+.active-filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.af-label{font-size:12px;color:var(--n500);}
+.af-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 12px;border-radius:30px;
+  font-size:12px;font-weight:600;
+  background:var(--p50);color:var(--p700);
+  border:1px solid var(--p200);
+}
+.af-chip-x{font-size:14px;line-height:1;cursor:pointer;color:var(--p400);}
+.af-chip-x:hover{color:var(--p700);}
+.af-clear{font-size:12px;font-weight:600;color:var(--n500);cursor:pointer;text-decoration:underline;}
+.af-clear:hover{color:var(--n700);}
+
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+
+/* Pagination */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;}
+.pg-btn{
+  width:38px;height:38px;border-radius:var(--r-sm);
+  font-size:13.5px;font-weight:600;color:var(--n600);
+  background:#fff;border:1.5px solid var(--n200);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;cursor:pointer;
+}
+.pg-btn:hover{background:var(--n50);border-color:var(--n300);}
+.pg-btn.active{background:var(--p700);color:#fff;border-color:var(--p700);}
+.pg-btn.arrow{font-size:16px;}
+.pg-dots{color:var(--n400);padding:0 4px;}
+.pg-info{font-size:12px;color:var(--n400);margin-left:8px;}
+
+/* ── STATE 3: NO RESULT ── */
+#state-noresult{display:none;}
+.noresult-wrap{
+  background:#fff;border-radius:var(--r-2xl);border:1.5px solid var(--n200);
+  padding:64px 40px;text-align:center;
+}
+.nr-illus{
+  width:120px;height:120px;border-radius:50%;
+  background:var(--n100);display:flex;align-items:center;justify-content:center;
+  margin:0 auto 24px;
+}
+.nr-illus svg{width:56px;height:56px;}
+.nr-title{font-size:22px;font-weight:800;color:var(--n900);margin-bottom:10px;}
+.nr-sub{font-size:15px;color:var(--n500);line-height:1.7;max-width:440px;margin:0 auto 32px;}
+.nr-suggestions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:28px;}
+.nr-sug{padding:7px 16px;border-radius:30px;font-size:13px;font-weight:600;background:var(--p50);color:var(--p700);border:1.5px solid var(--p200);cursor:pointer;transition:all .15s;}
+.nr-sug:hover{background:var(--p100);}
+.nr-actions{display:flex;gap:12px;justify-content:center;}
+.btn-nr-reset{height:44px;padding:0 28px;border-radius:var(--r-md);font-size:14px;font-weight:700;color:#fff;background:var(--p700);transition:all .15s;}
+.btn-nr-reset:hover{background:var(--p800);}
+.btn-nr-post{height:44px;padding:0 28px;border-radius:var(--r-md);font-size:14px;font-weight:700;color:var(--p700);background:transparent;border:1.5px solid var(--p200);}
+.btn-nr-post:hover{background:var(--p50);}
+
+/* Related tutors in no-result */
+.nr-related{background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);padding:24px;margin-top:24px;}
+.nr-related-title{font-size:16px;font-weight:800;color:var(--n900);margin-bottom:16px;}
+.nr-related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+/* ── FOOTER ── */
+.footer{background:#060F1F;margin-top:40px;}
+.footer::before{content:'';display:block;height:3px;background:linear-gradient(90deg,var(--p700),var(--p400) 40%,var(--s500) 70%,var(--s300));}
+.footer-top{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr;gap:48px;padding:48px 0;border-bottom:1px solid rgba(255,255,255,.07);max-width:1400px;margin:0 auto;padding-left:32px;padding-right:32px;}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.fl-icon{width:32px;height:32px;border-radius:8px;background:var(--p700);display:flex;align-items:center;justify-content:center;}
+.fl-icon svg{width:18px;height:18px;fill:white;}
+.fl-name{font-size:15px;font-weight:800;color:#fff;}
+.footer-desc{font-size:13px;color:rgba(255,255,255,.38);line-height:1.8;margin-bottom:20px;}
+.footer-socials{display:flex;gap:8px;}
+.fsoc{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(255,255,255,.4);cursor:pointer;transition:all .15s;}
+.fsoc:hover{background:var(--p700);color:#fff;}
+.fcol-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.3);margin-bottom:16px;}
+.footer-link{display:block;font-size:13px;color:rgba(255,255,255,.45);margin-bottom:11px;transition:color .15s;}
+.footer-link:hover{color:rgba(255,255,255,.8);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:20px 32px;max-width:1400px;margin:0 auto;}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.22);}
+.footer-trust{display:flex;gap:8px;}
+.ftrust{padding:3px 10px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);font-size:10px;font-weight:700;color:rgba(255,255,255,.28);}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+      </svg>
+      <div class="nav-logo-text">giasu<em>.edu.vn</em></div>
+    </a>
+    <div class="nav-links">
+      <a href="ui-trang-chu.html" class="nav-link">Trang chủ</a>
+      <a href="ui-tim-gia-su.html" class="nav-link active">Tìm gia sư</a>
+      <a href="ui-dang-tin.html" class="nav-link">Đăng tin</a>
+      <a href="ui-dang-ky-day.html" class="nav-link">Đăng ký dạy</a>
+      <a href="ui-blog.html" class="nav-link">Blog</a>
+      <a href="ui-gioi-thieu.html" class="nav-link">Về chúng tôi</a>
+    </div>
+    <div class="nav-actions">
+      <a href="ui-auth.html" class="btn-ghost">Đăng nhập</a>
+      <a href="ui-auth.html" class="btn-primary">Đăng ký</a>
+    </div>
+  </div>
+</nav>
+
+<!-- STATE SWITCHER -->
+<div class="state-bar">
+  <div class="state-bar-inner">
+    <span class="state-bar-label">Demo state:</span>
+    <div class="state-btns">
+      <button class="state-btn active" onclick="setState('empty')">Chưa tìm kiếm</button>
+      <button class="state-btn" onclick="setState('results')">Có kết quả (247)</button>
+      <button class="state-btn" onclick="setState('noresult')">Không tìm thấy</button>
+    </div>
+    <span class="state-desc" id="state-hint">Trạng thái mặc định khi user vào trang lần đầu</span>
+  </div>
+</div>
+
+<!-- PAGE WRAP -->
+<div class="page-wrap">
+
+  <!-- ═══ SIDEBAR (always visible) ═══ -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">Bộ lọc tìm kiếm</span>
+      <span class="sidebar-clear" onclick="clearAll()">Xoá tất cả</span>
+    </div>
+
+    <!-- 1. Môn học -->
+    <div class="filter-section">
+      <div class="filter-head" onclick="toggleFilter(this)">
+        <span class="filter-name">Môn học</span>
+        <span class="filter-toggle open">&#8964;</span>
+      </div>
+      <div class="filter-body">
+        <label class="check-item">
+          <input type="checkbox" checked>
+          <span class="check-label">Toán học</span>
+          <span class="check-count">2.340</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="check-label">Tiếng Anh</span>
+          <span class="check-count">1.890</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="check-label">Vật Lý</span>
+          <span class="check-count">980</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="check-label">Hóa Học</span>
+          <span class="check-count">870</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="check-label">Lập trình</span>
+          <span class="check-count">760</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="check-label">Ngữ Văn</span>
+          <span class="check-count">1.100</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="check-label">Âm nhạc</span>
+          <span class="check-count">540</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="check-label">Mỹ thuật</span>
+          <span class="check-count">380</span>
+        </label>
+        <label class="check-item" style="color:var(--p700);font-size:12.5px;font-weight:600;cursor:pointer;padding-top:4px;">
+          + Xem thêm 14 môn khác
+        </label>
+      </div>
+    </div>
+
+    <!-- 2. Cấp độ -->
+    <div class="filter-section">
+      <div class="filter-head" onclick="toggleFilter(this)">
+        <span class="filter-name">Cấp độ học sinh</span>
+        <span class="filter-toggle open">&#8964;</span>
+      </div>
+      <div class="filter-body">
+        <label class="check-item"><input type="checkbox"><span class="check-label">Tiểu học</span></label>
+        <label class="check-item"><input type="checkbox"><span class="check-label">THCS (lớp 6–9)</span></label>
+        <label class="check-item"><input type="checkbox" checked><span class="check-label">THPT (lớp 10–12)</span></label>
+        <label class="check-item"><input type="checkbox"><span class="check-label">Đại học / Cao đẳng</span></label>
+        <label class="check-item"><input type="checkbox"><span class="check-label">Người đi làm</span></label>
+        <label class="check-item"><input type="checkbox"><span class="check-label">Luyện thi IELTS / TOEIC</span></label>
+      </div>
+    </div>
+
+    <!-- 3. Hình thức -->
+    <div class="filter-section">
+      <div class="filter-head" onclick="toggleFilter(this)">
+        <span class="filter-name">Hình thức dạy</span>
+        <span class="filter-toggle open">&#8964;</span>
+      </div>
+      <div class="filter-body">
+        <label class="radio-item"><input type="radio" name="format" value="all"><span class="radio-label">Tất cả hình thức</span></label>
+        <label class="radio-item"><input type="radio" name="format" value="online" checked><span class="radio-label">Online (Zoom / Meet / Skype)</span></label>
+        <label class="radio-item"><input type="radio" name="format" value="home"><span class="radio-label">Tại nhà học sinh</span></label>
+        <label class="radio-item"><input type="radio" name="format" value="tutor"><span class="radio-label">Tại nhà gia sư</span></label>
+        <label class="radio-item"><input type="radio" name="format" value="both"><span class="radio-label">Kết hợp</span></label>
+      </div>
+    </div>
+
+    <!-- 4. Khu vực -->
+    <div class="filter-section">
+      <div class="filter-head" onclick="toggleFilter(this)">
+        <span class="filter-name">Khu vực</span>
+        <span class="filter-toggle open">&#8964;</span>
+      </div>
+      <div class="filter-body" style="display:flex;flex-direction:column;gap:8px;">
+        <select class="filter-select" id="sidebar-city" onchange="syncCityFromSidebar()">
+          <option value="hcm" selected>TP. Hồ Chí Minh</option>
+          <option value="hn">Hà Nội</option>
+          <option value="dn">Đà Nẵng</option>
+          <option value="ct">Cần Thơ</option>
+          <option value="hp">Hải Phòng</option>
+        </select>
+        <select class="filter-select">
+          <option>-- Tất cả quận/huyện --</option>
+          <option>Quận 1</option>
+          <option>Quận 3</option>
+          <option>Quận 5</option>
+          <option>Quận 7</option>
+          <option>Quận 10</option>
+          <option>Bình Thạnh</option>
+          <option>Gò Vấp</option>
+          <option>Tân Bình</option>
+          <option>Phú Nhuận</option>
+        </select>
+        <div style="font-size:11.5px;color:var(--n400);display:flex;align-items:center;gap:4px;">
+          <input type="checkbox"> &nbsp;Bán kính 5km từ vị trí của tôi
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Mức giá -->
+    <div class="filter-section">
+      <div class="filter-head" onclick="toggleFilter(this)">
+        <span class="filter-name">Học phí / giờ</span>
+        <span class="filter-toggle open">&#8964;</span>
+      </div>
+      <div class="filter-body">
+        <div class="price-range-display">
+          <span class="price-val">100.000đ</span>
+          <span style="font-size:12px;color:var(--n400);">đến</span>
+          <span class="price-val">300.000đ</span>
+        </div>
+        <div class="range-track">
+          <div class="range-fill"></div>
+          <div class="range-thumb left"></div>
+          <div class="range-thumb right"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--n400);margin-top:6px;">
+          <span>50.000đ</span><span>500.000đ+</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Đánh giá -->
+    <div class="filter-section">
+      <div class="filter-head" onclick="toggleFilter(this)">
+        <span class="filter-name">Đánh giá</span>
+        <span class="filter-toggle open">&#8964;</span>
+      </div>
+      <div class="filter-body">
+        <label class="star-item"><input type="checkbox"><span class="star-stars">★★★★★</span><span class="star-label">5 sao</span><span class="check-count" style="margin-left:auto;">3.241</span></label>
+        <label class="star-item"><input type="checkbox" checked><span class="star-stars">★★★★</span><span class="star-label">4 sao trở lên</span><span class="check-count" style="margin-left:auto;">7.890</span></label>
+        <label class="star-item"><input type="checkbox"><span class="star-stars">★★★</span><span class="star-label">3 sao trở lên</span><span class="check-count" style="margin-left:auto;">9.100</span></label>
+      </div>
+    </div>
+
+    <!-- 7. Số buổi đã dạy -->
+    <div class="filter-section">
+      <div class="filter-head" onclick="toggleFilter(this)">
+        <span class="filter-name">Kinh nghiệm</span>
+        <span class="filter-toggle open">&#8964;</span>
+      </div>
+      <div class="filter-body">
+        <label class="radio-item"><input type="radio" name="exp" checked><span class="radio-label">Tất cả</span></label>
+        <label class="radio-item"><input type="radio" name="exp"><span class="radio-label">Trên 50 buổi đã dạy</span></label>
+        <label class="radio-item"><input type="radio" name="exp"><span class="radio-label">Trên 100 buổi đã dạy</span></label>
+        <label class="radio-item"><input type="radio" name="exp"><span class="radio-label">Trên 5 năm kinh nghiệm</span></label>
+      </div>
+    </div>
+
+    <!-- 8. Xác minh -->
+    <div class="filter-section">
+      <div class="filter-head" onclick="toggleFilter(this)">
+        <span class="filter-name">Xác minh & Chứng chỉ</span>
+        <span class="filter-toggle open">&#8964;</span>
+      </div>
+      <div class="filter-body" style="display:flex;flex-direction:column;gap:10px;">
+        <div class="toggle-row">
+          <span class="toggle-label">Chỉ gia sư đã xác minh</span>
+          <label class="toggle-wrap">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">Có bằng đại học</span>
+          <label class="toggle-wrap">
+            <input type="checkbox">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">Có chứng chỉ nghiệp vụ sư phạm</span>
+          <label class="toggle-wrap">
+            <input type="checkbox">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-apply">
+      <button class="btn-apply">Áp dụng bộ lọc</button>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="main-content">
+
+    <!-- ══ STATE 1: EMPTY ══ -->
+    <div id="state-empty">
+      <!-- Search hero -->
+      <div class="search-hero">
+        <div class="sh-title">Tìm gia sư phù hợp cho bạn</div>
+        <div class="sh-sub">Nhập môn học và địa điểm — chúng tôi sẽ kết nối bạn với gia sư tốt nhất</div>
+        <div class="sh-searchbox">
+
+          <!-- Môn học: text + autocomplete -->
+          <div class="sh-sf" id="sf-subject-wrap">
+            <div class="sh-label">Môn học</div>
+            <input class="sh-input" id="sf-subject" type="text" placeholder="Toán, Tiếng Anh, Lập trình…"
+              autocomplete="off"
+              oninput="filterSubjectDrop()"
+              onfocus="openSubjectDrop()"
+              onblur="closeSubjectDrop()">
+            <!-- autocomplete dropdown -->
+            <div class="sh-subdrop" id="subject-drop">
+              <div class="sh-drop-item" data-val="Toán học" onmousedown="pickSubject('Toán học')">
+                <div class="di-icon" style="background:#EFF6FF;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"><path d="M3 17l4-8 4 4 4-6 4 10"/></svg></div>Toán học
+              </div>
+              <div class="sh-drop-item" data-val="Tiếng Anh" onmousedown="pickSubject('Tiếng Anh')">
+                <div class="di-icon" style="background:#F0FDF4;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>Tiếng Anh
+              </div>
+              <div class="sh-drop-item" data-val="Vật Lý" onmousedown="pickSubject('Vật Lý')">
+                <div class="di-icon" style="background:#F5F3FF;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/></svg></div>Vật Lý
+              </div>
+              <div class="sh-drop-item" data-val="Hóa Học" onmousedown="pickSubject('Hóa Học')">
+                <div class="di-icon" style="background:#FFF7ED;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2.5" stroke-linecap="round"><path d="M9 3h6v7l3 6H6l3-6V3z"/></svg></div>Hóa Học
+              </div>
+              <div class="sh-drop-item" data-val="Lập trình" onmousedown="pickSubject('Lập trình')">
+                <div class="di-icon" style="background:#F0FDFA;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>Lập trình
+              </div>
+              <div class="sh-drop-item" data-val="Ngữ Văn" onmousedown="pickSubject('Ngữ Văn')">
+                <div class="di-icon" style="background:#FFF1F2;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E11D48" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>Ngữ Văn
+              </div>
+              <div class="sh-drop-item" data-val="Âm nhạc" onmousedown="pickSubject('Âm nhạc')">
+                <div class="di-icon" style="background:#FDF4FF;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A21CAF" stroke-width="2.5" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>Âm nhạc
+              </div>
+              <div class="sh-drop-item" data-val="Mỹ thuật" onmousedown="pickSubject('Mỹ thuật')">
+                <div class="di-icon" style="background:#FFFBEB;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 12s1.5-2 4-2 4 2 4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>Mỹ thuật
+              </div>
+            </div>
+          </div>
+
+          <!-- Tỉnh / Thành phố: custom dropdown -->
+          <div class="sh-sf" id="sf-city-wrap" onclick="toggleCityDrop()">
+            <div class="sh-label">Tỉnh / Thành phố</div>
+            <div class="sh-val" id="sf-city-display">TP. Hồ Chí Minh</div>
+            <span class="sh-sf-caret"><svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <div class="sh-custom-drop" id="city-drop">
+              <div class="sh-cd-item active" data-val="TP. Hồ Chí Minh" onmousedown="pickCity('TP. Hồ Chí Minh','hcm')">TP. Hồ Chí Minh</div>
+              <div class="sh-cd-item" data-val="Hà Nội" onmousedown="pickCity('Hà Nội','hn')">Hà Nội</div>
+              <div class="sh-cd-item" data-val="Đà Nẵng" onmousedown="pickCity('Đà Nẵng','dn')">Đà Nẵng</div>
+              <div class="sh-cd-item" data-val="Cần Thơ" onmousedown="pickCity('Cần Thơ','ct')">Cần Thơ</div>
+              <div class="sh-cd-item" data-val="Hải Phòng" onmousedown="pickCity('Hải Phòng','hp')">Hải Phòng</div>
+              <div class="sh-cd-item" data-val="Toàn quốc" onmousedown="pickCity('Toàn quốc','all')">Toàn quốc</div>
+            </div>
+          </div>
+
+          <!-- Hình thức: custom dropdown -->
+          <div class="sh-sf" id="sf-format-wrap" onclick="toggleFormatDrop()">
+            <div class="sh-label">Hình thức</div>
+            <div class="sh-val" id="sf-format-display">Tất cả hình thức</div>
+            <span class="sh-sf-caret"><svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <div class="sh-custom-drop" id="format-drop">
+              <div class="sh-cd-item active" data-val="all" onmousedown="pickFormat('all','Tất cả hình thức')">Tất cả hình thức</div>
+              <div class="sh-cd-item" data-val="online" onmousedown="pickFormat('online','Online')">Online (Zoom / Meet / Skype)</div>
+              <div class="sh-cd-item" data-val="home" onmousedown="pickFormat('home','Tại nhà')">Tại nhà học sinh</div>
+              <div class="sh-cd-item" data-val="tutor" onmousedown="pickFormat('tutor','Tại nhà gia sư')">Tại nhà gia sư</div>
+              <div class="sh-cd-item" data-val="both" onmousedown="pickFormat('both','Kết hợp')">Kết hợp</div>
+            </div>
+          </div>
+
+          <button class="btn-sh-search" onclick="doSearch()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="m20 20-3.5-3.5"/></svg>
+            Tìm ngay
+          </button>
+        </div>
+        <div class="sh-tags">
+          <span class="sh-tag-label">Phổ biến:</span>
+          <span class="sh-tag">Toán THPT</span>
+          <span class="sh-tag">IELTS</span>
+          <span class="sh-tag">Tiếng Anh giao tiếp</span>
+          <span class="sh-tag">Lập trình Python</span>
+          <span class="sh-tag">Nhạc cụ</span>
+          <span class="sh-tag">Vật Lý luyện thi</span>
+        </div>
+      </div>
+
+      <!-- Popular subjects -->
+      <div class="empty-section-title">Danh mục phổ biến</div>
+      <div class="empty-subjects">
+        <div class="empty-scard" style="--sc-bg:#EFF6FF;--sc-c:#2563EB;">
+          <div class="es-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round"><path d="M3 17l4-8 4 4 4-6 4 10"/><line x1="3" y1="21" x2="21" y2="21"/></svg></div>
+          <div class="es-name">Toán học</div><div class="es-count">2.340 gia sư</div>
+        </div>
+        <div class="empty-scard" style="--sc-bg:#F0FDF4;--sc-c:#16A34A;">
+          <div class="es-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="es-name">Tiếng Anh</div><div class="es-count">1.890 gia sư</div>
+        </div>
+        <div class="empty-scard" style="--sc-bg:#F5F3FF;--sc-c:#7C3AED;">
+          <div class="es-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><line x1="12" y1="4" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="20"/><line x1="4" y1="12" x2="2" y2="12"/><line x1="22" y1="12" x2="20" y2="12"/></svg></div>
+          <div class="es-name">Vật Lý</div><div class="es-count">980 gia sư</div>
+        </div>
+        <div class="empty-scard" style="--sc-bg:#F0FDFA;--sc-c:#0D9488;">
+          <div class="es-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="6" x2="10" y2="18"/></svg></div>
+          <div class="es-name">Lập trình</div><div class="es-count">760 gia sư</div>
+        </div>
+      </div>
+
+      <!-- Featured tutors in empty state -->
+      <div class="empty-section-title">Gia sư nổi bật hôm nay</div>
+      <div class="featured-grid">
+        <!-- cards reuse same .tcard structure -->
+        <div class="tcard">
+          <div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span><span class="badge-verified">✓ Xác minh</span></div></div>
+          <div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=68" alt="Nguyễn Văn An"></div>
+          <div class="tcard-body">
+            <div class="tcard-name">Nguyễn Văn An</div>
+            <div class="tcard-subject">Toán · Vật Lý · cấp THPT</div>
+            <div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q.3 · Q.10</span></div>
+            <div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(128 đánh giá)</span></div>
+            <div class="tcard-foot"><div><div class="price-num">150.000đ</div><div class="price-unit">mỗi giờ</div></div><a href="ui-profile.html" class="btn-view">Xem chi tiết</a></div>
+          </div>
+        </div>
+        <div class="tcard">
+          <div class="tcard-cover tc-b"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div>
+          <div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=47" alt="Trần Thị Lan"></div>
+          <div class="tcard-body">
+            <div class="tcard-name">Trần Thị Lan</div>
+            <div class="tcard-subject">Tiếng Anh giao tiếp · IELTS</div>
+            <div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Toàn quốc</span></div>
+            <div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">5.0</span><span class="r-count">(91 đánh giá)</span></div>
+            <div class="tcard-foot"><div><div class="price-num">200.000đ</div><div class="price-unit">mỗi giờ</div></div><a href="ui-profile.html" class="btn-view">Xem chi tiết</a></div>
+          </div>
+        </div>
+        <div class="tcard">
+          <div class="tcard-cover tc-d"><div class="tcard-badges"><span class="badge-new">✦ Mới</span><span class="badge-verified">✓ Xác minh</span></div></div>
+          <div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=44" alt="Lê Minh Thu"></div>
+          <div class="tcard-body">
+            <div class="tcard-name">Lê Minh Thu</div>
+            <div class="tcard-subject">Lập trình · Python · Web Dev</div>
+            <div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Sinh viên · Đi làm</span></div>
+            <div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(55 đánh giá)</span></div>
+            <div class="tcard-foot"><div><div class="price-num">250.000đ</div><div class="price-unit">mỗi giờ</div></div><a href="ui-profile.html" class="btn-view">Xem chi tiết</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STATE 2: RESULTS ══ -->
+    <div id="state-results">
+      <div class="results-header">
+        <div class="results-top">
+          <div class="results-count">Tìm thấy <span>247 gia sư</span> phù hợp</div>
+          <div class="sort-wrap">
+            <span class="sort-label">Sắp xếp:</span>
+            <select class="sort-select">
+              <option>Phù hợp nhất</option>
+              <option>Đánh giá cao nhất</option>
+              <option>Giá thấp đến cao</option>
+              <option>Giá cao đến thấp</option>
+              <option>Nhiều đánh giá nhất</option>
+            </select>
+          </div>
+        </div>
+        <div class="active-filters">
+          <span class="af-label">Đang lọc:</span>
+          <span class="af-chip">Toán học <span class="af-chip-x" onclick="this.parentElement.remove()">×</span></span>
+          <span class="af-chip">TP. Hồ Chí Minh <span class="af-chip-x" onclick="this.parentElement.remove()">×</span></span>
+          <span class="af-chip">Online <span class="af-chip-x" onclick="this.parentElement.remove()">×</span></span>
+          <span class="af-chip">4★ trở lên <span class="af-chip-x" onclick="this.parentElement.remove()">×</span></span>
+          <span class="af-chip">100k–300k <span class="af-chip-x" onclick="this.parentElement.remove()">×</span></span>
+          <span class="af-clear">Xoá tất cả</span>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <!-- 9 cards, cycling covers, varied avatars -->
+        <div class="tcard"><div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=68" alt=""></div><div class="tcard-body"><div class="tcard-name">Nguyễn Văn An</div><div class="tcard-subject">Toán · Vật Lý · THPT</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q.3 · Q.10</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(128)</span></div><div class="tcard-foot"><div><div class="price-num">150.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+
+        <div class="tcard"><div class="tcard-cover tc-b"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=47" alt=""></div><div class="tcard-body"><div class="tcard-name">Trần Thị Lan</div><div class="tcard-subject">Tiếng Anh · IELTS</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Toàn quốc</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">5.0</span><span class="r-count">(91)</span></div><div class="tcard-foot"><div><div class="price-num">200.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+
+        <div class="tcard"><div class="tcard-cover tc-c"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=12" alt=""></div><div class="tcard-body"><div class="tcard-name">Phạm Hoàng Nam</div><div class="tcard-subject">Hóa Học · Sinh Học · THPT</div><div class="tcard-tags"><span class="tag home">Tại nhà</span><span class="tag">Q. Bình Thạnh</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.8</span><span class="r-count">(74)</span></div><div class="tcard-foot"><div><div class="price-num">180.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+
+        <div class="tcard"><div class="tcard-cover tc-d"><div class="tcard-badges"><span class="badge-new">✦ Mới</span><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=44" alt=""></div><div class="tcard-body"><div class="tcard-name">Lê Minh Thu</div><div class="tcard-subject">Lập trình · Python · Web Dev</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Sinh viên · Đi làm</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(55)</span></div><div class="tcard-foot"><div><div class="price-num">250.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+
+        <div class="tcard"><div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=32" alt=""></div><div class="tcard-body"><div class="tcard-name">Hoàng Văn Dũng</div><div class="tcard-subject">Toán · THCS &amp; THPT</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q.1</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(301)</span></div><div class="tcard-foot"><div><div class="price-num">300.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+
+        <div class="tcard"><div class="tcard-cover tc-b"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=56" alt=""></div><div class="tcard-body"><div class="tcard-name">Ngô Thị Thu Hà</div><div class="tcard-subject">Vật Lý · THCS &amp; THPT</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q. Bình Tân</span></div><div class="tcard-rating"><span class="stars">★★★★</span><span class="r-score">4.5</span><span class="r-count">(29)</span></div><div class="tcard-foot"><div><div class="price-num">160.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+
+        <div class="tcard"><div class="tcard-cover tc-c"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=15" alt=""></div><div class="tcard-body"><div class="tcard-name">Bùi Quang Huy</div><div class="tcard-subject">Lập trình · THPT &amp; Đại học</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Q. 12</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.8</span><span class="r-count">(95)</span></div><div class="tcard-foot"><div><div class="price-num">280.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+
+        <div class="tcard"><div class="tcard-cover tc-d"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=25" alt=""></div><div class="tcard-body"><div class="tcard-name">Phạm Thị Hương</div><div class="tcard-subject">Hóa Học · THPT</div><div class="tcard-tags"><span class="tag home">Tại nhà</span><span class="tag">Q. Gò Vấp</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.7</span><span class="r-count">(63)</span></div><div class="tcard-foot"><div><div class="price-num">150.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+
+        <div class="tcard"><div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=35" alt=""></div><div class="tcard-body"><div class="tcard-name">Vũ Đức Thành</div><div class="tcard-subject">Vật Lý · THPT &amp; Đại học</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q. Tân Bình</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(178)</span></div><div class="tcard-foot"><div><div class="price-num">200.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+      </div>
+
+      <div class="pagination">
+        <button class="pg-btn arrow">&lsaquo;</button>
+        <button class="pg-btn">1</button>
+        <button class="pg-btn active">2</button>
+        <button class="pg-btn">3</button>
+        <button class="pg-btn">4</button>
+        <button class="pg-btn">5</button>
+        <span class="pg-dots">…</span>
+        <button class="pg-btn">21</button>
+        <button class="pg-btn arrow">&rsaquo;</button>
+        <span class="pg-info">Trang 2 / 21 &nbsp;(247 gia sư)</span>
+      </div>
+    </div>
+
+    <!-- ══ STATE 3: NO RESULT ══ -->
+    <div id="state-noresult">
+      <div class="noresult-wrap">
+        <div class="nr-illus">
+          <svg viewBox="0 0 56 56" fill="none">
+            <circle cx="24" cy="24" r="16" stroke="#CBD5E1" stroke-width="2.5"/>
+            <path d="m36 36 8 8" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M18 24h12M24 18v12" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="24" x2="30" y2="24" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+            <path d="M36 20l-12 8M24 20l12 8" stroke="#E2E8F0" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="nr-title">Không tìm thấy gia sư phù hợp</div>
+        <div class="nr-sub">Không có gia sư nào khớp với tìm kiếm <strong>"Vật lý lớp 12 quận Bình Chánh"</strong>. Thử mở rộng tiêu chí tìm kiếm hoặc đăng yêu cầu để gia sư chủ động liên hệ bạn.</div>
+        <div class="nr-suggestions">
+          <span class="nr-sug">Bỏ lọc khu vực</span>
+          <span class="nr-sug">Thêm hình thức Online</span>
+          <span class="nr-sug">Thử "Vật Lý THPT"</span>
+          <span class="nr-sug">Nới rộng mức giá</span>
+        </div>
+        <div class="nr-actions">
+          <button class="btn-nr-reset">Xoá bộ lọc &amp; tìm lại</button>
+          <button class="btn-nr-post">Đăng yêu cầu tìm gia sư</button>
+        </div>
+      </div>
+
+      <div class="nr-related">
+        <div class="nr-related-title">Gia sư Vật Lý gần khu vực lân cận</div>
+        <div class="nr-related-grid">
+          <div class="tcard"><div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=35" alt=""></div><div class="tcard-body"><div class="tcard-name">Vũ Đức Thành</div><div class="tcard-subject">Vật Lý · THPT &amp; Đại học</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Q. Tân Bình</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(178)</span></div><div class="tcard-foot"><div><div class="price-num">200.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+          <div class="tcard"><div class="tcard-cover tc-c"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=12" alt=""></div><div class="tcard-body"><div class="tcard-name">Phạm Hoàng Nam</div><div class="tcard-subject">Vật Lý · Hóa · THPT</div><div class="tcard-tags"><span class="tag home">Tại nhà</span><span class="tag">Q. Bình Thạnh</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.8</span><span class="r-count">(74)</span></div><div class="tcard-foot"><div><div class="price-num">180.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+          <div class="tcard"><div class="tcard-cover tc-b"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=56" alt=""></div><div class="tcard-body"><div class="tcard-name">Ngô Thị Thu Hà</div><div class="tcard-subject">Vật Lý · THCS &amp; THPT</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span></div><div class="tcard-rating"><span class="stars">★★★★</span><span class="r-score">4.5</span><span class="r-count">(29)</span></div><div class="tcard-foot"><div><div class="price-num">160.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div><!-- page-wrap -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo"><div class="fl-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg></div><div class="fl-name">giasu.edu.vn</div></div>
+      <p class="footer-desc">Nền tảng kết nối gia sư uy tín hàng đầu Việt Nam. Mọi gia sư đều được xác minh danh tính và bằng cấp.</p>
+      <div class="footer-socials"><div class="fsoc">f</div><div class="fsoc">z</div><div class="fsoc">▶</div><div class="fsoc">in</div></div>
+    </div>
+    <div><div class="fcol-title">Sản phẩm</div><a href="#" class="footer-link">Tìm gia sư</a><a href="#" class="footer-link">Đăng ký dạy</a><a href="#" class="footer-link">Cách hoạt động</a><a href="#" class="footer-link">Bảng giá</a></div>
+    <div><div class="fcol-title">Hỗ trợ</div><a href="#" class="footer-link">Trung tâm trợ giúp</a><a href="#" class="footer-link">Liên hệ</a><a href="#" class="footer-link">Hoàn tiền</a><a href="#" class="footer-link">Cộng đồng</a></div>
+    <div><div class="fcol-title">Pháp lý</div><a href="#" class="footer-link">Điều khoản sử dụng</a><a href="#" class="footer-link">Chính sách bảo mật</a><a href="#" class="footer-link">Quy chế hoạt động</a></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 giasu.edu.vn · Mọi quyền được bảo lưu</div>
+    <div class="footer-trust"><span class="ftrust">VNPay</span><span class="ftrust">MoMo</span><span class="ftrust">SSL</span></div>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════
+   STATE SWITCHER
+══════════════════════════════════════ */
+const hints = {
+  empty:    'Trạng thái mặc định khi user vào trang lần đầu, chưa nhập gì',
+  results:  'Sau khi tìm kiếm — hiển thị danh sách kết quả + active filter chips',
+  noresult: 'Khi không có gia sư nào phù hợp — gợi ý điều chỉnh bộ lọc'
+};
+function setState(s) {
+  ['empty','results','noresult'].forEach(id => {
+    document.getElementById('state-'+id).style.display = id===s ? 'block' : 'none';
+  });
+  document.querySelectorAll('.state-btn').forEach((btn,i) => {
+    btn.classList.toggle('active', ['empty','results','noresult'][i]===s);
+  });
+  document.getElementById('state-hint').textContent = hints[s];
+}
+
+/* ══════════════════════════════════════
+   SIDEBAR FILTER COLLAPSE
+══════════════════════════════════════ */
+function toggleFilter(head) {
+  const body = head.nextElementSibling;
+  const toggle = head.querySelector('.filter-toggle');
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  toggle.classList.toggle('open', !isOpen);
+}
+
+function clearAll() {
+  document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
+  document.querySelectorAll('input[type=radio]').forEach(rb => {
+    rb.checked = rb.value === 'all' || rb.value === '';
+  });
+  // Reset hero
+  document.getElementById('sf-subject').value = '';
+  setHeroCity('TP. Hồ Chí Minh','hcm');
+  setHeroFormat('Tất cả hình thức','all');
+}
+
+/* ══════════════════════════════════════
+   HERO SEARCH — SUBJECT DROPDOWN
+══════════════════════════════════════ */
+let subjectDropOpen = false;
+
+function openSubjectDrop() {
+  document.getElementById('subject-drop').classList.add('open');
+  subjectDropOpen = true;
+}
+function closeSubjectDrop() {
+  // delay so mousedown fires before blur
+  setTimeout(() => {
+    document.getElementById('subject-drop').classList.remove('open');
+    subjectDropOpen = false;
+  }, 160);
+}
+function filterSubjectDrop() {
+  const q = document.getElementById('sf-subject').value.toLowerCase();
+  document.querySelectorAll('#subject-drop .sh-drop-item').forEach(item => {
+    item.style.display = item.dataset.val.toLowerCase().includes(q) ? '' : 'none';
+  });
+  openSubjectDrop();
+}
+function pickSubject(name) {
+  document.getElementById('sf-subject').value = name;
+  document.getElementById('subject-drop').classList.remove('open');
+  syncSubjectToSidebar(name);
+}
+
+// Hero subject → sidebar môn học checkboxes
+function syncSubjectToSidebar(name) {
+  // Get all checkboxes in the first filter-section (Môn học)
+  const monHocSection = document.querySelector('.filter-section:first-of-type');
+  if (!monHocSection) return;
+  monHocSection.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    const lbl = cb.closest('label');
+    const labelText = lbl ? lbl.querySelector('.check-label') : null;
+    if (labelText) cb.checked = labelText.textContent.trim() === name;
+  });
+}
+
+// Sidebar môn học → hero subject
+function syncSubjectFromSidebar(cb) {
+  if (!cb.checked) return;
+  const lbl = cb.closest('label');
+  const labelText = lbl ? lbl.querySelector('.check-label') : null;
+  if (labelText) document.getElementById('sf-subject').value = labelText.textContent.trim();
+}
+
+/* ══════════════════════════════════════
+   HERO SEARCH — CITY DROPDOWN
+══════════════════════════════════════ */
+const cityLabels = {
+  hcm:'TP. Hồ Chí Minh', hn:'Hà Nội', dn:'Đà Nẵng', ct:'Cần Thơ', hp:'Hải Phòng', all:'Toàn quốc'
+};
+let cityDropOpen = false;
+
+function toggleCityDrop(e) {
+  if (e && e.target.closest('.sh-custom-drop')) return; // click inside drop = ignore
+  const drop = document.getElementById('city-drop');
+  cityDropOpen = !cityDropOpen;
+  drop.classList.toggle('open', cityDropOpen);
+  closeOthers('city');
+}
+function pickCity(label, val) {
+  setHeroCity(label, val);
+  // Sync to sidebar
+  const sidebarCity = document.getElementById('sidebar-city');
+  if (sidebarCity && sidebarCity.querySelector('option[value="'+val+'"]')) {
+    sidebarCity.value = val;
+  }
+  setTimeout(() => document.getElementById('city-drop').classList.remove('open'), 80);
+}
+function setHeroCity(label, val) {
+  document.getElementById('sf-city-display').textContent = label;
+  document.querySelectorAll('#city-drop .sh-cd-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.val === label);
+  });
+}
+// Sidebar city select → hero
+function syncCityFromSidebar() {
+  const s = document.getElementById('sidebar-city');
+  const val = s.value;
+  setHeroCity(cityLabels[val] || s.options[s.selectedIndex].text, val);
+}
+
+/* ══════════════════════════════════════
+   HERO SEARCH — FORMAT DROPDOWN
+══════════════════════════════════════ */
+let formatDropOpen = false;
+
+function toggleFormatDrop(e) {
+  if (e && e.target.closest('.sh-custom-drop')) return;
+  const drop = document.getElementById('format-drop');
+  formatDropOpen = !formatDropOpen;
+  drop.classList.toggle('open', formatDropOpen);
+  closeOthers('format');
+}
+function pickFormat(val, label) {
+  setHeroFormat(label, val);
+  // Sync to sidebar radios
+  document.querySelectorAll('input[name=format]').forEach(r => { r.checked = r.value === val; });
+  setTimeout(() => document.getElementById('format-drop').classList.remove('open'), 80);
+}
+function setHeroFormat(label, val) {
+  document.getElementById('sf-format-display').textContent = label;
+  document.querySelectorAll('#format-drop .sh-cd-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.val === val);
+  });
+}
+// Sidebar format radio → hero
+function syncFormatFromSidebar(radio) {
+  const map = {
+    all:'Tất cả hình thức', online:'Online', home:'Tại nhà',
+    tutor:'Tại nhà gia sư', both:'Kết hợp'
+  };
+  setHeroFormat(map[radio.value] || radio.value, radio.value);
+}
+
+/* ══════════════════════════════════════
+   CLOSE OTHER DROPDOWNS
+══════════════════════════════════════ */
+function closeOthers(keep) {
+  if (keep !== 'city') { document.getElementById('city-drop').classList.remove('open'); cityDropOpen = false; }
+  if (keep !== 'format') { document.getElementById('format-drop').classList.remove('open'); formatDropOpen = false; }
+}
+
+// Close all dropdowns when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#sf-city-wrap')) { document.getElementById('city-drop').classList.remove('open'); cityDropOpen = false; }
+  if (!e.target.closest('#sf-format-wrap')) { document.getElementById('format-drop').classList.remove('open'); formatDropOpen = false; }
+});
+
+/* ══════════════════════════════════════
+   SEARCH BUTTON
+══════════════════════════════════════ */
+function doSearch() {
+  const subj = document.getElementById('sf-subject').value.trim();
+  const cityEl = document.getElementById('sf-city-display');
+  const fmtEl  = document.getElementById('sf-format-display');
+
+  // Update active filter chips in results state
+  const chipsArea = document.querySelector('.active-filters');
+  if (chipsArea) {
+    // Remove existing dynamic chips, keep the "clear all" button
+    chipsArea.querySelectorAll('.af-chip').forEach(c => c.remove());
+    const chips = [];
+    if (subj) chips.push(subj);
+    const city = cityEl ? cityEl.textContent : '';
+    if (city && city !== 'Toàn quốc') chips.push(city);
+    const fmt = fmtEl ? fmtEl.textContent : '';
+    if (fmt && fmt !== 'Tất cả hình thức') chips.push(fmt);
+    const clearBtn = chipsArea.querySelector('.af-clear');
+    chips.forEach(text => {
+      const chip = document.createElement('span');
+      chip.className = 'af-chip';
+      chip.innerHTML = text+' <span class="af-chip-x" onclick="this.parentElement.remove()">×</span>';
+      chipsArea.insertBefore(chip, clearBtn);
+    });
+    // Update count label
+    const countEl = document.querySelector('.results-count');
+    if (countEl) countEl.innerHTML = 'Tìm thấy <span>247 gia sư</span> phù hợp' + (subj ? ' với "'+subj+'"' : '');
+  }
+
+  setState('results');
+}
+
+/* ══════════════════════════════════════
+   INIT: wire sidebar → hero listeners
+══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function() {
+  // Môn học checkboxes
+  const monHocSection = document.querySelector('.filter-section:first-of-type');
+  if (monHocSection) {
+    monHocSection.querySelectorAll('input[type=checkbox]').forEach(cb => {
+      cb.addEventListener('change', () => syncSubjectFromSidebar(cb));
+    });
+  }
+
+  // Format radios
+  document.querySelectorAll('input[name=format]').forEach(r => {
+    r.addEventListener('change', () => { if (r.checked) syncFormatFromSidebar(r); });
+  });
+
+  // Sidebar apply button also runs search
+  const applyBtn = document.querySelector('.btn-apply');
+  if (applyBtn) applyBtn.addEventListener('click', doSearch);
+});
+</script>
+</body>
+</html>

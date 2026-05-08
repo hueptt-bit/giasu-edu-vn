@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p950:#061529;--p900:#0D2D6B;--p800:#1239A0;--p700:#1565C0;
+  --p600:#1976D2;--p500:#1E88E5;--p400:#42A5F5;--p300:#90CAF9;
+  --p200:#BBDEFB;--p100:#E3F2FD;--p50:#F0F8FF;
+  --s700:#C46200;--s600:#E65100;--s500:#F57C00;--s400:#FFA726;--s300:#FFCC80;--s100:#FFF3E0;
+  --n900:#0F172A;--n800:#1E293B;--n700:#334155;--n600:#475569;
+  --n500:#64748B;--n400:#94A3B8;--n300:#CBD5E1;--n200:#E2E8F0;--n100:#F1F5F9;--n50:#F8FAFC;
+  --green:#16A34A;--green-bg:#DCFCE7;
+  --red:#DC2626;--red-bg:#FEE2E2;
+  --yellow:#CA8A04;--yellow-bg:#FEF9C3;
+  --purple:#7C3AED;--purple-bg:#EDE9FE;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-2xl:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:var(--n800);background:var(--n100);-webkit-font-smoothing:antialiased;}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
+
+/* ═══ DEMO BAR ═══ */
+.demo-bar{background:#fff;border-bottom:1px solid var(--n200);padding:9px 20px;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:300;flex-wrap:wrap;}
+.demo-bar-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--n400);}
+.demo-btns{display:flex;gap:3px;background:var(--n100);border-radius:10px;padding:3px;flex-wrap:wrap;}
+.demo-btn{height:27px;padding:0 11px;border-radius:8px;font-size:11.5px;font-weight:600;color:var(--n500);background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:5px;}
+.demo-btn.active{background:#fff;color:var(--p700);box-shadow:0 1px 4px rgba(0,0,0,.1);}
+.demo-badge{background:var(--red);color:#fff;font-size:9.5px;font-weight:800;padding:1px 5px;border-radius:10px;}
+
+/* ═══ LAYOUT ═══ */
+.admin-wrap{display:flex;min-height:calc(100vh - 45px);}
+
+/* ═══ SIDEBAR ═══ */
+.admin-sb{width:232px;background:var(--p950);flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:45px;height:calc(100vh - 45px);overflow-y:auto;}
+.sb-logo{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:9px;}
+.sb-logo-text{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.sb-logo-text em{font-weight:500;font-style:normal;opacity:.35;}
+.sb-logo-pill{font-size:9px;font-weight:800;background:var(--s500);color:#fff;padding:2px 7px;border-radius:10px;letter-spacing:.4px;text-transform:uppercase;}
+.sb-section{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:rgba(255,255,255,.22);padding:18px 18px 6px;}
+.sb-nav{display:flex;flex-direction:column;gap:1px;padding:0 8px;}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-md);color:rgba(255,255,255,.55);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;position:relative;}
+.sb-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85);}
+.sb-item.active{background:rgba(255,255,255,.11);color:#fff;font-weight:600;}
+.sb-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:18px;border-radius:0 3px 3px 0;background:var(--s400);}
+.sb-item-ico{width:16px;height:16px;flex-shrink:0;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.75;}
+.sb-item.active .sb-item-ico{opacity:1;}
+.sb-n{margin-left:auto;background:var(--red);color:#fff;font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:10px;min-width:18px;text-align:center;}
+.sb-n.amber{background:var(--s500);}
+.sb-n.green{background:var(--green);}
+.sb-divider{height:1px;background:rgba(255,255,255,.07);margin:8px 18px;}
+.sb-profile{padding:14px 18px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:9px;margin-top:auto;}
+.sb-av{width:32px;height:32px;border-radius:50%;background:var(--p700);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;}
+.sb-name{font-size:12px;font-weight:700;color:#fff;}
+.sb-role{font-size:10.5px;color:rgba(255,255,255,.35);}
+
+/* ═══ MAIN ═══ */
+.admin-main{flex:1;min-width:0;padding:26px 30px;}
+.section{display:none;}
+.section.active{display:block;}
+
+/* ═══ PAGE HEADER ═══ */
+.page-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px;gap:12px;flex-wrap:wrap;}
+.page-title{font-size:19px;font-weight:800;color:var(--n900);}
+.page-sub{font-size:12.5px;color:var(--n500);margin-top:2px;}
+.hd-actions{display:flex;gap:8px;}
+.btn-sm{height:34px;padding:0 15px;border-radius:var(--r-md);font-size:12.5px;font-weight:600;cursor:pointer;transition:all .15s;}
+.btn-primary{background:var(--p700);color:#fff;}
+.btn-primary:hover{background:var(--p800);}
+.btn-ghost{background:#fff;color:var(--n700);border:1.5px solid var(--n200);}
+.btn-ghost:hover{border-color:var(--n400);}
+.btn-danger{background:var(--red-bg);color:var(--red);border:none;}
+.btn-danger:hover{background:#FECACA;}
+.btn-green{background:var(--green-bg);color:var(--green);border:none;}
+.btn-green:hover{background:#BBF7D0;}
+
+/* ═══ ALERT BAR ═══ */
+.alert-bar{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
+.alert-item{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--r-lg);border:1.5px solid;cursor:pointer;transition:all .15s;flex:1;min-width:180px;}
+.alert-item:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08);}
+.alert-item.red{background:var(--red-bg);border-color:#FECACA;}
+.alert-item.amber{background:var(--s100);border-color:var(--s300);}
+.alert-item.yellow{background:var(--yellow-bg);border-color:#FDE68A;}
+.alert-num{font-size:22px;font-weight:800;line-height:1;}
+.alert-item.red .alert-num{color:var(--red);}
+.alert-item.amber .alert-num{color:var(--s600);}
+.alert-item.yellow .alert-num{color:var(--yellow);}
+.alert-label{font-size:12px;font-weight:600;}
+.alert-item.red .alert-label{color:#7F1D1D;}
+.alert-item.amber .alert-label{color:var(--s700);}
+.alert-item.yellow .alert-label{color:#713F12;}
+.alert-sub{font-size:11px;color:inherit;opacity:.7;margin-top:1px;}
+
+/* ═══ STAT CARDS ═══ */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);padding:18px 20px;}
+.stat-ico{width:36px;height:36px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.stat-ico svg{width:16px;height:16px;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.stat-ico.blue{background:var(--p50);}  .stat-ico.blue svg{stroke:var(--p700);}
+.stat-ico.amber{background:var(--s100);} .stat-ico.amber svg{stroke:var(--s600);}
+.stat-ico.green{background:var(--green-bg);} .stat-ico.green svg{stroke:var(--green);}
+.stat-ico.purple{background:var(--purple-bg);} .stat-ico.purple svg{stroke:var(--purple);}
+.stat-num{font-size:24px;font-weight:800;color:var(--n900);letter-spacing:-.5px;}
+.stat-lbl{font-size:11.5px;color:var(--n500);margin-top:2px;}
+.stat-delta{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;margin-top:7px;padding:2px 8px;border-radius:20px;}
+.delta-up{background:var(--green-bg);color:var(--green);}
+.delta-dn{background:var(--red-bg);color:var(--red);}
+
+/* ═══ CARDS ═══ */
+.card{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);overflow:hidden;}
+.card-hd{padding:16px 20px;border-bottom:1px solid var(--n100);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.card-title{font-size:13.5px;font-weight:800;color:var(--n900);}
+.card-sub{font-size:12px;color:var(--n500);margin-top:1px;}
+
+/* ═══ TABS ═══ */
+.tab-bar{display:flex;gap:2px;background:var(--n100);border-radius:var(--r-lg);padding:3px;margin-bottom:18px;width:fit-content;}
+.tab-btn{height:31px;padding:0 16px;border-radius:var(--r-md);font-size:12.5px;font-weight:600;color:var(--n500);background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+.tab-btn.active{background:#fff;color:var(--n900);box-shadow:0 1px 4px rgba(0,0,0,.09);}
+.tc{font-size:10.5px;font-weight:800;padding:1px 6px;border-radius:10px;}
+.tc-red{background:var(--red-bg);color:var(--red);}
+.tc-green{background:var(--green-bg);color:var(--green);}
+.tc-gray{background:var(--n200);color:var(--n500);}
+.tc-amber{background:var(--s100);color:var(--s600);}
+
+/* ═══ DATA TABLE ═══ */
+.tbl{width:100%;border-collapse:collapse;}
+.tbl th{padding:9px 16px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--n400);border-bottom:1px solid var(--n100);background:var(--n50);}
+.tbl td{padding:12px 16px;border-bottom:1px solid var(--n100);font-size:12.5px;color:var(--n700);vertical-align:middle;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--n50);}
+
+/* User cell */
+.ucell{display:flex;align-items:center;gap:9px;}
+.uav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;}
+.uname{font-size:12.5px;font-weight:600;color:var(--n900);}
+.uemail{font-size:11px;color:var(--n400);margin-top:1px;}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;}
+.bg-green{background:var(--green-bg);color:var(--green);}
+.bg-yellow{background:var(--yellow-bg);color:var(--yellow);}
+.bg-red{background:var(--red-bg);color:var(--red);}
+.bg-blue{background:var(--p50);color:var(--p700);}
+.bg-gray{background:var(--n100);color:var(--n500);}
+.bg-amber{background:var(--s100);color:var(--s600);}
+.bg-purple{background:var(--purple-bg);color:var(--purple);}
+
+/* Action buttons */
+.abtn{height:27px;padding:0 10px;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .15s;}
+.ab-view{background:var(--n100);color:var(--n600);}       .ab-view:hover{background:var(--n200);}
+.ab-approve{background:var(--green-bg);color:var(--green);} .ab-approve:hover{background:#BBF7D0;}
+.ab-reject{background:var(--red-bg);color:var(--red);}     .ab-reject:hover{background:#FECACA;}
+.ab-suspend{background:var(--yellow-bg);color:var(--yellow);}
+.ab-more{background:var(--s100);color:var(--s600);}         .ab-more:hover{background:var(--s300);}
+.abtn-row{display:flex;align-items:center;gap:5px;}
+
+/* Pagination */
+.pagi{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--n100);}
+.pagi-info{font-size:12px;color:var(--n500);}
+.pagi-btns{display:flex;gap:3px;}
+.pbtn{width:28px;height:28px;border-radius:7px;font-size:12px;font-weight:600;border:1.5px solid var(--n200);background:#fff;color:var(--n600);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.pbtn.active{background:var(--p700);color:#fff;border-color:var(--p700);}
+.pbtn:hover:not(.active){background:var(--n100);}
+
+/* Search / filter row */
+.filter-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.si{height:33px;padding:0 10px 0 32px;border:1.5px solid var(--n200);border-radius:var(--r-md);font-size:12.5px;font-family:'Inter',sans-serif;color:var(--n700);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 9px center;width:190px;transition:border-color .15s;}
+.si:focus{outline:none;border-color:var(--p400);}
+.fsel{height:33px;padding:0 10px;border:1.5px solid var(--n200);border-radius:var(--r-md);font-size:12px;font-family:'Inter',sans-serif;color:var(--n700);background:#fff;cursor:pointer;}
+
+/* Charts row */
+.charts-row{display:grid;grid-template-columns:1.8fr 1fr;gap:16px;margin-bottom:22px;}
+.chart-card{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);padding:18px 20px;}
+.chart-title{font-size:13px;font-weight:800;color:var(--n900);margin-bottom:14px;}
+.bar-chart{display:flex;align-items:flex-end;gap:7px;height:72px;}
+.bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar{width:100%;border-radius:4px 4px 0 0;background:var(--p200);transition:background .15s;cursor:pointer;}
+.bar:hover{background:var(--p500);}
+.bl{font-size:9.5px;color:var(--n400);}
+.donut-row{display:flex;align-items:center;gap:18px;}
+.dleg{display:flex;flex-direction:column;gap:7px;flex:1;}
+.dleg-item{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--n600);}
+.ddot{width:9px;height:9px;border-radius:50%;}
+.dval{font-weight:700;color:var(--n900);margin-left:auto;}
+
+/* Activity list */
+.act-list{display:flex;flex-direction:column;}
+.act-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--n100);}
+.act-item:last-child{border-bottom:none;}
+.act-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.act-text{font-size:12.5px;color:var(--n700);flex:1;line-height:1.45;}
+.act-text strong{color:var(--n900);}
+.act-time{font-size:11px;color:var(--n400);white-space:nowrap;}
+
+/* ═══════════════════════════════════════
+   XACT THỰC GIA SƯ
+════════════════════════════════════════ */
+.veri-list{display:flex;flex-direction:column;gap:12px;}
+.veri-card{background:#fff;border:1px solid var(--n200);border-radius:var(--r-xl);overflow:hidden;}
+.veri-card.urgent{border-color:#FECACA;}
+.vc-top{padding:16px 20px;display:flex;align-items:flex-start;gap:14px;}
+.vc-av{width:44px;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;}
+.vc-meta{flex:1;min-width:0;}
+.vc-name{font-size:14px;font-weight:700;color:var(--n900);}
+.vc-info{font-size:12px;color:var(--n500);margin-top:3px;display:flex;gap:12px;flex-wrap:wrap;}
+.vc-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+.vc-docs{border-top:1px solid var(--n100);background:var(--n50);padding:12px 20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.vc-doc-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--n400);margin-right:4px;}
+.doc-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:11.5px;font-weight:600;border:1.5px solid;}
+.doc-chip.ok{background:var(--green-bg);border-color:#BBF7D0;color:var(--green);}
+.doc-chip.miss{background:var(--red-bg);border-color:#FECACA;color:var(--red);}
+.doc-chip.wait{background:var(--yellow-bg);border-color:#FDE68A;color:var(--yellow);}
+.vc-actions{border-top:1px solid var(--n100);padding:11px 20px;display:flex;gap:7px;justify-content:flex-end;align-items:center;}
+.wait-label{font-size:11.5px;color:var(--n400);margin-right:auto;}
+
+/* ═══════════════════════════════════════
+   TÀI CHÍNH
+════════════════════════════════════════ */
+.fin-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+.fin-card{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);padding:18px 20px;}
+.fin-lbl{font-size:11.5px;font-weight:600;color:var(--n500);margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+.fin-num{font-size:20px;font-weight:800;letter-spacing:-.4px;}
+.fin-num.blue{color:var(--p700);}
+.fin-num.green{color:var(--green);}
+.fin-num.amber{color:var(--s600);}
+.fin-num.red{color:var(--red);}
+.fin-note{font-size:11px;color:var(--n400);margin-top:5px;}
+.fin-bar{height:6px;background:var(--n100);border-radius:3px;margin-top:10px;overflow:hidden;}
+.fin-bar-fill{height:100%;border-radius:3px;}
+
+/* Payout table */
+.payout-card{background:#fff;border:1px solid var(--n200);border-radius:var(--r-xl);overflow:hidden;margin-bottom:14px;}
+.payout-hd{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--n100);background:var(--n50);}
+.payout-period{font-size:12.5px;font-weight:800;color:var(--n800);}
+.payout-total{font-size:13px;font-weight:800;color:var(--p700);}
+.payout-status{display:flex;align-items:center;gap:8px;}
+
+/* ═══════════════════════════════════════
+   XÁC NHẬN CHUYỂN KHOẢN
+════════════════════════════════════════ */
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.pay-row{background:#fff;border:1.5px solid var(--n200);border-radius:var(--r-xl);padding:0;margin-bottom:14px;overflow:hidden;transition:all .3s;}
+.pay-main{display:flex;align-items:center;gap:20px;padding:16px 20px;flex-wrap:wrap;border-bottom:1px solid var(--n100);}
+.pay-code{flex-shrink:0;min-width:130px;}
+.pay-info{flex:1;min-width:200px;}
+.pay-ck-info{flex-shrink:0;max-width:220px;}
+.pay-amount{flex-shrink:0;text-align:right;min-width:110px;}
+.pay-ck-status{padding:14px 20px;}
+
+/* Refund card */
+.refund-card{background:#fff;border:1px solid var(--n200);border-radius:var(--r-xl);padding:16px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;}
+.refund-ico{width:38px;height:38px;border-radius:var(--r-md);background:var(--red-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;}
+.refund-body{flex:1;}
+.refund-title{font-size:13px;font-weight:700;color:var(--n900);margin-bottom:3px;}
+.refund-meta{font-size:12px;color:var(--n500);}
+.refund-amount{font-size:14px;font-weight:800;color:var(--red);white-space:nowrap;}
+
+/* ═══════════════════════════════════════
+   KHIẾU NẠI
+════════════════════════════════════════ */
+.kn-card{background:#fff;border:1px solid var(--n200);border-radius:var(--r-xl);overflow:hidden;margin-bottom:12px;}
+.kn-card.urgent{border-color:#FECACA;}
+.kn-hd{padding:14px 18px;display:flex;align-items:flex-start;gap:12px;}
+.kn-ico{width:38px;height:38px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.kn-meta{flex:1;}
+.kn-title{font-size:13.5px;font-weight:700;color:var(--n900);margin-bottom:3px;}
+.kn-info{font-size:12px;color:var(--n500);display:flex;gap:12px;flex-wrap:wrap;}
+.kn-sla{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+.sla-box{padding:5px 12px;border-radius:var(--r-md);font-size:12px;font-weight:700;text-align:center;}
+.sla-box.ok{background:var(--green-bg);color:var(--green);}
+.sla-box.warn{background:var(--yellow-bg);color:var(--yellow);}
+.sla-box.over{background:var(--red-bg);color:var(--red);}
+.sla-label{font-size:10px;color:var(--n400);}
+.kn-reason{border-top:1px solid var(--n100);padding:11px 18px;background:var(--n50);}
+.kn-reason-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--n400);margin-bottom:5px;}
+.kn-reason-text{font-size:12.5px;color:var(--n700);line-height:1.5;}
+.kn-actions{border-top:1px solid var(--n100);padding:10px 18px;display:flex;gap:7px;justify-content:flex-end;align-items:center;}
+.kn-assign{font-size:11.5px;color:var(--n400);margin-right:auto;}
+
+/* ═══════════════════════════════════════
+   GIAO DỊCH — với cột hoa hồng
+════════════════════════════════════════ */
+.amount{font-weight:700;}
+.amount.pos{color:var(--green);}
+.amount.neg{color:var(--red);}
+.commission-cell{font-size:12px;color:var(--n500);}
+.pmethod{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--n600);}
+
+/* ═══════════════════════════════════════
+   AUTO-APPROVE RULES (duyệt tin)
+════════════════════════════════════════ */
+.auto-rule-box{background:linear-gradient(135deg,var(--p50),#fff);border:1.5px solid var(--p200);border-radius:var(--r-xl);padding:16px 20px;margin-bottom:20px;}
+.ar-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.ar-title{font-size:13px;font-weight:800;color:var(--p900);display:flex;align-items:center;gap:7px;}
+.ar-title svg{width:15px;height:15px;stroke:var(--p700);stroke-width:2;fill:none;stroke-linecap:round;}
+.ar-toggle{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--n600);}
+.tgl{width:36px;height:20px;border-radius:10px;background:var(--green);position:relative;cursor:pointer;}
+.tgl-k{width:14px;height:14px;border-radius:50%;background:#fff;position:absolute;top:3px;right:3px;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.ar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.ar-item{background:#fff;border:1px solid var(--n200);border-radius:var(--r-md);padding:12px;}
+.ar-check{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;margin-bottom:6px;}
+.ar-check.pass{background:var(--green-bg);color:var(--green);}
+.ar-check.fail{background:var(--red-bg);color:var(--red);}
+.ar-lbl{font-size:11.5px;font-weight:700;color:var(--n800);margin-bottom:3px;}
+.ar-desc{font-size:10.5px;color:var(--n500);line-height:1.4;}
+
+/* tin review cards */
+.tin-list{display:flex;flex-direction:column;gap:12px;}
+.tin-card{background:#fff;border:1px solid var(--n200);border-radius:var(--r-xl);overflow:hidden;}
+.tin-card.auto-ok{border-color:#BBF7D0;}
+.tin-card.manual{border-color:var(--n300);}
+.tc-hd{padding:14px 18px;display:flex;align-items:flex-start;gap:12px;}
+.tc-av{width:38px;height:38px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;}
+.tc-meta{flex:1;min-width:0;}
+.tc-title{font-size:13.5px;font-weight:700;color:var(--n900);margin-bottom:3px;}
+.tc-info{font-size:11.5px;color:var(--n500);display:flex;gap:10px;flex-wrap:wrap;}
+.tc-side{flex-shrink:0;}
+.tc-crit{border-top:1px solid var(--n100);background:var(--n50);padding:10px 18px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.tc-crit-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--n400);margin-right:3px;}
+.crit{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+.crit.ok{background:var(--green-bg);color:var(--green);}
+.crit.fail{background:var(--red-bg);color:var(--red);}
+.tc-acts{border-top:1px solid var(--n100);padding:10px 18px;display:flex;gap:7px;justify-content:flex-end;}
+.abtn-md{height:32px;padding:0 16px;border-radius:var(--r-md);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .15s;}
+
+/* ═══ PROFILE SLIDE-OVER ═══ */
+.prof-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;opacity:0;pointer-events:none;transition:opacity .25s;}
+.prof-overlay.open{opacity:1;pointer-events:all;}
+.prof-panel{position:fixed;top:0;right:0;width:640px;max-width:100vw;height:100vh;background:#fff;box-shadow:-4px 0 40px rgba(0,0,0,.2);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:901;overflow:hidden;}
+.prof-overlay.open .prof-panel{transform:translateX(0);}
+.prof-header{padding:20px 24px;border-bottom:1.5px solid var(--n200);display:flex;align-items:center;gap:14px;flex-shrink:0;}
+.prof-hav{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;flex-shrink:0;}
+.prof-hname{font-size:16px;font-weight:800;color:var(--n900);margin-bottom:3px;}
+.prof-hsub{font-size:11.5px;color:var(--n500);}
+.prof-close{margin-left:auto;width:32px;height:32px;border-radius:50%;background:var(--n100);color:var(--n600);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;}
+.prof-close:hover{background:var(--n200);}
+.prof-tabs{display:flex;border-bottom:1.5px solid var(--n200);flex-shrink:0;}
+.prof-tab{flex:1;height:44px;font-size:12.5px;font-weight:600;color:var(--n500);background:transparent;border:none;border-bottom:2.5px solid transparent;transition:all .15s;cursor:pointer;}
+.prof-tab.active{color:var(--p700);border-bottom-color:var(--p700);}
+.prof-tab:hover:not(.active){color:var(--n700);background:var(--n50);}
+.prof-body{flex:1;overflow-y:auto;padding:22px 24px;display:none;}
+.prof-body.active{display:block;}
+.prof-sec{margin-bottom:24px;}
+.prof-sec-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--n400);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--n100);}
+.prof-row{display:flex;align-items:baseline;gap:10px;margin-bottom:9px;font-size:13px;}
+.prof-lbl{color:var(--n500);font-weight:500;width:136px;flex-shrink:0;}
+.prof-val{color:var(--n900);font-weight:600;flex:1;}
+.prof-bio{font-size:13px;color:var(--n700);line-height:1.7;background:var(--n50);padding:14px 16px;border-radius:var(--r-md);border:1px solid var(--n200);}
+.prof-sched{display:grid;grid-template-columns:56px repeat(7,1fr);gap:4px;}
+.prof-sh{text-align:center;font-size:10.5px;font-weight:700;color:var(--n500);padding:4px 0;}
+.prof-sr{font-size:11px;font-weight:700;color:var(--n600);display:flex;align-items:center;}
+.prof-sc{height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;}
+.prof-sc.on{background:var(--p100);color:var(--p700);}
+.prof-sc.off{background:var(--n100);color:var(--n300);}
+.prof-doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.prof-doc-card{border:1.5px solid var(--n200);border-radius:var(--r-md);overflow:hidden;}
+.prof-doc-card.ok{border-color:#86EFAC;}
+.prof-doc-card.miss{border-color:#FCA5A5;}
+.prof-doc-card.wait{border-color:#FDE68A;}
+.prof-doc-thumb{width:100%;height:110px;background:var(--n100);display:flex;align-items:center;justify-content:center;font-size:40px;}
+.prof-doc-foot{padding:8px 12px;display:flex;align-items:center;justify-content:space-between;background:#fff;}
+.prof-doc-name{font-size:11.5px;font-weight:600;color:var(--n700);line-height:1.4;}
+.prof-doc-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;flex-shrink:0;margin-left:6px;}
+.prof-doc-badge.ok{background:var(--green-bg);color:var(--green);}
+.prof-doc-badge.miss{background:var(--red-bg);color:var(--red);}
+.prof-doc-badge.wait{background:var(--yellow-bg);color:var(--yellow);}
+.prof-actions{border-top:1.5px solid var(--n200);padding:14px 24px;display:flex;align-items:center;gap:8px;flex-shrink:0;background:#fff;}
+.prof-actions .pa-spacer{flex:1;}
+</style>
+</head>
+<body>
+
+<!-- DEMO BAR -->
+<div class="demo-bar">
+  <span class="demo-bar-label">Section:</span>
+  <div class="demo-btns">
+    <button class="demo-btn active" onclick="sw('overview')">📊 Tổng quan</button>
+    <button class="demo-btn" onclick="sw('verify')">🪪 Xác thực GS <span class="demo-badge">8</span></button>
+    <button class="demo-btn" onclick="sw('users')">👥 Người dùng</button>
+    <button class="demo-btn" onclick="sw('listings')">📋 Duyệt tin <span class="demo-badge">5</span></button>
+    <button class="demo-btn" onclick="sw('payment')" style="background:rgba(245,124,0,.08);color:#C46200;font-weight:700;">💸 Xác nhận CK <span class="demo-badge" style="background:var(--s500);">2</span></button>
+    <button class="demo-btn" onclick="sw('finance')">💰 Tài chính</button>
+    <button class="demo-btn" onclick="sw('disputes')">⚖️ Khiếu nại <span class="demo-badge">3</span></button>
+    <button class="demo-btn" onclick="sw('transactions')">💳 Giao dịch</button>
+  </div>
+</div>
+
+<div class="admin-wrap">
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="admin-sb">
+  <div class="sb-logo">
+    <svg width="28" height="18" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg">
+      <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+      <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+      <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+    </svg>
+    <div>
+      <div class="sb-logo-text">giasu<em>.edu.vn</em></div>
+    </div>
+    <span class="sb-logo-pill">Admin</span>
+  </div>
+
+  <div class="sb-section">Quản trị</div>
+  <div class="sb-nav">
+    <div class="sb-item active" id="sb-overview" onclick="sw('overview')">
+      <svg class="sb-item-ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Tổng quan
+    </div>
+    <div class="sb-item" id="sb-verify" onclick="sw('verify')">
+      <svg class="sb-item-ico" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Xác thực gia sư
+      <span class="sb-n amber">8</span>
+    </div>
+    <div class="sb-item" id="sb-listings" onclick="sw('listings')">
+      <svg class="sb-item-ico" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+      Duyệt tin đăng
+      <span class="sb-n">5</span>
+    </div>
+    <div class="sb-item" id="sb-disputes" onclick="sw('disputes')">
+      <svg class="sb-item-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Khiếu nại
+      <span class="sb-n">3</span>
+    </div>
+  </div>
+
+  <div class="sb-section">Người dùng</div>
+  <div class="sb-nav">
+    <div class="sb-item" id="sb-users" onclick="sw('users')">
+      <svg class="sb-item-ico" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Quản lý người dùng
+    </div>
+  </div>
+
+  <div class="sb-section">Tài chính</div>
+  <div class="sb-nav">
+    <div class="sb-item" id="sb-payment" onclick="sw('payment')" style="background:rgba(245,124,0,.12);border:1px solid rgba(245,124,0,.2);">
+      <svg class="sb-item-ico" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+      Xác nhận CK
+      <span class="sb-n amber" id="sb-payment-badge">2</span>
+    </div>
+    <div class="sb-item" id="sb-finance" onclick="sw('finance')">
+      <svg class="sb-item-ico" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Doanh thu & Hoa hồng
+    </div>
+    <div class="sb-item" id="sb-transactions" onclick="sw('transactions')">
+      <svg class="sb-item-ico" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Lịch sử giao dịch
+    </div>
+  </div>
+
+  <div class="sb-divider"></div>
+  <div class="sb-profile">
+    <div class="sb-av">A</div>
+    <div>
+      <div class="sb-name">Admin Chiara</div>
+      <div class="sb-role">Super Admin</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<main class="admin-main">
+
+<!-- ════════════════════════════════
+     1. TỔNG QUAN
+════════════════════════════════ -->
+<div class="section active" id="sec-overview">
+  <div class="page-hd">
+    <div>
+      <div class="page-title">Tổng quan hệ thống</div>
+      <div class="page-sub">Cập nhật lúc 14:32 · Thứ Tư, 07/05/2026</div>
+    </div>
+    <div class="hd-actions">
+      <button class="btn-sm btn-ghost">Xuất báo cáo</button>
+      <button class="btn-sm btn-primary">Làm mới</button>
+    </div>
+  </div>
+
+  <!-- Demo toggle -->
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 16px;background:#fff;border-radius:var(--r-lg);border:1.5px solid var(--n200);">
+    <span style="font-size:12px;font-weight:700;color:var(--n600);">🎭 Demo trạng thái:</span>
+    <button id="adov-btn-filled" onclick="toggleAdminOverview('filled')" style="height:28px;padding:0 12px;border-radius:6px;font-size:11.5px;font-weight:700;background:var(--p700);color:#fff;border:none;cursor:pointer;">Hệ thống đang chạy</button>
+    <button id="adov-btn-empty" onclick="toggleAdminOverview('empty')" style="height:28px;padding:0 12px;border-radius:6px;font-size:11.5px;font-weight:600;background:var(--n100);color:var(--n500);border:1.5px solid var(--n200);cursor:pointer;">🆕 Hệ thống mới khởi động</button>
+  </div>
+
+  <!-- ── EMPTY STATE: hệ thống mới, chưa có data ── -->
+  <div id="adov-empty" style="display:none;">
+
+    <!-- Welcome hero -->
+    <div style="background:linear-gradient(135deg,var(--p900),var(--p700));border-radius:var(--r-2xl);padding:28px 32px;margin-bottom:20px;display:flex;align-items:center;gap:24px;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:10px 10px;"></div>
+      <div style="width:64px;height:64px;border-radius:16px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;position:relative;">🚀</div>
+      <div style="flex:1;position:relative;">
+        <div style="font-size:19px;font-weight:800;color:#fff;margin-bottom:6px;">Hệ thống đã sẵn sàng!</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.5;">Chào mừng Admin đến với giasu.edu.vn. Hoàn tất cấu hình cơ bản để nền tảng hoạt động đầy đủ — chỉ mất khoảng <strong style="color:#FCD34D;">10–15 phút.</strong></div>
+      </div>
+    </div>
+
+    <!-- All-clear alert bar -->
+    <div class="alert-bar" style="margin-bottom:20px;">
+      <div class="alert-item" style="--ai-color:var(--green);background:var(--green-light);border-color:#BBF7D0;" onclick="sw('verify')">
+        <div><div class="alert-num" style="color:var(--green);">0</div><div class="alert-label">Gia sư chờ xác thực</div><div class="alert-sub" style="color:var(--green);">✓ Hàng chờ sạch</div></div>
+      </div>
+      <div class="alert-item" style="--ai-color:var(--green);background:var(--green-light);border-color:#BBF7D0;" onclick="sw('listings')">
+        <div><div class="alert-num" style="color:var(--green);">0</div><div class="alert-label">Tin đăng chờ duyệt</div><div class="alert-sub" style="color:var(--green);">✓ Hàng chờ sạch</div></div>
+      </div>
+      <div class="alert-item" style="--ai-color:var(--green);background:var(--green-light);border-color:#BBF7D0;" onclick="sw('disputes')">
+        <div><div class="alert-num" style="color:var(--green);">0</div><div class="alert-label">Khiếu nại</div><div class="alert-sub" style="color:var(--green);">✓ Không có vụ nào</div></div>
+      </div>
+      <div class="alert-item" style="--ai-color:var(--green);background:var(--green-light);border-color:#BBF7D0;" onclick="sw('finance')">
+        <div><div class="alert-num" style="color:var(--green);">0</div><div class="alert-label">Hoàn tiền đang xem</div><div class="alert-sub" style="color:var(--green);">✓ Không có yêu cầu</div></div>
+      </div>
+    </div>
+
+    <!-- Setup checklist -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+      <div style="background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);padding:22px 24px;">
+        <div style="font-size:14px;font-weight:800;color:var(--n900);margin-bottom:16px;">⚙️ Cấu hình cơ bản</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-md);background:var(--green-light);border:1px solid #BBF7D0;">
+            <div style="width:20px;height:20px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:800;flex-shrink:0;">✓</div>
+            <div style="font-size:13px;color:var(--n600);">Tài khoản Admin đã tạo</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-md);background:var(--green-light);border:1px solid #BBF7D0;">
+            <div style="width:20px;height:20px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:800;flex-shrink:0;">✓</div>
+            <div style="font-size:13px;color:var(--n600);">Cổng thanh toán MoMo & VNPay</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-md);background:var(--n50);border:1.5px dashed var(--n300);cursor:pointer;" onclick="sw('listings')">
+            <div style="width:20px;height:20px;border-radius:50%;background:var(--n200);display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
+            <div style="font-size:13px;font-weight:600;color:var(--n800);flex:1;">Thiết lập quy tắc tự duyệt tin</div>
+            <span style="font-size:11px;background:var(--s100);color:var(--s600);padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap;">Tiếp theo</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-md);background:var(--n50);border:1.5px dashed var(--n300);cursor:pointer;">
+            <div style="width:20px;height:20px;border-radius:50%;background:var(--n200);display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
+            <div style="font-size:13px;color:var(--n400);">Cấu hình SLA khiếu nại (72h)</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-md);background:var(--n50);border:1.5px dashed var(--n300);cursor:pointer;">
+            <div style="width:20px;height:20px;border-radius:50%;background:var(--n200);display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
+            <div style="font-size:13px;color:var(--n400);">Thêm admin phụ / kiểm duyệt viên</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zero stats -->
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);padding:16px 20px;display:flex;align-items:center;gap:16px;opacity:.6;">
+          <div class="stat-ico blue" style="width:36px;height:36px;border-radius:10px;background:var(--p50);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--p700);stroke-width:2;fill:none;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div><div style="font-size:20px;font-weight:800;color:var(--n900);">0</div><div style="font-size:12px;color:var(--n500);">Người dùng</div></div>
+        </div>
+        <div style="background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);padding:16px 20px;display:flex;align-items:center;gap:16px;opacity:.6;">
+          <div style="width:36px;height:36px;border-radius:10px;background:#FFFBEB;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#D97706;stroke-width:2;fill:none;stroke-linecap:round;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div><div style="font-size:20px;font-weight:800;color:var(--n900);">0</div><div style="font-size:12px;color:var(--n500);">Tin đăng đang tuyển</div></div>
+        </div>
+        <div style="background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);padding:16px 20px;display:flex;align-items:center;gap:16px;opacity:.6;">
+          <div style="width:36px;height:36px;border-radius:10px;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--green);stroke-width:2;fill:none;stroke-linecap:round;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div><div style="font-size:20px;font-weight:800;color:var(--n900);">0 đ</div><div style="font-size:12px;color:var(--n500);">Doanh thu tháng này</div></div>
+        </div>
+        <div style="background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);padding:16px 20px;display:flex;align-items:center;gap:16px;opacity:.6;">
+          <div style="width:36px;height:36px;border-radius:10px;background:var(--purple-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--purple);stroke-width:2;fill:none;stroke-linecap:round;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div><div style="font-size:20px;font-weight:800;color:var(--n900);">0</div><div style="font-size:12px;color:var(--n500);">Giao dịch hôm nay</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty activity log -->
+    <div class="card">
+      <div class="card-hd">
+        <div><div class="card-title">Hoạt động gần đây</div></div>
+      </div>
+      <div style="padding:48px 40px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:12px;">📋</div>
+        <div style="font-size:14px;font-weight:700;color:var(--n700);margin-bottom:6px;">Nhật ký hoạt động trống</div>
+        <div style="font-size:12.5px;color:var(--n400);max-width:320px;margin:0 auto;">Khi gia sư đăng ký, phụ huynh đặt lịch hoặc có giao dịch đầu tiên, nhật ký sẽ hiển thị tại đây.</div>
+      </div>
+    </div>
+
+  </div><!-- /adov-empty -->
+
+  <!-- ── FILLED STATE ── -->
+  <div id="adov-filled">
+  <!-- Alert bar -->
+  <div class="alert-bar">
+    <div class="alert-item red" onclick="sw('verify')">
+      <div><div class="alert-num">8</div><div class="alert-label">Gia sư chờ xác thực</div><div class="alert-sub">Lâu nhất: 3 ngày trước</div></div>
+    </div>
+    <div class="alert-item amber" onclick="sw('listings')">
+      <div><div class="alert-num">5</div><div class="alert-label">Tin đăng chờ duyệt</div><div class="alert-sub">3 đủ điều kiện tự duyệt</div></div>
+    </div>
+    <div class="alert-item red" onclick="sw('disputes')">
+      <div><div class="alert-num">3</div><div class="alert-label">Khiếu nại chưa xử lý</div><div class="alert-sub">1 sắp quá SLA 72h</div></div>
+    </div>
+    <div class="alert-item yellow" onclick="sw('finance')">
+      <div><div class="alert-num">12</div><div class="alert-label">Hoàn tiền đang xem xét</div><div class="alert-sub">Tổng: 3.840.000 VNĐ</div></div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-ico blue"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div class="stat-num">12.480</div>
+      <div class="stat-lbl">Tổng người dùng</div>
+      <div class="stat-delta delta-up">↑ +234 tháng này</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-ico amber"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div class="stat-num">1.240</div>
+      <div class="stat-lbl">Tin đang tuyển</div>
+      <div class="stat-delta delta-up">↑ +48 hôm nay</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-ico green"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="stat-num">84,2M</div>
+      <div class="stat-lbl">Doanh thu tháng (VNĐ)</div>
+      <div class="stat-delta delta-up">↑ +12% vs tháng trước</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-ico purple"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="stat-num">318</div>
+      <div class="stat-lbl">Giao dịch hôm nay</div>
+      <div class="stat-delta delta-dn">↓ −8 so với hôm qua</div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Doanh thu 7 ngày (triệu VNĐ)</div>
+      <div class="bar-chart">
+        <div class="bw"><div class="bar" style="height:42px;" title="9.2M"></div><div class="bl">T2</div></div>
+        <div class="bw"><div class="bar" style="height:58px;" title="12.7M"></div><div class="bl">T3</div></div>
+        <div class="bw"><div class="bar" style="height:35px;" title="7.7M"></div><div class="bl">T4</div></div>
+        <div class="bw"><div class="bar" style="height:72px;background:var(--p400);" title="15.8M"></div><div class="bl">T5</div></div>
+        <div class="bw"><div class="bar" style="height:52px;" title="11.4M"></div><div class="bl">T6</div></div>
+        <div class="bw"><div class="bar" style="height:68px;background:var(--p500);" title="14.9M"></div><div class="bl">T7</div></div>
+        <div class="bw"><div class="bar" style="height:44px;" title="9.6M"></div><div class="bl">CN</div></div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Phân loại người dùng</div>
+      <div class="donut-row">
+        <svg width="72" height="72" viewBox="0 0 72 72">
+          <circle cx="36" cy="36" r="26" fill="none" stroke="var(--n200)" stroke-width="12"/>
+          <circle cx="36" cy="36" r="26" fill="none" stroke="var(--p400)" stroke-width="12"
+            stroke-dasharray="98 65" stroke-dashoffset="0" transform="rotate(-90 36 36)"/>
+          <circle cx="36" cy="36" r="26" fill="none" stroke="var(--s400)" stroke-width="12"
+            stroke-dasharray="65 98" stroke-dashoffset="-98" transform="rotate(-90 36 36)"/>
+        </svg>
+        <div class="dleg">
+          <div class="dleg-item"><div class="ddot" style="background:var(--p400)"></div>Gia sư<span class="dval">7.480</span></div>
+          <div class="dleg-item"><div class="ddot" style="background:var(--s400)"></div>Phụ huynh<span class="dval">3.800</span></div>
+          <div class="dleg-item"><div class="ddot" style="background:var(--n300)"></div>Học viên<span class="dval">1.200</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity -->
+  <div class="card">
+    <div class="card-hd">
+      <div><div class="card-title">Hoạt động gần đây</div></div>
+      <button class="btn-sm btn-ghost">Xem tất cả</button>
+    </div>
+    <div style="padding:4px 20px 8px;">
+      <div class="act-list">
+        <div class="act-item"><div class="act-dot" style="background:var(--red)"></div><div class="act-text"><strong>Khiếu nại mới</strong> — Chị Hương phản ánh gia sư Nguyễn Văn A không đến dạy đúng lịch, yêu cầu hoàn tiền</div><div class="act-time">5 phút trước</div></div>
+        <div class="act-item"><div class="act-dot" style="background:var(--s500)"></div><div class="act-text"><strong>Gia sư chờ xác thực</strong> — Đoàn Trọng An nộp hồ sơ (bằng cấp + CCCD), chờ admin duyệt</div><div class="act-time">18 phút trước</div></div>
+        <div class="act-item"><div class="act-dot" style="background:var(--green)"></div><div class="act-text"><strong>Tin tự duyệt</strong> — "Cần gia sư Tiếng Anh lớp 8, Bình Thạnh" — đủ 4/4 tiêu chí, đã tự động approve</div><div class="act-time">32 phút trước</div></div>
+        <div class="act-item"><div class="act-dot" style="background:var(--p500)"></div><div class="act-text"><strong>Chi lương tuần</strong> — Đã giải ngân 47 gia sư · Tổng: 28.400.000 VNĐ · Thứ Hai 05/05</div><div class="act-time">2 ngày trước</div></div>
+        <div class="act-item"><div class="act-dot" style="background:var(--green)"></div><div class="act-text"><strong>Giao dịch lớn</strong> — Phạm Gia Bảo đặt lịch gia sư UI/UX 10 buổi · 5.500.000 VNĐ</div><div class="act-time">3 giờ trước</div></div>
+      </div>
+    </div>
+  </div>
+  </div><!-- /adov-filled -->
+</div><!-- /sec-overview -->
+
+<!-- ════════════════════════════════
+     2. XÁC THỰC GIA SƯ
+════════════════════════════════ -->
+<div class="section" id="sec-verify">
+  <div class="page-hd">
+    <div>
+      <div class="page-title">Xác thực gia sư</div>
+      <div class="page-sub">8 hồ sơ chờ xét duyệt · Xét duyệt trong vòng 24–48 giờ</div>
+    </div>
+    <button class="btn-sm btn-ghost">Xuất danh sách</button>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="swTab('vt','pending',this)">Chờ xét duyệt <span class="tc tc-amber">8</span></button>
+    <button class="tab-btn" onclick="swTab('vt','approved',this)">Đã xác thực <span class="tc tc-green">7.480</span></button>
+    <button class="tab-btn" onclick="swTab('vt','rejected',this)">Từ chối <span class="tc tc-gray">42</span></button>
+  </div>
+
+  <div id="vt-pending" class="veri-list">
+
+    <!-- Demo toggle -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 16px;background:#fff;border-radius:var(--r-lg);border:1.5px solid var(--n200);">
+      <span style="font-size:12px;font-weight:700;color:var(--n600);">🎭 Demo:</span>
+      <button id="vt-btn-filled" onclick="toggleVtQueue('filled')" style="height:28px;padding:0 12px;border-radius:6px;font-size:11.5px;font-weight:700;background:var(--p700);color:#fff;border:none;cursor:pointer;">8 hồ sơ chờ duyệt</button>
+      <button id="vt-btn-empty" onclick="toggleVtQueue('empty')" style="height:28px;padding:0 12px;border-radius:6px;font-size:11.5px;font-weight:600;background:var(--n100);color:var(--n500);border:1.5px solid var(--n200);cursor:pointer;">📭 Hàng chờ trống</button>
+    </div>
+
+    <!-- EMPTY STATE: hàng chờ xác thực rỗng -->
+    <div id="vt_pending_empty" style="display:none;background:#fff;border-radius:var(--r-xl);padding:56px 40px;text-align:center;border:1.5px solid var(--n200);">
+      <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#DCFCE7,#F0FDF4);border:2px solid #BBF7D0;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px;">✅</div>
+      <div style="font-size:18px;font-weight:800;color:var(--n900);margin-bottom:8px;">Hàng chờ đã xử lý xong!</div>
+      <div style="font-size:13.5px;color:var(--n500);line-height:1.6;max-width:420px;margin:0 auto 24px;">
+        Tất cả hồ sơ gia sư đã được xét duyệt. Khi có gia sư mới đăng ký, hồ sơ của họ sẽ xuất hiện ở đây để bạn xử lý.
+      </div>
+      <!-- Stats row -->
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;">
+        <div style="padding:12px 20px;background:var(--n50);border-radius:var(--r-md);text-align:center;">
+          <div style="font-size:20px;font-weight:800;color:var(--green);">7.480</div>
+          <div style="font-size:11px;color:var(--n500);margin-top:2px;">Gia sư đã xác thực</div>
+        </div>
+        <div style="padding:12px 20px;background:var(--n50);border-radius:var(--r-md);text-align:center;">
+          <div style="font-size:20px;font-weight:800;color:var(--p700);">24h</div>
+          <div style="font-size:11px;color:var(--n500);margin-top:2px;">Thời gian xử lý TB</div>
+        </div>
+        <div style="padding:12px 20px;background:var(--n50);border-radius:var(--r-md);text-align:center;">
+          <div style="font-size:20px;font-weight:800;color:var(--s500);">42</div>
+          <div style="font-size:11px;color:var(--n500);margin-top:2px;">Hồ sơ từ chối</div>
+        </div>
+      </div>
+      <!-- Tip -->
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--p50);border-radius:var(--r-md);font-size:12.5px;color:var(--p700);">
+        <span>💡</span> Bật thông báo email để nhận hồ sơ mới ngay khi gia sư đăng ký
+      </div>
+    </div>
+
+    <!-- FILLED STATE: danh sách hồ sơ chờ -->
+    <div id="vt_pending_filled">
+    <!-- Card 1 — đủ tài liệu -->
+    <div class="veri-card">
+      <div class="vc-top">
+        <div class="vc-av" style="background:linear-gradient(135deg,#1565C0,#42A5F5);">K</div>
+        <div class="vc-meta">
+          <div class="vc-name">Nguyễn Văn Khoa</div>
+          <div class="vc-info">
+            <span>📧 khoa.gv@gmail.com</span>
+            <span>📅 Đăng ký: 07/05/2026</span>
+            <span>📐 Môn dạy: Toán, Vật lý · Lớp 9–12</span>
+            <span>🏛️ ĐH Bách Khoa HN — K.Toán ứng dụng</span>
+          </div>
+        </div>
+        <div class="vc-side">
+          <span class="badge bg-yellow">⏳ Chờ duyệt · 6 giờ</span>
+          <button class="abtn ab-view" style="font-size:11.5px;" onclick="openProfile('khoa')">Xem hồ sơ đầy đủ</button>
+        </div>
+      </div>
+      <div class="vc-docs">
+        <span class="vc-doc-label">Tài liệu:</span>
+        <span class="doc-chip ok">✓ CCCD mặt trước</span>
+        <span class="doc-chip ok">✓ CCCD mặt sau</span>
+        <span class="doc-chip ok">✓ Bằng tốt nghiệp</span>
+        <span class="doc-chip ok">✓ Ảnh selfie cầm CCCD</span>
+        <span class="doc-chip ok">✓ Bảng điểm / chứng chỉ</span>
+      </div>
+      <div class="vc-actions">
+        <span class="wait-label">Tất cả tài liệu hợp lệ — có thể xác thực ngay</span>
+        <button class="abtn ab-reject">Từ chối</button>
+        <button class="abtn ab-more">Yêu cầu bổ sung</button>
+        <button class="abtn ab-approve" style="padding:0 16px;">✓ Xác thực gia sư</button>
+      </div>
+    </div>
+
+    <!-- Card 2 — thiếu tài liệu -->
+    <div class="veri-card urgent">
+      <div class="vc-top">
+        <div class="vc-av" style="background:linear-gradient(135deg,#C46200,#FFA726);">A</div>
+        <div class="vc-meta">
+          <div class="vc-name">Đoàn Trọng An</div>
+          <div class="vc-info">
+            <span>📧 an.doan.gs@gmail.com</span>
+            <span>📅 Đăng ký: 20/04/2026 · <strong style="color:var(--red);">17 ngày chờ</strong></span>
+            <span>📐 Môn dạy: IELTS / Tiếng Anh giao tiếp</span>
+            <span>🏛️ ĐH Hà Nội — Khoa Tiếng Anh</span>
+          </div>
+        </div>
+        <div class="vc-side">
+          <span class="badge bg-red">🔴 Chờ lâu · 17 ngày</span>
+          <button class="abtn ab-view" style="font-size:11.5px;" onclick="openProfile('an')">Xem hồ sơ đầy đủ</button>
+        </div>
+      </div>
+      <div class="vc-docs">
+        <span class="vc-doc-label">Tài liệu:</span>
+        <span class="doc-chip ok">✓ CCCD mặt trước</span>
+        <span class="doc-chip ok">✓ CCCD mặt sau</span>
+        <span class="doc-chip miss">✗ Bằng tốt nghiệp (chưa nộp)</span>
+        <span class="doc-chip wait">⏳ Ảnh selfie (mờ, cần chụp lại)</span>
+        <span class="doc-chip ok">✓ Chứng chỉ IELTS 7.5</span>
+      </div>
+      <div class="vc-actions">
+        <span class="wait-label">Thiếu 1 tài liệu, 1 tài liệu không hợp lệ — cần yêu cầu bổ sung</span>
+        <button class="abtn ab-reject">Từ chối</button>
+        <button class="abtn ab-more" style="padding:0 14px;">📩 Yêu cầu bổ sung</button>
+        <button class="abtn ab-approve" style="padding:0 14px;opacity:.4;cursor:not-allowed;">✓ Xác thực gia sư</button>
+      </div>
+    </div>
+
+    <!-- Card 3 — đủ tài liệu -->
+    <div class="veri-card">
+      <div class="vc-top">
+        <div class="vc-av" style="background:linear-gradient(135deg,#7C3AED,#A78BFA);">T</div>
+        <div class="vc-meta">
+          <div class="vc-name">Lê Minh Tú</div>
+          <div class="vc-info">
+            <span>📧 tu.le.piano@gmail.com</span>
+            <span>📅 Đăng ký: 06/05/2026 · 1 ngày chờ</span>
+            <span>🎨 Môn dạy: Piano, Âm nhạc cơ bản</span>
+            <span>🏛️ Nhạc viện Hà Nội — Chuyên ngành Piano</span>
+          </div>
+        </div>
+        <div class="vc-side">
+          <span class="badge bg-yellow">⏳ Chờ duyệt · 1 ngày</span>
+          <button class="abtn ab-view" style="font-size:11.5px;" onclick="openProfile('tu')">Xem hồ sơ đầy đủ</button>
+        </div>
+      </div>
+      <div class="vc-docs">
+        <span class="vc-doc-label">Tài liệu:</span>
+        <span class="doc-chip ok">✓ CCCD mặt trước</span>
+        <span class="doc-chip ok">✓ CCCD mặt sau</span>
+        <span class="doc-chip ok">✓ Bằng tốt nghiệp Nhạc viện</span>
+        <span class="doc-chip ok">✓ Ảnh selfie cầm CCCD</span>
+        <span class="doc-chip ok">✓ Video giảng thử 5 phút</span>
+      </div>
+      <div class="vc-actions">
+        <span class="wait-label">Tất cả tài liệu hợp lệ — có thể xác thực ngay</span>
+        <button class="abtn ab-reject">Từ chối</button>
+        <button class="abtn ab-more">Yêu cầu bổ sung</button>
+        <button class="abtn ab-approve" style="padding:0 16px;">✓ Xác thực gia sư</button>
+      </div>
+    </div>
+
+    <div style="padding:12px 0;text-align:center;font-size:12.5px;color:var(--n400);">Còn 5 hồ sơ nữa · <span style="color:var(--p700);cursor:pointer;font-weight:600;">Xem thêm →</span></div>
+    </div><!-- /vt_pending_filled -->
+  </div><!-- /vt-pending -->
+
+  <div id="vt-approved" style="display:none;">
+    <div class="card"><div style="padding:40px;text-align:center;color:var(--n400);font-size:13px;">7.480 gia sư đã xác thực — hiển thị dạng bảng</div></div>
+  </div>
+  <div id="vt-rejected" style="display:none;">
+    <div class="card"><div style="padding:40px;text-align:center;color:var(--n400);font-size:13px;">42 hồ sơ bị từ chối — hiển thị dạng bảng</div></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     3. QUẢN LÝ NGƯỜI DÙNG
+════════════════════════════════ -->
+<div class="section" id="sec-users">
+  <div class="page-hd">
+    <div>
+      <div class="page-title">Quản lý người dùng</div>
+      <div class="page-sub">12.480 người dùng · 234 mới tháng này</div>
+    </div>
+    <button class="btn-sm btn-ghost">Xuất CSV</button>
+  </div>
+  <div class="card">
+    <div class="card-hd">
+      <div class="filter-row">
+        <input class="si" placeholder="Tìm tên, email...">
+        <select class="fsel"><option>Tất cả vai trò</option><option>Gia sư</option><option>Phụ huynh</option><option>Học viên</option></select>
+        <select class="fsel"><option>Tất cả trạng thái</option><option>Đã xác minh</option><option>Chờ xác minh</option><option>Bị khoá</option></select>
+      </div>
+      <div style="font-size:12px;color:var(--n500);">1–8 / 12.480</div>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Người dùng</th><th>Vai trò</th><th>Ngày đăng ký</th><th>Trạng thái</th><th>Số GD</th><th>Tổng chi tiêu</th><th>Thao tác</th></tr></thead>
+      <tbody>
+        <tr><td><div class="ucell"><div class="uav" style="background:linear-gradient(135deg,#1565C0,#42A5F5);">H</div><div><div class="uname">Chị Hương</div><div class="uemail">huong.nguyen@gmail.com</div></div></div></td><td><span class="badge bg-amber">Phụ huynh</span></td><td>12/03/2026</td><td><span class="badge bg-green">✓ Xác minh</span></td><td>4</td><td style="font-weight:700;color:var(--n700);">680.000 đ</td><td><div class="abtn-row"><button class="abtn ab-view">Chi tiết</button><button class="abtn ab-suspend">Khoá</button></div></td></tr>
+        <tr><td><div class="ucell"><div class="uav" style="background:linear-gradient(135deg,#7C3AED,#A78BFA);">K</div><div><div class="uname">Nguyễn Văn Khoa</div><div class="uemail">khoa.gv@gmail.com</div></div></div></td><td><span class="badge bg-blue">Gia sư</span></td><td>07/05/2026</td><td><span class="badge bg-yellow">⏳ Chờ xác minh</span></td><td>0</td><td style="color:var(--n400);">—</td><td><div class="abtn-row"><button class="abtn ab-view">Chi tiết</button><button class="abtn ab-approve">Xác minh</button></div></td></tr>
+        <tr><td><div class="ucell"><div class="uav" style="background:linear-gradient(135deg,#16A34A,#4ADE80);">T</div><div><div class="uname">Lê Phương Thảo</div><div class="uemail">thao.le.tutor@gmail.com</div></div></div></td><td><span class="badge bg-blue">Gia sư</span></td><td>28/04/2026</td><td><span class="badge bg-green">✓ Xác minh</span></td><td>12</td><td style="font-weight:700;color:var(--green);">Thu: 4.080.000 đ</td><td><div class="abtn-row"><button class="abtn ab-view">Chi tiết</button><button class="abtn ab-suspend">Khoá</button></div></td></tr>
+        <tr><td><div class="ucell"><div class="uav" style="background:linear-gradient(135deg,#DC2626,#F87171);">M</div><div><div class="uname">Trần Hà My</div><div class="uemail">hamy.tran@outlook.com</div></div></div></td><td><span class="badge bg-amber">Phụ huynh</span></td><td>15/04/2026</td><td><span class="badge bg-red">⚠ Bị khoá</span></td><td>1</td><td style="font-weight:700;color:var(--n700);">350.000 đ</td><td><div class="abtn-row"><button class="abtn ab-view">Chi tiết</button><button class="abtn ab-approve">Mở khoá</button></div></td></tr>
+        <tr><td><div class="ucell"><div class="uav" style="background:linear-gradient(135deg,#0D2D6B,#1E88E5);">B</div><div><div class="uname">Phạm Gia Bảo</div><div class="uemail">bao.pham.hv@gmail.com</div></div></div></td><td><span class="badge bg-purple">Học viên</span></td><td>02/05/2026</td><td><span class="badge bg-green">✓ Xác minh</span></td><td>2</td><td style="font-weight:700;color:var(--n700);">1.030.000 đ</td><td><div class="abtn-row"><button class="abtn ab-view">Chi tiết</button><button class="abtn ab-suspend">Khoá</button></div></td></tr>
+        <tr><td><div class="ucell"><div class="uav" style="background:linear-gradient(135deg,#475569,#94A3B8);">D</div><div><div class="uname">Trịnh Thị Dung</div><div class="uemail">dung.trinh.ielts@gmail.com</div></div></div></td><td><span class="badge bg-blue">Gia sư</span></td><td>01/04/2026</td><td><span class="badge bg-green">✓ Xác minh</span></td><td>28</td><td style="font-weight:700;color:var(--green);">Thu: 9.520.000 đ</td><td><div class="abtn-row"><button class="abtn ab-view">Chi tiết</button><button class="abtn ab-suspend">Khoá</button></div></td></tr>
+      </tbody>
+    </table>
+    <div class="pagi">
+      <div class="pagi-info">Hiển thị 1–6 trong 12.480 người dùng</div>
+      <div class="pagi-btns"><button class="pbtn">‹</button><button class="pbtn active">1</button><button class="pbtn">2</button><button class="pbtn">3</button><button class="pbtn">…</button><button class="pbtn">1.560</button><button class="pbtn">›</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     4. DUYỆT TIN ĐĂNG
+════════════════════════════════ -->
+<div class="section" id="sec-listings">
+  <div class="page-hd">
+    <div>
+      <div class="page-title">Duyệt tin đăng</div>
+      <div class="page-sub">5 tin chờ duyệt · 3 đủ điều kiện tự duyệt</div>
+    </div>
+  </div>
+
+  <div class="auto-rule-box">
+    <div class="ar-hd">
+      <div class="ar-title">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Bộ quy tắc tự duyệt — tin đủ <strong style="color:var(--green);margin:0 3px;">4/4</strong> tiêu chí được duyệt tự động
+      </div>
+      <div class="ar-toggle">Đang bật <div class="tgl"><div class="tgl-k"></div></div></div>
+    </div>
+    <div class="ar-grid">
+      <div class="ar-item"><div class="ar-check pass">✓</div><div class="ar-lbl">Tài khoản xác minh</div><div class="ar-desc">Email + CCCD đã xác thực</div></div>
+      <div class="ar-item"><div class="ar-check pass">✓</div><div class="ar-lbl">Có lịch sử giao dịch</div><div class="ar-desc">≥ 1 giao dịch thành công</div></div>
+      <div class="ar-item"><div class="ar-check pass">✓</div><div class="ar-lbl">Thông tin đầy đủ</div><div class="ar-desc">Tiêu đề, môn, khu vực, ngân sách</div></div>
+      <div class="ar-item"><div class="ar-check pass">✓</div><div class="ar-lbl">Nội dung sạch</div><div class="ar-desc">Không liên hệ ngoài, không từ cấm</div></div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="swTab('tt','pending',this)">Chờ duyệt <span class="tc tc-red">5</span></button>
+    <button class="tab-btn" onclick="swTab('tt','approved',this)">Đã duyệt <span class="tc tc-green">1.240</span></button>
+    <button class="tab-btn" onclick="swTab('tt','rejected',this)">Từ chối <span class="tc tc-gray">18</span></button>
+  </div>
+
+  <div id="tt-pending" class="tin-list">
+
+    <!-- Demo toggle -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 16px;background:#fff;border-radius:var(--r-lg);border:1.5px solid var(--n200);">
+      <span style="font-size:12px;font-weight:700;color:var(--n600);">🎭 Demo:</span>
+      <button id="tt-btn-filled" onclick="toggleTtQueue('filled')" style="height:28px;padding:0 12px;border-radius:6px;font-size:11.5px;font-weight:700;background:var(--p700);color:#fff;border:none;cursor:pointer;">5 tin chờ duyệt</button>
+      <button id="tt-btn-empty" onclick="toggleTtQueue('empty')" style="height:28px;padding:0 12px;border-radius:6px;font-size:11.5px;font-weight:600;background:var(--n100);color:var(--n500);border:1.5px solid var(--n200);cursor:pointer;">📭 Hàng chờ trống</button>
+    </div>
+
+    <!-- EMPTY STATE: hàng chờ duyệt tin rỗng -->
+    <div id="tt_pending_empty" style="display:none;background:#fff;border-radius:var(--r-xl);padding:56px 40px;text-align:center;border:1.5px solid var(--n200);">
+      <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#DCFCE7,#F0FDF4);border:2px solid #BBF7D0;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px;">🛡️</div>
+      <div style="font-size:18px;font-weight:800;color:var(--n900);margin-bottom:8px;">Hàng chờ sạch bóng!</div>
+      <div style="font-size:13.5px;color:var(--n500);line-height:1.6;max-width:420px;margin:0 auto 24px;">
+        Không có tin đăng nào chờ xét duyệt. Hệ thống tự duyệt đang hoạt động tốt — các tin đủ tiêu chí sẽ được phê duyệt tự động.
+      </div>
+      <!-- Stats row -->
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;">
+        <div style="padding:12px 20px;background:var(--n50);border-radius:var(--r-md);text-align:center;">
+          <div style="font-size:20px;font-weight:800;color:var(--green);">1.240</div>
+          <div style="font-size:11px;color:var(--n500);margin-top:2px;">Tin đã duyệt</div>
+        </div>
+        <div style="padding:12px 20px;background:var(--n50);border-radius:var(--r-md);text-align:center;">
+          <div style="font-size:20px;font-weight:800;color:var(--p700);">86%</div>
+          <div style="font-size:11px;color:var(--n500);margin-top:2px;">Tự duyệt thành công</div>
+        </div>
+        <div style="padding:12px 20px;background:var(--n50);border-radius:var(--r-md);text-align:center;">
+          <div style="font-size:20px;font-weight:800;color:var(--s500);">18</div>
+          <div style="font-size:11px;color:var(--n500);margin-top:2px;">Tin từ chối</div>
+        </div>
+      </div>
+      <!-- Auto-approve status -->
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--green-light);border:1px solid #BBF7D0;border-radius:var(--r-md);font-size:12.5px;color:var(--green);font-weight:600;">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;"><polyline points="20 6 9 17 4 12"/></svg>
+        Bộ quy tắc tự duyệt đang hoạt động — 4/4 tiêu chí
+      </div>
+    </div>
+
+    <!-- FILLED STATE: danh sách tin chờ -->
+    <div id="tt_pending_filled">
+    <div class="tin-card auto-ok">
+      <div class="tc-hd">
+        <div class="tc-av" style="background:linear-gradient(135deg,#1565C0,#42A5F5);">H</div>
+        <div class="tc-meta">
+          <div class="tc-title">Cần gia sư Tiếng Anh lớp 8 — luyện giao tiếp, Bình Thạnh</div>
+          <div class="tc-info"><span>👤 Chị Mai · 6 GD</span><span>📐 Tiếng Anh · Lớp 8</span><span>💰 120–150k/buổi</span><span>🕐 8 phút trước</span></div>
+        </div>
+        <div class="tc-side"><span class="badge bg-green">⚡ Tự duyệt</span></div>
+      </div>
+      <div class="tc-crit"><span class="tc-crit-lbl">Tiêu chí:</span><span class="crit ok">✓ Xác minh</span><span class="crit ok">✓ Có lịch sử GD</span><span class="crit ok">✓ Đầy đủ thông tin</span><span class="crit ok">✓ Nội dung sạch</span></div>
+      <div class="tc-acts"><button class="abtn-md" style="background:var(--n100);color:var(--n600);">Xem nội dung</button><button class="abtn-md" style="background:var(--red-bg);color:var(--red);">Từ chối</button><button class="abtn-md" style="background:var(--green);color:#fff;">Duyệt ngay</button></div>
+    </div>
+    <div class="tin-card auto-ok">
+      <div class="tc-hd">
+        <div class="tc-av" style="background:linear-gradient(135deg,#7C3AED,#A78BFA);">B</div>
+        <div class="tc-meta">
+          <div class="tc-title">Tìm gia sư Lập trình Python/Web cho người đi làm, online</div>
+          <div class="tc-info"><span>👤 Anh Bảo · 2 GD</span><span>💡 Lập trình · Người đi làm</span><span>💰 200–300k/buổi</span><span>🕐 22 phút trước</span></div>
+        </div>
+        <div class="tc-side"><span class="badge bg-green">⚡ Tự duyệt</span></div>
+      </div>
+      <div class="tc-crit"><span class="tc-crit-lbl">Tiêu chí:</span><span class="crit ok">✓ Xác minh</span><span class="crit ok">✓ Có lịch sử GD</span><span class="crit ok">✓ Đầy đủ thông tin</span><span class="crit ok">✓ Nội dung sạch</span></div>
+      <div class="tc-acts"><button class="abtn-md" style="background:var(--n100);color:var(--n600);">Xem nội dung</button><button class="abtn-md" style="background:var(--red-bg);color:var(--red);">Từ chối</button><button class="abtn-md" style="background:var(--green);color:#fff;">Duyệt ngay</button></div>
+    </div>
+    <div class="tin-card manual">
+      <div class="tc-hd">
+        <div class="tc-av" style="background:linear-gradient(135deg,#DC2626,#F87171);">T</div>
+        <div class="tc-meta">
+          <div class="tc-title">Dạy Toán online giá rẻ — liên hệ Zalo 0912.xxx.xxx</div>
+          <div class="tc-info"><span>👤 Anh Tuấn · <strong style="color:var(--red);">0 GD</strong></span><span>📐 Toán · Lớp 12</span><span style="color:var(--red);">💰 Không điền ngân sách</span><span>🕐 2 giờ trước</span></div>
+        </div>
+        <div class="tc-side"><span class="badge bg-yellow">⚠ Thủ công</span></div>
+      </div>
+      <div class="tc-crit"><span class="tc-crit-lbl">Tiêu chí:</span><span class="crit fail">✗ Chưa xác minh</span><span class="crit fail">✗ 0 giao dịch</span><span class="crit fail">✗ Thiếu ngân sách</span><span class="crit fail">✗ Chứa SĐT ngoài</span></div>
+      <div class="tc-acts"><button class="abtn-md" style="background:var(--n100);color:var(--n600);">Xem nội dung</button><button class="abtn-md" style="background:var(--red-bg);color:var(--red);">Từ chối</button><button class="abtn-md" style="background:var(--green);color:#fff;">Duyệt</button></div>
+    </div>
+    </div><!-- /tt_pending_filled -->
+  </div><!-- /tt-pending -->
+  <div id="tt-approved" style="display:none;"><div class="card"><div style="padding:40px;text-align:center;color:var(--n400);">1.240 tin đã duyệt</div></div></div>
+  <div id="tt-rejected" style="display:none;"><div class="card"><div style="padding:40px;text-align:center;color:var(--n400);">18 tin từ chối</div></div></div>
+</div>
+
+<!-- ════════════════════════════════
+     5. TÀI CHÍNH
+════════════════════════════════ -->
+<div class="section" id="sec-finance">
+  <div class="page-hd">
+    <div>
+      <div class="page-title">Tài chính & Hoa hồng</div>
+      <div class="page-sub">Tháng 05/2026 · Hoa hồng nền tảng: 15% mỗi giao dịch</div>
+    </div>
+    <button class="btn-sm btn-ghost">Xuất báo cáo tháng</button>
+  </div>
+
+  <!-- Finance summary cards -->
+  <div class="fin-summary">
+    <div class="fin-card">
+      <div class="fin-lbl">💰 Tổng doanh thu (Gross)</div>
+      <div class="fin-num blue">84.240.000 đ</div>
+      <div class="fin-note">318 GD hoàn thành · tháng này</div>
+      <div class="fin-bar"><div class="fin-bar-fill" style="width:100%;background:var(--p300);"></div></div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-lbl">🏦 Hoa hồng nền tảng (15%)</div>
+      <div class="fin-num amber">12.636.000 đ</div>
+      <div class="fin-note">Doanh thu thuần của giasu.edu.vn</div>
+      <div class="fin-bar"><div class="fin-bar-fill" style="width:15%;background:var(--s400);"></div></div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-lbl">👨‍🏫 Phần của gia sư (85%)</div>
+      <div class="fin-num green">71.604.000 đ</div>
+      <div class="fin-note">Đã chi: 46.800.000 · Còn lại: 24.804.000</div>
+      <div class="fin-bar"><div class="fin-bar-fill" style="width:85%;background:var(--green);"></div></div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-lbl">↩ Hoàn tiền (Refund)</div>
+      <div class="fin-num red">3.840.000 đ</div>
+      <div class="fin-note">12 yêu cầu · đang xem xét</div>
+      <div class="fin-bar"><div class="fin-bar-fill" style="width:4.5%;background:var(--red);"></div></div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="swTab('ft','payout',this)">Chi lương gia sư <span class="tc tc-amber">24.8M chưa chi</span></button>
+    <button class="tab-btn" onclick="swTab('ft','refund',this)">Hoàn tiền <span class="tc tc-red">12</span></button>
+    <button class="tab-btn" onclick="swTab('ft','commission',this)">Lịch sử hoa hồng</button>
+  </div>
+
+  <!-- Payout tab -->
+  <div id="ft-payout">
+    <div style="background:var(--p50);border:1.5px solid var(--p200);border-radius:var(--r-lg);padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:12px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--p700)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:700;color:var(--p800);">Lịch giải ngân: <strong>Thứ Hai hàng tuần</strong> — ngưỡng tối thiểu 200.000 đ</div>
+        <div style="font-size:12px;color:var(--p700);margin-top:2px;">Đợt chi lương tiếp theo: <strong>Thứ Hai 12/05/2026</strong> · Tổng cần chi: 24.804.000 VNĐ cho 38 gia sư</div>
+      </div>
+      <button class="btn-sm btn-primary">Giải ngân ngay</button>
+    </div>
+
+    <div class="payout-card">
+      <div class="payout-hd">
+        <div class="payout-period">📅 Tuần 18–24/05/2026 (sắp tới)</div>
+        <div class="payout-status"><span class="badge bg-yellow">⏳ Chờ giải ngân</span><div class="payout-total">24.804.000 đ · 38 gia sư</div></div>
+      </div>
+      <table class="tbl">
+        <thead><tr><th>Gia sư</th><th>Số buổi</th><th>Doanh thu GD</th><th>Hoa hồng (15%)</th><th>Thực nhận (85%)</th><th>Tài khoản NH</th><th>Trạng thái</th></tr></thead>
+        <tbody>
+          <tr><td><div class="ucell"><div class="uav" style="width:28px;height:28px;font-size:11px;background:linear-gradient(135deg,#475569,#94A3B8);">D</div><div><div class="uname">Trịnh Thị Dung</div><div class="uemail">IELTS / Tiếng Anh</div></div></div></td><td>8 buổi</td><td>2.800.000</td><td style="color:var(--s600);font-weight:600;">−420.000</td><td style="color:var(--green);font-weight:700;">2.380.000 đ</td><td style="font-size:11.5px;color:var(--n500);">VCB ****4821</td><td><span class="badge bg-yellow">⏳ Chờ</span></td></tr>
+          <tr><td><div class="ucell"><div class="uav" style="width:28px;height:28px;font-size:11px;background:linear-gradient(135deg,#16A34A,#4ADE80);">T</div><div><div class="uname">Lê Phương Thảo</div><div class="uemail">UI/UX Design</div></div></div></td><td>5 buổi</td><td>2.750.000</td><td style="color:var(--s600);font-weight:600;">−412.500</td><td style="color:var(--green);font-weight:700;">2.337.500 đ</td><td style="font-size:11.5px;color:var(--n500);">TCB ****3309</td><td><span class="badge bg-yellow">⏳ Chờ</span></td></tr>
+          <tr><td><div class="ucell"><div class="uav" style="width:28px;height:28px;font-size:11px;background:linear-gradient(135deg,#7C3AED,#C4B5FD);">N</div><div><div class="uname">Nguyễn Thành Đạt</div><div class="uemail">Toán, Vật lý</div></div></div></td><td>6 buổi</td><td>1.320.000</td><td style="color:var(--s600);font-weight:600;">−198.000</td><td style="color:var(--green);font-weight:700;">1.122.000 đ</td><td style="font-size:11.5px;color:var(--n500);">MB ****7714</td><td><span class="badge bg-yellow">⏳ Chờ</span></td></tr>
+        </tbody>
+      </table>
+      <div class="pagi"><div class="pagi-info">Hiển thị 3 / 38 gia sư · Tổng chi: 24.804.000 đ</div><button class="btn-sm btn-primary">Xem tất cả & Giải ngân</button></div>
+    </div>
+
+    <div class="payout-card">
+      <div class="payout-hd">
+        <div class="payout-period">📅 Tuần 05/05/2026 (đã chi)</div>
+        <div class="payout-status"><span class="badge bg-green">✓ Đã giải ngân</span><div class="payout-total">46.800.000 đ · 47 gia sư</div></div>
+      </div>
+      <div style="padding:14px 18px;font-size:12.5px;color:var(--n500);">Giải ngân lúc 09:15 Thứ Hai 05/05/2026 · Tất cả 47 gia sư đã nhận tiền thành công · <span style="color:var(--p700);cursor:pointer;font-weight:600;">Xem chi tiết →</span></div>
+    </div>
+  </div>
+
+  <!-- Refund tab -->
+  <div id="ft-refund" style="display:none;">
+    <div class="refund-card">
+      <div class="refund-ico">↩</div>
+      <div class="refund-body">
+        <div class="refund-title">Chị Hương yêu cầu hoàn tiền buổi học ngày 06/05</div>
+        <div class="refund-meta">Lý do: Gia sư Nguyễn Văn A vắng mặt, không báo trước · GD #GS240506312 · 180.000 đ</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px;">
+        <div class="refund-amount">−180.000 đ</div>
+        <div class="abtn-row"><button class="abtn ab-reject">Từ chối</button><button class="abtn ab-approve">Duyệt hoàn tiền</button></div>
+      </div>
+    </div>
+    <div class="refund-card">
+      <div class="refund-ico">↩</div>
+      <div class="refund-body">
+        <div class="refund-title">Anh Bảo yêu cầu hoàn tiền khoá UI/UX 10 buổi</div>
+        <div class="refund-meta">Lý do: Gia sư không phù hợp, dạy không đúng cam kết · GD #GS240507308 · 5.500.000 đ (đang điều tra)</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px;">
+        <div class="refund-amount">−5.500.000 đ</div>
+        <div class="abtn-row"><button class="abtn ab-view">Điều tra</button><button class="abtn ab-reject">Từ chối</button><button class="abtn ab-approve">Duyệt hoàn tiền</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Commission history tab -->
+  <div id="ft-commission" style="display:none;">
+    <div class="card">
+      <table class="tbl">
+        <thead><tr><th>Mã GD</th><th>Gia sư</th><th>Phụ huynh / HV</th><th>Giá trị GD</th><th>HH 15%</th><th>GS nhận 85%</th><th>Ngày</th></tr></thead>
+        <tbody>
+          <tr><td style="font-size:11.5px;color:var(--n400);">#GS240507318</td><td style="font-size:12.5px;">Lê Trọng Nam</td><td style="font-size:12.5px;">Phạm Gia Bảo</td><td style="font-weight:700;">480.000</td><td style="color:var(--s600);font-weight:600;">72.000</td><td style="color:var(--green);font-weight:700;">408.000</td><td style="font-size:12px;color:var(--n500);">07/05 13:48</td></tr>
+          <tr><td style="font-size:11.5px;color:var(--n400);">#GS240507317</td><td style="font-size:12.5px;">Trịnh Thị Dung</td><td style="font-size:12.5px;">Trần Hà My</td><td style="font-weight:700;">350.000</td><td style="color:var(--s600);font-weight:600;">52.500</td><td style="color:var(--green);font-weight:700;">297.500</td><td style="font-size:12px;color:var(--n500);">07/05 13:15</td></tr>
+          <tr><td style="font-size:11.5px;color:var(--n400);">#GS240507308</td><td style="font-size:12.5px;">Lê Phương Thảo</td><td style="font-size:12.5px;">Phạm Gia Bảo</td><td style="font-weight:700;">550.000</td><td style="color:var(--s600);font-weight:600;">82.500</td><td style="color:var(--green);font-weight:700;">467.500</td><td style="font-size:12px;color:var(--n500);">07/05 10:05</td></tr>
+        </tbody>
+      </table>
+      <div class="pagi"><div class="pagi-info">Tổng hoa hồng tháng: <strong style="color:var(--s600);">12.636.000 đ</strong></div><div class="pagi-btns"><button class="pbtn">‹</button><button class="pbtn active">1</button><button class="pbtn">2</button><button class="pbtn">›</button></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     6. KHIẾU NẠI
+════════════════════════════════ -->
+<div class="section" id="sec-disputes">
+  <div class="page-hd">
+    <div>
+      <div class="page-title">Khiếu nại & Tranh chấp</div>
+      <div class="page-sub">3 khiếu nại mới · SLA xử lý: 72 giờ kể từ khi nhận</div>
+    </div>
+    <button class="btn-sm btn-ghost">Xem tất cả</button>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="swTab('kt','new',this)">Mới <span class="tc tc-red">3</span></button>
+    <button class="tab-btn" onclick="swTab('kt','processing',this)">Đang xử lý <span class="tc tc-amber">7</span></button>
+    <button class="tab-btn" onclick="swTab('kt','resolved',this)">Đã giải quyết <span class="tc tc-green">48</span></button>
+  </div>
+
+  <div id="kt-new">
+    <!-- Khiếu nại 1 — sắp quá SLA -->
+    <div class="kn-card urgent">
+      <div class="kn-hd">
+        <div class="kn-ico" style="background:var(--red-bg);">😡</div>
+        <div class="kn-meta">
+          <div class="kn-title">Chị Hương khiếu nại gia sư Nguyễn Văn A vắng mặt không báo</div>
+          <div class="kn-info">
+            <span>👤 Người khiếu nại: Chị Hương (Phụ huynh)</span>
+            <span>🎯 Đối tượng: Nguyễn Văn A (Gia sư · Toán)</span>
+            <span>💰 GD liên quan: #GS240506312 · 180.000 đ</span>
+            <span>📅 Gửi: 07/05 09:15</span>
+          </div>
+        </div>
+        <div class="kn-sla">
+          <div class="sla-box over">⚠ Còn 4h</div>
+          <div class="sla-label">Hết SLA lúc 21:15 hôm nay</div>
+        </div>
+      </div>
+      <div class="kn-reason">
+        <div class="kn-reason-lbl">Nội dung khiếu nại</div>
+        <div class="kn-reason-text">Gia sư đã xác nhận lịch học 06/05 lúc 19:00 nhưng không đến và không liên lạc được. Tôi và con đã chờ 45 phút. Yêu cầu hoàn tiền buổi học và có hình thức xử lý.</div>
+      </div>
+      <div class="kn-actions">
+        <div class="kn-assign">Chưa phân công · Admin xử lý</div>
+        <button class="abtn ab-view">Xem GD</button>
+        <button class="abtn" style="background:var(--yellow-bg);color:var(--yellow);">Cảnh cáo GS</button>
+        <button class="abtn ab-approve">Hoàn tiền & Đóng</button>
+      </div>
+    </div>
+
+    <!-- Khiếu nại 2 -->
+    <div class="kn-card" style="margin-top:12px;">
+      <div class="kn-hd">
+        <div class="kn-ico" style="background:var(--yellow-bg);">🤔</div>
+        <div class="kn-meta">
+          <div class="kn-title">Anh Bảo phản ánh chất lượng dạy không đúng cam kết</div>
+          <div class="kn-info">
+            <span>👤 Người khiếu nại: Phạm Gia Bảo (Học viên)</span>
+            <span>🎯 Đối tượng: Lê Phương Thảo (Gia sư · UI/UX)</span>
+            <span>💰 GD liên quan: #GS240507308 · 5.500.000 đ</span>
+            <span>📅 Gửi: 07/05 11:30</span>
+          </div>
+        </div>
+        <div class="kn-sla">
+          <div class="sla-box warn">Còn 58h</div>
+          <div class="sla-label">Hết SLA 10/05 11:30</div>
+        </div>
+      </div>
+      <div class="kn-reason">
+        <div class="kn-reason-lbl">Nội dung khiếu nại</div>
+        <div class="kn-reason-text">Đăng ký 10 buổi UI/UX Figma nhưng gia sư dạy sai syllabus, thiếu bài tập thực hành. Tôi đã nhắn tin nhưng gia sư giải thích không thỏa đáng. Muốn hoàn tiền 7 buổi còn lại.</div>
+      </div>
+      <div class="kn-actions">
+        <div class="kn-assign">Chưa phân công</div>
+        <button class="abtn ab-view">Xem GD</button>
+        <button class="abtn" style="background:var(--p50);color:var(--p700);">Gọi hòa giải</button>
+        <button class="abtn ab-approve" style="padding:0 12px;">Nhận xử lý</button>
+      </div>
+    </div>
+
+    <!-- Khiếu nại 3 — từ gia sư -->
+    <div class="kn-card" style="margin-top:12px;">
+      <div class="kn-hd">
+        <div class="kn-ico" style="background:var(--p50);">📢</div>
+        <div class="kn-meta">
+          <div class="kn-title">Gia sư Dung tố phụ huynh huỷ lịch liên tục không báo trước</div>
+          <div class="kn-info">
+            <span>👤 Người khiếu nại: Trịnh Thị Dung (Gia sư)</span>
+            <span>🎯 Đối tượng: Ngô Minh Linh (Phụ huynh)</span>
+            <span>💰 3 buổi bị huỷ · thiệt hại ước tính 660.000 đ</span>
+            <span>📅 Gửi: 07/05 13:00</span>
+          </div>
+        </div>
+        <div class="kn-sla">
+          <div class="sla-box ok">Còn 71h</div>
+          <div class="sla-label">Hết SLA 10/05 13:00</div>
+        </div>
+      </div>
+      <div class="kn-reason">
+        <div class="kn-reason-lbl">Nội dung khiếu nại</div>
+        <div class="kn-reason-text">Phụ huynh Ngô Minh Linh đã huỷ lịch 3 buổi liên tiếp trong 2 tuần, thông báo trước dưới 1 tiếng. Tôi đã từ chối học sinh khác để giữ lịch. Đề nghị platform áp dụng chính sách phạt huỷ lịch muộn.</div>
+      </div>
+      <div class="kn-actions">
+        <div class="kn-assign">Chưa phân công</div>
+        <button class="abtn ab-view">Xem lịch sử</button>
+        <button class="abtn" style="background:var(--yellow-bg);color:var(--yellow);">Cảnh cáo PH</button>
+        <button class="abtn ab-approve" style="padding:0 12px;">Nhận xử lý</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="kt-processing" style="display:none;"><div class="card"><div style="padding:40px;text-align:center;color:var(--n400);">7 khiếu nại đang xử lý</div></div></div>
+  <div id="kt-resolved" style="display:none;"><div class="card"><div style="padding:40px;text-align:center;color:var(--n400);">48 khiếu nại đã giải quyết</div></div></div>
+</div>
+
+<!-- ════════════════════════════════
+     7. GIAO DỊCH
+════════════════════════════════ -->
+<div class="section" id="sec-transactions">
+  <div class="page-hd">
+    <div>
+      <div class="page-title">Lịch sử giao dịch</div>
+      <div class="page-sub">318 GD hôm nay · Gross: 84.240.000 đ · HH nền tảng: 12.636.000 đ</div>
+    </div>
+    <button class="btn-sm btn-ghost">Xuất CSV</button>
+  </div>
+  <div class="card">
+    <div class="card-hd">
+      <div class="filter-row">
+        <input class="si" placeholder="Mã GD, tên...">
+        <select class="fsel"><option>Hôm nay</option><option>7 ngày</option><option>Tháng này</option></select>
+        <select class="fsel"><option>Tất cả trạng thái</option><option>Thành công</option><option>Đang xử lý</option><option>Thất bại</option><option>Hoàn tiền</option></select>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:var(--green);">+84.240.000 đ · HH: 12.636.000 đ</div>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Mã GD</th><th>Học viên / PH</th><th>Gia sư</th><th>Môn / Buổi</th><th>Giá trị GD</th><th>HH (15%)</th><th>GS nhận</th><th>Phương thức</th><th>Trạng thái</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="font-size:11px;color:var(--n400);font-weight:600;">#GS240507318</td>
+          <td><div class="ucell"><div class="uav" style="width:26px;height:26px;font-size:10px;background:linear-gradient(135deg,#7C3AED,#A78BFA);">B</div><div class="uname" style="font-size:12px;">Phạm Gia Bảo</div></div></td>
+          <td style="font-size:12px;color:var(--n700);">Lê Trọng Nam</td>
+          <td style="font-size:12px;color:var(--n600);">Python · 1 buổi</td>
+          <td class="amount pos">480.000</td>
+          <td class="commission-cell">72.000</td>
+          <td class="amount pos" style="font-size:12px;">408.000</td>
+          <td><div class="pmethod">💳 VNPAY</div></td>
+          <td><span class="badge bg-green">✓ Thành công</span></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--n400);font-weight:600;">#GS240507317</td>
+          <td><div class="ucell"><div class="uav" style="width:26px;height:26px;font-size:10px;background:linear-gradient(135deg,#1565C0,#42A5F5);">M</div><div class="uname" style="font-size:12px;">Trần Hà My</div></div></td>
+          <td style="font-size:12px;color:var(--n700);">Trịnh Thị Dung</td>
+          <td style="font-size:12px;color:var(--n600);">IELTS · 1 buổi</td>
+          <td class="amount pos">350.000</td>
+          <td class="commission-cell">52.500</td>
+          <td class="amount pos" style="font-size:12px;">297.500</td>
+          <td><div class="pmethod">🏦 MoMo</div></td>
+          <td><span class="badge bg-green">✓ Thành công</span></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--n400);font-weight:600;">#GS240507315</td>
+          <td><div class="ucell"><div class="uav" style="width:26px;height:26px;font-size:10px;background:linear-gradient(135deg,#16A34A,#4ADE80);">L</div><div class="uname" style="font-size:12px;">Ngô Minh Linh</div></div></td>
+          <td style="font-size:12px;color:var(--n700);">Nguyễn Thành Đạt</td>
+          <td style="font-size:12px;color:var(--n600);">Toán · 1 buổi</td>
+          <td class="amount" style="color:var(--n600);">220.000</td>
+          <td class="commission-cell">33.000</td>
+          <td class="amount" style="font-size:12px;color:var(--n600);">187.000</td>
+          <td><div class="pmethod">💳 Thẻ ATM</div></td>
+          <td><span class="badge bg-yellow">⏳ Xử lý</span></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--n400);font-weight:600;">#GS240506312</td>
+          <td><div class="ucell"><div class="uav" style="width:26px;height:26px;font-size:10px;background:linear-gradient(135deg,#1565C0,#42A5F5);">H</div><div class="uname" style="font-size:12px;">Chị Hương</div></div></td>
+          <td style="font-size:12px;color:var(--n700);">Nguyễn Văn A</td>
+          <td style="font-size:12px;color:var(--n600);">Toán · 1 buổi</td>
+          <td class="amount neg">−180.000</td>
+          <td class="commission-cell" style="color:var(--red);">−27.000</td>
+          <td class="amount neg" style="font-size:12px;">−153.000</td>
+          <td><div class="pmethod">💳 VNPAY</div></td>
+          <td><span class="badge bg-red">↩ Hoàn tiền</span></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--n400);font-weight:600;">#GS240507308</td>
+          <td><div class="ucell"><div class="uav" style="width:26px;height:26px;font-size:10px;background:linear-gradient(135deg,#7C3AED,#A78BFA);">B</div><div class="uname" style="font-size:12px;">Phạm Gia Bảo</div></div></td>
+          <td style="font-size:12px;color:var(--n700);">Lê Phương Thảo</td>
+          <td style="font-size:12px;color:var(--n600);">UI/UX · 10 buổi</td>
+          <td class="amount pos">5.500.000</td>
+          <td class="commission-cell">825.000</td>
+          <td class="amount pos" style="font-size:12px;">4.675.000</td>
+          <td><div class="pmethod">🏦 MoMo</div></td>
+          <td><span class="badge bg-yellow">⚠ Đang khiếu nại</span></td>
+        </tr>
+        <tr>
+          <td style="font-size:11px;color:var(--n400);font-weight:600;">#GS240507301</td>
+          <td><div class="ucell"><div class="uav" style="width:26px;height:26px;font-size:10px;background:linear-gradient(135deg,#475569,#94A3B8);">D</div><div class="uname" style="font-size:12px;">Nguyễn Văn Dũng</div></div></td>
+          <td style="font-size:12px;color:var(--n700);">Suzuki Hana</td>
+          <td style="font-size:12px;color:var(--n600);">Tiếng Nhật · 1 buổi</td>
+          <td class="amount pos">420.000</td>
+          <td class="commission-cell">63.000</td>
+          <td class="amount pos" style="font-size:12px;">357.000</td>
+          <td><div class="pmethod">💳 VNPAY</div></td>
+          <td><span class="badge bg-green">✓ Thành công</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagi">
+      <div class="pagi-info">Hiển thị 1–6 / 318 giao dịch · Tổng HH: <strong style="color:var(--s600);">12.636.000 đ</strong></div>
+      <div class="pagi-btns"><button class="pbtn">‹</button><button class="pbtn active">1</button><button class="pbtn">2</button><button class="pbtn">3</button><button class="pbtn">…</button><button class="pbtn">53</button><button class="pbtn">›</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     8. XÁC NHẬN CHUYỂN KHOẢN (Flow G)
+════════════════════════════════ -->
+<div class="section" id="sec-payment">
+  <div class="page-hd">
+    <div>
+      <div class="page-title">Xác nhận chuyển khoản</div>
+      <div class="page-sub">2 giao dịch đang chờ đối chiếu · Sao kê tự động quét mỗi 5 phút</div>
+    </div>
+    <div class="hd-actions">
+      <button class="btn-sm btn-ghost">🔄 Làm mới sao kê</button>
+      <button class="btn-sm btn-primary">Xuất danh sách</button>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div style="background:#FFF7ED;border:1.5px solid #FCD34D;border-radius:var(--r-lg);padding:14px 18px;margin-bottom:18px;display:flex;align-items:flex-start;gap:12px;">
+    <span style="font-size:22px;flex-shrink:0;line-height:1.3;">🏦</span>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#92400E;margin-bottom:5px;">Quy trình xác nhận chuyển khoản</div>
+      <div style="font-size:12.5px;color:#B45309;line-height:1.65;">
+        Học viên chuyển khoản với nội dung = mã đặt lịch (VD: <code style="background:#FEF3C7;padding:1px 5px;border-radius:4px;font-size:11.5px;">GS-2026-08421</code>). Admin đối chiếu sao kê ngân hàng theo mã này rồi bấm <strong>Xác nhận đã nhận tiền</strong> — hệ thống tự kích hoạt booking và gửi yêu cầu đến gia sư. <strong>SLA: 30 phút trong giờ hành chính.</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bank account -->
+  <div style="background:#fff;border:1.5px solid var(--n200);border-radius:var(--r-lg);padding:14px 20px;margin-bottom:22px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--n400);text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px;">Tài khoản nhận</div>
+      <div style="font-size:14.5px;font-weight:800;color:var(--n900);">Vietcombank — <span style="color:var(--p700);">1234 5678 9012</span></div>
+    </div>
+    <div style="width:1px;height:34px;background:var(--n200);flex-shrink:0;"></div>
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--n400);text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px;">Chủ tài khoản</div>
+      <div style="font-size:13px;font-weight:700;color:var(--n800);">CÔNG TY TNHH GIÁO DỤC GIASU EDU</div>
+    </div>
+    <div style="width:1px;height:34px;background:var(--n200);flex-shrink:0;"></div>
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--n400);text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px;">Nhận hôm nay</div>
+      <div style="font-size:14px;font-weight:900;color:var(--green);">+12.850.000 đ</div>
+    </div>
+    <div style="margin-left:auto;">
+      <button style="height:34px;padding:0 16px;border-radius:var(--r-md);background:var(--p50);color:var(--p700);border:1.5px solid var(--p200);font-size:12.5px;font-weight:700;cursor:pointer;">📥 Tải sao kê VCB</button>
+    </div>
+  </div>
+
+  <!-- Pending queue header -->
+  <div style="font-size:11px;font-weight:800;color:var(--n500);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;display:flex;align-items:center;gap:9px;">
+    ⏳ Chờ xác nhận
+    <span id="pay-pending-count" style="background:var(--s500);color:#fff;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:800;">2</span>
+  </div>
+
+  <!-- ── Row 1: Chưa tìm thấy trong sao kê ── -->
+  <div class="pay-row" id="pay-row-08421">
+    <div class="pay-main">
+      <div class="pay-code">
+        <div style="font-size:10px;color:var(--n400);font-weight:700;letter-spacing:.5px;margin-bottom:3px;">MÃ ĐẶT LỊCH</div>
+        <div style="font-size:14px;font-weight:900;color:var(--p700);">GS-2026-08421</div>
+        <div style="font-size:11px;color:var(--n400);margin-top:2px;">08/05/2026 · 14:32</div>
+      </div>
+      <div class="pay-info">
+        <div style="font-size:14px;font-weight:800;color:var(--n900);">Nguyễn Thị Mai</div>
+        <div style="font-size:12.5px;color:var(--n600);margin-top:2px;">→ GS Nguyễn Văn An · 📐 Toán lớp 9 · 8 buổi</div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:6px;">
+          <span style="font-size:11px;background:var(--p50);color:var(--p700);padding:2px 8px;border-radius:20px;font-weight:700;border:1px solid var(--p200);">🏦 Chuyển khoản</span>
+          <span style="font-size:11px;background:var(--yellow-bg);color:var(--yellow);padding:2px 8px;border-radius:20px;font-weight:700;">⏳ Chờ đối chiếu 28 phút</span>
+        </div>
+      </div>
+      <div class="pay-ck-info">
+        <div style="font-size:10px;color:var(--n400);font-weight:700;letter-spacing:.5px;margin-bottom:4px;">NỘI DUNG CHUYỂN KHOẢN</div>
+        <div style="font-size:12px;font-weight:700;color:var(--n800);background:var(--n100);padding:5px 10px;border-radius:6px;font-family:monospace;letter-spacing:.3px;">GS-2026-08421 THANH TOAN</div>
+      </div>
+      <div class="pay-amount">
+        <div style="font-size:20px;font-weight:900;color:var(--n900);">1.200.000</div>
+        <div style="font-size:11px;color:var(--n400);margin-top:2px;">150.000đ × 8 buổi</div>
+      </div>
+    </div>
+    <div class="pay-ck-status">
+      <div style="display:flex;align-items:center;gap:10px;background:var(--yellow-bg);border:1.5px solid #FDE68A;border-radius:10px;padding:11px 16px;margin-bottom:12px;">
+        <span style="font-size:22px;flex-shrink:0;">🔍</span>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;color:#92400E;">Chưa tìm thấy trong sao kê tự động</div>
+          <div style="font-size:12px;color:#A16207;margin-top:2px;">Có thể ngân hàng chưa cập nhật · Quét lại lúc 15:07 · Có thể xác nhận thủ công bên dưới</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:9px;">
+        <button onclick="rejectPayment('08421','Nguyễn Thị Mai','Toán lớp 9','1.200.000 đ')" style="flex:1;height:38px;border-radius:9px;background:var(--red-bg);color:var(--red);border:1.5px solid #FECACA;font-size:12.5px;font-weight:700;cursor:pointer;">✗ Không khớp</button>
+        <button onclick="confirmPayment('08421','Nguyễn Thị Mai → GS Nguyễn Văn An · Toán lớp 9','1.200.000 đ')" style="flex:2;height:38px;border-radius:9px;background:var(--green);color:#fff;border:none;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(22,163,74,.3);">✓ Xác nhận đã nhận tiền</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Row 2: Tìm thấy trong sao kê ── -->
+  <div class="pay-row" id="pay-row-08417" style="border-color:#BBF7D0;">
+    <div class="pay-main">
+      <div class="pay-code">
+        <div style="font-size:10px;color:var(--n400);font-weight:700;letter-spacing:.5px;margin-bottom:3px;">MÃ ĐẶT LỊCH</div>
+        <div style="font-size:14px;font-weight:900;color:var(--p700);">GS-2026-08417</div>
+        <div style="font-size:11px;color:var(--n400);margin-top:2px;">08/05/2026 · 11:05</div>
+      </div>
+      <div class="pay-info">
+        <div style="font-size:14px;font-weight:800;color:var(--n900);">Trần Minh Khải</div>
+        <div style="font-size:12.5px;color:var(--n600);margin-top:2px;">→ GS Lê Phương Thảo · 🎨 UI/UX Design · 5 buổi</div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:6px;">
+          <span style="font-size:11px;background:var(--p50);color:var(--p700);padding:2px 8px;border-radius:20px;font-weight:700;border:1px solid var(--p200);">🏦 Chuyển khoản</span>
+          <span style="font-size:11px;background:var(--green-bg);color:var(--green);padding:2px 8px;border-radius:20px;font-weight:700;">✓ Khớp sao kê · 11:08</span>
+        </div>
+      </div>
+      <div class="pay-ck-info">
+        <div style="font-size:10px;color:var(--n400);font-weight:700;letter-spacing:.5px;margin-bottom:4px;">PHÁT HIỆN TỪ SAO KÊ</div>
+        <div style="font-size:12px;font-weight:700;color:var(--green);background:var(--green-bg);padding:5px 10px;border-radius:6px;font-family:monospace;letter-spacing:.3px;">GS-2026-08417 ✓</div>
+        <div style="font-size:11px;color:var(--n400);margin-top:3px;">VCB ****3304 · 2.750.000đ</div>
+      </div>
+      <div class="pay-amount">
+        <div style="font-size:20px;font-weight:900;color:var(--n900);">2.750.000</div>
+        <div style="font-size:11px;color:var(--n400);margin-top:2px;">550.000đ × 5 buổi</div>
+      </div>
+    </div>
+    <div class="pay-ck-status">
+      <div style="display:flex;align-items:center;gap:10px;background:var(--green-bg);border:1.5px solid #BBF7D0;border-radius:10px;padding:11px 16px;margin-bottom:12px;">
+        <span style="font-size:22px;flex-shrink:0;">✅</span>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;color:var(--green);">Khớp tự động với sao kê · 11:08 hôm nay</div>
+          <div style="font-size:12px;color:#15803D;margin-top:2px;">2.750.000 đ từ TK VCB ****3304 · Nội dung: GS-2026-08417 · Sẵn sàng xác nhận</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:9px;">
+        <button onclick="rejectPayment('08417','Trần Minh Khải','UI/UX Design','2.750.000 đ')" style="flex:1;height:38px;border-radius:9px;background:var(--red-bg);color:var(--red);border:1.5px solid #FECACA;font-size:12.5px;font-weight:700;cursor:pointer;">✗ Không khớp</button>
+        <button onclick="confirmPayment('08417','Trần Minh Khải → GS Lê Phương Thảo · UI/UX Design','2.750.000 đ')" style="flex:2;height:38px;border-radius:9px;background:var(--green);color:#fff;border:none;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(22,163,74,.3);animation:pulse 2s ease infinite;" id="pay-btn-08417">✓ Xác nhận đã nhận tiền</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmed today -->
+  <div style="font-size:11px;font-weight:800;color:var(--n500);text-transform:uppercase;letter-spacing:.8px;margin:24px 0 12px;display:flex;align-items:center;gap:9px;">
+    ✓ Đã xác nhận hôm nay
+    <span id="pay-done-count" style="background:var(--green);color:#fff;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:800;">4</span>
+  </div>
+  <div id="pay-confirmed-list">
+    <div style="background:#fff;border:1.5px solid #BBF7D0;border-radius:var(--r-lg);padding:13px 18px;margin-bottom:9px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <div style="font-size:12px;font-weight:800;color:var(--p700);flex-shrink:0;min-width:120px;">GS-2026-08410</div>
+      <div style="flex:1;font-size:13px;color:var(--n700);">Hà Thị Bình → GS Trịnh Thị Dung · Tiếng Anh IELTS · 700.000 đ</div>
+      <div style="font-size:12px;color:var(--n400);flex-shrink:0;">08:15 hôm nay</div>
+      <span style="background:var(--green-bg);color:var(--green);font-size:11px;font-weight:700;padding:3px 11px;border-radius:20px;flex-shrink:0;">✓ Kích hoạt · GS đã nhận</span>
+    </div>
+    <div style="background:#fff;border:1.5px solid #BBF7D0;border-radius:var(--r-lg);padding:13px 18px;margin-bottom:9px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <div style="font-size:12px;font-weight:800;color:var(--p700);flex-shrink:0;min-width:120px;">GS-2026-08405</div>
+      <div style="flex:1;font-size:13px;color:var(--n700);">Ngô Văn Tám → GS Nguyễn Thành Đạt · Vật lý lớp 10 · 1.120.000 đ</div>
+      <div style="font-size:12px;color:var(--n400);flex-shrink:0;">07/05 16:40</div>
+      <span style="background:var(--green-bg);color:var(--green);font-size:11px;font-weight:700;padding:3px 11px;border-radius:20px;flex-shrink:0;">✓ Kích hoạt · GS đã nhận</span>
+    </div>
+    <div style="background:#fff;border:1.5px solid #BBF7D0;border-radius:var(--r-lg);padding:13px 18px;margin-bottom:9px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <div style="font-size:12px;font-weight:800;color:var(--p700);flex-shrink:0;min-width:120px;">GS-2026-08399</div>
+      <div style="flex:1;font-size:13px;color:var(--n700);">Lê Thu Hằng → GS Suzuki Hana · Tiếng Nhật · 840.000 đ</div>
+      <div style="font-size:12px;color:var(--n400);flex-shrink:0;">07/05 14:12</div>
+      <span style="background:var(--green-bg);color:var(--green);font-size:11px;font-weight:700;padding:3px 11px;border-radius:20px;flex-shrink:0;">✓ Kích hoạt · GS đã nhận</span>
+    </div>
+    <div style="background:#fff;border:1.5px solid #BBF7D0;border-radius:var(--r-lg);padding:13px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <div style="font-size:12px;font-weight:800;color:var(--p700);flex-shrink:0;min-width:120px;">GS-2026-08391</div>
+      <div style="flex:1;font-size:13px;color:var(--n700);">Phạm Minh Tuấn → GS Hoàng Văn Bình · Hóa học · 960.000 đ</div>
+      <div style="font-size:12px;color:var(--n400);flex-shrink:0;">07/05 09:50</div>
+      <span style="background:var(--green-bg);color:var(--green);font-size:11px;font-weight:700;padding:3px 11px;border-radius:20px;flex-shrink:0;">✓ Kích hoạt · GS đã nhận</span>
+    </div>
+  </div>
+</div>
+
+</main>
+</div><!-- /admin-wrap -->
+
+<script>
+const SECS = ['overview','verify','users','listings','finance','disputes','transactions','payment'];
+
+function sw(id) {
+  SECS.forEach(s => {
+    const sec = document.getElementById('sec-'+s);
+    const sb  = document.getElementById('sb-'+s);
+    if(sec) sec.classList.toggle('active', s===id);
+    if(sb)  sb.classList.toggle('active', s===id);
+  });
+  document.querySelectorAll('.demo-btn').forEach((b,i)=>{
+    b.classList.toggle('active', SECS[i]===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function swTab(prefix, tab, btn) {
+  // hide all sibling tab panes
+  const panes = document.querySelectorAll('[id^="'+prefix+'-"]');
+  panes.forEach(p => p.style.display = 'none');
+  const target = document.getElementById(prefix+'-'+tab);
+  if(target) { target.style.display='flex'; target.style.flexDirection='column'; }
+  // toggle tab buttons
+  if(btn) {
+    btn.closest('.tab-bar').querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+}
+
+// init
+document.querySelectorAll('.demo-btn').forEach((b,i)=>{
+  if(SECS[i]) b.setAttribute('data-sec', SECS[i]);
+});
+
+// ── Xác nhận Chuyển Khoản — Flow G ───────────────────
+let _payPending = 2;
+
+function confirmPayment(code, label, amount) {
+  const row = document.getElementById('pay-row-' + code);
+  if (!row) return;
+  row.style.transition = 'opacity .35s,transform .35s';
+  row.style.opacity = '0';
+  row.style.transform = 'translateX(18px)';
+  setTimeout(() => {
+    row.remove();
+    _payPending = Math.max(0, _payPending - 1);
+    // update badges
+    const pc = document.getElementById('pay-pending-count');
+    if (pc) pc.textContent = _payPending;
+    const dc = document.getElementById('pay-done-count');
+    if (dc) dc.textContent = (parseInt(dc.textContent) || 4) + 1;
+    const sbb = document.getElementById('sb-payment-badge');
+    if (sbb) { sbb.textContent = _payPending; if (_payPending === 0) sbb.style.display='none'; }
+    // insert into confirmed list
+    const list = document.getElementById('pay-confirmed-list');
+    if (list) {
+      const div = document.createElement('div');
+      div.style.cssText = 'background:#fff;border:1.5px solid #BBF7D0;border-radius:16px;padding:13px 18px;margin-bottom:9px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;animation:fadeSlideIn .4s ease;';
+      div.innerHTML = `<div style="font-size:12px;font-weight:800;color:var(--p700);flex-shrink:0;min-width:120px;">GS-2026-${code}</div><div style="flex:1;font-size:13px;color:var(--n700);">${label} · ${amount}</div><div style="font-size:12px;color:var(--n400);flex-shrink:0;">Vừa xác nhận</div><span style="background:var(--green-bg);color:var(--green);font-size:11px;font-weight:700;padding:3px 11px;border-radius:20px;flex-shrink:0;">✓ Kích hoạt · Đang gửi GS</span>`;
+      list.insertBefore(div, list.firstChild);
+    }
+    showAdminToast('✓ Đã xác nhận GS-2026-' + code + ' · Booking kích hoạt · Gia sư nhận yêu cầu ngay', 'green');
+  }, 350);
+}
+
+function rejectPayment(code, name, subject, amount) {
+  const row = document.getElementById('pay-row-' + code);
+  if (!row) return;
+  row.style.transition = 'background .25s,border-color .25s';
+  row.style.background = '#FEF2F2';
+  row.style.borderColor = '#FECACA';
+  setTimeout(() => { row.style.background = ''; row.style.borderColor = ''; }, 800);
+  showAdminToast('⚠️ Đánh dấu không khớp GS-2026-' + code + ' · Hệ thống sẽ thông báo học viên kiểm tra lại', 'amber');
+}
+
+function showAdminToast(text, type) {
+  const bg = type === 'green' ? 'linear-gradient(135deg,#16A34A,#15803D)' : 'linear-gradient(135deg,#D97706,#B45309)';
+  const t = document.createElement('div');
+  t.style.cssText = `position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:${bg};color:#fff;padding:13px 22px;border-radius:13px;font-size:13px;font-weight:700;z-index:9999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.22);animation:fadeSlideIn .3s ease;`;
+  t.textContent = text;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.transition='opacity .4s'; t.style.opacity='0'; setTimeout(()=>t.remove(),400); }, 4500);
+}
+// ─────────────────────────────────────────────────────
+
+// ── Profile Slide-over ──
+const PROFILES = {
+  khoa: {
+    av:'K', avBg:'linear-gradient(135deg,#1565C0,#42A5F5)',
+    name:'Nguyễn Văn Khoa', sub:'📅 Đăng ký 07/05/2026 · ⏳ Chờ duyệt 6 giờ',
+    info:{ email:'khoa.gv@gmail.com', phone:'0912 345 678', gender:'Nam', dob:'12/03/1998', addr:'Cầu Giấy, Hà Nội', reg:'07/05/2026',
+      statusHtml:'<span class="badge bg-yellow">⏳ Chờ duyệt</span>',
+      bio:'Sinh viên năm cuối ĐH Bách Khoa HN, khoa Toán ứng dụng. Có 3 năm kinh nghiệm dạy kèm Toán và Vật lý cho học sinh THPT, đặc biệt luyện thi đại học. Phương pháp: hệ thống lý thuyết nền + luyện đề chuyên sâu.' },
+    expert:{ subjects:'Toán, Vật lý', levels:'Lớp 9 – 12 · Luyện thi ĐH', edu:'ĐH Bách Khoa HN — Toán ứng dụng (năm 4)', exp:'3 năm', price:'200.000 – 350.000 đ/giờ',
+      sched:[[1,1,0,1,1,0,0],[0,1,1,0,1,1,0],[0,0,0,1,0,0,1]], video:null },
+    docs:[
+      {name:'CCCD mặt trước',st:'ok',ico:'🪪'},{name:'CCCD mặt sau',st:'ok',ico:'🪪'},
+      {name:'Bằng tốt nghiệp',st:'ok',ico:'📜'},{name:'Ảnh selfie cầm CCCD',st:'ok',ico:'🤳'},
+      {name:'Bảng điểm / chứng chỉ',st:'ok',ico:'📋'}],
+    noteOk:true, approveOk:true
+  },
+  an: {
+    av:'A', avBg:'linear-gradient(135deg,#C46200,#FFA726)',
+    name:'Đoàn Trọng An', sub:'📅 Đăng ký 20/04/2026 · 🔴 Chờ 17 ngày',
+    info:{ email:'an.doan.gs@gmail.com', phone:'0987 654 321', gender:'Nam', dob:'05/09/1996', addr:'Đống Đa, Hà Nội', reg:'20/04/2026',
+      statusHtml:'<span class="badge bg-red">🔴 Chờ lâu · 17 ngày</span>',
+      bio:'Cử nhân Tiếng Anh ĐH Hà Nội, đạt IELTS 7.5. Có 4 năm kinh nghiệm luyện thi IELTS và dạy tiếng Anh giao tiếp cho học viên từ 12–40 tuổi. Phương pháp: tập trung 4 kỹ năng, luyện phản xạ nói.' },
+    expert:{ subjects:'IELTS, Tiếng Anh giao tiếp', levels:'Tất cả trình độ', edu:'ĐH Hà Nội — Khoa Tiếng Anh', exp:'4 năm', price:'250.000 – 400.000 đ/giờ',
+      sched:[[0,1,1,0,1,1,0],[1,1,0,1,1,0,1],[0,0,0,0,0,1,1]], video:null },
+    docs:[
+      {name:'CCCD mặt trước',st:'ok',ico:'🪪'},{name:'CCCD mặt sau',st:'ok',ico:'🪪'},
+      {name:'Bằng tốt nghiệp',st:'miss',ico:'📜'},{name:'Ảnh selfie cầm CCCD',st:'wait',ico:'🤳'},
+      {name:'Chứng chỉ IELTS 7.5',st:'ok',ico:'📋'}],
+    noteOk:false, approveOk:false
+  },
+  tu: {
+    av:'T', avBg:'linear-gradient(135deg,#7C3AED,#A78BFA)',
+    name:'Lê Minh Tú', sub:'📅 Đăng ký 06/05/2026 · ⏳ Chờ duyệt 1 ngày',
+    info:{ email:'tu.le.piano@gmail.com', phone:'0901 234 567', gender:'Nữ', dob:'14/07/2000', addr:'Tây Hồ, Hà Nội', reg:'06/05/2026',
+      statusHtml:'<span class="badge bg-yellow">⏳ Chờ duyệt · 1 ngày</span>',
+      bio:'Tốt nghiệp Nhạc viện Hà Nội, chuyên ngành Piano. Dạy piano cho mọi lứa tuổi từ 5 tuổi trở lên, từ nhập môn đến nâng cao. Có thể đến nhà học viên hoặc dạy online qua video call.' },
+    expert:{ subjects:'Piano, Âm nhạc cơ bản', levels:'Mọi trình độ · Từ 5 tuổi', edu:'Nhạc viện Hà Nội — Chuyên ngành Piano', exp:'2 năm', price:'180.000 – 300.000 đ/giờ',
+      sched:[[1,0,1,0,1,0,1],[1,1,0,1,0,1,1],[0,0,0,0,0,0,1]], video:'https://youtube.com/watch?v=demo' },
+    docs:[
+      {name:'CCCD mặt trước',st:'ok',ico:'🪪'},{name:'CCCD mặt sau',st:'ok',ico:'🪪'},
+      {name:'Bằng tốt nghiệp Nhạc viện',st:'ok',ico:'📜'},{name:'Ảnh selfie cầm CCCD',st:'ok',ico:'🤳'},
+      {name:'Video giảng thử 5 phút',st:'ok',ico:'🎥'}],
+    noteOk:true, approveOk:true
+  }
+};
+const _DAYS=['T2','T3','T4','T5','T6','T7','CN'], _SLOTS=['Sáng','Chiều','Tối'];
+const _STLBL={ok:'✓ Hợp lệ',miss:'✗ Chưa nộp',wait:'⏳ Cần xem lại'};
+
+function openProfile(key){
+  const p=PROFILES[key]; if(!p) return;
+  // header
+  const hav=document.getElementById('prof-hav');
+  hav.textContent=p.av; hav.style.background=p.avBg;
+  document.getElementById('prof-hname').textContent=p.name;
+  document.getElementById('prof-hsub').textContent=p.sub;
+  // info tab
+  document.getElementById('pi-name').textContent=p.name;
+  document.getElementById('pi-email').textContent=p.info.email;
+  document.getElementById('pi-phone').textContent=p.info.phone;
+  document.getElementById('pi-gender').textContent=p.info.gender;
+  document.getElementById('pi-dob').textContent=p.info.dob;
+  document.getElementById('pi-addr').textContent=p.info.addr;
+  document.getElementById('pi-reg').textContent=p.info.reg;
+  document.getElementById('pi-status').innerHTML=p.info.statusHtml;
+  document.getElementById('pi-bio').textContent=p.info.bio;
+  // expert tab
+  document.getElementById('pe-subj').textContent=p.expert.subjects;
+  document.getElementById('pe-lvl').textContent=p.expert.levels;
+  document.getElementById('pe-edu').textContent=p.expert.edu;
+  document.getElementById('pe-exp').textContent=p.expert.exp;
+  document.getElementById('pe-price').textContent=p.expert.price;
+  // schedule
+  let sh='<div class="prof-sh"></div>'+_DAYS.map(d=>`<div class="prof-sh">${d}</div>`).join('');
+  p.expert.sched.forEach((row,ri)=>{
+    sh+=`<div class="prof-sr">${_SLOTS[ri]}</div>`;
+    sh+=row.map(v=>`<div class="prof-sc ${v?'on':'off'}">${v?'✓':''}</div>`).join('');
+  });
+  document.getElementById('pe-sched').innerHTML=sh;
+  // video
+  const vwrap=document.getElementById('pe-video-wrap');
+  if(p.expert.video){ vwrap.style.display='block'; document.getElementById('pe-video-link').href=p.expert.video; }
+  else { vwrap.style.display='none'; }
+  // docs tab
+  const dg=document.getElementById('pd-docs');
+  dg.innerHTML=p.docs.map(d=>`
+    <div class="prof-doc-card ${d.st}">
+      <div class="prof-doc-thumb">${d.ico}</div>
+      <div class="prof-doc-foot">
+        <span class="prof-doc-name">${d.name}</span>
+        <span class="prof-doc-badge ${d.st}">${_STLBL[d.st]}</span>
+      </div>
+    </div>`).join('');
+  document.getElementById('pd-note').innerHTML=p.noteOk
+    ?'<div style="background:var(--green-bg);color:var(--green);padding:11px 14px;border-radius:var(--r-md);font-size:12.5px;font-weight:600;">✓ Tất cả tài liệu hợp lệ — có thể xác thực ngay</div>'
+    :'<div style="background:var(--red-bg);color:var(--red);padding:11px 14px;border-radius:var(--r-md);font-size:12.5px;font-weight:600;">✗ Còn tài liệu thiếu / không hợp lệ — yêu cầu bổ sung trước khi xác thực</div>';
+  // approve btn
+  const ab=document.getElementById('prof-ab');
+  ab.style.opacity=p.approveOk?'1':'.4';
+  ab.style.cursor=p.approveOk?'pointer':'not-allowed';
+  // reset tab
+  swProfTab('info', document.querySelector('.prof-tab'));
+  document.getElementById('profile-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeProfile(){
+  document.getElementById('profile-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeProfBg(e){ if(e.target===e.currentTarget) closeProfile(); }
+
+function swProfTab(tab,btn){
+  document.querySelectorAll('.prof-body').forEach(el=>el.classList.remove('active'));
+  const target=document.getElementById('ptab-'+tab);
+  if(target) target.classList.add('active');
+  document.querySelectorAll('.prof-tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+
+// ═══ TOGGLE: Overview empty / filled ═══
+function toggleAdminOverview(state) {
+  document.getElementById('adov-empty').style.display  = state === 'empty' ? 'block' : 'none';
+  document.getElementById('adov-filled').style.display = state === 'empty' ? 'none'  : 'block';
+  const bF = document.getElementById('adov-btn-filled');
+  const bE = document.getElementById('adov-btn-empty');
+  bF.style.background = state === 'filled' ? 'var(--p700)' : 'var(--n100)';
+  bF.style.color      = state === 'filled' ? '#fff' : 'var(--n500)';
+  bF.style.border     = state === 'filled' ? 'none' : '1.5px solid var(--n200)';
+  bE.style.background = state === 'empty'  ? 'var(--p700)' : 'var(--n100)';
+  bE.style.color      = state === 'empty'  ? '#fff' : 'var(--n500)';
+  bE.style.border     = state === 'empty'  ? 'none' : '1.5px solid var(--n200)';
+}
+
+// ═══ TOGGLE: Demo empty / filled queues ═══
+function toggleVtQueue(state) {
+  document.getElementById('vt_pending_empty').style.display  = state === 'empty' ? 'block' : 'none';
+  document.getElementById('vt_pending_filled').style.display = state === 'empty' ? 'none'  : 'block';
+  const bFill = document.getElementById('vt-btn-filled');
+  const bEmp  = document.getElementById('vt-btn-empty');
+  bFill.style.background = state === 'filled' ? 'var(--p700)' : 'var(--n100)';
+  bFill.style.color      = state === 'filled' ? '#fff' : 'var(--n500)';
+  bFill.style.border     = state === 'filled' ? 'none' : '1.5px solid var(--n200)';
+  bEmp.style.background  = state === 'empty'  ? 'var(--p700)' : 'var(--n100)';
+  bEmp.style.color       = state === 'empty'  ? '#fff' : 'var(--n500)';
+  bEmp.style.border      = state === 'empty'  ? 'none' : '1.5px solid var(--n200)';
+}
+
+function toggleTtQueue(state) {
+  document.getElementById('tt_pending_empty').style.display  = state === 'empty' ? 'block' : 'none';
+  document.getElementById('tt_pending_filled').style.display = state === 'empty' ? 'none'  : 'block';
+  const bFill = document.getElementById('tt-btn-filled');
+  const bEmp  = document.getElementById('tt-btn-empty');
+  bFill.style.background = state === 'filled' ? 'var(--p700)' : 'var(--n100)';
+  bFill.style.color      = state === 'filled' ? '#fff' : 'var(--n500)';
+  bFill.style.border     = state === 'filled' ? 'none' : '1.5px solid var(--n200)';
+  bEmp.style.background  = state === 'empty'  ? 'var(--p700)' : 'var(--n100)';
+  bEmp.style.color       = state === 'empty'  ? '#fff' : 'var(--n500)';
+  bEmp.style.border      = state === 'empty'  ? 'none' : '1.5px solid var(--n200)';
+}
+</script>
+
+<!-- ════ PROFILE SLIDE-OVER ════ -->
+<div id="profile-overlay" class="prof-overlay" onclick="closeProfBg(event)">
+  <div class="prof-panel">
+    <!-- Header -->
+    <div class="prof-header">
+      <div class="prof-hav" id="prof-hav">K</div>
+      <div style="flex:1;min-width:0;">
+        <div class="prof-hname" id="prof-hname">—</div>
+        <div class="prof-hsub" id="prof-hsub">—</div>
+      </div>
+      <button class="prof-close" onclick="closeProfile()">✕</button>
+    </div>
+    <!-- Tabs -->
+    <div class="prof-tabs">
+      <button class="prof-tab active" onclick="swProfTab('info',this)">Thông tin cá nhân</button>
+      <button class="prof-tab" onclick="swProfTab('expert',this)">Chuyên môn</button>
+      <button class="prof-tab" onclick="swProfTab('docs',this)">Tài liệu</button>
+    </div>
+    <!-- Tab: Thông tin cá nhân -->
+    <div class="prof-body active" id="ptab-info">
+      <div class="prof-sec">
+        <div class="prof-sec-title">Thông tin cá nhân</div>
+        <div class="prof-row"><span class="prof-lbl">Họ và tên</span><span class="prof-val" id="pi-name">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Email</span><span class="prof-val" id="pi-email">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Điện thoại</span><span class="prof-val" id="pi-phone">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Giới tính</span><span class="prof-val" id="pi-gender">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Ngày sinh</span><span class="prof-val" id="pi-dob">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Địa chỉ</span><span class="prof-val" id="pi-addr">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Ngày đăng ký</span><span class="prof-val" id="pi-reg">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Trạng thái</span><span class="prof-val" id="pi-status">—</span></div>
+      </div>
+      <div class="prof-sec">
+        <div class="prof-sec-title">Giới thiệu bản thân</div>
+        <p class="prof-bio" id="pi-bio">—</p>
+      </div>
+    </div>
+    <!-- Tab: Chuyên môn -->
+    <div class="prof-body" id="ptab-expert">
+      <div class="prof-sec">
+        <div class="prof-sec-title">Môn dạy &amp; Trình độ</div>
+        <div class="prof-row"><span class="prof-lbl">Môn dạy</span><span class="prof-val" id="pe-subj">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Cấp độ học sinh</span><span class="prof-val" id="pe-lvl">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Học vấn</span><span class="prof-val" id="pe-edu">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Kinh nghiệm</span><span class="prof-val" id="pe-exp">—</span></div>
+        <div class="prof-row"><span class="prof-lbl">Học phí</span><span class="prof-val" id="pe-price">—</span></div>
+      </div>
+      <div class="prof-sec">
+        <div class="prof-sec-title">Lịch dạy trống</div>
+        <div class="prof-sched" id="pe-sched"></div>
+      </div>
+      <div class="prof-sec" id="pe-video-wrap" style="display:none;">
+        <div class="prof-sec-title">Video giới thiệu</div>
+        <div style="background:var(--n50);border-radius:var(--r-md);padding:16px;text-align:center;border:1px solid var(--n200);">
+          🎥 <a id="pe-video-link" href="#" target="_blank" style="color:var(--p700);font-weight:600;font-size:13px;">Xem video giới thiệu →</a>
+        </div>
+      </div>
+    </div>
+    <!-- Tab: Tài liệu -->
+    <div class="prof-body" id="ptab-docs">
+      <div class="prof-sec">
+        <div class="prof-sec-title">Hồ sơ tài liệu (5 loại)</div>
+        <div class="prof-doc-grid" id="pd-docs"></div>
+      </div>
+      <div id="pd-note" style="margin-top:4px;"></div>
+    </div>
+    <!-- Action bar -->
+    <div class="prof-actions">
+      <button class="abtn ab-reject" onclick="closeProfile()">✗ Từ chối</button>
+      <button class="abtn ab-more" onclick="closeProfile()">📩 Yêu cầu bổ sung</button>
+      <div class="pa-spacer"></div>
+      <button class="abtn ab-approve" id="prof-ab" onclick="closeProfile()">✓ Xác thực gia sư</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 Mẹo Học Toán Hiệu Quả Cho Học Sinh THPT — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p950:#061529;--p900:#0D2D6B;--p800:#1239A0;--p700:#1565C0;
+  --p600:#1976D2;--p500:#1E88E5;--p400:#42A5F5;--p300:#90CAF9;
+  --p200:#BBDEFB;--p100:#E3F2FD;--p50:#F0F8FF;
+  --s700:#C46200;--s600:#E65100;--s500:#F57C00;--s400:#FFA726;--s300:#FFCC80;--s100:#FFF3E0;
+  --n900:#0F172A;--n800:#1E293B;--n700:#334155;--n600:#475569;
+  --n500:#64748B;--n400:#94A3B8;--n300:#CBD5E1;--n200:#E2E8F0;--n100:#F1F5F9;--n50:#F8FAFC;
+  --green:#16A34A;--green-bg:#DCFCE7;
+  --red:#DC2626;--red-bg:#FEE2E2;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-2xl:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:var(--n800);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
+svg{display:block;}
+
+/* ── NAVBAR ── */
+.navbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--n200);}
+.nav-inner{display:flex;align-items:center;height:64px;max-width:1200px;margin:0 auto;padding:0 24px;}
+.nav-logo{display:flex;align-items:center;gap:9px;margin-right:40px;flex-shrink:0;}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px;}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.5;}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-link{padding:6px 13px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:var(--n600);transition:all .15s;}
+.nav-link:hover{background:var(--n100);color:var(--n800);}
+.nav-link.active{color:var(--p700);font-weight:600;background:var(--p50);}
+.nav-actions{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.btn-ghost-nav{height:36px;padding:0 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--n700);background:transparent;border:1.5px solid var(--n200);transition:all .15s;}
+.btn-ghost-nav:hover{background:var(--n50);}
+.btn-primary-nav{height:36px;padding:0 18px;border-radius:var(--r-sm);font-size:13px;font-weight:700;color:#fff;background:var(--p700);box-shadow:0 1px 6px rgba(21,101,192,.3);transition:all .15s;}
+.btn-primary-nav:hover{background:var(--p800);}
+
+/* ── READING PROGRESS BAR ── */
+.reading-bar{position:fixed;top:64px;left:0;right:0;height:3px;background:var(--n200);z-index:199;}
+.reading-fill{height:100%;background:linear-gradient(90deg,var(--p700),var(--s500));width:0%;transition:width .1s;}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{max-width:1200px;margin:0 auto;padding:16px 24px 0;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--n400);}
+.breadcrumb a{color:var(--n500);font-weight:500;transition:color .15s;}
+.breadcrumb a:hover{color:var(--p700);}
+.bc-sep{color:var(--n300);}
+.bc-cur{color:var(--n700);font-weight:600;}
+
+/* ── MAIN LAYOUT ── */
+.page-wrap{max-width:1200px;margin:0 auto;padding:24px 24px 60px;display:grid;grid-template-columns:1fr 312px;gap:48px;align-items:start;}
+
+/* ── ARTICLE ── */
+.article-header{margin-bottom:28px;}
+.article-cat{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;background:var(--p100);color:var(--p700);font-size:12px;font-weight:700;margin-bottom:14px;}
+.article-title{font-size:30px;font-weight:800;color:var(--n900);line-height:1.3;letter-spacing:-.4px;margin-bottom:14px;}
+.article-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.meta-author{display:flex;align-items:center;gap:8px;}
+.meta-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1565C0,#42A5F5);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;}
+.meta-name{font-size:13px;font-weight:700;color:var(--n800);}
+.meta-role{font-size:11.5px;color:var(--n500);}
+.meta-dot{width:4px;height:4px;border-radius:50%;background:var(--n300);}
+.meta-info{font-size:12.5px;color:var(--n500);display:flex;align-items:center;gap:5px;}
+.meta-info svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── HERO IMAGE ── */
+.article-hero{width:100%;height:360px;border-radius:var(--r-2xl);margin-bottom:32px;
+  background:linear-gradient(135deg,#061529 0%,#0D2D6B 40%,#1565C0 80%,#42A5F5 100%);
+  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.article-hero::before{content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:40px 40px;}
+.hero-emoji{font-size:80px;position:relative;z-index:1;filter:drop-shadow(0 8px 24px rgba(0,0,0,.3));}
+.hero-caption{position:absolute;bottom:16px;right:20px;font-size:11px;color:rgba(255,255,255,.4);z-index:1;}
+
+/* ── ARTICLE BODY ── */
+.article-body{font-size:16px;line-height:1.8;color:var(--n700);}
+.article-body h2{font-size:21px;font-weight:800;color:var(--n900);margin:36px 0 14px;letter-spacing:-.2px;padding-top:4px;border-top:2px solid var(--n100);}
+.article-body h2:first-child{border-top:none;margin-top:0;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--n800);margin:24px 0 10px;}
+.article-body p{margin-bottom:18px;}
+.article-body strong{color:var(--n900);font-weight:700;}
+.article-body ul,.article-body ol{margin:0 0 18px 20px;display:flex;flex-direction:column;gap:8px;}
+.article-body li{font-size:15.5px;line-height:1.7;}
+
+/* ── BLOCKQUOTE ── */
+.article-body blockquote{
+  background:var(--p50);border-left:4px solid var(--p700);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+  padding:16px 20px;margin:24px 0;
+  font-size:15.5px;font-style:italic;color:var(--p900);
+}
+.article-body blockquote cite{display:block;font-size:12.5px;font-style:normal;color:var(--n500);margin-top:8px;font-weight:600;}
+
+/* ── TIP BOX ── */
+.tip-box{background:linear-gradient(135deg,var(--s100),#FFF8ED);border:1px solid var(--s300);border-radius:var(--r-lg);padding:18px 20px;margin:24px 0;}
+.tip-box-head{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--s700);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;}
+.tip-box p{font-size:14.5px;color:var(--n700);margin:0;line-height:1.7;}
+
+/* ── NUMBERED STEP ── */
+.step-list{display:flex;flex-direction:column;gap:0;margin:0 0 24px;}
+.step-item{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--n100);}
+.step-item:last-child{border-bottom:none;}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--p700);color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-body h3{font-size:16px;font-weight:800;color:var(--n900);margin-bottom:7px;}
+.step-body p{font-size:14.5px;color:var(--n700);line-height:1.7;margin:0;}
+
+/* ── TAGS ── */
+.article-tags{display:flex;flex-wrap:wrap;gap:7px;margin:32px 0;}
+.tag{padding:5px 13px;border-radius:20px;background:var(--n100);color:var(--n600);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;}
+.tag:hover{background:var(--p100);color:var(--p700);}
+
+/* ── SHARE ── */
+.share-bar{display:flex;align-items:center;gap:10px;padding:20px 0;border-top:1px solid var(--n200);border-bottom:1px solid var(--n200);margin:0 0 32px;}
+.share-label{font-size:13px;font-weight:700;color:var(--n700);margin-right:4px;}
+.share-btn{height:36px;padding:0 16px;border-radius:20px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px;cursor:pointer;transition:all .15s;}
+.share-fb{background:#1877F2;color:#fff;}
+.share-fb:hover{background:#1461CC;}
+.share-tw{background:#1DA1F2;color:#fff;}
+.share-tw:hover{background:#1781C8;}
+.share-link{background:var(--n100);color:var(--n700);}
+.share-link:hover{background:var(--n200);}
+.share-count{margin-left:auto;font-size:12.5px;color:var(--n400);font-weight:500;}
+
+/* ── AUTHOR CARD ── */
+.author-card{display:flex;gap:18px;background:var(--n50);border-radius:var(--r-xl);padding:22px;margin-bottom:40px;border:1px solid var(--n200);}
+.author-av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#1565C0,#42A5F5);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;flex-shrink:0;}
+.author-name{font-size:15px;font-weight:800;color:var(--n900);margin-bottom:3px;}
+.author-title{font-size:12.5px;color:var(--n500);margin-bottom:9px;}
+.author-bio{font-size:13.5px;color:var(--n600);line-height:1.65;}
+.author-follow{margin-top:12px;}
+.btn-follow{height:32px;padding:0 16px;border-radius:20px;background:var(--p700);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .15s;}
+.btn-follow:hover{background:var(--p800);}
+
+/* ── RELATED ARTICLES ── */
+.related-title{font-size:18px;font-weight:800;color:var(--n900);margin-bottom:18px;letter-spacing:-.2px;}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.related-card{border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--n200);transition:all .2s;cursor:pointer;}
+.related-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.rc-thumb{height:120px;display:flex;align-items:center;justify-content:center;font-size:40px;}
+.rc-body{padding:14px 16px;}
+.rc-cat{font-size:10.5px;font-weight:700;color:var(--p700);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.rc-title{font-size:13.5px;font-weight:700;color:var(--n900);line-height:1.4;margin-bottom:8px;}
+.rc-meta{font-size:11.5px;color:var(--n400);}
+
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:80px;}
+.sb-card{background:#fff;border:1px solid var(--n200);border-radius:var(--r-xl);padding:20px;margin-bottom:20px;}
+.sb-card-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--n400);margin-bottom:14px;}
+
+/* TOC */
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.toc-item a{display:block;font-size:13px;color:var(--n600);font-weight:500;padding:7px 10px;border-radius:var(--r-sm);border-left:2px solid transparent;transition:all .15s;}
+.toc-item a:hover{background:var(--p50);color:var(--p700);border-left-color:var(--p300);}
+.toc-item a.active{background:var(--p50);color:var(--p700);font-weight:700;border-left-color:var(--p700);}
+.toc-item.sub a{padding-left:20px;font-size:12.5px;}
+
+/* Popular posts */
+.pop-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--n100);cursor:pointer;}
+.pop-item:last-child{border-bottom:none;padding-bottom:0;}
+.pop-thumb{width:52px;height:52px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.pop-title{font-size:12.5px;font-weight:600;color:var(--n800);line-height:1.4;margin-bottom:4px;}
+.pop-meta{font-size:11px;color:var(--n400);}
+
+/* CTA sidebar */
+.sb-cta{background:linear-gradient(135deg,var(--p900),var(--p700));border-radius:var(--r-xl);padding:22px;margin-bottom:20px;text-align:center;}
+.sb-cta-icon{font-size:32px;margin-bottom:10px;}
+.sb-cta-title{font-size:15px;font-weight:800;color:#fff;margin-bottom:7px;}
+.sb-cta-sub{font-size:12.5px;color:rgba(255,255,255,.65);margin-bottom:16px;line-height:1.5;}
+.sb-cta-btn{display:block;padding:10px 0;background:var(--s500);color:#fff;border-radius:var(--r-md);font-size:13.5px;font-weight:800;transition:all .15s;}
+.sb-cta-btn:hover{background:var(--s600);}
+
+/* Tags sidebar */
+.tag-cloud{display:flex;flex-wrap:wrap;gap:6px;}
+
+/* ── FOOTER ── */
+.footer{background:var(--p950);padding:24px 0;margin-top:60px;}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.footer-logo{display:flex;align-items:center;gap:8px;}
+.footer-logo-text{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.footer-logo-text em{font-weight:500;font-style:normal;opacity:.35;}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.3);flex:1;}
+.footer-links{display:flex;gap:18px;}
+.footer-link{font-size:12px;color:rgba(255,255,255,.4);transition:color .15s;}
+.footer-link:hover{color:#fff;}
+</style>
+</head>
+<body>
+
+<!-- Reading progress -->
+<div class="reading-bar"><div class="reading-fill" id="reading-fill"></div></div>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="ui-trang-chu.html">
+      <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+      </svg>
+      <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="ui-trang-chu.html">Trang chủ</a>
+      <a class="nav-link" href="ui-tim-gia-su.html">Tìm gia sư</a>
+      <a class="nav-link" href="ui-dang-tin.html">Đăng tin</a>
+      <a class="nav-link" href="ui-dang-ky-day.html">Đăng ký dạy</a>
+      <a class="nav-link active" href="ui-blog.html">Blog</a>
+      <a class="nav-link" href="ui-gioi-thieu.html">Về chúng tôi</a>
+    </div>
+    <div class="nav-actions">
+      <a href="ui-auth.html"><button class="btn-ghost-nav">Đăng nhập</button></a>
+      <a href="ui-auth.html"><button class="btn-primary-nav">Đăng ký miễn phí</button></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── BREADCRUMB ── -->
+<div class="breadcrumb">
+  <a href="ui-trang-chu.html">Trang chủ</a>
+  <span class="bc-sep">›</span>
+  <a href="ui-blog.html">Blog</a>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Học Toán</span>
+</div>
+
+<!-- ── PAGE WRAP ── -->
+<div class="page-wrap">
+
+  <!-- ═══ MAIN ARTICLE ═══ -->
+  <main>
+    <!-- Header -->
+    <div class="article-header">
+      <div class="article-cat">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Phương pháp học
+      </div>
+      <h1 class="article-title">10 Mẹo Học Toán Hiệu Quả Cho Học Sinh THPT Bạn Nên Biết</h1>
+      <div class="article-meta">
+        <div class="meta-author">
+          <div class="meta-av">A</div>
+          <div>
+            <div class="meta-name">Nguyễn Văn An</div>
+            <div class="meta-role">Gia sư Toán · ĐH Bách Khoa HN</div>
+          </div>
+        </div>
+        <div class="meta-dot"></div>
+        <div class="meta-info">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          06/05/2026
+        </div>
+        <div class="meta-dot"></div>
+        <div class="meta-info">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          8 phút đọc
+        </div>
+        <div class="meta-dot"></div>
+        <div class="meta-info">
+          <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          4.231 lượt xem
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero image -->
+    <div class="article-hero">
+      <div class="hero-emoji">📐</div>
+      <div class="hero-caption">Minh hoạ: giasu.edu.vn</div>
+    </div>
+
+    <!-- Article body -->
+    <article class="article-body" id="article-body">
+
+      <p>Học Toán không phải là chuyện dễ dàng với nhiều học sinh THPT. Nhưng sự thật là <strong>Toán học không khó — chỉ là bạn chưa có đúng phương pháp</strong>. Sau hơn 3 năm đồng hành cùng hàng chục học sinh từ mức 5–6 điểm vươn lên 9–10 điểm thi THPT Quốc gia, tôi đúc kết 10 mẹo thiết thực nhất dưới đây.</p>
+
+      <blockquote>
+        "Học Toán không phải là ghi nhớ công thức — mà là hiểu bản chất của vấn đề. Khi hiểu rồi, mọi bài toán đều có logic riêng của nó."
+        <cite>— GS. Ngô Bảo Châu, Nhà toán học Việt Nam đầu tiên giành Huy chương Fields</cite>
+      </blockquote>
+
+      <h2 id="phan-1">Phần 1: Nền tảng tư duy</h2>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Học lý thuyết trước, làm bài tập sau</h3>
+            <p>Nhiều học sinh mắc sai lầm là nhảy thẳng vào bài tập mà bỏ qua lý thuyết. Hãy dành ít nhất <strong>20 phút mỗi chủ đề</strong> để hiểu khái niệm, định lý, và điều kiện áp dụng trước. Ghi chú dạng mind map thay vì sao chép nguyên văn sách giáo khoa.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Phân loại dạng toán — không học tràn lan</h3>
+            <p>Chương trình Toán THPT có khoảng <strong>30–40 dạng toán chính</strong>. Thay vì làm hàng trăm bài lẻ tẻ, hãy nhận dạng và hệ thống hóa từng loại. Mỗi dạng nắm chắc 2–3 bài mẫu, sau đó tự phân tích các bài còn lại theo cùng khuôn mẫu.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>Học từ sai lầm — lập "nhật ký lỗi"</h3>
+            <p>Mỗi khi làm sai một bài, đừng chỉ xem đáp án rồi bỏ qua. Hãy viết lại bài đó, chú thích <em>tại sao mình sai</em>, và ôn lại sau 3 ngày. Phương pháp "nhật ký lỗi" này giúp tỉ lệ tái phạm cùng dạng sai giảm tới 80%.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="phan-2">Phần 2: Chiến lược ôn tập</h2>
+
+      <div class="tip-box">
+        <div class="tip-box-head">
+          <span>💡</span> Mẹo quan trọng
+        </div>
+        <p>Lịch ôn tập hiệu quả nhất cho Toán THPT: học khái niệm mới buổi sáng (não minh mẫn nhất), luyện bài tập buổi chiều, ôn lại bài cũ 15 phút trước khi ngủ. Đừng học Toán quá 2 tiếng liên tục — não bộ cần nghỉ để củng cố kiến thức.</p>
+      </div>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h3>Áp dụng kỹ thuật Pomodoro cho Toán</h3>
+            <p>Học 25 phút — nghỉ 5 phút. Sau 4 chu kỳ, nghỉ dài 20–30 phút. Trong 25 phút đó, <strong>tắt điện thoại hoàn toàn</strong>. Chỉ cần 4 chu kỳ (2 tiếng thực) mỗi ngày là đủ để vượt qua hầu hết học sinh học cả buổi chiều nhưng mất tập trung.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h3>Làm đề thi thử đúng điều kiện thi thật</h3>
+            <p>Ít nhất <strong>1 lần/tuần</strong>, ngồi làm trọn vẹn 1 đề thi THPT Quốc gia trong 90 phút, không tra tài liệu. Chấm điểm, phân tích điểm yếu, rồi lên kế hoạch ôn tập tuần tiếp theo dựa trên kết quả. Đây là cách phát hiện lỗ hổng nhanh nhất.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <h3>Ôn tập spaced repetition — đúng thời điểm</h3>
+            <p>Ôn lại kiến thức vào ngày 1 → ngày 3 → ngày 7 → ngày 21 → ngày 60. Đây là đường cong quên lãng của Ebbinghaus đã được chứng minh khoa học. Dùng app <strong>Anki</strong> hoặc đơn giản là lịch tay để nhắc nhở.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="phan-3">Phần 3: Kỹ năng làm bài thi</h2>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">7</div>
+          <div class="step-body">
+            <h3>Đọc lướt toàn bộ đề — làm dễ trước</h3>
+            <p>Trong 90 phút thi, dành 5 phút đầu đọc hết đề, đánh dấu bài dễ/trung bình/khó. Làm dễ trước để lấy điểm chắc, sau đó mới quay lại bài khó. <strong>Đừng bao giờ kẹt quá 3 phút ở một câu</strong> — bỏ qua và làm tiếp.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">8</div>
+          <div class="step-body">
+            <h3>Kiểm tra lại — nhưng biết kiểm tra gì</h3>
+            <p>Nếu còn thời gian, đừng đọc lại toàn bộ bài. Hãy kiểm tra <strong>3 nguồn sai phổ biến nhất</strong>: nhầm dấu âm/dương, sai điều kiện (tập xác định, mẫu ≠ 0), và nhầm đơn vị. 80% lỗi thi Toán rơi vào 3 nhóm này.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">9</div>
+          <div class="step-body">
+            <h3>Học thuộc các công thức quan trọng — nhưng biết cách</h3>
+            <p>Không học vẹt. Hãy hiểu <em>nguồn gốc</em> công thức để không bao giờ quên. Ví dụ: công thức lượng giác xuất phát từ hình học, công thức tích phân từ diện tích. Khi hiểu bản chất, dù quên công thức vẫn có thể tự suy ra.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">10</div>
+          <div class="step-body">
+            <h3>Tìm gia sư phù hợp — đừng học một mình mãi</h3>
+            <p>Nếu sau 2 tuần tự học mà điểm vẫn không cải thiện, đó là dấu hiệu bạn cần người hướng dẫn. Một gia sư giỏi không chỉ giảng bài — họ <strong>phát hiện đúng lỗ hổng tư duy</strong> của bạn và sửa tận gốc. Thời gian học với gia sư thường hiệu quả gấp 3–5 lần tự học.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="ket-luan">Kết luận</h2>
+      <p>Học Toán là hành trình dài, nhưng với đúng phương pháp, mọi học sinh đều có thể đạt điểm cao. <strong>10 mẹo trên không phải là phép màu</strong> — chúng là hệ thống đã được kiểm chứng qua thực tế dạy học. Hãy áp dụng kiên trì trong 30 ngày và bạn sẽ thấy sự thay đổi rõ rệt.</p>
+      <p>Nếu bạn muốn được hỗ trợ trực tiếp từ các gia sư có kinh nghiệm, hãy <a href="ui-tim-gia-su.html" style="color:var(--p700);font-weight:700;">tìm gia sư Toán phù hợp trên giasu.edu.vn</a> — với hơn 500 gia sư được xác thực, chắc chắn có người phù hợp với lịch trình và ngân sách của bạn.</p>
+
+    </article>
+
+    <!-- Tags -->
+    <div class="article-tags">
+      <span class="tag">Học Toán</span>
+      <span class="tag">THPT</span>
+      <span class="tag">Phương pháp học</span>
+      <span class="tag">Luyện thi ĐH</span>
+      <span class="tag">Pomodoro</span>
+      <span class="tag">Gia sư Toán</span>
+    </div>
+
+    <!-- Share -->
+    <div class="share-bar">
+      <span class="share-label">Chia sẻ:</span>
+      <button class="share-btn share-fb">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </button>
+      <button class="share-btn share-tw">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        Twitter
+      </button>
+      <button class="share-btn share-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Sao chép link
+      </button>
+      <span class="share-count">1.247 lượt chia sẻ</span>
+    </div>
+
+    <!-- Author card -->
+    <div class="author-card">
+      <div class="author-av">A</div>
+      <div>
+        <div class="author-name">Nguyễn Văn An</div>
+        <div class="author-title">Gia sư Toán · ĐH Bách Khoa Hà Nội · 3 năm kinh nghiệm</div>
+        <div class="author-bio">Chuyên dạy Toán và Vật lý cho học sinh lớp 9–12. Tốt nghiệp loại giỏi khoa Toán ứng dụng. Đã giúp hơn 50 học sinh cải thiện điểm số, nhiều em đỗ vào ĐH Bách Khoa, ĐH Kinh tế Quốc dân.</div>
+        <div class="author-follow">
+          <a href="ui-profile.html"><button class="btn-follow">Xem hồ sơ gia sư →</button></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related articles -->
+    <div>
+      <div class="related-title">Bài viết liên quan</div>
+      <div class="related-grid">
+        <a href="ui-bai-viet.html" class="related-card">
+          <div class="rc-thumb" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB);">🔬</div>
+          <div class="rc-body">
+            <div class="rc-cat">Phương pháp học</div>
+            <div class="rc-title">Học Vật lý hiệu quả: Bí kíp từ học sinh 10 điểm</div>
+            <div class="rc-meta">5 phút · 06/04/2026</div>
+          </div>
+        </a>
+        <a href="ui-bai-viet.html" class="related-card">
+          <div class="rc-thumb" style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2);">📝</div>
+          <div class="rc-body">
+            <div class="rc-cat">Luyện thi</div>
+            <div class="rc-title">Lịch ôn thi THPT Quốc gia 3 tháng cuối: Mẫu kế hoạch chi tiết</div>
+            <div class="rc-meta">7 phút · 28/03/2026</div>
+          </div>
+        </a>
+        <a href="ui-bai-viet.html" class="related-card">
+          <div class="rc-thumb" style="background:linear-gradient(135deg,#DCFCE7,#BBF7D0);">🎯</div>
+          <div class="rc-body">
+            <div class="rc-cat">Tư vấn học tập</div>
+            <div class="rc-title">Chọn gia sư như thế nào để tiến bộ nhanh nhất?</div>
+            <div class="rc-meta">4 phút · 20/03/2026</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+
+    <!-- Table of contents -->
+    <div class="sb-card">
+      <div class="sb-card-title">Mục lục bài viết</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#phan-1" class="active">Phần 1: Nền tảng tư duy</a></li>
+        <li class="toc-item sub"><a href="#phan-1">Mẹo 1 – Học lý thuyết trước</a></li>
+        <li class="toc-item sub"><a href="#phan-1">Mẹo 2 – Phân loại dạng toán</a></li>
+        <li class="toc-item sub"><a href="#phan-1">Mẹo 3 – Nhật ký lỗi</a></li>
+        <li class="toc-item"><a href="#phan-2">Phần 2: Chiến lược ôn tập</a></li>
+        <li class="toc-item sub"><a href="#phan-2">Mẹo 4 – Kỹ thuật Pomodoro</a></li>
+        <li class="toc-item sub"><a href="#phan-2">Mẹo 5 – Làm đề thử</a></li>
+        <li class="toc-item sub"><a href="#phan-2">Mẹo 6 – Spaced repetition</a></li>
+        <li class="toc-item"><a href="#phan-3">Phần 3: Kỹ năng làm bài</a></li>
+        <li class="toc-item"><a href="#ket-luan">Kết luận</a></li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="sb-cta">
+      <div class="sb-cta-icon">🎓</div>
+      <div class="sb-cta-title">Tìm gia sư Toán ngay</div>
+      <div class="sb-cta-sub">Hơn 500 gia sư được xác thực. Đặt buổi học thử miễn phí hôm nay.</div>
+      <a href="ui-tim-gia-su.html" class="sb-cta-btn">Tìm gia sư miễn phí →</a>
+    </div>
+
+    <!-- Popular posts -->
+    <div class="sb-card">
+      <div class="sb-card-title">Bài đọc nhiều nhất</div>
+      <div class="pop-item">
+        <div class="pop-thumb" style="background:var(--p100);">🌍</div>
+        <div><div class="pop-title">8 cách luyện Tiếng Anh giao tiếp tại nhà hiệu quả</div><div class="pop-meta">12.4k lượt xem</div></div>
+      </div>
+      <div class="pop-item">
+        <div class="pop-thumb" style="background:var(--s100);">⏰</div>
+        <div><div class="pop-title">Quản lý thời gian học cho học sinh lớp 12</div><div class="pop-meta">8.1k lượt xem</div></div>
+      </div>
+      <div class="pop-item">
+        <div class="pop-thumb" style="background:var(--green-bg);">💰</div>
+        <div><div class="pop-title">Học phí gia sư bao nhiêu là hợp lý? So sánh toàn diện</div><div class="pop-meta">6.7k lượt xem</div></div>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="sb-card">
+      <div class="sb-card-title">Chủ đề phổ biến</div>
+      <div class="tag-cloud">
+        <span class="tag">Toán THPT</span>
+        <span class="tag">IELTS</span>
+        <span class="tag">Vật lý</span>
+        <span class="tag">Luyện thi</span>
+        <span class="tag">Hóa học</span>
+        <span class="tag">Tiếng Anh</span>
+        <span class="tag">Gia sư online</span>
+        <span class="tag">Phương pháp</span>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="36" height="22" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+      </svg>
+      <span class="footer-logo-text">giasu<em>.edu.vn</em></span>
+    </div>
+    <span class="footer-copy">© 2026 giasu.edu.vn · Nền tảng gia sư trực tuyến #1 Việt Nam</span>
+    <div class="footer-links">
+      <a class="footer-link" href="#">Chính sách</a>
+      <a class="footer-link" href="#">Điều khoản</a>
+      <a class="footer-link" href="#">Liên hệ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Reading progress bar
+window.addEventListener('scroll', () => {
+  const body = document.body;
+  const html = document.documentElement;
+  const h = Math.max(body.scrollHeight, html.scrollHeight) - window.innerHeight;
+  const pct = (window.scrollY / h) * 100;
+  document.getElementById('reading-fill').style.width = Math.min(pct, 100) + '%';
+
+  // TOC active state
+  const headings = ['phan-1','phan-2','phan-3','ket-luan'];
+  let active = headings[0];
+  headings.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) active = id;
+  });
+  document.querySelectorAll('.toc-item a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#'+active);
+  });
+});
+
+// Copy link
+document.querySelector('.share-link').addEventListener('click', function() {
+  navigator.clipboard.writeText(window.location.href).catch(()=>{});
+  this.innerHTML = this.innerHTML.replace('Sao chép link', 'Đã sao chép ✓');
+  setTimeout(() => { this.innerHTML = this.innerHTML.replace('Đã sao chép ✓', 'Sao chép link'); }, 2000);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đặt lịch học — Nguyễn Văn An | giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p900:#0D2D6B;--p800:#1239A0;--p700:#1565C0;--p600:#1976D2;--p500:#1E88E5;
+  --p400:#42A5F5;--p300:#90CAF9;--p200:#BBDEFB;--p100:#E3F2FD;--p50:#F0F8FF;
+  --s700:#C46200;--s600:#E65100;--s500:#F57C00;--s400:#FFA726;--s300:#FFCC80;--s100:#FFF3E0;
+  --n900:#0F172A;--n800:#1E293B;--n700:#334155;--n600:#475569;--n500:#64748B;
+  --n400:#94A3B8;--n300:#CBD5E1;--n200:#E2E8F0;--n100:#F1F5F9;--n50:#F8FAFC;
+  --green:#16A34A;--green-bg:#DCFCE7;--green-light:#F0FDF4;
+  --red:#DC2626;--red-bg:#FEE2E2;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-2xl:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:var(--n800);background:var(--n50);-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
+input,select,textarea{font-family:'Inter',sans-serif;}
+
+/* ── NAVBAR ── */
+.navbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--n200);}
+.nav-inner{display:flex;align-items:center;height:68px;max-width:1200px;margin:0 auto;padding:0 24px;}
+.nav-logo{display:flex;align-items:center;gap:10px;margin-right:40px;flex-shrink:0;}
+
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px;line-height:1;}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.5;letter-spacing:-.2px;}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-link{padding:7px 14px;border-radius:var(--r-sm);font-size:14px;font-weight:500;color:var(--n600);transition:all .15s;}
+.nav-link:hover{background:var(--n100);color:var(--n800);}
+.nav-actions{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.btn-ghost{height:38px;padding:0 18px;border-radius:var(--r-sm);font-size:13.5px;font-weight:600;color:var(--n700);background:transparent;border:1.5px solid var(--n200);transition:all .15s;}
+.btn-ghost:hover{background:var(--n50);}
+.btn-primary-nav{height:38px;padding:0 20px;border-radius:var(--r-sm);font-size:13.5px;font-weight:700;color:#fff;background:var(--p700);box-shadow:0 2px 8px rgba(21,101,192,.28);transition:all .15s;}
+.btn-primary-nav:hover{background:var(--p800);}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{background:#fff;border-bottom:1px solid var(--n200);padding:10px 0;}
+.breadcrumb-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:6px;font-size:13px;}
+.bc-item{color:var(--n500);}
+.bc-item:hover{color:var(--p700);}
+.bc-sep{color:var(--n300);}
+.bc-current{font-weight:600;color:var(--n800);}
+
+/* ── PROGRESS ── */
+.progress-bar{background:#fff;border-bottom:1px solid var(--n200);padding:14px 0;}
+.progress-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;}
+.step{display:flex;align-items:center;gap:8px;}
+.step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.step.done .step-num{background:var(--green);color:#fff;}
+.step.active .step-num{background:var(--p700);color:#fff;}
+.step.pending .step-num{background:var(--n200);color:var(--n500);}
+.step-label{font-size:13px;font-weight:600;}
+.step.done .step-label{color:var(--green);}
+.step.active .step-label{color:var(--p700);}
+.step.pending .step-label{color:var(--n400);}
+.step-connector{flex:1;height:1.5px;background:var(--n200);margin:0 12px;min-width:32px;}
+.step-connector.done{background:var(--green);}
+
+/* ── LAYOUT ── */
+.page-body{max-width:1200px;margin:0 auto;padding:28px 24px 80px;display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start;}
+
+/* ── BOOKING TYPE SWITCHER ── */
+.btype-card{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);overflow:hidden;margin-bottom:20px;}
+.btype-head{padding:16px 22px;border-bottom:1px solid var(--n100);}
+.btype-head-top{display:flex;align-items:center;gap:10px;}
+.btype-tutor-av{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--n200);}
+.btype-tutor-name{font-size:14px;font-weight:700;color:var(--n900);}
+.btype-tutor-sub{font-size:12px;color:var(--n500);margin-top:1px;}
+.btype-trial-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;background:var(--green-light);border:1px solid var(--green-bg);font-size:11px;font-weight:700;color:var(--green);margin-top:4px;}
+.btype-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 22px;}
+.btype-opt{border:2px solid var(--n200);border-radius:var(--r-lg);padding:16px;cursor:pointer;transition:all .2s;text-align:left;background:#fff;position:relative;}
+.btype-opt:hover{border-color:var(--p300);background:var(--p50);}
+.btype-opt.active{border-color:var(--p700);background:var(--p50);}
+.btype-opt.active-trial{border-color:var(--green);background:var(--green-light);}
+.btype-check{position:absolute;top:12px;right:12px;width:18px;height:18px;border-radius:50%;border:2px solid var(--n300);display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.btype-opt.active .btype-check{background:var(--p700);border-color:var(--p700);}
+.btype-opt.active-trial .btype-check{background:var(--green);border-color:var(--green);}
+.btype-check svg{width:10px;height:10px;color:#fff;opacity:0;transition:opacity .15s;}
+.btype-opt.active .btype-check svg,
+.btype-opt.active-trial .btype-check svg{opacity:1;}
+.btype-icon{font-size:26px;margin-bottom:8px;display:block;}
+.btype-label{font-size:14px;font-weight:700;color:var(--n900);margin-bottom:3px;}
+.btype-desc{font-size:12px;color:var(--n500);line-height:1.4;}
+.btype-price{font-size:18px;font-weight:800;margin-top:8px;}
+.btype-opt.active .btype-price{color:var(--p700);}
+.btype-opt.active-trial .btype-price{color:var(--green);}
+
+/* ── CARD ── */
+.card{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);overflow:hidden;}
+.card+.card{margin-top:20px;}
+.card-head{padding:18px 24px 0;display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-size:15px;font-weight:700;color:var(--n900);}
+.card-edit{font-size:12.5px;font-weight:600;color:var(--p700);display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;transition:background .15s;}
+.card-edit:hover{background:var(--p50);}
+.card-body{padding:16px 24px 20px;}
+
+/* ── SCHEDULE ── */
+.sched-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sched-item{background:var(--n50);border:1px solid var(--n200);border-radius:var(--r-md);padding:10px 14px;}
+.sched-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--n400);margin-bottom:4px;}
+.sched-val{font-size:13.5px;font-weight:700;color:var(--n800);}
+.sched-val.hl{color:var(--p700);}
+.day-pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
+.day-pill{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--p100);color:var(--p800);}
+.trial-sched-item{background:var(--green-light);border-color:#BBF7D0;}
+.trial-sched-item .sched-val{color:var(--green);}
+
+/* ── USER TYPE TOGGLE ── */
+.utype-toggle{display:flex;gap:0;border:1.5px solid var(--n200);border-radius:var(--r-md);overflow:hidden;margin-bottom:16px;}
+.utype-btn{flex:1;padding:9px 0;font-size:13px;font-weight:600;color:var(--n500);background:#fff;transition:all .15s;border:none;}
+.utype-btn.active{background:var(--p700);color:#fff;}
+.utype-btn:first-child{border-right:1px solid var(--n200);}
+
+/* ── FORM ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-grid.single{grid-template-columns:1fr;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-label{font-size:12px;font-weight:700;color:var(--n700);}
+.form-label span.req{color:var(--red);}
+.form-label .autofill-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;color:var(--green);background:var(--green-light);padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:middle;}
+.form-input{height:40px;border:1.5px solid var(--n200);border-radius:var(--r-sm);padding:0 12px;font-size:13.5px;color:var(--n800);transition:border-color .15s;background:#fff;}
+.form-input:focus{outline:none;border-color:var(--p400);}
+.form-input.error{border-color:var(--red);}
+.form-input.prefilled{background:var(--n50);border-color:var(--n200);color:var(--n700);}
+.form-select{height:40px;border:1.5px solid var(--n200);border-radius:var(--r-sm);padding:0 12px;font-size:13.5px;color:var(--n800);background:#fff;-webkit-appearance:none;cursor:pointer;}
+.form-select:focus{outline:none;border-color:var(--p400);}
+.form-textarea{border:1.5px solid var(--n200);border-radius:var(--r-sm);padding:10px 12px;font-size:13.5px;color:var(--n800);resize:vertical;min-height:80px;line-height:1.5;transition:border-color .15s;}
+.form-textarea:focus{outline:none;border-color:var(--p400);}
+.form-hint{font-size:11.5px;color:var(--n400);}
+.form-error{font-size:11.5px;color:var(--red);display:none;}
+.form-error.show{display:block;}
+
+/* section separator inside card */
+.form-section{margin-top:18px;padding-top:16px;border-top:1px solid var(--n100);}
+.form-section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--n400);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.form-section-label::after{content:'';flex:1;height:1px;background:var(--n100);}
+
+/* ── NOTIFICATION ── */
+.notif-opts{display:flex;flex-direction:column;gap:8px;}
+.notif-opt{display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 12px;border-radius:var(--r-md);border:1.5px solid var(--n200);background:#fff;transition:all .15s;}
+.notif-opt.active{border-color:var(--p300);background:var(--p50);}
+.notif-opt input{width:15px;height:15px;accent-color:var(--p700);cursor:pointer;flex-shrink:0;}
+.notif-opt-text .title{font-size:13px;font-weight:600;color:var(--n800);}
+.notif-opt-text .sub{font-size:12px;color:var(--n500);}
+
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px;}
+
+/* ── ORDER CARD ── */
+.order-card{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);overflow:hidden;}
+.order-head{padding:14px 20px;border-bottom:1px solid var(--n100);background:var(--n50);display:flex;align-items:center;justify-content:space-between;}
+.order-title{font-size:14px;font-weight:700;color:var(--n900);}
+.order-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;}
+.order-badge.paid{background:var(--p100);color:var(--p800);}
+.order-badge.free{background:var(--green-light);color:var(--green);}
+.order-body{padding:16px 20px;}
+.order-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:5px 0;}
+.order-row-label{font-size:12.5px;color:var(--n500);line-height:1.4;}
+.order-row-val{font-size:12.5px;font-weight:600;color:var(--n800);text-align:right;flex-shrink:0;}
+.order-divider{height:1px;background:var(--n100);margin:10px 0;}
+.order-total-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;}
+.order-total-label{font-size:14px;font-weight:700;color:var(--n900);}
+.order-total-val{font-size:20px;font-weight:800;}
+.order-total-val.paid{color:var(--p700);}
+.order-total-val.free{color:var(--green);}
+.order-discount-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;display:none;}
+.order-discount-row.show{display:flex;}
+.order-discount-label{font-size:12.5px;color:var(--green);font-weight:600;}
+.order-discount-val{font-size:13px;font-weight:700;color:var(--green);}
+
+/* trial notice */
+.trial-notice{padding:12px 14px;background:var(--green-light);border:1px solid #BBF7D0;border-radius:var(--r-md);display:flex;gap:10px;align-items:flex-start;}
+.trial-notice svg{width:16px;height:16px;color:var(--green);flex-shrink:0;margin-top:1px;}
+.trial-notice-text{font-size:12px;color:#166534;line-height:1.5;}
+
+/* ── COUPON ── */
+.coupon-row{display:flex;gap:8px;}
+.coupon-input{flex:1;height:38px;border:1.5px solid var(--n200);border-radius:var(--r-sm);padding:0 12px;font-size:13px;color:var(--n800);}
+.coupon-input:focus{outline:none;border-color:var(--p400);}
+.coupon-input.success{border-color:var(--green);}
+.coupon-input.fail{border-color:var(--red);}
+.coupon-btn{height:38px;padding:0 14px;border-radius:var(--r-sm);font-size:13px;font-weight:700;color:var(--p700);background:var(--p50);border:1.5px solid var(--p200);transition:all .15s;white-space:nowrap;}
+.coupon-btn:hover{background:var(--p100);}
+.coupon-msg{font-size:11.5px;margin-top:5px;display:none;}
+.coupon-msg.success{color:var(--green);display:block;}
+.coupon-msg.fail{color:var(--red);display:block;}
+
+/* ── PAYMENT ── */
+.pay-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.pay-tab{padding:10px;border-radius:var(--r-md);border:1.5px solid var(--n200);background:#fff;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:all .15s;}
+.pay-tab:hover{border-color:var(--p300);background:var(--p50);}
+.pay-tab.active{border-color:var(--p700);background:var(--p50);}
+.pay-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.pay-label{font-size:11px;font-weight:600;color:var(--n600);text-align:center;line-height:1.2;}
+.pay-tab.active .pay-label{color:var(--p800);}
+.pay-detail{margin-top:12px;padding:12px 14px;border-radius:var(--r-md);background:var(--n50);border:1px solid var(--n200);}
+.pay-detail-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;}
+.pay-detail-label{font-size:11.5px;color:var(--n500);}
+.pay-detail-val{font-size:12px;font-weight:700;color:var(--n800);}
+.pay-detail-val.copy{color:var(--p700);cursor:pointer;display:flex;align-items:center;gap:4px;}
+.copy-tick{display:none;font-size:10px;}
+.copy-tick.show{display:inline;}
+.pay-detail-note{margin-top:8px;font-size:11px;color:var(--n400);line-height:1.4;}
+
+/* ── CONFIRM ── */
+.section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--n400);margin-bottom:10px;}
+.terms-row{display:flex;align-items:flex-start;gap:8px;padding:4px 0;}
+.terms-row input{width:15px;height:15px;margin-top:2px;accent-color:var(--p700);cursor:pointer;flex-shrink:0;}
+.terms-text{font-size:12px;color:var(--n600);line-height:1.5;}
+.terms-text a{color:var(--p700);font-weight:600;}
+.confirm-btn{width:100%;height:50px;border-radius:var(--r-lg);font-size:15px;font-weight:800;color:#fff;box-shadow:0 4px 16px rgba(21,101,192,.32);transition:all .2s;letter-spacing:-.2px;margin-top:14px;}
+.confirm-btn.style-paid{background:var(--p700);}
+.confirm-btn.style-paid:hover:not(:disabled){background:var(--p800);transform:translateY(-1px);}
+.confirm-btn.style-free{background:var(--green);box-shadow:0 4px 16px rgba(22,163,74,.3);}
+.confirm-btn.style-free:hover:not(:disabled){background:#15803D;transform:translateY(-1px);}
+.confirm-btn:disabled{background:var(--n300);box-shadow:none;cursor:not-allowed;transform:none;}
+.confirm-btn-inner{display:flex;align-items:center;justify-content:center;gap:8px;}
+.confirm-note{font-size:11.5px;color:var(--n400);text-align:center;line-height:1.5;margin-top:8px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+.confirm-btn.loading .spinner{display:block;}
+.confirm-btn.loading .btn-text{display:none;}
+
+/* ── INFO NOTICE ── */
+/* ── STEP 3 PAYMENT ── */
+.s3-pay-detail{margin-top:14px;}
+.s3-bank-box{background:#fff;border:1.5px solid var(--n200);border-radius:var(--r-lg);padding:20px;}
+.s3-bank-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--n200);}
+.s3-bank-rows{display:flex;flex-direction:column;gap:10px;}
+.s3-bank-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:2px 0;}
+.s3-bank-label{font-size:12.5px;color:var(--n500);}
+.s3-bank-val{font-size:13px;font-weight:700;color:var(--n800);}
+.s3-bank-val.copy{color:var(--p700);cursor:pointer;display:flex;align-items:center;gap:5px;}
+.s3-amount-row{padding-top:10px;border-top:1px solid var(--n100);margin-top:4px;}
+.s3-amount{font-size:22px;font-weight:800;color:var(--p700);}
+.s3-qr-area{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:16px;margin-top:16px;border-top:1px solid var(--n100);}
+.s3-qr-box{width:150px;height:150px;border-radius:12px;border:2px solid var(--n200);background:var(--n50);display:flex;align-items:center;justify-content:center;}
+.qr-placeholder{width:122px;height:122px;border-radius:8px;background:var(--p50);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--p600);letter-spacing:3px;border:2.5px dashed var(--p200);}
+.s3-qr-note{font-size:12px;color:var(--n500);text-align:center;max-width:240px;line-height:1.4;}
+.info-notice{display:flex;gap:10px;padding:12px 14px;background:var(--p50);border:1px solid var(--p200);border-radius:var(--r-md);}
+.info-notice svg{width:16px;height:16px;color:var(--p600);flex-shrink:0;margin-top:1px;}
+.info-notice-text{font-size:12px;color:var(--p800);line-height:1.5;}
+
+/* ── SUCCESS MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.modal-overlay.show{opacity:1;pointer-events:all;}
+.modal{background:#fff;border-radius:var(--r-2xl);padding:36px;max-width:460px;width:90%;box-shadow:0 24px 60px rgba(0,0,0,.18);transform:translateY(20px) scale(.97);transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+.modal-overlay.show .modal{transform:translateY(0) scale(1);}
+.modal-icon{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.modal-icon.paid{background:var(--p100);border:3px solid var(--p200);}
+.modal-icon.free{background:var(--green-light);border:3px solid var(--green-bg);}
+.modal-icon svg{width:36px;height:36px;}
+.modal-icon.paid svg{color:var(--p700);}
+.modal-icon.free svg{color:var(--green);}
+.modal-title{font-size:22px;font-weight:800;color:var(--n900);text-align:center;letter-spacing:-.4px;}
+.modal-sub{font-size:14px;color:var(--n500);text-align:center;margin-top:6px;line-height:1.5;}
+.modal-code-box{background:var(--n50);border:1.5px dashed var(--n300);border-radius:var(--r-md);padding:12px 16px;text-align:center;margin:20px 0 0;}
+.modal-code-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--n400);}
+.modal-code{font-size:20px;font-weight:800;color:var(--p700);letter-spacing:2px;margin-top:2px;}
+.modal-steps{margin:20px 0 0;}
+.modal-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--n100);}
+.modal-step:last-child{border:none;}
+.modal-step-num{width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.modal-step-num.paid{background:var(--p100);color:var(--p700);}
+.modal-step-num.free{background:var(--green-light);color:var(--green);}
+.modal-step-text{font-size:13px;color:var(--n700);line-height:1.4;}
+.modal-step-text strong{color:var(--n900);}
+.modal-actions{display:flex;gap:10px;margin-top:24px;}
+.modal-btn-primary{flex:1;height:44px;border-radius:var(--r-md);font-size:14px;font-weight:700;color:#fff;transition:all .15s;}
+.modal-btn-primary.paid{background:var(--p700);}
+.modal-btn-primary.free{background:var(--green);}
+.modal-btn-ghost{flex:1;height:44px;border-radius:var(--r-md);font-size:14px;font-weight:600;color:var(--n700);background:#fff;border:1.5px solid var(--n200);transition:all .15s;}
+.modal-btn-ghost:hover{background:var(--n50);}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+      </svg>
+      <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="ui-trang-chu.html">Trang chủ</a>
+      <a class="nav-link active" href="ui-tim-gia-su.html">Tìm gia sư</a>
+      <a class="nav-link" href="ui-dang-tin.html">Đăng tin</a>
+      <a class="nav-link" href="ui-dang-ky-day.html">Đăng ký dạy</a>
+      <a class="nav-link" href="ui-blog.html">Blog</a>
+      <a class="nav-link" href="ui-gioi-thieu.html">Về chúng tôi</a>
+    </div>
+    <div class="nav-actions">
+      <a href="ui-auth.html" class="btn-ghost">Đăng nhập</a>
+      <a href="ui-auth.html" class="btn-primary-nav">Đăng ký miễn phí</a>
+    </div>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a class="bc-item" href="#">Trang chủ</a><span class="bc-sep">›</span>
+    <a class="bc-item" href="#">Gia sư</a><span class="bc-sep">›</span>
+    <a class="bc-item" href="#">Nguyễn Văn An</a><span class="bc-sep">›</span>
+    <span class="bc-current">Đặt lịch học</span>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="step done">
+      <div class="step-num"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="step-label">Chọn lịch học</span>
+    </div>
+    <div class="step-connector done"></div>
+    <div class="step active" id="pb-step2"><div class="step-num">2</div><span class="step-label">Xác nhận thông tin</span></div>
+    <div class="step-connector" id="pb-conn2"></div>
+    <div class="step pending" id="pb-step3"><div class="step-num">3</div><span class="step-label">Thanh toán</span></div>
+  </div>
+</div>
+
+<!-- PAGE BODY: STEP 2 -->
+<div class="page-body" id="step2-body">
+
+  <!-- LEFT COLUMN -->
+  <div>
+
+    <!-- ① BOOKING TYPE SWITCHER -->
+    <div class="btype-card">
+      <div class="btype-head">
+        <div class="btype-head-top">
+          <img class="btype-tutor-av" src="https://i.pravatar.cc/80?img=11" alt="">
+          <div>
+            <div class="btype-tutor-name">Nguyễn Văn An · Toán &amp; Vật Lý</div>
+            <div class="btype-tutor-sub">⭐ 4.9 · 127 buổi · 280.000đ/giờ</div>
+            <div class="btype-trial-badge">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Có buổi học thử miễn phí 60 phút
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btype-options">
+        <!-- Trial -->
+        <button class="btype-opt" id="opt-trial" onclick="setBookingType('trial')">
+          <div class="btype-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span class="btype-icon">🎁</span>
+          <div class="btype-label">Học thử miễn phí</div>
+          <div class="btype-desc">1 buổi · 60 phút<br>Không cam kết</div>
+          <div class="btype-price">MIỄN PHÍ</div>
+        </button>
+        <!-- Long-term -->
+        <button class="btype-opt active" id="opt-longterm" onclick="setBookingType('longterm')">
+          <div class="btype-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span class="btype-icon">📅</span>
+          <div class="btype-label">Đặt lịch dài hạn</div>
+          <div class="btype-desc">3 buổi/tuần · 8 tuần<br>T2 T4 T6 · 08:00–10:00</div>
+          <div class="btype-price">13.440.000đ</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- ② BOOKING SUMMARY (dynamic) -->
+    <div class="card" id="schedCard">
+      <div class="card-head">
+        <span class="card-title" id="schedTitle">Thông tin buổi học</span>
+        <a class="card-edit" href="#" id="schedEditBtn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Chỉnh sửa
+        </a>
+      </div>
+      <div class="card-body">
+        <!-- Long-term sched -->
+        <div id="sched-longterm">
+          <div class="sched-grid">
+            <div class="sched-item"><div class="sched-label">Ngày học</div><div class="day-pills"><span class="day-pill">T2</span><span class="day-pill">T4</span><span class="day-pill">T6</span></div></div>
+            <div class="sched-item"><div class="sched-label">Khung giờ</div><div class="sched-val hl">08:00 – 10:00</div></div>
+            <div class="sched-item"><div class="sched-label">Thời lượng</div><div class="sched-val">2 tiếng / buổi</div></div>
+            <div class="sched-item"><div class="sched-label">Số buổi / tuần</div><div class="sched-val">3 buổi</div></div>
+            <div class="sched-item"><div class="sched-label">Từ ngày</div><div class="sched-val">05/05/2026</div></div>
+            <div class="sched-item"><div class="sched-label">Đến ngày</div><div class="sched-val">29/06/2026 <span style="font-size:11px;color:var(--n400);font-weight:500;">(8 tuần)</span></div></div>
+          </div>
+          <div class="info-notice" style="margin-top:14px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div class="info-notice-text">Gia sư sẽ xác nhận lịch học trong vòng <strong>24 giờ</strong>. Bạn sẽ nhận thông báo qua email và Zalo.</div>
+          </div>
+        </div>
+        <!-- Trial sched -->
+        <div id="sched-trial" style="display:none;">
+          <div class="sched-grid">
+            <div class="sched-item trial-sched-item"><div class="sched-label">Hình thức</div><div class="sched-val" style="color:var(--green);">Học thử miễn phí</div></div>
+            <div class="sched-item trial-sched-item"><div class="sched-label">Thời lượng</div><div class="sched-val" style="color:var(--green);">60 phút</div></div>
+            <div class="sched-item trial-sched-item"><div class="sched-label">Ngày học thử</div><div class="sched-val" style="color:var(--green);">Thỏa thuận với gia sư</div></div>
+            <div class="sched-item trial-sched-item"><div class="sched-label">Chi phí</div><div class="sched-val" style="color:var(--green);">Miễn phí 100%</div></div>
+          </div>
+          <div class="trial-notice" style="margin-top:14px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div class="trial-notice-text">Sau buổi học thử, bạn có thể quyết định tiếp tục theo gói dài hạn hoặc tìm gia sư khác — <strong>không ràng buộc</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ INFO FORM (auto từ account type) -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Thông tin người học</span>
+        <a class="card-edit" href="#" style="gap:5px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Chỉnh sửa hồ sơ
+        </a>
+      </div>
+      <div class="card-body">
+
+        <!-- Account type chip -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:9px 12px;background:var(--n50);border-radius:var(--r-md);border:1px solid var(--n200);">
+          <span style="font-size:16px;">👨‍👧</span>
+          <div style="flex:1;">
+            <span style="font-size:12.5px;font-weight:700;color:var(--n800);">Tài khoản Phụ huynh</span>
+            <span style="font-size:12px;color:var(--n400);margin-left:6px;">· Thông tin điền tự động từ hồ sơ</span>
+          </div>
+          <a href="#" style="font-size:12px;font-weight:600;color:var(--p700);">Đổi loại tài khoản →</a>
+        </div>
+
+        <!-- Thông tin phụ huynh (prefilled) -->
+        <div class="form-section-label" style="margin-bottom:10px;">Thông tin phụ huynh</div>
+        <div class="form-grid" style="margin-bottom:0;">
+          <div class="form-group">
+            <label class="form-label">Họ tên phụ huynh <span class="req">*</span></label>
+            <input class="form-input prefilled" type="text" value="Nguyễn Thị Mai" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Số điện thoại <span class="req">*</span></label>
+            <input class="form-input prefilled" type="tel" value="0901 234 567" readonly>
+          </div>
+        </div>
+
+        <!-- Thông tin con -->
+        <div class="form-section">
+          <div class="form-section-label">Thông tin học sinh (con)</div>
+          <div class="form-grid" style="margin-bottom:14px;">
+            <div class="form-group">
+              <label class="form-label">Tên học sinh <span class="req">*</span></label>
+              <input class="form-input" type="text" placeholder="VD: Nguyễn Minh Khôi" id="childName">
+              <span class="form-error" id="childNameErr">Vui lòng nhập tên học sinh</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Lớp / Cấp học <span class="req">*</span></label>
+              <select class="form-select" id="childGrade">
+                <option value="">-- Chọn lớp --</option>
+                <option>Lớp 6</option><option>Lớp 7</option><option>Lớp 8</option><option>Lớp 9</option>
+                <option>Lớp 10</option><option selected>Lớp 11</option><option>Lớp 12</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Giới tính</label>
+              <select class="form-select"><option>Nam</option><option>Nữ</option><option>Khác</option></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Môn cần học <span class="req">*</span></label>
+              <select class="form-select"><option selected>Toán &amp; Vật Lý</option><option>Toán</option><option>Vật Lý</option></select>
+            </div>
+          </div>
+          <div class="form-group form-grid single">
+            <label class="form-label">Ghi chú cho gia sư</label>
+            <textarea class="form-textarea" placeholder="VD: Con đang yếu phần hàm số và lượng giác, cần ôn trước kỳ thi học kỳ 2..."></textarea>
+            <span class="form-hint">Không bắt buộc. Giúp gia sư chuẩn bị tốt hơn cho buổi học đầu tiên.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Phiên bản học viên (comment để xem khi demo) -->
+    <!-- KHI ACCOUNT = HỌC VIÊN, hiển thị block này thay cho block trên:
+    <div class="card">
+      <div class="card-head"><span class="card-title">Thông tin người học</span>...</div>
+      <div class="card-body">
+        [chip: 👨‍🎓 Tài khoản Học viên]
+        [form: tên, SĐT, lớp, môn, ghi chú — tất cả prefilled]
+      </div>
+    </div>
+    -->
+
+    <!-- ④ NOTIFICATION PREF -->
+    <div class="card">
+      <div class="card-head"><span class="card-title">Cách nhận thông báo</span></div>
+      <div class="card-body">
+        <div class="notif-opts">
+          <label class="notif-opt active" id="notif-email">
+            <input type="radio" name="notif" value="email" checked onchange="styleNotif()">
+            <div class="notif-opt-text"><div class="title">Email</div><div class="sub">hue.ptt@phuongnameducation.com</div></div>
+          </label>
+          <label class="notif-opt" id="notif-zalo">
+            <input type="radio" name="notif" value="zalo" onchange="styleNotif()">
+            <div class="notif-opt-text">
+              <div class="title" style="display:flex;align-items:center;gap:6px;">Zalo <span style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;background:#e8f4fd;color:#0068ff;">Khuyến nghị</span></div>
+              <div class="sub">Nhận tin nhắn, hình ảnh lịch học · Miễn phí</div>
+            </div>
+          </label>
+          <label class="notif-opt" id="notif-both">
+            <input type="radio" name="notif" value="both" onchange="styleNotif()">
+            <div class="notif-opt-text"><div class="title">Tất cả</div><div class="sub">Email + Zalo</div></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- Order Summary -->
+    <div class="order-card">
+      <div class="order-head">
+        <div class="order-title" id="sidebarTitle">Tóm tắt đơn hàng</div>
+        <span class="order-badge paid" id="sidebarBadge">Đặt lịch dài hạn</span>
+      </div>
+      <div class="order-body" id="orderBody">
+        <!-- Long-term content (default) -->
+        <div id="summary-longterm">
+          <div class="order-row"><span class="order-row-label">Giá / giờ</span><span class="order-row-val">280.000đ</span></div>
+          <div class="order-row"><span class="order-row-label">Thời lượng / buổi</span><span class="order-row-val">2 tiếng</span></div>
+          <div class="order-row"><span class="order-row-label">Số buổi / tuần</span><span class="order-row-val">3 buổi</span></div>
+          <div class="order-row"><span class="order-row-label">Số tuần</span><span class="order-row-val">8 tuần</span></div>
+          <div class="order-divider"></div>
+          <div class="order-row"><span class="order-row-label">Tổng buổi</span><span class="order-row-val">24 buổi (48 tiếng)</span></div>
+          <div class="order-discount-row" id="discountRow"><span class="order-discount-label">Giảm giá (GSMO20)</span><span class="order-discount-val" id="discountVal">–2.688.000đ</span></div>
+          <div class="order-divider"></div>
+          <div class="order-total-row">
+            <span class="order-total-label">Tổng thanh toán</span>
+            <span class="order-total-val paid" id="totalVal">13.440.000đ</span>
+          </div>
+          <div style="font-size:11px;color:var(--n400);text-align:right;margin-top:4px;">Đã bao gồm VAT</div>
+        </div>
+        <!-- Trial content -->
+        <div id="summary-trial" style="display:none;">
+          <div class="order-row"><span class="order-row-label">Hình thức</span><span class="order-row-val" style="color:var(--green);">Học thử</span></div>
+          <div class="order-row"><span class="order-row-label">Thời lượng</span><span class="order-row-val">60 phút</span></div>
+          <div class="order-row"><span class="order-row-label">Ngày học</span><span class="order-row-val">Thỏa thuận</span></div>
+          <div class="order-divider"></div>
+          <div class="order-total-row">
+            <span class="order-total-label">Tổng thanh toán</span>
+            <span class="order-total-val free">MIỄN PHÍ</span>
+          </div>
+          <div class="trial-notice" style="margin-top:12px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div class="trial-notice-text" style="font-size:11.5px;">Không cần thanh toán trước. Gia sư sẽ liên hệ để chốt thời gian học thử.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coupon (only for longterm) -->
+    <div class="order-card" id="couponSection">
+      <div class="order-body">
+        <div class="section-label">Mã giảm giá</div>
+        <div class="coupon-row">
+          <input class="coupon-input" type="text" placeholder="Nhập mã khuyến mãi" id="couponInput">
+          <button class="coupon-btn" onclick="applyCoupon()">Áp dụng</button>
+        </div>
+        <div class="coupon-msg" id="couponMsg"></div>
+      </div>
+    </div>
+
+    <!-- Payment (chỉ hiện khi đặt lịch dài hạn) -->
+    <div class="order-card" id="paymentSection">
+      <div class="order-body">
+        <div class="section-label">Phương thức thanh toán</div>
+        <div class="pay-tabs">
+          <button class="pay-tab active" onclick="selectPay(this,'bank')">
+            <div class="pay-icon">🏦</div><div class="pay-label">Chuyển khoản<br>ngân hàng</div>
+          </button>
+          <button class="pay-tab" onclick="selectPay(this,'momo')">
+            <div class="pay-icon">💜</div><div class="pay-label">Ví MoMo</div>
+          </button>
+          <button class="pay-tab" onclick="selectPay(this,'vnpay')">
+            <div class="pay-icon">🔵</div><div class="pay-label">VNPay QR</div>
+          </button>
+          <button class="pay-tab" onclick="selectPay(this,'card')">
+            <div class="pay-icon">💳</div><div class="pay-label">Thẻ tín dụng<br>/ ghi nợ</div>
+          </button>
+        </div>
+        <div class="pay-detail" id="detail-bank">
+          <div class="pay-detail-row"><span class="pay-detail-label">Ngân hàng</span><span class="pay-detail-val">Vietcombank</span></div>
+          <div class="pay-detail-row"><span class="pay-detail-label">Số tài khoản</span><span class="pay-detail-val copy" onclick="copyText(this,'0071001234567')">0071001234567 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="copy-tick">✓</span></span></div>
+          <div class="pay-detail-row"><span class="pay-detail-label">Chủ TK</span><span class="pay-detail-val">CONG TY GIASU EDU</span></div>
+          <div class="pay-detail-row"><span class="pay-detail-label">Nội dung CK</span><span class="pay-detail-val copy" onclick="copyText(this,'DATLICH AN20260506')">DATLICH AN20260506 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="copy-tick">✓</span></span></div>
+          <div class="pay-detail-note">⏱ Chuyển khoản trong vòng 24h để xác nhận đơn hàng.</div>
+        </div>
+        <div class="pay-detail" id="detail-momo" style="display:none;text-align:center;">
+          <div style="font-size:56px;margin-bottom:6px;">📱</div>
+          <div style="font-size:13px;font-weight:700;color:var(--n800);margin-bottom:3px;">Quét mã QR bằng ứng dụng MoMo</div>
+          <div style="font-size:12px;color:var(--n400);">SĐT: <strong style="color:var(--n700);">0901 234 567</strong> · Chủ TK: <strong style="color:var(--n700);">GIA SƯ EDU</strong></div>
+        </div>
+        <div class="pay-detail" id="detail-vnpay" style="display:none;text-align:center;">
+          <div style="font-size:56px;margin-bottom:6px;">📷</div>
+          <div style="font-size:13px;font-weight:700;color:var(--n800);margin-bottom:3px;">Quét mã QR qua ngân hàng</div>
+          <div style="font-size:12px;color:var(--n400);">Hỗ trợ tất cả ngân hàng có tính năng VNPay QR</div>
+        </div>
+        <div class="pay-detail" id="detail-card" style="display:none;">
+          <div class="form-group" style="margin-bottom:10px;">
+            <label class="form-label">Số thẻ</label>
+            <input class="form-input" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="form-group"><label class="form-label">Hết hạn</label><input class="form-input" type="text" placeholder="MM/YY" maxlength="5"></div>
+            <div class="form-group"><label class="form-label">CVV</label><input class="form-input" type="text" placeholder="123" maxlength="3"></div>
+          </div>
+          <div style="font-size:11px;color:var(--n400);margin-top:8px;">🔒 Mã hoá SSL 256-bit</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms + CTA -->
+    <div class="order-card">
+      <div class="order-body">
+        <div class="terms-row" style="margin-bottom:0;">
+          <input type="checkbox" id="termsCheck" onchange="toggleConfirm()">
+          <label class="terms-text" for="termsCheck">Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách hoàn tiền</a> của giasu.edu.vn</label>
+        </div>
+        <button class="confirm-btn style-paid" id="confirmBtn" disabled onclick="confirmBooking()">
+          <div class="confirm-btn-inner">
+            <div class="spinner"></div>
+            <span class="btn-text" id="confirmBtnText">Xác nhận đặt lịch</span>
+          </div>
+        </button>
+        <div class="confirm-note" id="confirmNote">Gia sư sẽ liên hệ xác nhận trong vòng 24 giờ.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PAGE BODY: STEP 3 -->
+<div class="page-body" id="step3-body" style="display:none;">
+
+  <!-- LEFT: Payment details -->
+  <div>
+
+    <!-- Payment method card -->
+    <div class="card">
+      <div class="card-head"><span class="card-title">Hoàn tất thanh toán</span></div>
+      <div class="card-body">
+        <div class="pay-tabs" id="s3-pay-tabs">
+          <button class="pay-tab active" id="s3-tab-bank" onclick="s3SelectPay(this,'bank')">
+            <div class="pay-icon">🏦</div><div class="pay-label">Chuyển khoản<br>ngân hàng</div>
+          </button>
+          <button class="pay-tab" id="s3-tab-momo" onclick="s3SelectPay(this,'momo')">
+            <div class="pay-icon">💜</div><div class="pay-label">Ví MoMo</div>
+          </button>
+          <button class="pay-tab" id="s3-tab-vnpay" onclick="s3SelectPay(this,'vnpay')">
+            <div class="pay-icon">🔵</div><div class="pay-label">VNPay QR</div>
+          </button>
+          <button class="pay-tab" id="s3-tab-card" onclick="s3SelectPay(this,'card')">
+            <div class="pay-icon">💳</div><div class="pay-label">Thẻ tín dụng<br>/ ghi nợ</div>
+          </button>
+        </div>
+
+        <!-- Bank transfer -->
+        <div class="s3-pay-detail" id="s3-detail-bank">
+          <div class="s3-bank-box">
+            <div class="s3-bank-header">
+              <div style="width:42px;height:42px;border-radius:10px;background:var(--p100);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🏦</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--n900);">Vietcombank</div>
+                <div style="font-size:12px;color:var(--n500);">Ngân hàng TMCP Ngoại Thương Việt Nam</div>
+              </div>
+            </div>
+            <div class="s3-bank-rows">
+              <div class="s3-bank-row">
+                <span class="s3-bank-label">Số tài khoản</span>
+                <span class="s3-bank-val copy" onclick="copyText(this,'0071001234567')">0071001234567 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="copy-tick">✓</span></span>
+              </div>
+              <div class="s3-bank-row">
+                <span class="s3-bank-label">Chủ tài khoản</span>
+                <span class="s3-bank-val">CONG TY GIASU EDU</span>
+              </div>
+              <div class="s3-bank-row">
+                <span class="s3-bank-label">Nội dung CK</span>
+                <span class="s3-bank-val copy" onclick="copyText(this,'DATLICH AN20260506')">DATLICH AN20260506 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="copy-tick">✓</span></span>
+              </div>
+              <div class="s3-bank-row s3-amount-row">
+                <span class="s3-bank-label">Số tiền chuyển khoản</span>
+                <span class="s3-amount" id="s3-amount-display">13.440.000đ</span>
+              </div>
+            </div>
+            <div class="s3-qr-area">
+              <div class="s3-qr-box"><div class="qr-placeholder">QR</div></div>
+              <div class="s3-qr-note">Quét mã QR bằng ứng dụng ngân hàng để điền thông tin chuyển khoản tự động</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MoMo -->
+        <div class="s3-pay-detail" id="s3-detail-momo" style="display:none;">
+          <div class="s3-bank-box">
+            <div class="s3-qr-area" style="border-top:none;padding-top:0;margin-top:0;">
+              <div class="s3-qr-box"><div class="qr-placeholder" style="background:#fce4ec;color:#a30064;border-color:#f8bbd0;">MM</div></div>
+              <div class="s3-qr-note">Mở ứng dụng MoMo → Quét mã → Xác nhận số tiền</div>
+            </div>
+            <div class="s3-bank-rows" style="margin-top:16px;">
+              <div class="s3-bank-row">
+                <span class="s3-bank-label">Số điện thoại MoMo</span>
+                <span class="s3-bank-val copy" onclick="copyText(this,'0901234567')">0901 234 567 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="copy-tick">✓</span></span>
+              </div>
+              <div class="s3-bank-row">
+                <span class="s3-bank-label">Tên người nhận</span>
+                <span class="s3-bank-val">GIA SƯ EDU</span>
+              </div>
+              <div class="s3-bank-row s3-amount-row">
+                <span class="s3-bank-label">Số tiền</span>
+                <span class="s3-amount">13.440.000đ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VNPay -->
+        <div class="s3-pay-detail" id="s3-detail-vnpay" style="display:none;">
+          <div class="s3-bank-box">
+            <div class="s3-qr-area" style="border-top:none;padding-top:0;margin-top:0;">
+              <div class="s3-qr-box"><div class="qr-placeholder" style="background:#e3f2fd;color:#0053a0;border-color:#bbdefb;">VP</div></div>
+              <div class="s3-qr-note">Quét mã VNPay bằng bất kỳ ứng dụng ngân hàng hỗ trợ VNPay QR</div>
+            </div>
+            <div style="margin-top:14px;font-size:12px;color:var(--n500);text-align:center;line-height:1.6;">Hỗ trợ Vietcombank, VietinBank, BIDV, Techcombank, MB Bank<br>và 40+ ngân hàng khác</div>
+            <div class="s3-bank-rows" style="margin-top:12px;">
+              <div class="s3-bank-row s3-amount-row" style="border-top:none;padding-top:0;">
+                <span class="s3-bank-label">Số tiền</span>
+                <span class="s3-amount">13.440.000đ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card -->
+        <div class="s3-pay-detail" id="s3-detail-card" style="display:none;">
+          <div class="s3-bank-box">
+            <div class="form-group" style="margin-bottom:12px;">
+              <label class="form-label">Số thẻ</label>
+              <input class="form-input" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+              <div class="form-group"><label class="form-label">Hết hạn</label><input class="form-input" type="text" placeholder="MM/YY" maxlength="5"></div>
+              <div class="form-group"><label class="form-label">CVV</label><input class="form-input" type="text" placeholder="123" maxlength="3"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tên chủ thẻ</label>
+              <input class="form-input" type="text" placeholder="NGUYEN THI MAI">
+            </div>
+            <div style="margin-top:12px;display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--n400);">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Mã hoá SSL 256-bit · PCI DSS compliant
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div style="background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);padding:14px 20px;margin-top:16px;display:flex;align-items:center;gap:14px;">
+      <div style="width:40px;height:40px;border-radius:50%;background:var(--s100);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">⏱</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:var(--n800);">Đơn hàng sẽ hết hạn sau</div>
+        <div style="font-size:11.5px;color:var(--n500);">Vui lòng hoàn tất thanh toán trước khi hết giờ</div>
+      </div>
+      <div id="countdown" style="font-size:24px;font-weight:800;color:var(--s600);font-variant-numeric:tabular-nums;letter-spacing:1px;">23:59:59</div>
+    </div>
+
+    <!-- Notice -->
+    <div class="info-notice" style="margin-top:16px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <div class="info-notice-text">Sau khi chuyển khoản, nhấn <strong>"Tôi đã chuyển khoản"</strong> bên phải. Lịch học sẽ được kích hoạt trong <strong>30 phút</strong> sau khi hệ thống xác nhận.</div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- Locked order summary -->
+    <div class="order-card">
+      <div class="order-head" style="background:var(--green-light);border-bottom-color:#BBF7D0;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="order-title" style="color:#166534;">Đã xác nhận</span>
+        </div>
+        <span class="order-badge free">#GS-2026-08421</span>
+      </div>
+      <div class="order-body">
+        <div class="order-row"><span class="order-row-label">Gia sư</span><span class="order-row-val">Nguyễn Văn An</span></div>
+        <div class="order-row"><span class="order-row-label">Môn học</span><span class="order-row-val">Toán &amp; Vật Lý</span></div>
+        <div class="order-row"><span class="order-row-label">Học sinh</span><span class="order-row-val">Nguyễn Minh Khôi · L11</span></div>
+        <div class="order-row"><span class="order-row-label">Lịch học</span><span class="order-row-val">T2 T4 T6 · 08:00–10:00</span></div>
+        <div class="order-row"><span class="order-row-label">Thời gian</span><span class="order-row-val">8 tuần · 24 buổi</span></div>
+        <div class="order-divider"></div>
+        <div class="order-discount-row" id="s3-discount-row"><span class="order-discount-label">Giảm giá (GSMO20)</span><span class="order-discount-val">–2.688.000đ</span></div>
+        <div class="order-total-row">
+          <span class="order-total-label">Cần thanh toán</span>
+          <span class="order-total-val paid" id="s3-total-val">13.440.000đ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="order-card">
+      <div class="order-body">
+        <button class="confirm-btn style-paid" id="s3-confirmBtn" onclick="confirmPayment()" style="margin-top:0;">
+          <div class="confirm-btn-inner">
+            <div class="spinner"></div>
+            <span class="btn-text" id="s3-btnText">Tôi đã chuyển khoản ✓</span>
+          </div>
+        </button>
+        <div style="text-align:center;margin-top:10px;">
+          <div style="font-size:11.5px;color:var(--n400);">🔒 Giao dịch bảo mật SSL 256-bit</div>
+          <div style="font-size:11.5px;color:var(--n400);margin-top:2px;">Xác nhận tự động trong 30 phút</div>
+        </div>
+        <div style="text-align:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--n100);">
+          <a href="#" onclick="backToStep2();return false;" style="font-size:12.5px;font-weight:600;color:var(--n500);display:inline-flex;align-items:center;gap:4px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Quay lại bước trước
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-icon paid" id="modalIcon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="modal-title" id="modalTitle">Đặt lịch thành công! 🎉</div>
+    <div class="modal-sub" id="modalSub">Gia sư Nguyễn Văn An đã nhận yêu cầu của bạn và sẽ liên hệ trong 24 giờ.</div>
+    <div class="modal-code-box">
+      <div class="modal-code-label">Mã đặt lịch</div>
+      <div class="modal-code" id="modalCode">GS-2026-08421</div>
+    </div>
+    <div class="modal-steps" id="modalSteps">
+      <div class="modal-step"><div class="modal-step-num paid">1</div><div class="modal-step-text"><strong>Kiểm tra email</strong> — Xác nhận và chi tiết lịch học đã được gửi đến hòm thư của bạn.</div></div>
+      <div class="modal-step"><div class="modal-step-num paid">2</div><div class="modal-step-text"><strong>Gia sư xác nhận</strong> — Gia sư sẽ liên hệ để xác nhận buổi học đầu tiên.</div></div>
+      <div class="modal-step"><div class="modal-step-num paid">3</div><div class="modal-step-text"><strong>Thanh toán</strong> — Hoàn tất chuyển khoản theo thông tin đã cung cấp.</div></div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn-primary paid" id="modalPrimaryBtn" onclick="closeModal()">Xem lịch học</button>
+      <button class="modal-btn-ghost" onclick="closeModal()">Về trang chủ</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let bookingType = 'longterm';
+const userType = 'parent'; // đọc từ account, không thay đổi trên trang này
+let discountPct = 0;
+
+// ── BOOKING TYPE ──
+function setBookingType(type) {
+  bookingType = type;
+  const isTrial = type === 'trial';
+
+  // Switcher styles
+  document.getElementById('opt-trial').className    = 'btype-opt' + (isTrial ? ' active-trial' : '');
+  document.getElementById('opt-longterm').className = 'btype-opt' + (!isTrial ? ' active' : '');
+
+  // Schedule card
+  document.getElementById('sched-longterm').style.display = isTrial ? 'none' : 'block';
+  document.getElementById('sched-trial').style.display    = isTrial ? 'block' : 'none';
+  document.getElementById('schedTitle').textContent = isTrial ? 'Thông tin buổi học thử' : 'Thông tin đặt lịch';
+
+  // Sidebar summary
+  document.getElementById('summary-longterm').style.display = isTrial ? 'none' : 'block';
+  document.getElementById('summary-trial').style.display    = isTrial ? 'block' : 'none';
+  const badge = document.getElementById('sidebarBadge');
+  badge.textContent = isTrial ? 'Học thử miễn phí' : 'Đặt lịch dài hạn';
+  badge.className = 'order-badge ' + (isTrial ? 'free' : 'paid');
+
+  // Show/hide coupon + payment
+  document.getElementById('couponSection').style.display  = isTrial ? 'none' : 'block';
+  document.getElementById('paymentSection').style.display = isTrial ? 'none' : 'block';
+
+  // CTA button
+  const btn = document.getElementById('confirmBtn');
+  btn.className = 'confirm-btn ' + (isTrial ? 'style-free' : 'style-paid');
+  document.getElementById('confirmBtnText').textContent = isTrial ? 'Đăng ký học thử ngay' : 'Xác nhận đặt lịch';
+  document.getElementById('confirmNote').textContent = isTrial
+    ? 'Miễn phí, không cam kết. Gia sư sẽ liên hệ để chốt thời gian.'
+    : 'Gia sư sẽ liên hệ xác nhận trong vòng 24 giờ.';
+
+  // Reset terms
+  document.getElementById('termsCheck').checked = false;
+  btn.disabled = true;
+}
+
+
+// ── NOTIFICATION STYLES ──
+function styleNotif() {
+  document.querySelectorAll('.notif-opt').forEach(el => {
+    el.classList.toggle('active', el.querySelector('input').checked);
+  });
+}
+
+// ── PAYMENT ──
+function selectPay(btn, type) {
+  document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['bank','momo','vnpay','card'].forEach(t => {
+    const el = document.getElementById('detail-' + t);
+    if (el) el.style.display = t === type ? 'block' : 'none';
+  });
+}
+
+// ── COUPON ──
+const VALID = { 'GSMO20': 20 };
+function applyCoupon() {
+  const code = document.getElementById('couponInput').value.trim().toUpperCase();
+  const msg  = document.getElementById('couponMsg');
+  const inp  = document.getElementById('couponInput');
+  inp.className = 'coupon-input';
+  msg.className = 'coupon-msg';
+  if (!code) { msg.textContent='Vui lòng nhập mã'; msg.className='coupon-msg fail'; return; }
+  if (VALID[code]) {
+    discountPct = VALID[code];
+    inp.className = 'coupon-input success';
+    msg.textContent = `✓ Giảm ${discountPct}% — tiết kiệm 2.688.000đ`;
+    msg.className = 'coupon-msg success';
+    const base = 13440000, disc = Math.round(base * discountPct / 100);
+    document.getElementById('discountVal').textContent = '–' + (base*discountPct/100).toLocaleString('vi-VN') + 'đ';
+    document.getElementById('totalVal').textContent = (base - disc).toLocaleString('vi-VN') + 'đ';
+    document.getElementById('discountRow').classList.add('show');
+  } else {
+    discountPct = 0;
+    inp.className = 'coupon-input fail';
+    msg.textContent = '✗ Mã không hợp lệ hoặc đã hết hạn';
+    msg.className = 'coupon-msg fail';
+    document.getElementById('discountRow').classList.remove('show');
+    document.getElementById('totalVal').textContent = '13.440.000đ';
+  }
+}
+document.getElementById('couponInput').addEventListener('keydown', e => { if(e.key==='Enter') applyCoupon(); });
+
+// ── CONFIRM TOGGLE ──
+function toggleConfirm() {
+  document.getElementById('confirmBtn').disabled = !document.getElementById('termsCheck').checked;
+}
+
+// ── CONFIRM BOOKING (step 2 → step 3 or modal) ──
+function confirmBooking() {
+  const isTrial = bookingType === 'trial';
+  const isParent = userType === 'parent';
+
+  // Validate
+  let valid = true;
+  if (isParent) {
+    const childName = document.getElementById('childName').value.trim();
+    document.getElementById('childNameErr').classList.toggle('show', !childName);
+    document.getElementById('childName').classList.toggle('error', !childName);
+    if (!childName) valid = false;
+  }
+  if (!valid) return;
+
+  // Loading
+  const btn = document.getElementById('confirmBtn');
+  btn.classList.add('loading'); btn.disabled = true;
+
+  setTimeout(() => {
+    btn.classList.remove('loading'); btn.disabled = false;
+
+    if (isTrial) {
+      // Trial: no payment needed → success modal trực tiếp
+      document.getElementById('modalIcon').className = 'modal-icon free';
+      document.getElementById('modalTitle').textContent = 'Đăng ký học thử thành công! 🎉';
+      document.getElementById('modalSub').textContent = 'Gia sư Nguyễn Văn An đã nhận yêu cầu học thử. Gia sư sẽ liên hệ để chốt thời gian trong 24 giờ.';
+      document.getElementById('modalCode').textContent = 'TH-2026-00187';
+      document.getElementById('modalSteps').innerHTML = `
+        <div class="modal-step"><div class="modal-step-num free">1</div><div class="modal-step-text"><strong>Chờ gia sư liên hệ</strong> — Gia sư sẽ nhắn tin hoặc gọi điện để chốt thời gian phù hợp.</div></div>
+        <div class="modal-step"><div class="modal-step-num free">2</div><div class="modal-step-text"><strong>Tham gia buổi học thử</strong> — 60 phút hoàn toàn miễn phí, không cần chuẩn bị gì đặc biệt.</div></div>
+        <div class="modal-step"><div class="modal-step-num free">3</div><div class="modal-step-text"><strong>Quyết định tiếp theo</strong> — Nếu hài lòng, bạn có thể đặt lịch dài hạn ngay sau buổi học thử.</div></div>
+      `;
+      document.getElementById('modalPrimaryBtn').className = 'modal-btn-primary free';
+      document.getElementById('modalPrimaryBtn').textContent = 'Theo dõi yêu cầu';
+      document.getElementById('successModal').classList.add('show');
+    } else {
+      // Longterm: chuyển sang step 3 thanh toán
+      showStep3();
+    }
+  }, 1000);
+}
+
+// ── STEP 3 ──
+let countdownTimer = null;
+let s3PayMethod = 'bank';
+
+function showStep3() {
+  // Update progress bar
+  const step2el = document.getElementById('pb-step2');
+  step2el.className = 'step done';
+  step2el.querySelector('.step-num').innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  document.getElementById('pb-conn2').className = 'step-connector done';
+  document.getElementById('pb-step3').className = 'step active';
+
+  // Sync phương thức thanh toán từ step 2
+  const activeTab = document.querySelector('#paymentSection .pay-tab.active');
+  let method = 'bank';
+  if (activeTab) {
+    const lbl = activeTab.querySelector('.pay-label').textContent;
+    if (lbl.includes('MoMo')) method = 'momo';
+    else if (lbl.includes('VNPay')) method = 'vnpay';
+    else if (lbl.includes('Thẻ')) method = 'card';
+  }
+  const s3Tab = document.getElementById('s3-tab-' + method);
+  if (s3Tab) s3SelectPay(s3Tab, method);
+
+  // Sync tổng tiền
+  const total = document.getElementById('totalVal').textContent;
+  document.getElementById('s3-total-val').textContent = total;
+  document.getElementById('s3-amount-display').textContent = total;
+
+  // Sync giảm giá
+  const hasDiscount = document.getElementById('discountRow').classList.contains('show');
+  document.getElementById('s3-discount-row').style.display = hasDiscount ? 'flex' : 'none';
+
+  // Switch views
+  document.getElementById('step2-body').style.display = 'none';
+  document.getElementById('step3-body').style.display = 'grid';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  startCountdown();
+}
+
+function backToStep2() {
+  document.getElementById('step3-body').style.display = 'none';
+  document.getElementById('step2-body').style.display = 'grid';
+  // Reset progress bar
+  const step2el = document.getElementById('pb-step2');
+  step2el.className = 'step active';
+  step2el.querySelector('.step-num').textContent = '2';
+  document.getElementById('pb-conn2').className = 'step-connector';
+  document.getElementById('pb-step3').className = 'step pending';
+  // Re-enable confirm button if terms checked
+  document.getElementById('confirmBtn').disabled = !document.getElementById('termsCheck').checked;
+  stopCountdown();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function s3SelectPay(btn, type) {
+  s3PayMethod = type;
+  document.querySelectorAll('#s3-pay-tabs .pay-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['bank','momo','vnpay','card'].forEach(t => {
+    const el = document.getElementById('s3-detail-' + t);
+    if (el) el.style.display = t === type ? 'block' : 'none';
+  });
+  // Update CTA text
+  const btnText = document.getElementById('s3-btnText');
+  if (type === 'card') btnText.textContent = 'Thanh toán ngay →';
+  else if (type === 'momo' || type === 'vnpay') btnText.textContent = 'Tôi đã thanh toán ✓';
+  else btnText.textContent = 'Tôi đã chuyển khoản ✓';
+}
+
+function confirmPayment() {
+  const btn = document.getElementById('s3-confirmBtn');
+  btn.classList.add('loading'); btn.disabled = true;
+  setTimeout(() => {
+    btn.classList.remove('loading'); btn.disabled = false;
+    stopCountdown();
+    document.getElementById('modalIcon').className = 'modal-icon paid';
+    document.getElementById('modalTitle').textContent = 'Thanh toán thành công! 🎉';
+    document.getElementById('modalSub').textContent = 'Lịch học với gia sư Nguyễn Văn An đã được kích hoạt. Gia sư sẽ liên hệ xác nhận buổi học đầu tiên.';
+    document.getElementById('modalCode').textContent = 'GS-2026-08421';
+    document.getElementById('modalSteps').innerHTML = `
+      <div class="modal-step"><div class="modal-step-num paid">1</div><div class="modal-step-text"><strong>Kiểm tra email</strong> — Hoá đơn và chi tiết lịch học đã được gửi đến hòm thư của bạn.</div></div>
+      <div class="modal-step"><div class="modal-step-num paid">2</div><div class="modal-step-text"><strong>Gia sư xác nhận</strong> — Gia sư sẽ liên hệ để xác nhận buổi học đầu tiên trong 24 giờ.</div></div>
+      <div class="modal-step"><div class="modal-step-num paid">3</div><div class="modal-step-text"><strong>Bắt đầu học</strong> — Lịch học đã xuất hiện trong dashboard của bạn ngay bây giờ.</div></div>
+    `;
+    document.getElementById('modalPrimaryBtn').className = 'modal-btn-primary paid';
+    document.getElementById('modalPrimaryBtn').textContent = 'Xem lịch học';
+    document.getElementById('successModal').classList.add('show');
+  }, 1800);
+}
+
+// Countdown timer
+let countdownSecs = 86399;
+function startCountdown() {
+  countdownSecs = 86399;
+  updateCountdown();
+  countdownTimer = setInterval(() => {
+    countdownSecs = Math.max(0, countdownSecs - 1);
+    updateCountdown();
+    if (countdownSecs === 0) stopCountdown();
+  }, 1000);
+}
+function stopCountdown() {
+  if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+}
+function updateCountdown() {
+  const h = Math.floor(countdownSecs / 3600);
+  const m = Math.floor((countdownSecs % 3600) / 60);
+  const s = countdownSecs % 60;
+  const el = document.getElementById('countdown');
+  if (!el) return;
+  el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.style.color = countdownSecs < 3600 ? 'var(--red)' : 'var(--s600)';
+}
+
+// ── UTILS ──
+function copyText(el, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const t = el.querySelector('.copy-tick'); t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
+}
+function formatCard(el) {
+  let v = el.value.replace(/\D/g,'').substring(0,16);
+  el.value = v.replace(/(.{4})/g,'$1 ').trim();
+}
+function closeModal() {
+  document.getElementById('successModal').classList.remove('show');
+}
+document.getElementById('successModal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
+</script>
+</body>
+</html>

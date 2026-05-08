@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng ký / Đăng nhập — giasu.edu.vn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --p900: #0D2D6B;
+    --p800: #1239A0;
+    --p700: #1565C0;
+    --p400: #42A5F5;
+    --p300: #90CAF9;
+    --p200: #BBDEFB;
+    --p100: #E3F2FD;
+    --p50:  #F0F8FF;
+    --s700: #C46200;
+    --s600: #E65100;
+    --s500: #F57C00;
+    --s400: #FFA726;
+    --s300: #FFCC80;
+    --n900: #0F172A;
+    --n800: #1E293B;
+    --n700: #334155;
+    --n600: #475569;
+    --n500: #64748B;
+    --n400: #94A3B8;
+    --n300: #CBD5E1;
+    --n200: #E2E8F0;
+    --n100: #F1F5F9;
+    --n50:  #F8FAFC;
+  }
+
+  html, body { height: 100%; font-family: 'Inter', sans-serif; overflow: hidden; }
+
+  .auth-layout { display: flex; height: 100vh; width: 100vw; }
+
+  /* ==================== LEFT PANEL ==================== */
+  .left-panel {
+    width: 45%;
+    min-height: 100vh;
+    background: linear-gradient(160deg, #061529 0%, #0D2D6B 35%, #1239A0 70%, #1565C0 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 48px;
+  }
+
+  /* Grid overlay */
+  .left-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Subtle radial highlight */
+  .left-panel::after {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(ellipse at center, rgba(66,165,245,0.12) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .blob-1 {
+    position: absolute; width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(66,165,245,0.14) 0%, transparent 70%);
+    top: -160px; right: -160px; pointer-events: none; z-index: 0;
+  }
+  .blob-2 {
+    position: absolute; width: 340px; height: 340px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,124,0,0.11) 0%, transparent 70%);
+    bottom: 40px; left: -100px; pointer-events: none; z-index: 0;
+  }
+  .blob-3 {
+    position: absolute; width: 220px; height: 220px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(144,202,249,0.09) 0%, transparent 70%);
+    bottom: 220px; right: 20px; pointer-events: none; z-index: 0;
+  }
+
+  /* Decorative dots */
+  .dots-pattern {
+    position: absolute;
+    bottom: 120px;
+    right: 36px;
+    width: 120px;
+    height: 120px;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    position: relative; z-index: 2; text-decoration: none;
+  }
+  .logo-text { font-size: 21px; font-weight: 800; color: #fff; letter-spacing: -0.4px; }
+  .logo-text em { font-weight: 500; font-style: normal; color: #fff; opacity: .55; }
+
+  .left-center {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+    position: relative; z-index: 2; padding: 32px 0;
+  }
+
+  .badge-new {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,167,38,0.15); border: 1px solid rgba(255,167,38,0.35);
+    border-radius: 20px; padding: 5px 14px; margin-bottom: 20px; width: fit-content;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #FFA726; }
+  .badge-text { font-size: 12px; font-weight: 600; color: #FFA726; letter-spacing: 0.2px; }
+
+  .left-headline {
+    font-size: 36px; font-weight: 900; color: #fff;
+    line-height: 1.18; letter-spacing: -0.6px; margin-bottom: 16px;
+  }
+  .left-headline em { font-style: normal; color: #FFA726; }
+
+  .left-sub {
+    font-size: 15px; font-weight: 400; color: rgba(255,255,255,0.62);
+    margin-bottom: 32px; line-height: 1.65;
+  }
+
+  /* Floating tutor card */
+  .floating-card {
+    background: rgba(255,255,255,0.09);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.17);
+    border-radius: 18px; padding: 14px 18px;
+    display: flex; align-items: center; gap: 13px;
+    width: fit-content; margin-bottom: 28px;
+    animation: floatCard 4.5s ease-in-out infinite;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+  @keyframes floatCard {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  .card-avatar {
+    width: 46px; height: 46px; border-radius: 50%; overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.35); flex-shrink: 0;
+  }
+  .card-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .card-info { flex: 1; }
+  .card-name { font-size: 13.5px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .card-subject { font-size: 11.5px; color: rgba(255,255,255,0.6); margin-bottom: 5px; }
+  .card-stars { display: flex; gap: 1px; align-items: center; }
+  .star-i { color: #FFA726; font-size: 13px; line-height: 1; }
+  .card-rating { font-size: 12px; font-weight: 700; color: #fff; margin-left: 5px; }
+  .card-cta {
+    background: linear-gradient(135deg, #F57C00, #E65100);
+    color: #fff; font-size: 11px; font-weight: 700;
+    border-radius: 8px; padding: 6px 12px; flex-shrink: 0;
+    white-space: nowrap; box-shadow: 0 2px 8px rgba(230,81,0,0.4);
+  }
+
+  .trust-points { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-bottom: 36px; }
+  .trust-point { display: flex; align-items: center; gap: 12px; color: #fff; font-size: 14px; font-weight: 500; }
+  .trust-check {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(66,165,245,0.18); border: 1.5px solid rgba(66,165,245,0.45);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .trust-check svg { width: 13px; height: 13px; }
+
+  /* Stats row */
+  .stats-row {
+    display: flex; gap: 24px; margin-bottom: 32px;
+  }
+  .stat-item {}
+  .stat-num { font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
+  .stat-num span { color: #FFA726; }
+  .stat-label { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.55); margin-top: 1px; }
+
+  /* Social proof */
+  .social-proof { display: flex; align-items: center; gap: 12px; position: relative; z-index: 2; }
+  .avatar-stack { display: flex; }
+  .avatar-stack img {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.55); object-fit: cover;
+    margin-left: -11px; transition: transform 0.2s;
+  }
+  .avatar-stack img:first-child { margin-left: 0; }
+  .avatar-stack img:hover { transform: translateY(-2px); z-index: 2; }
+  .proof-text { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75); }
+  .proof-text strong { color: #fff; font-weight: 700; }
+
+  /* ==================== DEMO BAR ==================== */
+  .demo-bar {
+    background: var(--n50); border-bottom: 1px solid var(--n200);
+    padding: 10px 24px; display: flex; align-items: center; gap: 8px;
+    flex-shrink: 0; flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .demo-bar-label {
+    font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .8px; color: var(--n400); margin-right: 2px; white-space: nowrap;
+  }
+  .demo-btns { display: flex; gap: 3px; background: var(--n100); border-radius: 10px; padding: 3px; flex-wrap: wrap; }
+  .demo-btn {
+    height: 28px; padding: 0 12px; border-radius: 8px; font-size: 12px;
+    font-weight: 600; color: var(--n500); background: transparent;
+    border: none; cursor: pointer; transition: all .15s; white-space: nowrap;
+  }
+  .demo-btn.active { background: #fff; color: var(--p700); box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+
+  /* ==================== RIGHT PANEL ==================== */
+  .right-panel {
+    width: 55%; height: 100vh; overflow-y: auto;
+    background: #fff; display: flex; flex-direction: column;
+  }
+  .right-panel::-webkit-scrollbar { width: 5px; }
+  .right-panel::-webkit-scrollbar-track { background: transparent; }
+  .right-panel::-webkit-scrollbar-thumb { background: var(--n200); border-radius: 4px; }
+
+  .right-inner {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-start;
+    padding: 40px 64px 60px;
+  }
+
+  .form-container { width: 100%; max-width: 448px; margin: auto 0; }
+
+  /* ---- Progress bar ---- */
+  .progress-bar-wrap { display: none; margin-bottom: 28px; }
+  .progress-bar-wrap.visible { display: block; }
+
+  .progress-steps { display: flex; align-items: flex-start; }
+  .progress-step { display: flex; flex-direction: column; align-items: center; gap: 7px; flex: 1; position: relative; }
+  .progress-step:not(:last-child)::after {
+    content: ''; position: absolute; top: 15px; left: calc(50% + 16px);
+    right: calc(-50% + 16px); height: 2px;
+    background: var(--n200); z-index: 0; transition: background 0.4s;
+  }
+  .progress-step.completed:not(:last-child)::after { background: var(--p700); }
+  .step-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid var(--n300); background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: var(--n400);
+    position: relative; z-index: 1; transition: all 0.3s;
+  }
+  .progress-step.active .step-circle { border-color: var(--p700); background: var(--p700); color: #fff; box-shadow: 0 0 0 4px rgba(21,101,192,0.15); }
+  .progress-step.completed .step-circle { border-color: var(--p700); background: var(--p700); color: #fff; }
+  .step-label { font-size: 11px; font-weight: 500; color: var(--n400); text-align: center; white-space: nowrap; }
+  .progress-step.active .step-label { color: var(--p700); font-weight: 700; }
+  .progress-step.completed .step-label { color: var(--p700); font-weight: 600; }
+
+  /* ---- Form header ---- */
+  .form-header { margin-bottom: 24px; }
+  .form-title { font-size: 24px; font-weight: 800; color: var(--p900); letter-spacing: -0.4px; margin-bottom: 5px; }
+  .form-sub { font-size: 14px; color: var(--n500); font-weight: 400; }
+
+  /* ---- Tab switcher ---- */
+  .tab-switcher {
+    display: flex; background: var(--n100); border-radius: 12px;
+    padding: 4px; margin-bottom: 26px;
+  }
+  .tab-btn {
+    flex: 1; padding: 10px 16px; border: none; background: transparent;
+    border-radius: 9px; font-family: 'Inter', sans-serif; font-size: 14px;
+    font-weight: 600; color: var(--n500); cursor: pointer; transition: all 0.25s;
+  }
+  .tab-btn.active {
+    background: var(--p700); color: #fff;
+    box-shadow: 0 2px 10px rgba(21,101,192,0.28);
+  }
+
+  /* ---- Google button ---- */
+  .google-btn {
+    width: 100%; height: 48px; border: 1.5px solid var(--n200);
+    background: #fff; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+    color: var(--n800); cursor: pointer; transition: all 0.2s; margin-bottom: 18px;
+  }
+  .google-btn:hover { border-color: var(--n300); background: var(--n50); box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+
+  /* ---- Divider ---- */
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 18px; color: var(--n400); font-size: 12px; font-weight: 500;
+  }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--n200); }
+
+  /* ---- Form fields ---- */
+  .field-group { margin-bottom: 15px; }
+  .field-label { display: block; font-size: 13px; font-weight: 600; color: var(--n700); margin-bottom: 6px; }
+  .field-wrap { position: relative; }
+  .field-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--n400); display: flex; align-items: center; pointer-events: none;
+  }
+  .field-icon svg { width: 17px; height: 17px; }
+  .field-input {
+    width: 100%; height: 48px; border: 1.5px solid var(--n200);
+    border-radius: 10px; padding: 12px 16px 12px 44px;
+    font-family: 'Inter', sans-serif; font-size: 14px; color: var(--n900);
+    background: #fff; outline: none; transition: all 0.2s;
+  }
+  .field-input::placeholder { color: var(--n400); }
+  .field-input:focus { border-color: var(--p700); box-shadow: 0 0 0 3px rgba(21,101,192,0.12); }
+  .field-input.error { border-color: #DC2626; background: #FEF2F2; }
+  .field-input.success { border-color: #16A34A; }
+  .field-input.no-icon { padding-left: 16px; }
+
+  .toggle-pw {
+    position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; color: var(--n400);
+    display: flex; align-items: center; padding: 4px; transition: color 0.2s;
+  }
+  .toggle-pw:hover { color: var(--n600); }
+  .toggle-pw svg { width: 17px; height: 17px; }
+
+  /* ---- Check row ---- */
+  .check-row {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px;
+  }
+  .check-label {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--n600); cursor: pointer;
+  }
+  .check-label input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--p700); cursor: pointer; }
+  .forgot-link { font-size: 13px; font-weight: 600; color: var(--p700); text-decoration: none; transition: color 0.2s; }
+  .forgot-link:hover { color: var(--p800); text-decoration: underline; }
+
+  /* ---- Buttons ---- */
+  .btn-primary {
+    width: 100%; height: 48px; background: var(--p700);
+    color: #fff; border: none; border-radius: 10px;
+    font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--p800); box-shadow: 0 4px 18px rgba(21,101,192,0.38); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+  .btn-amber {
+    width: 100%; height: 48px;
+    background: linear-gradient(135deg, #F57C00, #E65100);
+    color: #fff; border: none; border-radius: 10px;
+    font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 2px 10px rgba(230,81,0,0.28);
+  }
+  .btn-amber:hover { box-shadow: 0 6px 22px rgba(230,81,0,0.42); transform: translateY(-1px); opacity: 0.95; }
+  .btn-amber:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .btn-secondary {
+    height: 48px; background: transparent; color: var(--n600);
+    border: 1.5px solid var(--n200); border-radius: 10px;
+    font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 20px;
+  }
+  .btn-secondary:hover { border-color: var(--n300); background: var(--n50); }
+
+  /* ---- Bottom link ---- */
+  .bottom-link { text-align: center; margin-top: 22px; font-size: 14px; color: var(--n500); }
+  .bottom-link a { color: var(--p700); font-weight: 700; text-decoration: none; transition: color 0.2s; }
+  .bottom-link a:hover { color: var(--p800); text-decoration: underline; }
+
+  /* ==================== STATE PANELS ==================== */
+  .state-panel { display: none; }
+  .state-panel.active { display: block; }
+
+  /* ---- Role cards ---- */
+  .role-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .role-card { padding: 18px 12px 14px; }
+  .role-card {
+    border: 2px solid var(--n200); border-radius: 16px;
+    padding: 22px 16px 18px; cursor: pointer; transition: all 0.25s;
+    position: relative; background: #fff; text-align: center;
+    user-select: none;
+  }
+  .role-card:hover { border-color: var(--p300); background: var(--p50); box-shadow: 0 4px 18px rgba(21,101,192,0.1); }
+  .role-card.selected { border-color: var(--p700); background: var(--p50); box-shadow: 0 4px 18px rgba(21,101,192,0.15); }
+  .role-card-check {
+    position: absolute; top: 10px; right: 10px; width: 22px; height: 22px;
+    border-radius: 50%; background: var(--p700); display: none; align-items: center; justify-content: center;
+  }
+  .role-card.selected .role-card-check { display: flex; }
+  .role-card-check svg { width: 13px; height: 13px; }
+  .role-icon {
+    width: 56px; height: 56px; margin: 0 auto 13px;
+    background: var(--p100); border-radius: 16px;
+    display: flex; align-items: center; justify-content: center; transition: background 0.25s;
+  }
+  .role-card.selected .role-icon { background: var(--p200); }
+  .role-icon svg { width: 30px; height: 30px; }
+  .role-title { font-size: 13px; font-weight: 700; color: var(--n800); margin-bottom: 7px; line-height: 1.35; }
+  .role-desc { font-size: 11.5px; color: var(--n500); line-height: 1.55; }
+
+  /* ---- Step 2 ---- */
+  .step-section-title { font-size: 19px; font-weight: 800; color: var(--p900); margin-bottom: 4px; }
+  .step-section-sub { font-size: 13px; color: var(--n500); margin-bottom: 18px; }
+  .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Password strength */
+  .strength-wrap { margin-top: 7px; }
+  .strength-bar { display: flex; gap: 4px; margin-bottom: 4px; }
+  .strength-seg { flex: 1; height: 3px; border-radius: 2px; background: var(--n200); transition: background 0.3s; }
+  .strength-label { font-size: 11px; color: var(--n400); font-weight: 500; }
+
+  /* ---- OTP ---- */
+  .otp-wrap { text-align: center; padding: 4px 0 12px; }
+  .otp-icon {
+    width: 68px; height: 68px; background: var(--p100);
+    border-radius: 22px; display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px; box-shadow: 0 4px 16px rgba(21,101,192,0.12);
+  }
+  .otp-icon svg { width: 34px; height: 34px; }
+  .otp-title { font-size: 22px; font-weight: 800; color: var(--p900); margin-bottom: 8px; }
+  .otp-phone { font-size: 14px; color: var(--n500); margin-bottom: 28px; line-height: 1.6; }
+  .otp-phone strong { color: var(--n800); font-weight: 700; }
+  .otp-inputs { display: flex; gap: 10px; justify-content: center; margin-bottom: 22px; }
+  .otp-digit {
+    width: 54px; height: 62px; border: 2px solid var(--n200);
+    border-radius: 12px; text-align: center;
+    font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 700;
+    color: var(--n900); outline: none; transition: all 0.2s; background: #fff;
+    caret-color: var(--p700);
+  }
+  .otp-digit:focus { border-color: var(--p700); box-shadow: 0 0 0 3px rgba(21,101,192,0.12); background: var(--p50); }
+  .otp-digit.filled { border-color: var(--p700); background: var(--p50); }
+  .otp-digit.error { border-color: #DC2626; background: #FEF2F2; }
+  .resend-info { font-size: 13px; color: var(--n500); margin-bottom: 26px; }
+  .resend-info a { color: var(--p700); font-weight: 600; text-decoration: none; cursor: pointer; }
+  .resend-info a:hover { text-decoration: underline; }
+
+  /* ---- Button row ---- */
+  .btn-row { display: flex; gap: 10px; margin-top: 6px; }
+  .btn-row .btn-amber { flex: 1; }
+
+  /* ---- Sticky footer ---- */
+  .right-footer {
+    padding: 14px 64px; text-align: center;
+    font-size: 11.5px; color: var(--n400); line-height: 1.65;
+    border-top: 1px solid var(--n100); background: #fff;
+    position: sticky; bottom: 0;
+  }
+  .right-footer a { color: var(--p700); text-decoration: none; font-weight: 600; }
+  .right-footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="auth-layout">
+
+  <!-- ==================== LEFT PANEL ==================== -->
+  <div class="left-panel">
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+    <div class="blob-3"></div>
+    <div class="dots-pattern"></div>
+
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <svg width="36" height="22" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+      </svg>
+      <span class="logo-text">giasu<em>.edu.vn</em></span>
+    </a>
+
+    <!-- Center -->
+    <div class="left-center">
+      <div class="badge-new">
+        <div class="badge-dot"></div>
+        <span class="badge-text">Nền tảng #1 Việt Nam 2025</span>
+      </div>
+
+      <h1 class="left-headline">
+        Kết nối với gia sư<br>uy tín —
+        <em>học hiệu quả<br>hơn</em> mỗi ngày
+      </h1>
+      <p class="left-sub">
+        Tham gia cùng 54.000+ phụ huynh đang tin dùng<br>nền tảng gia sư hàng đầu Việt Nam
+      </p>
+
+      <!-- Floating tutor card -->
+      <div class="floating-card">
+        <div class="card-avatar">
+          <img src="https://i.pravatar.cc/92?img=33" alt="Gia sư">
+        </div>
+        <div class="card-info">
+          <div class="card-name">Nguyễn Thanh Hà</div>
+          <div class="card-subject">Toán cao cấp · ĐH Bách Khoa HN</div>
+          <div class="card-stars">
+            <span class="star-i">★</span><span class="star-i">★</span>
+            <span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span>
+            <span class="card-rating">5.0 (128 đánh giá)</span>
+          </div>
+        </div>
+        <div class="card-cta">Đặt lịch</div>
+      </div>
+
+      <!-- Trust points -->
+      <ul class="trust-points">
+        <li class="trust-point">
+          <span class="trust-check">
+            <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="#90CAF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          10.000+ gia sư đã xác minh danh tính
+        </li>
+        <li class="trust-point">
+          <span class="trust-check">
+            <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="#90CAF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Thanh toán an toàn qua hệ thống escrow
+        </li>
+        <li class="trust-point">
+          <span class="trust-check">
+            <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="#90CAF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Hoàn tiền 100% nếu không hài lòng
+        </li>
+      </ul>
+
+      <!-- Stats row -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num">10<span>K+</span></div>
+          <div class="stat-label">Gia sư</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">54<span>K+</span></div>
+          <div class="stat-label">Phụ huynh</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4.9<span>★</span></div>
+          <div class="stat-label">Đánh giá TB</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social proof -->
+    <div class="social-proof">
+      <div class="avatar-stack">
+        <img src="https://i.pravatar.cc/72?img=25" alt="User">
+        <img src="https://i.pravatar.cc/72?img=35" alt="User">
+        <img src="https://i.pravatar.cc/72?img=47" alt="User">
+      </div>
+      <div class="proof-text">
+        <strong>54.218 phụ huynh</strong> đang sử dụng
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== RIGHT PANEL ==================== -->
+  <div class="right-panel" id="rightPanel">
+
+    <!-- Demo bar -->
+    <div class="demo-bar">
+      <span class="demo-bar-label">Xem demo:</span>
+      <div class="demo-btns">
+        <button class="demo-btn active" id="dbtn-login" onclick="demoSwitch('login')">Đăng nhập</button>
+        <button class="demo-btn" id="dbtn-reg-hv" onclick="demoSwitch('reg-hv')">Đăng ký · Học viên</button>
+        <button class="demo-btn" id="dbtn-reg-ph" onclick="demoSwitch('reg-ph')">Đăng ký · Phụ huynh</button>
+        <button class="demo-btn" id="dbtn-reg-gs" onclick="demoSwitch('reg-gs')">Đăng ký · Gia sư</button>
+        <button class="demo-btn" id="dbtn-otp" onclick="demoSwitch('otp')">Xác minh OTP</button>
+      </div>
+    </div>
+
+    <div class="right-inner">
+      <div class="form-container">
+
+        <!-- Progress bar (register only) -->
+        <div class="progress-bar-wrap" id="progressBar">
+          <div class="progress-steps">
+            <div class="progress-step active" id="ps1">
+              <div class="step-circle" id="sc1">1</div>
+              <div class="step-label">Chọn vai trò</div>
+            </div>
+            <div class="progress-step" id="ps2">
+              <div class="step-circle" id="sc2">2</div>
+              <div class="step-label">Thông tin</div>
+            </div>
+            <div class="progress-step" id="ps3">
+              <div class="step-circle" id="sc3">3</div>
+              <div class="step-label">Xác minh</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Login header (hidden in register) -->
+        <div class="form-header" id="loginHeader">
+          <div class="form-title">Chào mừng trở lại! 👋</div>
+          <div class="form-sub">Đăng nhập để tiếp tục hành trình học tập</div>
+        </div>
+
+        <!-- Tab switcher -->
+        <div class="tab-switcher" id="tabSwitcher">
+          <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Đăng nhập</button>
+          <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">Đăng ký</button>
+        </div>
+
+        <!-- ========== LOGIN STATE ========== -->
+        <div class="state-panel active" id="panelLogin">
+          <button class="google-btn" onclick="handleGoogle()">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Tiếp tục với Google
+          </button>
+
+          <div class="divider">— hoặc đăng nhập bằng email —</div>
+
+          <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="field-group">
+              <label class="field-label" for="loginEmail">Email</label>
+              <div class="field-wrap">
+                <span class="field-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
+                  </svg>
+                </span>
+                <input type="email" id="loginEmail" class="field-input" placeholder="ten@email.com" autocomplete="email">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="loginPw">Mật khẩu</label>
+              <div class="field-wrap">
+                <span class="field-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </span>
+                <input type="password" id="loginPw" class="field-input" placeholder="••••••••" autocomplete="current-password">
+                <button type="button" class="toggle-pw" onclick="togglePw('loginPw', this)">
+                  <svg id="eyeL" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="check-row">
+              <label class="check-label">
+                <input type="checkbox" id="rememberMe"> Ghi nhớ đăng nhập
+              </label>
+              <a href="ui-quen-mat-khau.html" class="forgot-link">Quên mật khẩu?</a>
+            </div>
+
+            <button type="submit" class="btn-primary" id="loginBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+              </svg>
+              Đăng nhập
+            </button>
+          </form>
+
+          <div class="bottom-link">
+            Chưa có tài khoản? <a href="#" onclick="switchTab('register'); return false;">Đăng ký ngay</a>
+          </div>
+        </div>
+
+        <!-- ========== REGISTER — STEP 1: Role ========== -->
+        <div class="state-panel" id="panelStep1">
+          <div class="form-header">
+            <div class="form-title">Tạo tài khoản mới</div>
+            <div class="form-sub">Bạn muốn tham gia với vai trò nào?</div>
+          </div>
+
+          <div class="role-cards">
+            <!-- Học viên -->
+            <div class="role-card selected" id="roleStudent" onclick="selectRole('student')">
+              <div class="role-card-check">
+                <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="role-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              </div>
+              <div class="role-title">Học viên</div>
+              <div class="role-desc">Tôi muốn tự tìm gia sư và đặt lịch học</div>
+            </div>
+
+            <!-- Phụ huynh -->
+            <div class="role-card" id="roleParent" onclick="selectRole('parent')">
+              <div class="role-card-check">
+                <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="role-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="role-title">Phụ huynh</div>
+              <div class="role-desc">Tôi đăng ký tìm gia sư cho con</div>
+            </div>
+
+            <!-- Gia sư -->
+            <div class="role-card" id="roleTutor" onclick="selectRole('tutor')">
+              <div class="role-card-check">
+                <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="role-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="6" r="3"/>
+                  <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+                  <path d="M17 8l3 2-3 2"/><line x1="20" y1="10" x2="14" y2="10"/>
+                </svg>
+              </div>
+              <div class="role-title">Gia sư</div>
+              <div class="role-desc">Tôi muốn dạy học và kiếm thu nhập linh hoạt</div>
+            </div>
+          </div>
+
+          <button class="btn-amber" onclick="goToStep(2)" style="margin-bottom:0;">
+            Tiếp tục
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+
+          <div class="bottom-link">
+            Đã có tài khoản? <a href="#" onclick="switchTab('login'); return false;">Đăng nhập</a>
+          </div>
+        </div>
+
+        <!-- ========== REGISTER — STEP 2: Personal Info ========== -->
+        <div class="state-panel" id="panelStep2">
+          <div class="step-section-title">Thông tin cá nhân</div>
+          <div class="step-section-sub">Điền đầy đủ để tạo tài khoản của bạn</div>
+
+          <form id="regForm" onsubmit="handleStep2(event)">
+            <div class="name-row">
+              <div class="field-group">
+                <label class="field-label">Họ</label>
+                <div class="field-wrap">
+                  <input type="text" class="field-input no-icon" placeholder="Nguyễn" autocomplete="family-name">
+                </div>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Tên</label>
+                <div class="field-wrap">
+                  <input type="text" class="field-input no-icon" placeholder="An" autocomplete="given-name">
+                </div>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Email</label>
+              <div class="field-wrap">
+                <span class="field-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
+                  </svg>
+                </span>
+                <input type="email" id="regEmail" class="field-input" placeholder="ten@email.com" autocomplete="email">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Số điện thoại</label>
+              <div class="field-wrap">
+                <span class="field-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.49 5.49l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/>
+                  </svg>
+                </span>
+                <input type="tel" id="regPhone" class="field-input" placeholder="0912 345 678" autocomplete="tel">
+              </div>
+            </div>
+
+            <!-- Thông tin học sinh — chỉ hiện khi chọn Phụ huynh -->
+            <div id="childInfoSection" style="display:none;margin-bottom:4px;">
+              <div style="display:flex;align-items:center;gap:10px;margin:18px 0 14px;">
+                <div style="flex:1;height:1px;background:var(--n200);"></div>
+                <div style="font-size:11.5px;font-weight:700;color:var(--n500);white-space:nowrap;display:flex;align-items:center;gap:6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                  Thông tin học sinh
+                </div>
+                <div style="flex:1;height:1px;background:var(--n200);"></div>
+              </div>
+              <div class="name-row">
+                <div class="field-group">
+                  <label class="field-label">Họ và tên con</label>
+                  <div class="field-wrap">
+                    <input type="text" class="field-input no-icon" placeholder="Nguyễn Minh Anh">
+                  </div>
+                </div>
+                <div class="field-group">
+                  <label class="field-label">Đang học lớp</label>
+                  <div class="field-wrap">
+                    <select class="field-input no-icon" style="appearance:none;cursor:pointer;">
+                      <option value="">Chọn lớp...</option>
+                      <optgroup label="Tiểu học">
+                        <option>Lớp 1</option><option>Lớp 2</option><option>Lớp 3</option><option>Lớp 4</option><option>Lớp 5</option>
+                      </optgroup>
+                      <optgroup label="THCS">
+                        <option>Lớp 6</option><option>Lớp 7</option><option>Lớp 8</option><option>Lớp 9</option>
+                      </optgroup>
+                      <optgroup label="THPT">
+                        <option>Lớp 10</option><option>Lớp 11</option><option>Lớp 12</option>
+                      </optgroup>
+                      <optgroup label="Khác">
+                        <option>Đại học / Cao đẳng</option><option>Người đi làm</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Môn cần tìm gia sư <span style="color:var(--n400);font-weight:400;">(có thể chọn nhiều)</span></label>
+                <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;" onmouseover="this.style.borderColor='var(--p300)'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--n200)'">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Toán
+                  </label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Tiếng Anh
+                  </label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Vật lý
+                  </label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Hoá học
+                  </label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Ngữ văn
+                  </label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Lịch sử
+                  </label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Tin học
+                  </label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Khác...
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Thông tin học tập — chỉ hiện khi chọn Học viên -->
+            <div id="studentInfoSection" style="display:none;margin-bottom:4px;">
+              <div style="display:flex;align-items:center;gap:10px;margin:18px 0 14px;">
+                <div style="flex:1;height:1px;background:var(--n200);"></div>
+                <div style="font-size:11.5px;font-weight:700;color:var(--n500);white-space:nowrap;display:flex;align-items:center;gap:6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                  Thông tin học tập
+                </div>
+                <div style="flex:1;height:1px;background:var(--n200);"></div>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Lớp / Cấp học hiện tại</label>
+                <div class="field-wrap">
+                  <select class="field-input no-icon" style="appearance:none;cursor:pointer;">
+                    <option value="">Chọn lớp / cấp học...</option>
+                    <optgroup label="Tiểu học">
+                      <option>Lớp 1</option><option>Lớp 2</option><option>Lớp 3</option><option>Lớp 4</option><option>Lớp 5</option>
+                    </optgroup>
+                    <optgroup label="THCS">
+                      <option>Lớp 6</option><option>Lớp 7</option><option>Lớp 8</option><option>Lớp 9</option>
+                    </optgroup>
+                    <optgroup label="THPT">
+                      <option>Lớp 10</option><option>Lớp 11</option><option>Lớp 12</option>
+                    </optgroup>
+                    <optgroup label="Khác">
+                      <option>Đại học / Cao đẳng</option><option>Người đi làm</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Môn muốn học <span style="color:var(--n400);font-weight:400;">(có thể chọn nhiều)</span></label>
+                <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Toán</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Tiếng Anh</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Vật lý</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Hoá học</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Ngữ văn</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Lịch sử</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Tin học</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Khác...</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Môn có thể dạy — chỉ hiện khi chọn Gia sư -->
+            <div id="tutorInfoSection" style="display:none;margin-bottom:4px;">
+              <div style="display:flex;align-items:center;gap:10px;margin:18px 0 14px;">
+                <div style="flex:1;height:1px;background:var(--n200);"></div>
+                <div style="font-size:11.5px;font-weight:700;color:var(--n500);white-space:nowrap;display:flex;align-items:center;gap:6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M17 8l3 2-3 2"/><line x1="20" y1="10" x2="14" y2="10"/></svg>
+                  Thông tin giảng dạy
+                </div>
+                <div style="flex:1;height:1px;background:var(--n200);"></div>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Môn có thể dạy <span style="color:var(--n400);font-weight:400;">(có thể chọn nhiều)</span></label>
+                <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;">
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Toán</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Tiếng Anh</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Vật lý</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Hoá học</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Ngữ văn</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Lịch sử</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Tin học</label>
+                  <label style="display:flex;align-items:center;gap:5px;padding:5px 11px;border:1.5px solid var(--n200);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--n700);cursor:pointer;transition:all .15s;user-select:none;">
+                    <input type="checkbox" style="accent-color:var(--p700);"> Khác...</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Mật khẩu</label>
+              <div class="field-wrap">
+                <span class="field-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </span>
+                <input type="password" id="regPw" class="field-input" placeholder="Tối thiểu 8 ký tự" autocomplete="new-password" oninput="updateStrength(this.value)">
+                <button type="button" class="toggle-pw" onclick="togglePw('regPw', this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+              </div>
+              <div class="strength-wrap">
+                <div class="strength-bar">
+                  <div class="strength-seg" id="str1"></div>
+                  <div class="strength-seg" id="str2"></div>
+                  <div class="strength-seg" id="str3"></div>
+                  <div class="strength-seg" id="str4"></div>
+                </div>
+                <div class="strength-label" id="strLabel"></div>
+              </div>
+            </div>
+
+            <div class="field-group" style="margin-bottom:20px;">
+              <label class="field-label">Xác nhận mật khẩu</label>
+              <div class="field-wrap">
+                <span class="field-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </span>
+                <input type="password" id="regPwConfirm" class="field-input" placeholder="Nhập lại mật khẩu" autocomplete="new-password">
+                <button type="button" class="toggle-pw" onclick="togglePw('regPwConfirm', this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="button" class="btn-secondary" onclick="goToStep(1)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+                </svg>
+                Quay lại
+              </button>
+              <button type="submit" class="btn-amber">
+                Tiếp tục
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ========== REGISTER — STEP 3: OTP ========== -->
+        <div class="state-panel" id="panelStep3">
+          <div class="otp-wrap">
+            <div class="otp-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.49 5.49l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/>
+              </svg>
+            </div>
+            <div class="otp-title">Xác minh số điện thoại</div>
+            <div class="otp-phone">
+              Mã OTP gồm 6 chữ số đã được gửi đến<br>
+              <strong id="otpPhoneDisplay">0912 xxx xxx</strong>
+            </div>
+
+            <div class="otp-inputs">
+              <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" id="otp0" oninput="otpInput(this,0)" onkeydown="otpKeydown(event,0)">
+              <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" id="otp1" oninput="otpInput(this,1)" onkeydown="otpKeydown(event,1)">
+              <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" id="otp2" oninput="otpInput(this,2)" onkeydown="otpKeydown(event,2)">
+              <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" id="otp3" oninput="otpInput(this,3)" onkeydown="otpKeydown(event,3)">
+              <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" id="otp4" oninput="otpInput(this,4)" onkeydown="otpKeydown(event,4)">
+              <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" id="otp5" oninput="otpInput(this,5)" onkeydown="otpKeydown(event,5)">
+            </div>
+
+            <div class="resend-info" id="resendWrap">
+              Gửi lại mã sau <strong id="countdown">54</strong> giây
+            </div>
+            <div class="resend-info" id="resendLink" style="display:none;">
+              Không nhận được mã? <a onclick="resendOTP()">Gửi lại ngay</a>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn-secondary" onclick="goToStep(2)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+              </svg>
+              Quay lại
+            </button>
+            <button class="btn-amber" id="verifyBtn" onclick="handleOTPVerify()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Xác nhận
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Sticky footer -->
+    <div class="right-footer">
+      Bằng cách đăng ký, bạn đồng ý với
+      <a href="#">Điều khoản sử dụng</a> và
+      <a href="#">Chính sách bảo mật</a> của chúng tôi.
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ==================== DEMO SWITCHER ====================
+  function demoSwitch(mode) {
+    // Update demo bar active state
+    ['login','reg-hv','reg-ph','reg-gs','otp'].forEach(m => {
+      document.getElementById('dbtn-'+m).classList.toggle('active', m === mode);
+    });
+
+    if (mode === 'login') {
+      switchTab('login');
+    } else if (mode === 'reg-hv') {
+      switchTab('register');
+      selectRole('student');
+      goToStep(2);
+    } else if (mode === 'reg-ph') {
+      switchTab('register');
+      selectRole('parent');
+      goToStep(2);
+    } else if (mode === 'reg-gs') {
+      switchTab('register');
+      selectRole('tutor');
+      goToStep(2);
+    } else if (mode === 'otp') {
+      switchTab('register');
+      selectRole('student');
+      goToStep(3);
+    }
+
+    // Scroll right-panel về đầu sau khi switch
+    const rp = document.getElementById('rightPanel');
+    if (rp) rp.scrollTop = 0;
+  }
+
+  // ==================== STATE ====================
+  let currentTab = 'login';
+  let currentStep = 1;
+  let selectedRole = 'student';
+  let countdownTimer = null;
+
+  const CHECK_SVG = '<svg viewBox="0 0 13 13" fill="none" width="14" height="14"><path d="M2 6.5L5 9.5L11 3.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function switchTab(tab) {
+    currentTab = tab;
+    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+    document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+
+    if (tab === 'login') {
+      showPanel('panelLogin');
+      document.getElementById('progressBar').classList.remove('visible');
+      document.getElementById('loginHeader').style.display = '';
+    } else {
+      currentStep = 1;
+      goToStep(1);
+      document.getElementById('loginHeader').style.display = 'none';
+    }
+  }
+
+  function showPanel(id) {
+    ['panelLogin','panelStep1','panelStep2','panelStep3'].forEach(p => {
+      document.getElementById(p).classList.remove('active');
+    });
+    document.getElementById(id).classList.add('active');
+  }
+
+  function goToStep(step) {
+    currentStep = step;
+    document.getElementById('progressBar').classList.add('visible');
+    document.getElementById('loginHeader').style.display = 'none';
+
+    [1,2,3].forEach(s => {
+      const ps = document.getElementById('ps'+s);
+      const sc = document.getElementById('sc'+s);
+      ps.classList.remove('active','completed');
+      if (s < step) {
+        ps.classList.add('completed');
+        sc.innerHTML = CHECK_SVG;
+      } else if (s === step) {
+        ps.classList.add('active');
+        sc.textContent = s;
+      } else {
+        sc.textContent = s;
+      }
+    });
+
+    if (step === 1) showPanel('panelStep1');
+    else if (step === 2) showPanel('panelStep2');
+    else if (step === 3) {
+      showPanel('panelStep3');
+      // Update phone display
+      const phone = document.getElementById('regPhone');
+      if (phone && phone.value) {
+        const v = phone.value.replace(/\D/g,'');
+        document.getElementById('otpPhoneDisplay').textContent =
+          v.slice(0,4) + ' xxx xxx';
+      }
+      startCountdown();
+      setTimeout(() => document.getElementById('otp0').focus(), 150);
+    }
+  }
+
+  // ==================== ROLE ====================
+  function selectRole(role) {
+    selectedRole = role;
+    document.getElementById('roleStudent').classList.toggle('selected', role === 'student');
+    document.getElementById('roleParent').classList.toggle('selected', role === 'parent');
+    document.getElementById('roleTutor').classList.toggle('selected', role === 'tutor');
+    // Hiện/ẩn section theo vai trò
+    const childSection   = document.getElementById('childInfoSection');
+    const studentSection = document.getElementById('studentInfoSection');
+    const tutorSection   = document.getElementById('tutorInfoSection');
+    if (childSection)   childSection.style.display   = role === 'parent'  ? 'block' : 'none';
+    if (studentSection) studentSection.style.display = role === 'student' ? 'block' : 'none';
+    if (tutorSection)   tutorSection.style.display   = role === 'tutor'   ? 'block' : 'none';
+  }
+
+  // ==================== PASSWORD TOGGLE ====================
+  function togglePw(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    const svg = btn.querySelector('svg');
+    if (isText) {
+      svg.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    } else {
+      svg.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+    }
+  }
+
+  // ==================== STRENGTH ====================
+  function updateStrength(val) {
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+
+    const palettes = ['','#DC2626','#F57C00','#EAB308','#16A34A'];
+    const labels = ['','Yếu','Trung bình','Khá','Mạnh'];
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById('str'+i).style.background = i <= score ? palettes[score] : 'var(--n200)';
+    }
+    const lbl = document.getElementById('strLabel');
+    lbl.textContent = val.length ? labels[score] : '';
+    lbl.style.color = palettes[score] || 'var(--n400)';
+  }
+
+  // ==================== FORM HANDLERS ====================
+  function handleGoogle() {
+    const btn = document.querySelector('.google-btn');
+    btn.textContent = 'Đang chuyển hướng...';
+    setTimeout(() => { btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Tiếp tục với Google'; }, 1500);
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail');
+    const pw = document.getElementById('loginPw');
+    let valid = true;
+
+    if (!email.value || !email.value.includes('@')) {
+      email.classList.add('error'); valid = false;
+    } else { email.classList.remove('error'); }
+
+    if (!pw.value || pw.value.length < 6) {
+      pw.classList.add('error'); valid = false;
+    } else { pw.classList.remove('error'); }
+
+    if (!valid) return;
+
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Đang đăng nhập...';
+
+    setTimeout(() => {
+      btn.style.background = '#16A34A';
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Đăng nhập thành công!';
+      setTimeout(() => {
+        btn.style.background = '';
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Đăng nhập';
+        btn.disabled = false;
+      }, 2200);
+    }, 1300);
+  }
+
+  function handleStep2(e) {
+    e.preventDefault();
+    goToStep(3);
+  }
+
+  function handleOTPVerify() {
+    const digits = [0,1,2,3,4,5].map(i => document.getElementById('otp'+i).value).join('');
+    if (digits.length < 6) {
+      [0,1,2,3,4,5].forEach(i => {
+        const el = document.getElementById('otp'+i);
+        if (!el.value) el.classList.add('error');
+      });
+      return;
+    }
+    const btn = document.getElementById('verifyBtn');
+    btn.disabled = true;
+    btn.innerHTML = 'Đang xác minh...';
+    setTimeout(() => {
+      btn.style.background = '#16A34A';
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Xác minh thành công!';
+    }, 1200);
+  }
+
+  // ==================== OTP ====================
+  function otpInput(el, idx) {
+    el.value = el.value.replace(/\D/g,'').slice(-1);
+    el.classList.remove('error');
+    el.classList.toggle('filled', !!el.value);
+    if (el.value && idx < 5) {
+      document.getElementById('otp'+(idx+1)).focus();
+    }
+    if ([0,1,2,3,4,5].every(i => document.getElementById('otp'+i).value)) {
+      setTimeout(handleOTPVerify, 400);
+    }
+  }
+
+  function otpKeydown(e, idx) {
+    if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+      document.getElementById('otp'+(idx-1)).focus();
+    }
+    if (e.key === 'ArrowLeft' && idx > 0) document.getElementById('otp'+(idx-1)).focus();
+    if (e.key === 'ArrowRight' && idx < 5) document.getElementById('otp'+(idx+1)).focus();
+  }
+
+  // ==================== COUNTDOWN ====================
+  function startCountdown() {
+    clearInterval(countdownTimer);
+    let secs = 54;
+    const cd = document.getElementById('countdown');
+    const rw = document.getElementById('resendWrap');
+    const rl = document.getElementById('resendLink');
+    cd.textContent = secs;
+    rw.style.display = ''; rl.style.display = 'none';
+
+    countdownTimer = setInterval(() => {
+      secs--;
+      if (secs <= 0) {
+        clearInterval(countdownTimer);
+        rw.style.display = 'none'; rl.style.display = '';
+      } else { cd.textContent = secs; }
+    }, 1000);
+  }
+
+  function resendOTP() {
+    [0,1,2,3,4,5].forEach(i => {
+      const el = document.getElementById('otp'+i);
+      el.value = ''; el.classList.remove('filled','error');
+    });
+    document.getElementById('otp0').focus();
+    startCountdown();
+  }
+
+  // ==================== SPIN ANIMATION ====================
+  const style = document.createElement('style');
+  style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+  document.head.appendChild(style);
+
+  // ==================== INIT ====================
+  switchTab('login');
+</script>
+</body>
+</html>

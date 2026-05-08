@@ -3362,6 +3362,33 @@ document.addEventListener('click', e => {
     switchState('messages');
   }
 });
+
+// ── Hash-based deep link: ui-dashboard-phu-huynh.html#msg-{key} ──
+// Dùng khi từ trang profile nhấn "Nhắn tin trước" → auto mở messages + chọn đúng GS
+(function handleDeepLink() {
+  const hash = location.hash; // e.g. "#msg-an"
+  if (!hash.startsWith('#msg-')) return;
+  const key = hash.slice(5); // "an"
+  // Đảm bảo panel messages đã render rồi mới switch
+  setTimeout(() => {
+    switchState('messages');
+    togglePhMsgState('filled');
+    // Tìm đúng item trong danh sách cuộc hội thoại và click
+    const convoItems = document.querySelectorAll('[onclick*="phSwitchConvo"]');
+    let found = false;
+    convoItems.forEach(item => {
+      if (item.getAttribute('onclick')?.includes(`'${key}'`)) {
+        item.click();
+        found = true;
+      }
+    });
+    // Nếu không có key khớp, fallback về conversation đầu tiên
+    if (!found) {
+      const first = document.querySelector('[onclick*="phSwitchConvo"]');
+      if (first) first.click();
+    }
+  }, 100);
+})();
 // ─────────────────────────────────────────────────────
 
 // ── Simulate Admin Confirm CK — Flow G ───────────────

@@ -1948,15 +1948,36 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
 
 <!-- ═══ PAGE: Tin nhắn ═══ -->
 <div id="page-messages" style="display:none;position:fixed;left:248px;right:0;top:64px;bottom:0;overflow-y:auto;background:var(--n50);padding:28px 32px;box-sizing:border-box;">
-  <div style="display:grid;grid-template-columns:300px 1fr;gap:0;border-radius:var(--r-xl);overflow:hidden;border:1.5px solid var(--n200);height:620px;background:#fff;">
+
+  <!-- Demo toggle -->
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;background:#fff;border:1.5px solid var(--n200);border-radius:var(--r-lg);padding:10px 16px;">
+    <span style="font-size:12px;font-weight:700;color:var(--n600);">🎭 Demo trạng thái:</span>
+    <button id="gsmsg-btn-filled" onclick="toggleGsMsgState('filled')" style="height:30px;padding:0 14px;border-radius:var(--r-sm);font-size:12px;font-weight:700;background:var(--p700);color:#fff;border:none;cursor:pointer;">Có tin nhắn (4 cuộc)</button>
+    <button id="gsmsg-btn-empty" onclick="toggleGsMsgState('empty')" style="height:30px;padding:0 14px;border-radius:var(--r-sm);font-size:12px;font-weight:600;background:var(--n100);color:var(--n500);border:1.5px solid var(--n200);cursor:pointer;">📭 Hộp thư trống</button>
+  </div>
+
+  <!-- ── EMPTY STATE ── -->
+  <div id="gsmsg-empty-state" style="display:none;background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);padding:64px 40px;text-align:center;">
+    <div style="width:72px;height:72px;background:var(--p50);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+      <svg viewBox="0 0 24 24" style="width:34px;height:34px;stroke:var(--p300);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </div>
+    <div style="font-size:17px;font-weight:800;color:var(--n900);margin-bottom:8px;">Chưa có tin nhắn nào</div>
+    <div style="font-size:13.5px;color:var(--n500);line-height:1.7;max-width:360px;margin:0 auto 28px;">Khi phụ huynh hoặc học sinh nhắn tin hỏi về lịch dạy, bạn sẽ thấy cuộc hội thoại xuất hiện ở đây.</div>
+    <div style="display:inline-flex;align-items:center;gap:8px;background:var(--p50);border:1.5px solid var(--p100);border-radius:var(--r-lg);padding:12px 20px;font-size:13px;color:var(--p700);">
+      <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:var(--p500);stroke-width:2;fill:none;stroke-linecap:round;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Hồ sơ của bạn càng đầy đủ, phụ huynh càng dễ liên hệ
+    </div>
+  </div>
+
+  <!-- ── FILLED STATE ── -->
+  <div id="gsmsg-filled-state" style="display:grid;grid-template-columns:300px 1fr;gap:0;border-radius:var(--r-xl);overflow:hidden;border:1.5px solid var(--n200);height:calc(100vh - 210px);min-height:560px;background:#fff;">
     <!-- Conversation list -->
     <div style="border-right:1.5px solid var(--n200);display:flex;flex-direction:column;">
       <div style="padding:14px 16px;border-bottom:1px solid var(--n100);">
         <input type="text" placeholder="Tìm cuộc hội thoại..." style="width:100%;height:34px;border:1.5px solid var(--n200);border-radius:var(--r-md);padding:0 12px;font-size:12.5px;font-family:'Inter',sans-serif;outline:none;">
       </div>
-      <div style="flex:1;overflow-y:auto;">
-        <!-- Active convo -->
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--p50);border-left:3px solid var(--p700);cursor:pointer;">
+      <div style="flex:1;overflow-y:auto;" id="gs-convo-list">
+        <div class="gs-convo-item gs-convo-active" onclick="selectGsConvo('huong')" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--p50);border-left:3px solid var(--p700);cursor:pointer;">
           <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#C46200,#FFA726);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;">H</div>
           <div style="flex:1;min-width:0;">
             <div style="font-size:13px;font-weight:700;color:var(--n900);">Phụ huynh Hương</div>
@@ -1964,7 +1985,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
           </div>
           <div style="font-size:10.5px;color:var(--n400);flex-shrink:0;">10:32</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--n50);">
+        <div class="gs-convo-item" onclick="selectGsConvo('minhanh')" style="display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--n50);">
           <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1565C0,#42A5F5);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;">M</div>
           <div style="flex:1;min-width:0;">
             <div style="font-size:13px;font-weight:700;color:var(--n900);">Minh Anh (HV)</div>
@@ -1972,7 +1993,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
           </div>
           <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><div style="font-size:10.5px;color:var(--n400);">09:15</div><div style="width:16px;height:16px;background:var(--p700);border-radius:50%;font-size:9px;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;">2</div></div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--n50);">
+        <div class="gs-convo-item" onclick="selectGsConvo('tuan')" style="display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--n50);">
           <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#16A34A,#4ADE80);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;">T</div>
           <div style="flex:1;min-width:0;">
             <div style="font-size:13px;font-weight:700;color:var(--n800);">Phụ huynh Tuấn</div>
@@ -1980,7 +2001,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
           </div>
           <div style="font-size:10.5px;color:var(--n400);flex-shrink:0;">Hôm qua</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;">
+        <div class="gs-convo-item" onclick="selectGsConvo('phuong')" style="display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;">
           <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A78BFA);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;">P</div>
           <div style="flex:1;min-width:0;">
             <div style="font-size:13px;font-weight:700;color:var(--n800);">Phụ huynh Phương</div>
@@ -1991,36 +2012,27 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
       </div>
     </div>
     <!-- Chat area -->
-    <div style="display:flex;flex-direction:column;">
-      <div style="padding:14px 18px;border-bottom:1px solid var(--n100);display:flex;align-items:center;gap:10px;">
+    <div style="display:flex;flex-direction:column;overflow:hidden;">
+      <div id="gs-chat-header" style="padding:14px 18px;border-bottom:1px solid var(--n100);display:flex;align-items:center;gap:10px;flex-shrink:0;">
         <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#C46200,#FFA726);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;">H</div>
         <div><div style="font-size:13.5px;font-weight:700;">Phụ huynh Hương</div><div style="font-size:11px;color:var(--green);">● Đang hoạt động</div></div>
       </div>
-      <div style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;">
+      <div id="gs-msg-area" style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;">
         <div style="display:flex;gap:9px;">
           <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#C46200,#FFA726);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;">H</div>
-          <div style="max-width:70%;">
-            <div style="background:var(--n100);border-radius:4px 14px 14px 14px;padding:10px 14px;font-size:13px;color:var(--n800);">Thầy ơi buổi thứ 6 tuần này thầy có dạy được không ạ? Con nhà em thi giữa kỳ sắp đến rồi.</div>
-            <div style="font-size:10.5px;color:var(--n400);margin-top:4px;">10:28</div>
-          </div>
+          <div style="max-width:70%;"><div style="background:var(--n100);border-radius:4px 14px 14px 14px;padding:10px 14px;font-size:13px;color:var(--n800);">Thầy ơi buổi thứ 6 tuần này thầy có dạy được không ạ? Con nhà em thi giữa kỳ sắp đến rồi.</div><div style="font-size:10.5px;color:var(--n400);margin-top:4px;">10:28</div></div>
         </div>
         <div style="display:flex;gap:9px;flex-direction:row-reverse;">
-          <div style="max-width:70%;">
-            <div style="background:var(--p700);border-radius:14px 4px 14px 14px;padding:10px 14px;font-size:13px;color:#fff;">Dạ được ạ! Thầy sắp xếp được buổi thứ 6 từ 19:00 – 21:00. Em báo cháu chuẩn bị bài chương 3 nhé.</div>
-            <div style="font-size:10.5px;color:var(--n400);margin-top:4px;text-align:right;">10:30 ✓✓</div>
-          </div>
+          <div style="max-width:70%;"><div style="background:var(--p700);border-radius:14px 4px 14px 14px;padding:10px 14px;font-size:13px;color:#fff;">Dạ được ạ! Thầy sắp xếp được buổi thứ 6 từ 19:00 – 21:00. Em báo cháu chuẩn bị bài chương 3 nhé.</div><div style="font-size:10.5px;color:var(--n400);margin-top:4px;text-align:right;">10:30 ✓✓</div></div>
         </div>
         <div style="display:flex;gap:9px;">
           <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#C46200,#FFA726);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;">H</div>
-          <div style="max-width:70%;">
-            <div style="background:var(--n100);border-radius:4px 14px 14px 14px;padding:10px 14px;font-size:13px;color:var(--n800);">Thầy ơi buổi thứ 6 có dạy không ạ? Giờ em bận chưa đọc kịp 😅</div>
-            <div style="font-size:10.5px;color:var(--n400);margin-top:4px;">10:32</div>
-          </div>
+          <div style="max-width:70%;"><div style="background:var(--n100);border-radius:4px 14px 14px 14px;padding:10px 14px;font-size:13px;color:var(--n800);">Cảm ơn thầy! Em sẽ nhắc cháu. Thầy ơi buổi thứ 6 có dạy không ạ? Giờ em bận chưa đọc kịp 😅</div><div style="font-size:10.5px;color:var(--n400);margin-top:4px;">10:32</div></div>
         </div>
       </div>
-      <div style="padding:12px 16px;border-top:1px solid var(--n100);display:flex;gap:10px;align-items:center;">
+      <div style="padding:12px 16px;border-top:1px solid var(--n100);display:flex;gap:10px;align-items:center;flex-shrink:0;">
         <input type="text" id="gs-msg-input" placeholder="Nhập tin nhắn..." onkeydown="if(event.key==='Enter')gsSendMsg()" style="flex:1;height:40px;border:1.5px solid var(--n200);border-radius:20px;padding:0 16px;font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s;" onfocus="this.style.borderColor='var(--p400)'" onblur="this.style.borderColor='var(--n200)'">
-        <button onclick="gsSendMsg()" style="width:40px;height:40px;background:var(--p700);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;">
+        <button onclick="gsSendMsg()" style="width:40px;height:40px;background:var(--p700);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:background .15s;" onmouseenter="this.style.background='var(--p600)'" onmouseleave="this.style.background='var(--p700)'">
           <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </div>
@@ -3579,36 +3591,120 @@ function declineSelectedByPh() {
 }
 // ──────────────────────────────────────────────────────────
 
+// ── GS Tin nhắn — toggle empty/filled ─────────────────────
+function toggleGsMsgState(state) {
+  document.getElementById('gsmsg-empty-state').style.display  = state === 'empty' ? 'block' : 'none';
+  document.getElementById('gsmsg-filled-state').style.display = state === 'empty' ? 'none'  : 'grid';
+  const btnFilled = document.getElementById('gsmsg-btn-filled');
+  const btnEmpty  = document.getElementById('gsmsg-btn-empty');
+  if (btnFilled) { btnFilled.style.background = state === 'filled' ? 'var(--p700)' : 'var(--n100)'; btnFilled.style.color = state === 'filled' ? '#fff' : 'var(--n500)'; btnFilled.style.border = state === 'filled' ? 'none' : '1.5px solid var(--n200)'; }
+  if (btnEmpty)  { btnEmpty.style.background  = state === 'empty'  ? 'var(--p700)' : 'var(--n100)'; btnEmpty.style.color  = state === 'empty'  ? '#fff' : 'var(--n500)'; btnEmpty.style.border  = state === 'empty'  ? 'none' : '1.5px solid var(--n200)'; }
+}
+
+// ── GS Tin nhắn — conversation data ───────────────────────
+const _gsMsgs = {
+  huong: {
+    name: 'Phụ huynh Hương', status: '● Đang hoạt động', statusColor: 'var(--green)',
+    avatarBg: 'linear-gradient(135deg,#C46200,#FFA726)', avatarText: 'H',
+    messages: [
+      { from:'other', text:'Thầy ơi buổi thứ 6 tuần này thầy có dạy được không ạ? Con nhà em thi giữa kỳ sắp đến rồi.', time:'10:28' },
+      { from:'me',    text:'Dạ được ạ! Thầy sắp xếp được buổi thứ 6 từ 19:00 – 21:00. Em báo cháu chuẩn bị bài chương 3 nhé.', time:'10:30 ✓✓' },
+      { from:'other', text:'Cảm ơn thầy! Em sẽ nhắc cháu. Thầy ơi buổi thứ 6 có dạy không ạ? Giờ em bận chưa đọc kịp 😅', time:'10:32' },
+    ]
+  },
+  minhanh: {
+    name: 'Minh Anh (Học viên)', status: '● Đang hoạt động', statusColor: 'var(--green)',
+    avatarBg: 'linear-gradient(135deg,#1565C0,#42A5F5)', avatarText: 'M',
+    messages: [
+      { from:'other', text:'Thầy ơi em đã làm xong bài tập chương 5 rồi ạ! Em gửi thầy qua đây ạ 📎', time:'09:10' },
+      { from:'me',    text:'Tốt lắm Minh Anh! Thầy sẽ chấm và phản hồi trước 12h nhé.', time:'09:13 ✓✓' },
+      { from:'other', text:'Dạ cảm ơn thầy ạ! Bài số 3 em chưa hiểu phần tích phân từng phần, thầy giảng lại được không ạ?', time:'09:15' },
+    ]
+  },
+  tuan: {
+    name: 'Phụ huynh Tuấn', status: 'Hoạt động hôm qua', statusColor: 'var(--n400)',
+    avatarBg: 'linear-gradient(135deg,#16A34A,#4ADE80)', avatarText: 'T',
+    messages: [
+      { from:'me',    text:'Chào anh Tuấn! Tuần này bé Bảo đã tiến bộ rõ rệt với phần đại số ạ.', time:'Hôm qua 18:30 ✓✓' },
+      { from:'other', text:'Vậy ạ, em Bảo về nhà cũng hay kể chuyện học với thầy lắm. Cảm ơn thầy nhiều ạ!', time:'Hôm qua 19:02' },
+      { from:'me',    text:'Dạ thầy sẽ cố gắng! Buổi sau thầy sẽ ôn thêm phần hình học cho bé.', time:'Hôm qua 19:05 ✓✓' },
+    ]
+  },
+  phuong: {
+    name: 'Phụ huynh Phương', status: '3 ngày trước', statusColor: 'var(--n400)',
+    avatarBg: 'linear-gradient(135deg,#7C3AED,#A78BFA)', avatarText: 'P',
+    messages: [
+      { from:'other', text:'Chào thầy! Cho em hỏi thầy đang dạy lớp mấy ạ? Con em đang học lớp 10.', time:'3 ngày trước' },
+      { from:'me',    text:'Dạ thầy dạy từ lớp 8 đến lớp 12. Lớp 10 thầy có kinh nghiệm nhiều nhất với chương trình mới ạ!', time:'3 ngày trước ✓✓' },
+    ]
+  }
+};
+
+function selectGsConvo(key) {
+  const convo = _gsMsgs[key];
+  if (!convo) return;
+
+  // Cập nhật active state trong list
+  document.querySelectorAll('.gs-convo-item').forEach(item => {
+    const isActive = item.getAttribute('onclick')?.includes(`'${key}'`);
+    item.style.background = isActive ? 'var(--p50)' : '';
+    item.style.borderLeft = isActive ? '3px solid var(--p700)' : '3px solid transparent';
+    item.classList.toggle('gs-convo-active', isActive);
+  });
+
+  // Cập nhật header
+  const header = document.getElementById('gs-chat-header');
+  if (header) {
+    header.innerHTML = `<div style="width:36px;height:36px;border-radius:50%;background:${convo.avatarBg};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;">${convo.avatarText}</div><div><div style="font-size:13.5px;font-weight:700;">${convo.name}</div><div style="font-size:11px;color:${convo.statusColor};">${convo.status}</div></div>`;
+  }
+
+  // Cập nhật messages
+  const area = document.getElementById('gs-msg-area');
+  if (!area) return;
+  area.innerHTML = '';
+  convo.messages.forEach(msg => {
+    const isMe = msg.from === 'me';
+    const div = document.createElement('div');
+    div.style.cssText = `display:flex;gap:9px;${isMe ? 'flex-direction:row-reverse;' : ''}align-items:flex-end;animation:fadeSlideIn .25s ease;`;
+    if (!isMe) {
+      div.innerHTML = `<div style="width:30px;height:30px;border-radius:50%;background:${convo.avatarBg};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;">${convo.avatarText}</div><div style="max-width:70%;"><div style="background:var(--n100);border-radius:4px 14px 14px 14px;padding:10px 14px;font-size:13px;color:var(--n800);line-height:1.5;">${msg.text}</div><div style="font-size:10.5px;color:var(--n400);margin-top:4px;">${msg.time}</div></div>`;
+    } else {
+      div.innerHTML = `<div style="max-width:70%;"><div style="background:var(--p700);border-radius:14px 4px 14px 14px;padding:10px 14px;font-size:13px;color:#fff;line-height:1.5;">${msg.text}</div><div style="font-size:10.5px;color:var(--n400);margin-top:4px;text-align:right;">${msg.time}</div></div>`;
+    }
+    area.appendChild(div);
+  });
+  area.scrollTop = area.scrollHeight;
+}
+
 // ── GS Tin nhắn — send message ────────────────────────────
 function gsSendMsg() {
   const input = document.getElementById('gs-msg-input');
-  const area  = document.querySelector('#page-messages .flex-1.overflow-y-auto') ||
-                document.querySelector('#page-messages [style*="overflow-y:auto"][style*="flex-direction:column"]');
-  const msgArea = document.querySelector('#page-messages > div > div:last-child > div[style*="overflow-y:auto"]');
+  const area  = document.getElementById('gs-msg-area');
   const text  = input ? input.value.trim() : '';
-  if (!text) return;
+  if (!text || !area) return;
 
   const now = new Date();
   const time = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
-  const target = msgArea || document.querySelector('#page-messages [style*="gap:12px"]');
-  if (!target) return;
-
   const div = document.createElement('div');
   div.style.cssText = 'display:flex;gap:9px;flex-direction:row-reverse;align-items:flex-end;animation:fadeSlideIn .25s ease;';
   div.innerHTML = `<div style="max-width:70%;"><div style="background:var(--p700);border-radius:14px 4px 14px 14px;padding:10px 14px;font-size:13px;color:#fff;line-height:1.5;">${text.replace(/</g,'&lt;')}</div><div style="font-size:10.5px;color:var(--n400);margin-top:4px;text-align:right;">${time} ✓</div></div>`;
-  target.appendChild(div);
-  target.scrollTop = target.scrollHeight;
-  if (input) input.value = '';
+  area.appendChild(div);
+  area.scrollTop = area.scrollHeight;
+  input.value = '';
 
-  // Typing indicator
+  // Typing indicator — lấy avatar của cuộc hội thoại đang active
   setTimeout(() => {
+    const activeKey = document.querySelector('.gs-convo-active')?.getAttribute('onclick')?.match(/'([^']+)'\)/)?.[1] || 'huong';
+    const c = _gsMsgs[activeKey];
+    if (!c) return;
     const typing = document.createElement('div');
+    typing.id = 'gs-typing-ind';
     typing.style.cssText = 'display:flex;gap:9px;align-items:flex-end;animation:fadeSlideIn .25s ease;';
-    typing.innerHTML = `<div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#C46200,#FFA726);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;">H</div><div style="background:var(--n100);border-radius:4px 16px 16px 16px;padding:11px 16px;display:flex;gap:4px;align-items:center;"><div style="width:7px;height:7px;background:var(--n400);border-radius:50%;animation:pulseGreen 1.2s infinite;"></div><div style="width:7px;height:7px;background:var(--n400);border-radius:50%;animation:pulseGreen 1.2s .2s infinite;"></div><div style="width:7px;height:7px;background:var(--n400);border-radius:50%;animation:pulseGreen 1.2s .4s infinite;"></div></div>`;
-    target.appendChild(typing);
-    target.scrollTop = target.scrollHeight;
-    setTimeout(() => typing.remove(), 2000);
+    typing.innerHTML = `<div style="width:30px;height:30px;border-radius:50%;background:${c.avatarBg};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;">${c.avatarText}</div><div style="background:var(--n100);border-radius:4px 16px 16px 16px;padding:11px 16px;display:flex;gap:4px;align-items:center;"><div style="width:7px;height:7px;background:var(--n400);border-radius:50%;animation:pulse 1.2s infinite;"></div><div style="width:7px;height:7px;background:var(--n400);border-radius:50%;animation:pulse 1.2s .2s infinite;"></div><div style="width:7px;height:7px;background:var(--n400);border-radius:50%;animation:pulse 1.2s .4s infinite;"></div></div>`;
+    area.appendChild(typing);
+    area.scrollTop = area.scrollHeight;
+    setTimeout(() => typing.remove(), 2200);
   }, 900);
 }
 

@@ -1406,13 +1406,10 @@ function selDur(btn, h) {
   }
 })();
 
-/* ── NHẮN TIN PREVIEW ── */
+/* ── NHẮN TIN TRƯỚC → PH Dashboard messages ── */
 function previewMsg() {
-  const btn = document.getElementById('msgBtn');
-  const orig = btn.innerHTML;
-  btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Sắp ra mắt!';
-  btn.style.opacity = '.65';
-  setTimeout(()=>{ btn.innerHTML = orig; btn.style.opacity = '1'; }, 2000);
+  // Mở PH dashboard với hash #msg-an để auto-switch sang panel tin nhắn và chọn đúng GS
+  window.location.href = 'ui-dashboard-phu-huynh.html#msg-an';
 }
 </script>
 </body>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>giasu.edu.vn — Project Files</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F1F5F9;color:#0F172A;min-height:100vh}
+.header{background:#0D2D6B;padding:32px 40px 28px;display:flex;align-items:center;justify-content:space-between}
+.header-logo{display:flex;align-items:center;gap:10px}
+.logo-text{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.4px}
+.logo-text em{font-weight:500;font-style:normal;opacity:.5}
+.header-meta{text-align:right}
+.header-meta-title{font-size:20px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.header-meta-sub{font-size:13px;color:rgba(255,255,255,.5);margin-top:3px}
+.stats-bar{background:#0D2D6B;border-top:1px solid rgba(255,255,255,.1);padding:12px 40px;display:flex;gap:32px}
+.stat{display:flex;align-items:center;gap:8px}
+.stat-dot{width:8px;height:8px;border-radius:50%;background:#16A34A;flex-shrink:0}
+.stat-label{font-size:12.5px;color:rgba(255,255,255,.6)}
+.stat-val{font-size:12.5px;font-weight:700;color:#fff}
+.content{padding:36px 40px;max-width:1280px;margin:0 auto}
+.category{margin-bottom:36px}
+.category-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.category-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#64748B}
+.category-line{flex:1;height:1px;background:#E2E8F0}
+.category-count{font-size:11px;font-weight:600;color:#94A3B8}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.file-card{background:#fff;border-radius:14px;border:1px solid #E2E8F0;overflow:hidden;transition:box-shadow .2s,transform .2s;display:flex;flex-direction:column}
+.file-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.09);transform:translateY(-2px)}
+.card-accent{height:4px;flex-shrink:0}
+.card-body{padding:16px 18px 12px;flex:1}
+.card-icon-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.card-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.card-badge{font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:99px}
+.card-title{font-size:14px;font-weight:700;color:#0F172A;margin-bottom:4px;line-height:1.3}
+.card-desc{font-size:12.5px;color:#64748B;line-height:1.5}
+.card-file{font-size:11px;color:#94A3B8;margin-top:8px;background:#F8FAFC;padding:4px 7px;border-radius:5px;display:inline-block}
+.card-footer{padding:10px 18px 14px;display:flex;align-items:center;justify-content:space-between}
+.open-btn{display:inline-flex;align-items:center;gap:5px;background:#0D2D6B;color:#fff;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:7px;text-decoration:none;transition:background .15s}
+.open-btn:hover{background:#1565C0}
+.open-btn-amber{background:#F57C00}.open-btn-amber:hover{background:#C46200}
+.open-btn-red{background:#DC2626}.open-btn-red:hover{background:#B91C1C}
+.open-btn-purple{background:#7C3AED}.open-btn-purple:hover{background:#6D28D9}
+.done-chip{font-size:10.5px;font-weight:600;color:#16A34A;display:flex;align-items:center;gap:4px}
+.accent-blue{background:#1565C0}.accent-amber{background:#F57C00}.accent-gray{background:#94A3B8}
+.accent-green{background:#16A34A}.accent-red{background:#DC2626}.accent-purple{background:#7C3AED}
+.icon-blue{background:#E3F2FD}.icon-amber{background:#FFF3E0}.icon-gray{background:#F1F5F9}
+.icon-green{background:#DCFCE7}.icon-red{background:#FEE2E2}.icon-purple{background:#EDE9FE}
+.badge-blue{background:#E3F2FD;color:#1565C0}.badge-amber{background:#FFF3E0;color:#E65100}
+.badge-gray{background:#F1F5F9;color:#475569}.badge-green{background:#DCFCE7;color:#16A34A}
+.badge-red{background:#FEE2E2;color:#DC2626}.badge-purple{background:#EDE9FE;color:#7C3AED}
+.footer{background:#fff;border-top:1px solid #E2E8F0;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.footer-text{font-size:12.5px;color:#94A3B8}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">
+    <svg width="44" height="27" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0">
+      <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+      <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+      <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+    </svg>
+    <span class="logo-text">giasu<em>.edu.vn</em></span>
+  </div>
+  <div class="header-meta">
+    <div class="header-meta-title">Project Files</div>
+    <div class="header-meta-sub">UI Mockup — Navigation Hub</div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-dot"></div><span class="stat-label">Trang public</span><span class="stat-val">6</span></div>
+  <div class="stat"><div class="stat-dot" style="background:#F57C00"></div><span class="stat-label">Auth / Form</span><span class="stat-val">5</span></div>
+  <div class="stat"><div class="stat-dot" style="background:#7C3AED"></div><span class="stat-label">Dashboard</span><span class="stat-val">3</span></div>
+  <div class="stat"><div class="stat-dot" style="background:#90CAF9"></div><span class="stat-label">Tài liệu</span><span class="stat-val">1</span></div>
+  <div class="stat" style="margin-left:auto"><span class="stat-label">Tất cả</span><span class="stat-val">15 files ✓</span></div>
+</div>
+
+<div class="content">
+
+  <div class="category">
+    <div class="category-header"><span class="category-label">Trang public</span><div class="category-line"></div><span class="category-count">6 trang</span></div>
+    <div class="card-grid">
+      <div class="file-card"><div class="card-accent accent-blue"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-blue">🏠</div><span class="card-badge badge-blue">Marketing</span></div><div class="card-title">Trang chủ</div><div class="card-desc">Hero section, features, stats, testimonials, CTA đăng ký</div><span class="card-file">ui-trang-chu.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-trang-chu.html" class="open-btn">Mở →</a></div></div>
+      <div class="file-card"><div class="card-accent accent-blue"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-blue">🔍</div><span class="card-badge badge-blue">Listing</span></div><div class="card-title">Tìm gia sư</div><div class="card-desc">Filter sidebar, card grid kết quả, sắp xếp, phân trang</div><span class="card-file">ui-tim-gia-su.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-tim-gia-su.html" class="open-btn">Mở →</a></div></div>
+      <div class="file-card"><div class="card-accent accent-blue"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-blue">ℹ️</div><span class="card-badge badge-blue">Marketing</span></div><div class="card-title">Giới thiệu</div><div class="card-desc">Mission, đội ngũ, timeline, giá trị cốt lõi</div><span class="card-file">ui-gioi-thieu.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-gioi-thieu.html" class="open-btn">Mở →</a></div></div>
+      <div class="file-card"><div class="card-accent accent-blue"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-blue">📝</div><span class="card-badge badge-blue">Content</span></div><div class="card-title">Blog</div><div class="card-desc">Danh sách bài viết, featured post, filter theo chủ đề</div><span class="card-file">ui-blog.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-blog.html" class="open-btn">Mở →</a></div></div>
+      <div class="file-card"><div class="card-accent accent-blue"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-blue">📄</div><span class="card-badge badge-blue">Content</span></div><div class="card-title">Bài viết chi tiết</div><div class="card-desc">Article layout, sidebar, bài liên quan, share</div><span class="card-file">ui-bai-viet.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-bai-viet.html" class="open-btn">Mở →</a></div></div>
+      <div class="file-card"><div class="card-accent accent-blue"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-blue">❓</div><span class="card-badge badge-blue">Support</span></div><div class="card-title">Hướng dẫn / FAQ</div><div class="card-desc">Accordion FAQ, tìm kiếm, category tabs theo chủ đề</div><span class="card-file">ui-huong-dan.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-huong-dan.html" class="open-btn">Mở →</a></div></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="category-header"><span class="category-label">Auth &amp; Form</span><div class="category-line"></div><span class="category-count">5 trang</span></div>
+    <div class="card-grid">
+      <div class="file-card"><div class="card-accent accent-gray"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-gray">🔐</div><span class="card-badge badge-gray">Auth</span></div><div class="card-title">Đăng nhập / Đăng ký</div><div class="card-desc">Tab switch login ↔ register, form validation, social login</div><span class="card-file">ui-auth.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-auth.html" class="open-btn">Mở →</a></div></div>
+      <div class="file-card"><div class="card-accent accent-gray"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-gray">🔑</div><span class="card-badge badge-gray">Auth</span></div><div class="card-title">Quên mật khẩu</div><div class="card-desc">3 bước: Email → OTP → Đặt lại mật khẩu mới</div><span class="card-file">ui-quen-mat-khau.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-quen-mat-khau.html" class="open-btn">Mở →</a></div></div>
+      <div class="file-card"><div class="card-accent accent-amber"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-amber">👨‍🏫</div><span class="card-badge badge-amber">Gia sư</span></div><div class="card-title">Đăng ký dạy</div><div class="card-desc">Multi-step form: thông tin → môn dạy → kinh nghiệm → upload</div><span class="card-file">ui-dang-ky-day.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-dang-ky-day.html" class="open-btn open-btn-amber">Mở →</a></div></div>
+      <div class="file-card"><div class="card-accent accent-amber"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-amber">📢</div><span class="card-badge badge-amber">Phụ huynh</span></div><div class="card-title">Đăng tin tìm GS</div><div class="card-desc">Phụ huynh tạo yêu cầu theo môn, khu vực, lịch, ngân sách</div><span class="card-file">ui-dang-tin.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-dang-tin.html" class="open-btn open-btn-amber">Mở →</a></div></div>
+      <div class="file-card"><div class="card-accent accent-amber"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-amber">💳</div><span class="card-badge badge-amber">Checkout</span></div><div class="card-title">Thanh toán</div><div class="card-desc">Order summary, chọn phương thức thanh toán, confirm</div><span class="card-file">ui-checkout.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-checkout.html" class="open-btn open-btn-amber">Mở →</a></div></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="category-header"><span class="category-label">Profile</span><div class="category-line"></div><span class="category-count">1 trang</span></div>
+    <div class="card-grid">
+      <div class="file-card"><div class="card-accent accent-blue"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-blue">👤</div><span class="card-badge badge-blue">Detail</span></div><div class="card-title">Hồ sơ gia sư</div><div class="card-desc">Gallery ảnh, đánh giá, thành tích, booking widget sticky bên phải</div><span class="card-file">ui-profile.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-profile.html" class="open-btn">Mở →</a></div></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="category-header"><span class="category-label">Dashboard</span><div class="category-line"></div><span class="category-count">3 file</span></div>
+    <div class="card-grid">
+      <div class="file-card"><div class="card-accent accent-purple"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-purple">📊</div><span class="card-badge badge-purple">Gia sư</span></div><div class="card-title">Dashboard Gia sư</div><div class="card-desc">SPA 7 tabs: Tổng quan, Yêu cầu, Khoá học, Tin nhắn, Lịch dạy, Thu nhập, Hồ sơ + empty states</div><span class="card-file">ui-dashboard-gia-su.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-dashboard-gia-su.html" class="open-btn open-btn-purple">Mở →</a></div></div>
+
+      <div class="file-card"><div class="card-accent accent-purple"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-purple">👨‍👩‍👧</div><span class="card-badge badge-purple">Phụ huynh</span></div><div class="card-title">Dashboard Phụ huynh</div><div class="card-desc">SPA 6 panels: Tổng quan, Tìm GS, Yêu cầu, Khoá học, Tin nhắn, Thanh toán + empty states</div><span class="card-file">ui-dashboard-phu-huynh.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-dashboard-phu-huynh.html" class="open-btn open-btn-purple">Mở →</a></div></div>
+      <div class="file-card"><div class="card-accent accent-red"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-red">🛡️</div><span class="card-badge badge-red">Admin</span></div><div class="card-title">Dashboard Admin</div><div class="card-desc">SPA 6 sections: Tổng quan, Xác thực GS, Duyệt tin, Users, Tài chính, Cài đặt + empty states</div><span class="card-file">ui-admin.html</span></div><div class="card-footer"><span class="done-chip">✓ Chốt</span><a href="ui-admin.html" class="open-btn open-btn-red">Mở →</a></div></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="category-header"><span class="category-label">Tài liệu</span><div class="category-line"></div><span class="category-count">1 file</span></div>
+    <div class="card-grid">
+      <div class="file-card"><div class="card-accent accent-green"></div><div class="card-body"><div class="card-icon-row"><div class="card-icon icon-green">📋</div><span class="card-badge badge-green">Dev Handoff</span></div><div class="card-title">UI Handoff Document</div><div class="card-desc">Design tokens, component library, SPA patterns, empty state inventory, page inventory đầy đủ</div><span class="card-file">ui-handoff.html</span></div><div class="card-footer"><span class="done-chip">✓ Mới tạo</span><a href="ui-handoff.html" class="open-btn" style="background:#16A34A">Mở →</a></div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div style="display:flex;align-items:center;gap:8px">
+    <svg width="28" height="17" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block">
+      <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+      <circle cx="48" cy="30" r="3.5" fill="#fff"/>
+    </svg>
+    <span style="font-size:13px;font-weight:700;color:#0D2D6B;letter-spacing:-.3px">giasu<span style="font-weight:500;opacity:.5">.edu.vn</span></span>
+  </div>
+  <span class="footer-text">15 files &nbsp;·&nbsp; Tất cả đã chốt &nbsp;·&nbsp; 08/05/2026</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI Handoff — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p900:#0D2D6B;--p800:#1239A0;--p700:#1565C0;--p600:#1976D2;--p500:#1E88E5;
+  --p400:#42A5F5;--p300:#90CAF9;--p200:#BBDEFB;--p100:#E3F2FD;--p50:#F0F8FF;
+  --s700:#C46200;--s600:#E65100;--s500:#F57C00;--s400:#FFA726;--s300:#FFCC80;--s100:#FFF3E0;
+  --n900:#0F172A;--n800:#1E293B;--n700:#334155;--n600:#475569;--n500:#64748B;
+  --n400:#94A3B8;--n300:#CBD5E1;--n200:#E2E8F0;--n100:#F1F5F9;--n50:#F8FAFC;
+  --green:#16A34A;--green-bg:#DCFCE7;--green-light:#F0FDF4;
+  --red:#DC2626;--red-bg:#FEE2E2;
+  --yellow:#CA8A04;--yellow-bg:#FEF9C3;
+  --purple:#7C3AED;--purple-bg:#EDE9FE;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-2xl:28px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.1),0 4px 12px rgba(0,0,0,.06);
+  --shadow-xl:0 24px 60px rgba(0,0,0,.14),0 8px 20px rgba(0,0,0,.08);
+  --sidebar:248px;
+}
+body{font-family:'Inter',sans-serif;background:#F8FAFC;color:#0F172A;font-size:15px;line-height:1.6}
+code,pre{font-family:'JetBrains Mono',monospace}
+
+/* ── Layout ── */
+.app{display:flex;min-height:100vh}
+.sidebar{width:260px;background:#fff;border-right:1px solid var(--n200);position:fixed;top:0;left:0;height:100vh;overflow-y:auto;padding:24px 0;z-index:100}
+.main{margin-left:260px;padding:48px 56px;max-width:1160px}
+
+/* ── Sidebar nav ── */
+.sidebar-logo{display:flex;align-items:center;gap:8px;padding:0 20px 24px;border-bottom:1px solid var(--n200);margin-bottom:12px}
+.nav-logo-text{font-size:14px;font-weight:800;color:var(--p900);letter-spacing:-.4px}
+.nav-logo-text em{font-weight:500;font-style:normal;color:var(--p900);opacity:.5}
+.sb-section{padding:8px 20px 4px;font-size:10.5px;font-weight:700;color:var(--n400);letter-spacing:.08em;text-transform:uppercase}
+.sb-link{display:block;padding:7px 20px;font-size:13.5px;font-weight:500;color:var(--n700);text-decoration:none;border-radius:0;cursor:pointer;transition:background .15s,color .15s;border:none;background:none;width:100%;text-align:left}
+.sb-link:hover{background:var(--n50);color:var(--p700)}
+.sb-link.active{background:var(--p50);color:var(--p700);font-weight:600}
+.sb-chip{display:inline-block;background:var(--p100);color:var(--p700);font-size:10px;font-weight:700;padding:1px 6px;border-radius:99px;margin-left:6px;vertical-align:middle}
+
+/* ── Typography ── */
+h1{font-size:32px;font-weight:800;color:var(--n900);letter-spacing:-.5px;margin-bottom:8px}
+h2{font-size:22px;font-weight:700;color:var(--n900);letter-spacing:-.3px;margin:48px 0 20px;padding-top:48px;border-top:1px solid var(--n200)}
+h2:first-of-type{border-top:none;margin-top:24px;padding-top:0}
+h3{font-size:15px;font-weight:700;color:var(--n800);margin:28px 0 12px}
+p{color:var(--n700);margin-bottom:12px}
+.lead{font-size:16px;color:var(--n600);margin-bottom:0}
+
+/* ── Chips / badges ── */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600}
+.badge-blue{background:var(--p100);color:var(--p700)}
+.badge-amber{background:var(--s100);color:var(--s600)}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.badge-purple{background:var(--purple-bg);color:var(--purple)}
+.badge-gray{background:var(--n100);color:var(--n600)}
+
+/* ── Cards ── */
+.card{background:#fff;border:1px solid var(--n200);border-radius:var(--r-lg);padding:20px;box-shadow:var(--shadow-sm)}
+.card-grid{display:grid;gap:16px}
+.card-grid-2{grid-template-columns:1fr 1fr}
+.card-grid-3{grid-template-columns:1fr 1fr 1fr}
+.card-grid-4{grid-template-columns:1fr 1fr 1fr 1fr}
+
+/* ── Color swatch ── */
+.swatch-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+.swatch{border-radius:var(--r-md);overflow:hidden;border:1px solid rgba(0,0,0,.07);min-width:80px}
+.swatch-color{height:44px}
+.swatch-label{background:#fff;padding:6px 8px}
+.swatch-name{font-size:10px;font-weight:600;color:var(--n600)}
+.swatch-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--n500)}
+
+/* ── Code block ── */
+.code-block{background:var(--n900);color:#e2e8f0;padding:20px;border-radius:var(--r-md);overflow-x:auto;font-size:12.5px;line-height:1.7;margin:12px 0}
+.code-block .cm{color:#64748b}
+.code-block .cv{color:#F57C00}
+.code-block .cs{color:#90CAF9}
+.code-block .ck{color:#7dd3fc}
+.code-inline{background:var(--n100);color:var(--p800);padding:1px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:12px}
+
+/* ── Table ── */
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+thead th{background:var(--n50);padding:10px 14px;text-align:left;font-weight:600;color:var(--n700);border-bottom:2px solid var(--n200);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--n100);color:var(--n700);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--n50)}
+
+/* ── Component preview ── */
+.preview-box{background:var(--n50);border:1px solid var(--n200);border-radius:var(--r-lg);padding:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:12px 0}
+.preview-box.dark{background:var(--p900)}
+.preview-box.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(--r-sm);font-size:14px;font-weight:600;border:none;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif}
+.btn-primary{background:var(--p700);color:#fff}
+.btn-primary:hover{background:var(--p800)}
+.btn-secondary{background:var(--p50);color:var(--p700);border:1.5px solid var(--p200)}
+.btn-outline{background:transparent;color:var(--n700);border:1.5px solid var(--n300)}
+.btn-ghost{background:transparent;color:var(--n600);border:none}
+.btn-amber{background:var(--s500);color:#fff}
+.btn-danger{background:var(--red-bg);color:var(--red)}
+.btn-sm{padding:6px 14px;font-size:13px}
+.btn-lg{padding:14px 28px;font-size:15px;font-weight:700}
+.btn-icon{width:36px;height:36px;padding:0;border-radius:var(--r-sm);display:inline-flex;align-items:center;justify-content:center;font-size:16px}
+
+/* Stat card */
+.stat-card{background:#fff;border:1px solid var(--n200);border-radius:var(--r-lg);padding:20px;box-shadow:var(--shadow-sm)}
+.stat-num{font-size:28px;font-weight:800;color:var(--p900);letter-spacing:-.5px}
+.stat-label{font-size:13px;color:var(--n500);margin-top:2px}
+.stat-delta{font-size:12px;font-weight:600;padding:2px 7px;border-radius:99px;margin-top:8px;display:inline-block}
+.stat-delta.pos{background:var(--green-bg);color:var(--green)}
+.stat-delta.neg{background:var(--red-bg);color:var(--red)}
+.stat-icon{width:40px;height:40px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+
+/* Tag / filter chip */
+.chip{display:inline-flex;align-items:center;padding:6px 14px;border-radius:99px;font-size:13px;font-weight:500;border:1.5px solid var(--n300);background:#fff;color:var(--n700);cursor:pointer}
+.chip.active{background:var(--p700);color:#fff;border-color:var(--p700)}
+
+/* Input */
+.input-demo{background:#fff;border:1.5px solid var(--n300);border-radius:var(--r-sm);padding:10px 14px;font-size:14px;font-family:'Inter',sans-serif;color:var(--n900);width:100%;outline:none}
+.input-demo:focus{border-color:var(--p500);box-shadow:0 0 0 3px var(--p100)}
+
+/* Alert / callout */
+.callout{border-radius:var(--r-md);padding:14px 18px;font-size:13.5px;display:flex;gap:10px;align-items:flex-start}
+.callout-info{background:var(--p50);border:1px solid var(--p200);color:var(--p800)}
+.callout-warn{background:var(--yellow-bg);border:1px solid #FDE68A;color:#92400E}
+.callout-success{background:var(--green-light);border:1px solid #BBF7D0;color:#14532D}
+.callout-error{background:var(--red-bg);border:1px solid #FECACA;color:#991B1B}
+
+/* Sidebar preview */
+.sb-preview{background:var(--p900);border-radius:var(--r-lg);width:200px;padding:16px 0;flex-shrink:0}
+.sb-preview-logo{display:flex;align-items:center;gap:7px;padding:0 14px 14px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px}
+.sb-preview-text{font-size:13px;font-weight:800;color:#fff;letter-spacing:-.4px}
+.sb-preview-text em{font-weight:500;font-style:normal;opacity:.5}
+.sb-preview-item{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:12.5px;color:rgba(255,255,255,.7);border-radius:0;cursor:pointer}
+.sb-preview-item.active{background:rgba(255,255,255,.12);color:#fff;font-weight:600}
+.sb-preview-item:hover{background:rgba(255,255,255,.08)}
+.sb-preview-icon{font-size:15px;width:20px;text-align:center}
+
+/* Flow diagram */
+.flow{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.flow-node{background:#fff;border:1.5px solid var(--n300);border-radius:var(--r-md);padding:10px 16px;font-size:12.5px;font-weight:600;color:var(--n800);text-align:center;min-width:100px}
+.flow-node.primary{background:var(--p700);border-color:var(--p700);color:#fff}
+.flow-node.amber{background:var(--s500);border-color:var(--s500);color:#fff}
+.flow-node.green{background:var(--green);border-color:var(--green);color:#fff}
+.flow-arrow{color:var(--n400);font-size:18px;padding:0 6px;flex-shrink:0}
+
+/* Spacing / layout ruler */
+.ruler-row{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.ruler-swatch{background:var(--p300);border-radius:4px;height:24px;flex-shrink:0}
+.ruler-label{font-size:13px;color:var(--n700);font-weight:500;min-width:36px}
+.ruler-val{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--n500)}
+
+/* Section anchor offset */
+.anchor{display:block;position:relative;top:-80px;visibility:hidden}
+
+/* TOC meta */
+.meta-row{display:flex;gap:24px;margin:16px 0 32px;flex-wrap:wrap}
+.meta-item{font-size:13px;color:var(--n500)}
+.meta-item strong{color:var(--n800);font-weight:600}
+
+/* Divider */
+.divider{border:none;border-top:1px solid var(--n200);margin:0}
+
+/* Modal preview */
+.modal-preview{background:rgba(0,0,0,.35);border-radius:var(--r-lg);padding:24px;display:flex;align-items:center;justify-content:center}
+.modal-box{background:#fff;border-radius:var(--r-xl);padding:28px;max-width:400px;width:100%;box-shadow:var(--shadow-xl)}
+.modal-title{font-size:17px;font-weight:700;color:var(--n900);margin-bottom:8px}
+.modal-body{font-size:13.5px;color:var(--n600);margin-bottom:20px}
+.modal-footer{display:flex;gap:10px;justify-content:flex-end}
+
+/* Tabs */
+.tabs{display:flex;border-bottom:2px solid var(--n200);gap:0;margin-bottom:20px}
+.tab{padding:10px 20px;font-size:14px;font-weight:500;color:var(--n600);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;border-top:none;border-left:none;border-right:none;background:none;font-family:'Inter',sans-serif}
+.tab.active{color:var(--p700);border-bottom-color:var(--p700);font-weight:600}
+
+/* Page inventory status */
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.dot-done{background:var(--green)}
+.dot-wip{background:var(--s500)}
+
+/* Empty state preview */
+.empty-prev{text-align:center;padding:40px 20px;background:var(--n50);border-radius:var(--r-lg)}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.empty-title{font-size:15px;font-weight:700;color:var(--n800);margin-bottom:6px}
+.empty-desc{font-size:13px;color:var(--n500)}
+
+/* Topbar preview */
+.topbar-prev{background:#fff;border-bottom:1px solid var(--n200);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;border-radius:var(--r-md) var(--r-md) 0 0}
+
+/* Avatar */
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--p100);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--p700);flex-shrink:0}
+
+/* Interaction pattern box */
+.pattern-box{background:var(--n900);border-radius:var(--r-lg);padding:20px;margin:12px 0}
+.pattern-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--n400);margin-bottom:12px}
+.pattern-fn{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#90CAF9;line-height:1.8}
+.pattern-comment{color:#475569}
+.pattern-kw{color:#F57C00}
+.pattern-str{color:#86EFAC}
+.pattern-num{color:#FCA5A5}
+
+/* Responsive suppressed for handoff */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .main{margin-left:0;padding:24px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <svg width="36" height="22" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+      <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+      <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+    </svg>
+    <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+  </div>
+
+  <div class="sb-section">Tổng quan</div>
+  <button class="sb-link active" onclick="scrollTo('overview')">📋 Giới thiệu</button>
+  <button class="sb-link" onclick="scrollTo('pages')">📄 Page Inventory</button>
+  <button class="sb-link" onclick="scrollTo('flows')">🗺️ Flow & Navigation</button>
+
+  <div class="sb-section">Brand & Tokens</div>
+  <button class="sb-link" onclick="scrollTo('logo')">♾️ Logo</button>
+  <button class="sb-link" onclick="scrollTo('colors')">🎨 Màu sắc</button>
+  <button class="sb-link" onclick="scrollTo('typography')">Aa Typography</button>
+  <button class="sb-link" onclick="scrollTo('spacing')">📐 Spacing & Layout</button>
+  <button class="sb-link" onclick="scrollTo('shadows')">💡 Shadows & Radius</button>
+
+  <div class="sb-section">Components</div>
+  <button class="sb-link" onclick="scrollTo('buttons')">🔘 Buttons</button>
+  <button class="sb-link" onclick="scrollTo('cards')">🃏 Cards & Stats</button>
+  <button class="sb-link" onclick="scrollTo('badges')">🏷️ Badges & Chips</button>
+  <button class="sb-link" onclick="scrollTo('forms')">📝 Forms</button>
+  <button class="sb-link" onclick="scrollTo('alerts')">⚠️ Alerts</button>
+  <button class="sb-link" onclick="scrollTo('nav-components')">🧭 Nav Components</button>
+  <button class="sb-link" onclick="scrollTo('modals')">💬 Modals</button>
+  <button class="sb-link" onclick="scrollTo('empty-states')">🌿 Empty States</button>
+
+  <div class="sb-section">Patterns</div>
+  <button class="sb-link" onclick="scrollTo('spa-patterns')">⚡ SPA Navigation</button>
+  <button class="sb-link" onclick="scrollTo('demo-toggle')">🔀 Demo Toggles</button>
+  <button class="sb-link" onclick="scrollTo('roles')">👥 Roles & Access</button>
+</nav>
+
+<!-- ══════════ MAIN ══════════ -->
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <span class="anchor" id="overview"></span>
+  <h1>UI Handoff — giasu.edu.vn</h1>
+  <p class="lead">Tài liệu thiết kế dành cho developer. Bao gồm design tokens, component library, navigation patterns và page inventory.</p>
+  <div class="meta-row">
+    <span class="meta-item"><strong>Version:</strong> 1.0</span>
+    <span class="meta-item"><strong>Ngày:</strong> 08/05/2026</span>
+    <span class="meta-item"><strong>Tổng file UI:</strong> 15 trang + 3 dashboard</span>
+    <span class="meta-item"><strong>Stack:</strong> Vanilla HTML/CSS/JS (single-file)</span>
+    <span class="meta-item"><strong>Font:</strong> Inter (Google Fonts)</span>
+  </div>
+
+  <div class="callout callout-info">
+    <span>ℹ️</span>
+    <div>Toàn bộ file UI là <strong>single-file HTML</strong> — embedded CSS và JS inline, không có build step. Mỗi dashboard là SPA mini dùng JS thuần để switch panel, không dùng framework.</div>
+  </div>
+
+  <!-- PAGE INVENTORY -->
+  <span class="anchor" id="pages"></span>
+  <h2>📄 Page Inventory</h2>
+  <p>Danh sách 15 trang UI đã hoàn thiện, cộng thêm các file phụ trợ.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>Tên trang</th>
+        <th>Loại</th>
+        <th>Ghi chú</th>
+        <th>Trạng thái</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code class="code-inline">ui-trang-chu.html</code></td><td>Trang chủ</td><td><span class="badge badge-blue">Marketing</span></td><td>Hero, features, CTA, testimonials, stats</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-tim-gia-su.html</code></td><td>Tìm gia sư</td><td><span class="badge badge-blue">Listing</span></td><td>Filter sidebar, card grid, pagination</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-auth.html</code></td><td>Đăng nhập / Đăng ký</td><td><span class="badge badge-gray">Auth</span></td><td>Tab switch login/register, form validation</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-profile.html</code></td><td>Trang hồ sơ GS</td><td><span class="badge badge-blue">Detail</span></td><td>Gallery, rating, booking widget sticky</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-checkout.html</code></td><td>Thanh toán</td><td><span class="badge badge-amber">Checkout</span></td><td>Order summary, payment method, confirm</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-gioi-thieu.html</code></td><td>Giới thiệu</td><td><span class="badge badge-blue">Marketing</span></td><td>Mission, team, timeline, values</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-blog.html</code></td><td>Blog listing</td><td><span class="badge badge-blue">Content</span></td><td>Featured post, category filter, card grid</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-bai-viet.html</code></td><td>Bài viết chi tiết</td><td><span class="badge badge-blue">Content</span></td><td>Article layout, sidebar, related posts</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-dang-ky-day.html</code></td><td>Đăng ký dạy</td><td><span class="badge badge-amber">Onboarding</span></td><td>Multi-step form, subject picker, upload</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-dang-tin.html</code></td><td>Đăng tin học</td><td><span class="badge badge-amber">Form</span></td><td>PH tạo yêu cầu tìm GS</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-huong-dan.html</code></td><td>Hướng dẫn / FAQ</td><td><span class="badge badge-blue">Support</span></td><td>Accordion FAQ, search, category tabs</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-quen-mat-khau.html</code></td><td>Quên mật khẩu</td><td><span class="badge badge-gray">Auth</span></td><td>Email step → OTP step → Reset step</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-dashboard-gia-su.html</code></td><td>Dashboard Gia sư</td><td><span class="badge badge-purple">Dashboard</span></td><td>SPA: Overview, Yêu cầu, Khoá học, Tin nhắn, Lịch, Thu nhập, Hồ sơ</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-dashboard-phu-huynh.html</code></td><td>Dashboard Phụ huynh</td><td><span class="badge badge-purple">Dashboard</span></td><td>SPA: Overview, Tìm GS, Yêu cầu, Khoá học, Tin nhắn, Thanh toán</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-admin.html</code></td><td>Dashboard Admin</td><td><span class="badge badge-red">Admin</span></td><td>SPA: Overview, Xác thực GS, Duyệt tin, Users, Tài chính, Cài đặt</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-onboarding-gia-su.html</code></td><td>Onboarding GS mới</td><td><span class="badge badge-amber">Onboarding</span></td><td>5-step wizard, progress bar, tips panel</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+    </tbody>
+  </table>
+
+  <!-- FLOWS -->
+  <span class="anchor" id="flows"></span>
+  <h2>🗺️ Flow & Navigation</h2>
+
+  <h3>User journey tổng quan</h3>
+  <div class="card" style="padding:24px;margin-bottom:16px">
+    <div style="margin-bottom:16px">
+      <span class="badge badge-blue" style="margin-bottom:8px;display:inline-block">Gia sư</span>
+      <div class="flow">
+        <div class="flow-node">Trang chủ</div><div class="flow-arrow">→</div>
+        <div class="flow-node primary">Đăng ký dạy</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Onboarding</div><div class="flow-arrow">→</div>
+        <div class="flow-node primary">Dashboard GS</div>
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <span class="badge badge-amber" style="margin-bottom:8px;display:inline-block">Phụ huynh</span>
+      <div class="flow">
+        <div class="flow-node">Trang chủ</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Tìm gia sư</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Profile GS</div><div class="flow-arrow">→</div>
+        <div class="flow-node amber">Checkout</div><div class="flow-arrow">→</div>
+        <div class="flow-node primary">Dashboard PH</div>
+      </div>
+    </div>
+    <div>
+      <span class="badge badge-red" style="margin-bottom:8px;display:inline-block">Admin</span>
+      <div class="flow">
+        <div class="flow-node">Login</div><div class="flow-arrow">→</div>
+        <div class="flow-node primary">Dashboard Admin</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Xác thực GS</div><div class="flow-arrow">+</div>
+        <div class="flow-node">Duyệt tin</div><div class="flow-arrow">+</div>
+        <div class="flow-node">Quản lý users</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Dashboard GS — Tab pages</h3>
+  <div class="code-block"><span class="cm">// tabPages array — switchPage(name) ẩn tất cả rồi show target</span>
+<span class="ck">const</span> tabPages = [<span class="cs">'overview'</span>, <span class="cs">'requests'</span>, <span class="cs">'courses'</span>, <span class="cs">'messages'</span>, <span class="cs">'schedule'</span>, <span class="cs">'income'</span>, <span class="cs">'profile'</span>];
+<span class="cm">// extraPages — position:fixed overlay, ẩn .main khi active</span>
+<span class="ck">const</span> extraPages = [<span class="cs">'onboarding'</span>, <span class="cs">'notifications'</span>];</div>
+
+  <h3>Dashboard PH — State panels</h3>
+  <div class="code-block"><span class="cm">// allPanels — switchState(name) ẩn tất cả rồi show target</span>
+<span class="ck">const</span> allPanels = [<span class="cs">'overview'</span>, <span class="cs">'find'</span>, <span class="cs">'requests'</span>, <span class="cs">'courses'</span>, <span class="cs">'messages'</span>, <span class="cs">'payment'</span>];</div>
+
+  <h3>Dashboard Admin — Sections + Sub-tabs</h3>
+  <div class="code-block"><span class="cm">// sw(id) switch section chính</span>
+<span class="ck">const</span> SECS = [<span class="cs">'overview'</span>, <span class="cs">'verify-tutor'</span>, <span class="cs">'approve-post'</span>, <span class="cs">'users'</span>, <span class="cs">'finance'</span>, <span class="cs">'settings'</span>];
+
+<span class="cm">// swTab(prefix, tab, btn) — switch sub-tab trong section</span>
+<span class="cm">// Dùng selector [id^="prefix-"] để ẩn/show → tên ID con PHẢI dùng underscore</span>
+<span class="cm">// Ví dụ: id="vt_pending_empty" (safe) vs id="vt-pending-empty" (bị ẩn nhầm!)</span>
+swTab(<span class="cs">'vt'</span>, <span class="cs">'pending'</span>, <span class="cs">'btn'</span>);   <span class="cm">// verify-tutor tabs</span>
+swTab(<span class="cs">'tt'</span>, <span class="cs">'pending'</span>, <span class="cs">'btn'</span>);   <span class="cm">// approve-post tabs</span></div>
+
+  <!-- LOGO -->
+  <span class="anchor" id="logo"></span>
+  <h2>♾️ Logo</h2>
+  <p>Logo là hình <strong>infinity (∞)</strong> — hai vòng cong giao nhau, tâm amber. <strong>Không dùng icon vuông hay placeholder.</strong></p>
+
+  <div class="card-grid card-grid-2" style="margin:16px 0">
+    <div class="card">
+      <h3 style="margin-top:0">Navbar / Nền sáng</h3>
+      <div class="preview-box" style="justify-content:center">
+        <div style="display:flex;align-items:center;gap:8px">
+          <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+            <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+            <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+            <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+          </svg>
+          <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+        </div>
+      </div>
+      <div class="code-block" style="font-size:11px"><span class="cv">stroke</span>=<span class="cs">"#0D2D6B"</span> | center dot: <span class="cs">#F57C00</span>
+inner dot: <span class="cs">#FFFFFF</span>
+size: <span class="cv">40×25px</span></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Footer / Sidebar / Header tối</h3>
+      <div class="preview-box dark" style="justify-content:center">
+        <div style="display:flex;align-items:center;gap:8px">
+          <svg width="36" height="22" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+            <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+            <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+            <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+          </svg>
+          <span style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.4px">giasu<span style="font-weight:500;opacity:.5">.edu.vn</span></span>
+        </div>
+      </div>
+      <div class="code-block" style="font-size:11px"><span class="cv">stroke</span>=<span class="cs">"white"</span> | center dot: <span class="cs">#F57C00</span>
+inner dot: <span class="cs">rgba(255,255,255,0.2)</span>
+size: <span class="cv">36×22px</span></div>
+    </div>
+  </div>
+
+  <h3>Wordmark CSS</h3>
+  <div class="code-block"><span class="cs">.nav-logo-text</span> {
+  <span class="ck">font-size</span>: <span class="cv">15.5px</span>;
+  <span class="ck">font-weight</span>: <span class="cv">800</span>;
+  <span class="ck">color</span>: <span class="cv">#0D2D6B</span>;
+  <span class="ck">letter-spacing</span>: <span class="cv">-.4px</span>;
+}
+<span class="cs">.nav-logo-text em</span> {
+  <span class="ck">font-weight</span>: <span class="cv">500</span>;
+  <span class="ck">font-style</span>: <span class="cv">normal</span>;
+  <span class="ck">opacity</span>: <span class="cv">.5</span>;
+}</div>
+
+  <!-- COLORS -->
+  <span class="anchor" id="colors"></span>
+  <h2>🎨 Màu sắc — Design Tokens</h2>
+  <p>Tất cả màu được định nghĩa qua CSS custom properties trên <code class="code-inline">:root</code>.</p>
+
+  <h3>Primary — Navy Blue</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-color" style="background:#0D2D6B"></div><div class="swatch-label"><div class="swatch-name">--p900</div><div class="swatch-val">#0D2D6B</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#1239A0"></div><div class="swatch-label"><div class="swatch-name">--p800</div><div class="swatch-val">#1239A0</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#1565C0"></div><div class="swatch-label"><div class="swatch-name">--p700</div><div class="swatch-val">#1565C0</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#1976D2"></div><div class="swatch-label"><div class="swatch-name">--p600</div><div class="swatch-val">#1976D2</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#1E88E5"></div><div class="swatch-label"><div class="swatch-name">--p500</div><div class="swatch-val">#1E88E5</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#42A5F5"></div><div class="swatch-label"><div class="swatch-name">--p400</div><div class="swatch-val">#42A5F5</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#90CAF9"></div><div class="swatch-label"><div class="swatch-name">--p300</div><div class="swatch-val">#90CAF9</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#BBDEFB"></div><div class="swatch-label"><div class="swatch-name">--p200</div><div class="swatch-val">#BBDEFB</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#E3F2FD"></div><div class="swatch-label"><div class="swatch-name">--p100</div><div class="swatch-val">#E3F2FD</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#F0F8FF"></div><div class="swatch-label"><div class="swatch-name">--p50</div><div class="swatch-val">#F0F8FF</div></div></div>
+  </div>
+
+  <h3>Secondary — Amber</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-color" style="background:#C46200"></div><div class="swatch-label"><div class="swatch-name">--s700</div><div class="swatch-val">#C46200</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#E65100"></div><div class="swatch-label"><div class="swatch-name">--s600</div><div class="swatch-val">#E65100</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#F57C00"></div><div class="swatch-label"><div class="swatch-name">--s500</div><div class="swatch-val">#F57C00</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#FFA726"></div><div class="swatch-label"><div class="swatch-name">--s400</div><div class="swatch-val">#FFA726</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#FFCC80"></div><div class="swatch-label"><div class="swatch-name">--s300</div><div class="swatch-val">#FFCC80</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#FFF3E0"></div><div class="swatch-label"><div class="swatch-name">--s100</div><div class="swatch-val">#FFF3E0</div></div></div>
+  </div>
+
+  <h3>Neutral</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-color" style="background:#0F172A"></div><div class="swatch-label"><div class="swatch-name">--n900</div><div class="swatch-val">#0F172A</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#1E293B"></div><div class="swatch-label"><div class="swatch-name">--n800</div><div class="swatch-val">#1E293B</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#334155"></div><div class="swatch-label"><div class="swatch-name">--n700</div><div class="swatch-val">#334155</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#475569"></div><div class="swatch-label"><div class="swatch-name">--n600</div><div class="swatch-val">#475569</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#64748B"></div><div class="swatch-label"><div class="swatch-name">--n500</div><div class="swatch-val">#64748B</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#94A3B8"></div><div class="swatch-label"><div class="swatch-name">--n400</div><div class="swatch-val">#94A3B8</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#CBD5E1"></div><div class="swatch-label"><div class="swatch-name">--n300</div><div class="swatch-val">#CBD5E1</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#E2E8F0"></div><div class="swatch-label"><div class="swatch-name">--n200</div><div class="swatch-val">#E2E8F0</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#F1F5F9"></div><div class="swatch-label"><div class="swatch-name">--n100</div><div class="swatch-val">#F1F5F9</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#F8FAFC"></div><div class="swatch-label"><div class="swatch-name">--n50</div><div class="swatch-val">#F8FAFC</div></div></div>
+  </div>
+
+  <h3>Semantic</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-color" style="background:#16A34A"></div><div class="swatch-label"><div class="swatch-name">--green</div><div class="swatch-val">#16A34A</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#DCFCE7"></div><div class="swatch-label"><div class="swatch-name">--green-bg</div><div class="swatch-val">#DCFCE7</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#DC2626"></div><div class="swatch-label"><div class="swatch-name">--red</div><div class="swatch-val">#DC2626</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#FEE2E2"></div><div class="swatch-label"><div class="swatch-name">--red-bg</div><div class="swatch-val">#FEE2E2</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#7C3AED"></div><div class="swatch-label"><div class="swatch-name">--purple</div><div class="swatch-val">#7C3AED</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#EDE9FE"></div><div class="swatch-label"><div class="swatch-name">--purple-bg</div><div class="swatch-val">#EDE9FE</div></div></div>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <span class="anchor" id="typography"></span>
+  <h2>Aa Typography</h2>
+  <p>Font duy nhất: <strong>Inter</strong> — load qua Google Fonts. Không có fallback font tùy chỉnh.</p>
+
+  <div class="card" style="margin:16px 0">
+    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--n100)">
+      <div style="font-size:32px;font-weight:800;color:var(--n900);letter-spacing:-.5px;margin-bottom:4px">Tiêu đề trang H1</div>
+      <code class="code-inline">32px / weight 800 / tracking -0.5px / color --n900</code>
+    </div>
+    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--n100)">
+      <div style="font-size:22px;font-weight:700;color:var(--n900);letter-spacing:-.3px;margin-bottom:4px">Section heading H2</div>
+      <code class="code-inline">22px / weight 700 / tracking -0.3px</code>
+    </div>
+    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--n100)">
+      <div style="font-size:18px;font-weight:700;color:var(--n900);margin-bottom:4px">Card title H3</div>
+      <code class="code-inline">18px / weight 700</code>
+    </div>
+    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--n100)">
+      <div style="font-size:15px;font-weight:600;color:var(--n800);margin-bottom:4px">Sub-heading / label</div>
+      <code class="code-inline">15px / weight 600 / color --n800</code>
+    </div>
+    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--n100)">
+      <div style="font-size:14px;color:var(--n700);margin-bottom:4px">Body text mặc định — dùng cho description, paragraph nội dung chính.</div>
+      <code class="code-inline">14–15px / weight 400 / color --n700 / line-height 1.6</code>
+    </div>
+    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--n100)">
+      <div style="font-size:13px;color:var(--n500);margin-bottom:4px">Caption / meta text — ngày tháng, số lượt xem, phụ đề nhỏ.</div>
+      <code class="code-inline">12–13px / weight 400–500 / color --n500</code>
+    </div>
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--p800);background:var(--p50);padding:6px 10px;border-radius:6px;display:inline-block;margin-bottom:4px">code snippet</div>
+      <div><code class="code-inline">JetBrains Mono / 12–13px / color --p800 / bg --p50</code></div>
+    </div>
+  </div>
+
+  <!-- SPACING & LAYOUT -->
+  <span class="anchor" id="spacing"></span>
+  <h2>📐 Spacing & Layout</h2>
+
+  <div class="card-grid card-grid-2" style="margin:16px 0">
+    <div class="card">
+      <h3 style="margin-top:0">Spacing scale (px)</h3>
+      <div class="ruler-row"><div class="ruler-swatch" style="width:4px"></div><div class="ruler-label">4px</div><div class="ruler-val">gap nhỏ nhất, icon spacing</div></div>
+      <div class="ruler-row"><div class="ruler-swatch" style="width:8px"></div><div class="ruler-label">8px</div><div class="ruler-val">padding chip, badge</div></div>
+      <div class="ruler-row"><div class="ruler-swatch" style="width:12px"></div><div class="ruler-label">12px</div><div class="ruler-val">gap trong form group</div></div>
+      <div class="ruler-row"><div class="ruler-swatch" style="width:16px"></div><div class="ruler-label">16px</div><div class="ruler-val">gap card grid, padding nhỏ</div></div>
+      <div class="ruler-row"><div class="ruler-swatch" style="width:20px"></div><div class="ruler-label">20px</div><div class="ruler-val">padding card nội dung</div></div>
+      <div class="ruler-row"><div class="ruler-swatch" style="width:24px"></div><div class="ruler-label">24px</div><div class="ruler-val">section gap, padding sidebar</div></div>
+      <div class="ruler-row"><div class="ruler-swatch" style="width:32px"></div><div class="ruler-label">32px</div><div class="ruler-val">section margin lớn</div></div>
+      <div class="ruler-row"><div class="ruler-swatch" style="width:48px"></div><div class="ruler-label">48px</div><div class="ruler-val">hero padding, page top</div></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Layout constants</h3>
+      <table style="margin:0">
+        <tbody>
+          <tr><td style="font-weight:600;color:var(--n800)">Sidebar width</td><td><code class="code-inline">--sidebar: 248px</code></td></tr>
+          <tr><td style="font-weight:600;color:var(--n800)">Topbar height</td><td><code class="code-inline">64px</code></td></tr>
+          <tr><td style="font-weight:600;color:var(--n800)">Container max</td><td><code class="code-inline">1200px</code></td></tr>
+          <tr><td style="font-weight:600;color:var(--n800)">Content area</td><td><code class="code-inline">calc(100vw - 248px)</code></td></tr>
+          <tr><td style="font-weight:600;color:var(--n800)">Page padding</td><td><code class="code-inline">28–32px</code></td></tr>
+          <tr><td style="font-weight:600;color:var(--n800)">Card grid gap</td><td><code class="code-inline">16–20px</code></td></tr>
+          <tr><td style="font-weight:600;color:var(--n800)">Stat card grid</td><td><code class="code-inline">repeat(4, 1fr)</code></td></tr>
+          <tr><td style="font-weight:600;color:var(--n800)">z-index sidebar</td><td><code class="code-inline">100</code></td></tr>
+          <tr><td style="font-weight:600;color:var(--n800)">z-index modal</td><td><code class="code-inline">1000</code></td></tr>
+          <tr><td style="font-weight:600;color:var(--n800)">z-index overlay</td><td><code class="code-inline">999</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SHADOWS & RADIUS -->
+  <span class="anchor" id="shadows"></span>
+  <h2>💡 Shadows & Border Radius</h2>
+
+  <div class="card-grid card-grid-2" style="margin:16px 0">
+    <div class="card">
+      <h3 style="margin-top:0">Border Radius</h3>
+      <table style="margin:0">
+        <tbody>
+          <tr><td><code class="code-inline">--r-sm</code></td><td>8px — button, input, chip nhỏ</td></tr>
+          <tr><td><code class="code-inline">--r-md</code></td><td>12px — card nhỏ, dropdown</td></tr>
+          <tr><td><code class="code-inline">--r-lg</code></td><td>16px — card chính, panel</td></tr>
+          <tr><td><code class="code-inline">--r-xl</code></td><td>20px — modal, highlight box</td></tr>
+          <tr><td><code class="code-inline">--r-2xl</code></td><td>28px — hero card, feature box</td></tr>
+          <tr><td><code class="code-inline">9999px</code></td><td>badge, pill, avatar</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Shadows</h3>
+      <div style="margin-bottom:12px">
+        <div style="background:#fff;border:1px solid var(--n200);border-radius:var(--r-md);padding:14px;box-shadow:var(--shadow-sm);margin-bottom:8px;font-size:13px;color:var(--n700)">shadow-sm — card thường, sidebar item</div>
+        <code class="code-inline" style="font-size:10.5px">0 1px 3px rgba(0,0,0,.08)</code>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="background:#fff;border:1px solid var(--n200);border-radius:var(--r-md);padding:14px;box-shadow:var(--shadow-md);margin-bottom:8px;font-size:13px;color:var(--n700)">shadow-md — card hover, dropdown</div>
+        <code class="code-inline" style="font-size:10.5px">0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04)</code>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="background:#fff;border:1px solid var(--n200);border-radius:var(--r-md);padding:14px;box-shadow:var(--shadow-lg);margin-bottom:8px;font-size:13px;color:var(--n700)">shadow-lg — sticky element, floating</div>
+        <code class="code-inline" style="font-size:10.5px">0 12px 40px rgba(0,0,0,.1), 0 4px 12px rgba(0,0,0,.06)</code>
+      </div>
+      <div>
+        <div style="background:#fff;border:1px solid var(--n200);border-radius:var(--r-md);padding:14px;box-shadow:var(--shadow-xl);margin-bottom:8px;font-size:13px;color:var(--n700)">shadow-xl — modal, popover</div>
+        <code class="code-inline" style="font-size:10.5px">0 24px 60px rgba(0,0,0,.14), 0 8px 20px rgba(0,0,0,.08)</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUTTONS -->
+  <span class="anchor" id="buttons"></span>
+  <h2>🔘 Buttons</h2>
+
+  <div class="preview-box">
+    <button class="btn btn-primary">Primary</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-outline">Outline</button>
+    <button class="btn btn-ghost">Ghost</button>
+    <button class="btn btn-amber">Amber CTA</button>
+    <button class="btn btn-danger">Danger</button>
+  </div>
+  <div class="preview-box">
+    <button class="btn btn-primary btn-sm">Nhỏ</button>
+    <button class="btn btn-primary">Thường</button>
+    <button class="btn btn-primary btn-lg">Lớn</button>
+    <button class="btn btn-icon btn-primary">+</button>
+    <button class="btn btn-icon btn-outline">✏️</button>
+    <button class="btn btn-primary" disabled style="opacity:.45;cursor:not-allowed">Disabled</button>
+  </div>
+
+  <table>
+    <thead><tr><th>Variant</th><th>Dùng khi</th><th>Token</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge badge-blue">Primary</span></td><td>CTA chính, action quan trọng nhất trên page</td><td><code class="code-inline">bg: --p700 / color: #fff</code></td></tr>
+      <tr><td><span class="badge badge-blue" style="background:var(--p50);color:var(--p700)">Secondary</span></td><td>Action phụ bên cạnh primary</td><td><code class="code-inline">bg: --p50 / border: --p200</code></td></tr>
+      <tr><td><span class="badge badge-gray">Outline</span></td><td>Action trung tính, filter, cancel</td><td><code class="code-inline">border: --n300 / color: --n700</code></td></tr>
+      <tr><td><span class="badge badge-gray" style="background:transparent">Ghost</span></td><td>Action trong card, table row actions</td><td><code class="code-inline">no border, color: --n600</code></td></tr>
+      <tr><td><span class="badge badge-amber">Amber</span></td><td>Hero CTA, đăng ký, conversion cao</td><td><code class="code-inline">bg: --s500 / color: #fff</code></td></tr>
+      <tr><td><span class="badge badge-red">Danger</span></td><td>Xóa, hủy, thao tác destructive</td><td><code class="code-inline">bg: --red-bg / color: --red</code></td></tr>
+    </tbody>
+  </table>
+
+  <!-- CARDS & STATS -->
+  <span class="anchor" id="cards"></span>
+  <h2>🃏 Cards & Stat Cards</h2>
+
+  <h3>Stat Card</h3>
+  <div class="card-grid card-grid-4" style="margin:12px 0">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:var(--p100)">📚</div>
+      <div class="stat-num">24</div>
+      <div class="stat-label">Khoá học active</div>
+      <div class="stat-delta pos">↑ 12% tháng này</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:var(--green-bg)">💰</div>
+      <div class="stat-num">4.2M</div>
+      <div class="stat-label">Thu nhập tháng</div>
+      <div class="stat-delta pos">↑ 8%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:var(--s100)">⭐</div>
+      <div class="stat-num">4.9</div>
+      <div class="stat-label">Đánh giá TB</div>
+      <div class="stat-delta pos">+0.2</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:var(--red-bg)">❌</div>
+      <div class="stat-num">3</div>
+      <div class="stat-label">Yêu cầu từ chối</div>
+      <div class="stat-delta neg">↓ 2 so với T4</div>
+    </div>
+  </div>
+
+  <div class="code-block"><span class="cm">/* Stat card anatomy */</span>
+<span class="cs">.stat-card</span>: bg #fff | border --n200 | radius --r-lg | padding 20px | shadow-sm
+<span class="cs">.stat-icon</span>: 40×40px | radius --r-sm | emoji icon 18px
+<span class="cs">.stat-num</span>: 28px / weight 800 / color --p900 / tracking -0.5px
+<span class="cs">.stat-label</span>: 13px / color --n500
+<span class="cs">.stat-delta.pos</span>: bg --green-bg / color --green | <span class="cs">.neg</span>: --red-bg / --red</div>
+
+  <h3>Content Card variants</h3>
+  <div class="card-grid card-grid-2" style="margin:12px 0">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--p100);display:flex;align-items:center;justify-content:center;font-size:20px">👨‍🏫</div>
+        <div>
+          <div style="font-weight:700;font-size:15px;color:var(--n900)">Nguyễn Văn Tuấn</div>
+          <div style="font-size:13px;color:var(--n500)">Toán, Lý — TP.HCM</div>
+        </div>
+        <span class="badge badge-green" style="margin-left:auto">⭐ 4.9</span>
+      </div>
+      <div style="font-size:13px;color:var(--n600);margin-bottom:12px">7 năm kinh nghiệm, tốt nghiệp ĐH Bách Khoa, chuyên luyện thi THPT QG...</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-weight:700;color:var(--p700);font-size:15px">200.000đ/h</span>
+        <button class="btn btn-primary btn-sm">Đặt lịch</button>
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div style="font-weight:700;font-size:15px;color:var(--n900)">Yêu cầu #1234</div>
+        <span class="badge badge-amber">⏳ Chờ xác nhận</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:var(--n600);margin-bottom:16px">
+        <div>📚 Môn: <strong style="color:var(--n800)">Tiếng Anh</strong></div>
+        <div>🏠 Hình thức: <strong style="color:var(--n800)">Online</strong></div>
+        <div>⏰ Thời gian: <strong style="color:var(--n800)">3h/tuần</strong></div>
+        <div>💰 Ngân sách: <strong style="color:var(--n800)">150k/h</strong></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary btn-sm" style="flex:1">Nhận lớp</button>
+        <button class="btn btn-outline btn-sm">Từ chối</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BADGES & CHIPS -->
+  <span class="anchor" id="badges"></span>
+  <h2>🏷️ Badges & Filter Chips</h2>
+
+  <h3>Status badges</h3>
+  <div class="preview-box">
+    <span class="badge badge-green">✓ Đã xác thực</span>
+    <span class="badge badge-blue">📘 Active</span>
+    <span class="badge badge-amber">⏳ Chờ duyệt</span>
+    <span class="badge badge-red">✗ Từ chối</span>
+    <span class="badge badge-purple">⭐ Premium</span>
+    <span class="badge badge-gray">— Không hoạt động</span>
+  </div>
+
+  <h3>Filter chips</h3>
+  <div class="preview-box">
+    <span class="chip active">Tất cả</span>
+    <span class="chip">Toán học</span>
+    <span class="chip">Tiếng Anh</span>
+    <span class="chip">Vật lý</span>
+    <span class="chip">Hóa học</span>
+    <span class="chip">Online</span>
+    <span class="chip">Tại nhà</span>
+  </div>
+
+  <div class="code-block"><span class="cs">.badge</span>: inline-flex | padding 3px 10px | radius 99px | font 12px weight 600
+<span class="cs">.chip</span>: padding 6px 14px | radius 99px | border 1.5px --n300 | font 13px weight 500
+<span class="cs">.chip.active</span>: bg --p700 | color #fff | border-color --p700</div>
+
+  <!-- FORMS -->
+  <span class="anchor" id="forms"></span>
+  <h2>📝 Form Elements</h2>
+
+  <div class="card-grid card-grid-2" style="margin:16px 0">
+    <div class="card">
+      <h3 style="margin-top:0">Input states</h3>
+      <div style="margin-bottom:12px">
+        <label style="font-size:13px;font-weight:600;color:var(--n700);display:block;margin-bottom:6px">Họ và tên *</label>
+        <input class="input-demo" placeholder="Nhập họ và tên...">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-size:13px;font-weight:600;color:var(--n700);display:block;margin-bottom:6px">Email</label>
+        <input class="input-demo" value="user@gmail.com" style="border-color:var(--p500);box-shadow:0 0 0 3px var(--p100)">
+        <div style="font-size:12px;color:var(--n500);margin-top:4px">Focus state</div>
+      </div>
+      <div>
+        <label style="font-size:13px;font-weight:600;color:var(--red);display:block;margin-bottom:6px">Số điện thoại *</label>
+        <input class="input-demo" value="abc123" style="border-color:var(--red);background:var(--red-bg)">
+        <div style="font-size:12px;color:var(--red);margin-top:4px">⚠ Số điện thoại không hợp lệ</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Select & Textarea</h3>
+      <div style="margin-bottom:12px">
+        <label style="font-size:13px;font-weight:600;color:var(--n700);display:block;margin-bottom:6px">Môn dạy</label>
+        <select class="input-demo" style="appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%2364748B' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 12px center">
+          <option>Toán học</option>
+          <option>Tiếng Anh</option>
+          <option>Vật lý</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:13px;font-weight:600;color:var(--n700);display:block;margin-bottom:6px">Mô tả</label>
+        <textarea class="input-demo" rows="4" placeholder="Nhập mô tả..." style="resize:vertical"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-block"><span class="cs">input, select, textarea</span>:
+  border: 1.5px solid --n300 | radius --r-sm | padding 10px 14px | font 14px
+  <span class="cm">:focus</span>  → border-color --p500 | box-shadow 0 0 0 3px --p100
+  <span class="cm">.error</span>  → border-color --red | bg --red-bg
+  <span class="cm">label</span>   → 13px weight 600 color --n700 | margin-bottom 6px</div>
+
+  <!-- ALERTS -->
+  <span class="anchor" id="alerts"></span>
+  <h2>⚠️ Alerts & Callouts</h2>
+
+  <div style="display:grid;gap:10px;margin:16px 0">
+    <div class="callout callout-info"><span>ℹ️</span><div><strong>Thông tin:</strong> Hồ sơ của bạn đang được xem xét. Thời gian xử lý 1–3 ngày làm việc.</div></div>
+    <div class="callout callout-success"><span>✅</span><div><strong>Thành công:</strong> Khoá học đã được xác nhận. Gia sư sẽ liên hệ trong 24 giờ.</div></div>
+    <div class="callout callout-warn"><span>⚠️</span><div><strong>Lưu ý:</strong> Hồ sơ chưa hoàn thiện. Cập nhật để tăng tỷ lệ được chọn.</div></div>
+    <div class="callout callout-error"><span>🚫</span><div><strong>Lỗi:</strong> Không thể xử lý thanh toán. Vui lòng kiểm tra lại thông tin thẻ.</div></div>
+  </div>
+
+  <div class="code-block"><span class="cs">.callout</span>: radius --r-md | padding 14px 18px | display flex | gap 10px
+<span class="cs">.callout-info</span>:    bg --p50    | border --p200 | color --p800
+<span class="cs">.callout-success</span>: bg --green-light | border #BBF7D0 | color #14532D
+<span class="cs">.callout-warn</span>:    bg --yellow-bg | border #FDE68A | color #92400E
+<span class="cs">.callout-error</span>:   bg --red-bg | border #FECACA | color #991B1B</div>
+
+  <!-- NAV COMPONENTS -->
+  <span class="anchor" id="nav-components"></span>
+  <h2>🧭 Navigation Components</h2>
+
+  <h3>Sidebar (Dashboard)</h3>
+  <div class="preview-box" style="align-items:flex-start;gap:24px">
+    <div class="sb-preview">
+      <div class="sb-preview-logo">
+        <svg width="28" height="18" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg">
+          <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+          <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+          <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+        </svg>
+        <span class="sb-preview-text">giasu<em>.edu.vn</em></span>
+      </div>
+      <div class="sb-preview-item active"><span class="sb-preview-icon">📊</span>Tổng quan</div>
+      <div class="sb-preview-item"><span class="sb-preview-icon">📋</span>Yêu cầu</div>
+      <div class="sb-preview-item"><span class="sb-preview-icon">📚</span>Khoá học</div>
+      <div class="sb-preview-item"><span class="sb-preview-icon">💬</span>Tin nhắn</div>
+      <div class="sb-preview-item"><span class="sb-preview-icon">📅</span>Lịch dạy</div>
+      <div class="sb-preview-item"><span class="sb-preview-icon">💰</span>Thu nhập</div>
+    </div>
+    <div style="flex:1">
+      <div class="code-block" style="margin:0"><span class="cm">/* Sidebar shell */</span>
+width: <span class="cv">var(--sidebar)</span> = <span class="cv">248px</span>
+background: <span class="cv">--p900</span> (#0D2D6B)
+position: fixed | top:0 left:0 | height: 100vh
+
+<span class="cm">/* Nav item */</span>
+padding: <span class="cv">10px 20px</span> | gap: <span class="cv">10px</span>
+font: <span class="cv">13.5px / weight 500</span>
+color: <span class="cv">rgba(255,255,255,.7)</span>
+<span class="cs">.active</span>: bg rgba(255,255,255,.12) | color #fff | weight 600
+
+<span class="cm">/* Section label */</span>
+font: <span class="cv">10px / weight 700</span> | uppercase
+color: <span class="cv">rgba(255,255,255,.4)</span>
+padding: <span class="cv">16px 20px 6px</span></div>
+    </div>
+  </div>
+
+  <h3>Topbar</h3>
+  <div style="margin:12px 0">
+    <div class="topbar-prev">
+      <div style="font-weight:700;font-size:15px;color:var(--n900)">📊 Tổng quan</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="btn-icon btn-outline btn" style="font-size:18px;border:none;background:var(--n50)">🔔</button>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="avatar">NT</div>
+          <div style="font-size:13px">
+            <div style="font-weight:600;color:var(--n900)">Nguyễn Tuấn</div>
+            <div style="color:var(--n500)">Gia sư</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--n100);border:1px solid var(--n200);border-top:none;border-radius:0 0 var(--r-md) var(--r-md);height:100px;display:flex;align-items:center;justify-content:center;color:var(--n400);font-size:13px">page content area</div>
+  </div>
+  <div class="code-block"><span class="cm">/* Topbar */</span>
+height: <span class="cv">64px</span> | background: <span class="cv">#fff</span>
+border-bottom: <span class="cv">1px solid --n200</span>
+position: sticky | top: 0 | z-index: 50
+padding: <span class="cv">0 28px</span> | display: flex | justify-content: space-between</div>
+
+  <h3>Tab bar (section switcher)</h3>
+  <div style="margin:12px 0">
+    <div class="tabs">
+      <button class="tab active">Đang chờ <span class="sb-chip">12</span></button>
+      <button class="tab">Đã duyệt</button>
+      <button class="tab">Từ chối</button>
+    </div>
+    <div style="background:var(--n50);border:1px solid var(--n200);border-radius:0 0 var(--r-md) var(--r-md);height:60px;display:flex;align-items:center;justify-content:center;color:var(--n400);font-size:13px">tab content</div>
+  </div>
+  <div class="code-block"><span class="cm">/* Tab bar */</span>
+border-bottom: <span class="cv">2px solid --n200</span>
+<span class="cs">.tab</span>: padding 10px 20px | 14px weight 500 | color --n600
+<span class="cs">.tab.active</span>: color --p700 | border-bottom 2px solid --p700 | weight 600
+<span class="cm">/* count chip inside tab */</span>
+<span class="cs">.sb-chip</span>: bg --p100 | color --p700 | 10px bold | padding 1px 6px | radius 99px</div>
+
+  <!-- MODALS -->
+  <span class="anchor" id="modals"></span>
+  <h2>💬 Modals</h2>
+
+  <div class="modal-preview" style="margin:16px 0">
+    <div class="modal-box">
+      <div class="modal-title">Xác nhận hành động</div>
+      <div class="modal-body">Bạn có chắc muốn xóa yêu cầu này không? Thao tác này không thể hoàn tác.</div>
+      <div class="modal-footer">
+        <button class="btn btn-outline btn-sm">Hủy</button>
+        <button class="btn btn-danger btn-sm">Xóa</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-block"><span class="cm">/* Modal overlay */</span>
+position: fixed | inset: 0 | z-index: 1000
+background: rgba(0,0,0,.5) | backdrop-filter: blur(4px)
+
+<span class="cm">/* Modal box */</span>
+background: #fff | radius: --r-xl | padding: 28–32px
+box-shadow: --shadow-xl | max-width: 480px
+animation: fadeInScale 0.2s ease
+
+<span class="cm">/* Close on backdrop click — standard pattern */</span>
+modal.addEventListener(<span class="cs">'click'</span>, (e) => { <span class="ck">if</span>(e.target === modal) closeModal() })</div>
+
+  <!-- EMPTY STATES -->
+  <span class="anchor" id="empty-states"></span>
+  <h2>🌿 Empty States</h2>
+  <p>Mỗi empty state có demo toggle (2 nút) để switch giữa trạng thái trống và trạng thái có dữ liệu khi demo.</p>
+
+  <div class="card-grid card-grid-3" style="margin:16px 0">
+    <div class="empty-prev">
+      <div class="empty-icon">📋</div>
+      <div class="empty-title">Chưa có yêu cầu nào</div>
+      <div class="empty-desc">Yêu cầu từ phụ huynh sẽ hiển thị ở đây. Hãy hoàn thiện hồ sơ để nhận lớp.</div>
+    </div>
+    <div class="empty-prev">
+      <div class="empty-icon">🎓</div>
+      <div class="empty-title">Chưa có khoá học nào</div>
+      <div class="empty-desc">Khi phụ huynh xác nhận lịch học, khoá học sẽ xuất hiện tại đây.</div>
+    </div>
+    <div class="empty-prev">
+      <div class="empty-icon">💬</div>
+      <div class="empty-title">Chưa có tin nhắn</div>
+      <div class="empty-desc">Tin nhắn từ phụ huynh và học viên sẽ xuất hiện ở đây.</div>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Dashboard</th><th>Panel</th><th>Empty state ID</th><th>Toggle function</th></tr></thead>
+    <tbody>
+      <tr><td>Gia sư</td><td>Tổng quan</td><td><code class="code-inline">#gsov-empty</code> / <code class="code-inline">#gsov-filled</code></td><td><code class="code-inline">toggleGsOverview('empty'|'filled')</code></td></tr>
+      <tr><td>Gia sư</td><td>Yêu cầu</td><td><code class="code-inline">#req-empty-state</code> / <code class="code-inline">#req-filled-state</code></td><td><code class="code-inline">toggleRequestState('empty'|'filled')</code></td></tr>
+      <tr><td>Gia sư</td><td>Khoá học</td><td><code class="code-inline">#kh-empty-state</code> / <code class="code-inline">#kh-filled-state</code></td><td><code class="code-inline">toggleKhoahocState('empty'|'filled')</code></td></tr>
+      <tr><td>Phụ huynh</td><td>Tổng quan</td><td><code class="code-inline">#phov-empty</code> / <code class="code-inline">#phov-filled</code></td><td><code class="code-inline">togglePhOverview('empty'|'filled')</code></td></tr>
+      <tr><td>Phụ huynh</td><td>Tin nhắn</td><td><code class="code-inline">#phmsg-empty-state</code> / <code class="code-inline">#phmsg-filled-state</code></td><td><code class="code-inline">togglePhMsgState('empty'|'filled')</code></td></tr>
+      <tr><td>Admin</td><td>Tổng quan</td><td><code class="code-inline">#adov-empty</code> / <code class="code-inline">#adov-filled</code></td><td><code class="code-inline">toggleAdminOverview('empty'|'filled')</code></td></tr>
+      <tr><td>Admin</td><td>Xác thực GS queue</td><td><code class="code-inline">vt_pending_empty</code> / <code class="code-inline">vt_pending_filled</code></td><td><code class="code-inline">toggleVtQueue('empty'|'filled')</code></td></tr>
+      <tr><td>Admin</td><td>Duyệt tin queue</td><td><code class="code-inline">tt_pending_empty</code> / <code class="code-inline">tt_pending_filled</code></td><td><code class="code-inline">toggleTtQueue('empty'|'filled')</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-warn" style="margin-top:16px">
+    <span>⚠️</span>
+    <div><strong>Admin gotcha:</strong> Trong <code class="code-inline">ui-admin.html</code>, các div con của <code class="code-inline">#vt-pending</code> và <code class="code-inline">#tt-pending</code> dùng <strong>underscore</strong> trong ID (vd: <code class="code-inline">vt_pending_empty</code>) — không phải dash — để tránh bị hàm <code class="code-inline">swTab('vt', ...)</code> selector <code class="code-inline">[id^="vt-"]</code> ẩn nhầm.</div>
+  </div>
+
+  <!-- SPA PATTERNS -->
+  <span class="anchor" id="spa-patterns"></span>
+  <h2>⚡ SPA Navigation Patterns</h2>
+
+  <div class="pattern-box">
+    <div class="pattern-title">Dashboard Gia sư — switchPage(name)</div>
+    <div class="pattern-fn"><span class="pattern-comment">// tabPages = array tên pages thông thường</span>
+<span class="pattern-kw">function</span> switchPage(name) {
+  tabPages.forEach(p => {
+    document.getElementById(<span class="pattern-str">'page-'</span> + p).style.display = <span class="pattern-str">'none'</span>;
+  });
+  <span class="pattern-comment">// extraPages: ẩn .main, show page với position:fixed</span>
+  <span class="pattern-kw">if</span> (extraPages.includes(name)) {
+    document.querySelector(<span class="pattern-str">'.main'</span>).style.display = <span class="pattern-str">'none'</span>;
+    document.getElementById(<span class="pattern-str">'page-'</span> + name).style.display = <span class="pattern-str">'block'</span>;
+  } <span class="pattern-kw">else</span> {
+    document.querySelector(<span class="pattern-str">'.main'</span>).style.display = <span class="pattern-str">'block'</span>;
+    document.getElementById(<span class="pattern-str">'page-'</span> + name).style.display = <span class="pattern-str">'block'</span>;
+  }
+}</div>
+  </div>
+
+  <div class="pattern-box">
+    <div class="pattern-title">Dashboard Phụ huynh — switchState(name)</div>
+    <div class="pattern-fn"><span class="pattern-kw">function</span> switchState(name) {
+  allPanels.forEach(p => {
+    document.getElementById(<span class="pattern-str">'panel-'</span> + p).style.display = <span class="pattern-str">'none'</span>;
+  });
+  document.getElementById(<span class="pattern-str">'panel-'</span> + name).style.display = <span class="pattern-str">'block'</span>;
+  <span class="pattern-comment">// update active nav item</span>
+  document.querySelectorAll(<span class="pattern-str">'.nav-item'</span>).forEach(el => el.classList.remove(<span class="pattern-str">'active'</span>));
+  document.querySelector(<span class="pattern-str">`[data-page="${name}"]`</span>).classList.add(<span class="pattern-str">'active'</span>);
+}</div>
+  </div>
+
+  <div class="pattern-box">
+    <div class="pattern-title">Dashboard Admin — sw(id) + swTab(prefix, tab, btn)</div>
+    <div class="pattern-fn"><span class="pattern-comment">// sw: switch section chính</span>
+<span class="pattern-kw">function</span> sw(id) {
+  SECS.forEach(s => document.getElementById(<span class="pattern-str">'sec-'</span> + s).style.display = <span class="pattern-str">'none'</span>);
+  document.getElementById(<span class="pattern-str">'sec-'</span> + id).style.display = <span class="pattern-str">'block'</span>;
+}
+<span class="pattern-comment">// swTab: switch sub-tab bên trong section</span>
+<span class="pattern-kw">function</span> swTab(prefix, tab, btnPrefix) {
+  <span class="pattern-comment">// ẩn tất cả [id^="prefix-"]</span>
+  document.querySelectorAll(<span class="pattern-str">`[id^="${prefix}-"]`</span>).forEach(el => el.style.display = <span class="pattern-str">'none'</span>);
+  document.getElementById(<span class="pattern-str">`${prefix}-${tab}`</span>).style.display = <span class="pattern-str">'block'</span>;
+  <span class="pattern-comment">// ⚠ ID con dùng underscore: vt_pending_empty (không phải vt-pending-empty)</span>
+}</div>
+  </div>
+
+  <!-- DEMO TOGGLE -->
+  <span class="anchor" id="demo-toggle"></span>
+  <h2>🔀 Demo Toggle Pattern</h2>
+  <p>Mỗi section có thể switch giữa empty state và filled state để demo. Dùng để showcase khi present cho stakeholder.</p>
+
+  <div class="pattern-box">
+    <div class="pattern-title">Demo toggle — HTML + JS chuẩn</div>
+    <div class="pattern-fn"><span class="pattern-comment">&lt;!-- Toggle buttons --&gt;</span>
+&lt;div <span class="pattern-kw">class</span>=<span class="pattern-str">"demo-toggle"</span>&gt;
+  &lt;button <span class="pattern-kw">onclick</span>=<span class="pattern-str">"toggleXxx('filled')"</span> <span class="pattern-kw">id</span>=<span class="pattern-str">"btnFilled"</span>&gt;📊 Có dữ liệu&lt;/button&gt;
+  &lt;button <span class="pattern-kw">onclick</span>=<span class="pattern-str">"toggleXxx('empty')"</span>  <span class="pattern-kw">id</span>=<span class="pattern-str">"btnEmpty"</span>&gt;🌱 Tài khoản mới&lt;/button&gt;
+&lt;/div&gt;
+
+<span class="pattern-comment">&lt;!-- Content divs --&gt;</span>
+&lt;div <span class="pattern-kw">id</span>=<span class="pattern-str">"xxx-filled"</span>&gt; ... existing content ... &lt;/div&gt;
+&lt;div <span class="pattern-kw">id</span>=<span class="pattern-str">"xxx-empty"</span> <span class="pattern-kw">style</span>=<span class="pattern-str">"display:none"</span>&gt; ... empty state ... &lt;/div&gt;
+
+<span class="pattern-comment">// JS function</span>
+<span class="pattern-kw">function</span> toggleXxx(state) {
+  document.getElementById(<span class="pattern-str">'xxx-empty'</span>).style.display  = state === <span class="pattern-str">'empty'</span>  ? <span class="pattern-str">'block'</span> : <span class="pattern-str">'none'</span>;
+  document.getElementById(<span class="pattern-str">'xxx-filled'</span>).style.display = state === <span class="pattern-str">'filled'</span> ? <span class="pattern-str">'block'</span> : <span class="pattern-str">'none'</span>;
+  document.getElementById(<span class="pattern-str">'btnEmpty'</span>).style.background  = state === <span class="pattern-str">'empty'</span>  ? <span class="pattern-str">'#0D2D6B'</span> : <span class="pattern-str">'transparent'</span>;
+  document.getElementById(<span class="pattern-str">'btnFilled'</span>).style.background = state === <span class="pattern-str">'filled'</span> ? <span class="pattern-str">'#0D2D6B'</span> : <span class="pattern-str">'transparent'</span>;
+  <span class="pattern-comment">// swap text color similarly...</span>
+}</div>
+  </div>
+
+  <!-- ROLES -->
+  <span class="anchor" id="roles"></span>
+  <h2>👥 Roles & Access</h2>
+
+  <div class="card-grid card-grid-3" style="margin:16px 0">
+    <div class="card">
+      <div style="font-size:24px;margin-bottom:10px">👨‍🏫</div>
+      <div style="font-weight:700;font-size:16px;color:var(--n900);margin-bottom:8px">Gia sư</div>
+      <div style="font-size:13px;color:var(--n600);margin-bottom:12px">Dashboard tại <code class="code-inline">ui-dashboard-gia-su.html</code></div>
+      <div style="font-size:13px;color:var(--n700)">
+        Tabs: Tổng quan, Yêu cầu, Khoá học, Tin nhắn, Lịch dạy, Thu nhập, Hồ sơ<br><br>
+        Extra: Onboarding (wizard 5 bước), Thông báo
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:24px;margin-bottom:10px">👨‍👩‍👧</div>
+      <div style="font-weight:700;font-size:16px;color:var(--n900);margin-bottom:8px">Phụ huynh / Học viên</div>
+      <div style="font-size:13px;color:var(--n600);margin-bottom:12px">Dashboard tại <code class="code-inline">ui-dashboard-phu-huynh.html</code></div>
+      <div style="font-size:13px;color:var(--n700)">
+        Panels: Tổng quan, Tìm gia sư, Yêu cầu của tôi, Khoá học, Tin nhắn, Thanh toán
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:24px;margin-bottom:10px">🛡️</div>
+      <div style="font-weight:700;font-size:16px;color:var(--n900);margin-bottom:8px">Admin</div>
+      <div style="font-size:13px;color:var(--n600);margin-bottom:12px">Dashboard tại <code class="code-inline">ui-admin.html</code></div>
+      <div style="font-size:13px;color:var(--n700)">
+        Sections: Tổng quan, Xác thực GS, Duyệt tin, Quản lý users, Tài chính, Cài đặt<br><br>
+        Sub-tabs: pending / approved / rejected (trong Xác thực GS + Duyệt tin)
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-success" style="margin-top:0">
+    <span>✅</span>
+    <div><strong>Tất cả 15 trang + 3 dashboard đã hoàn chỉnh và chốt.</strong> File này là nguồn tham chiếu duy nhất cho implementation. Mọi thắc mắc về design intent hoặc interaction edge-case, refer về document này trước khi hỏi designer.</div>
+  </div>
+
+  <div style="height:60px"></div>
+</main>
+
+<script>
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+  document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+  event.target.classList.add('active');
+}
+// Highlight active section on scroll
+const anchors = document.querySelectorAll('.anchor');
+const links = document.querySelectorAll('.sb-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  anchors.forEach(a => {
+    if (window.scrollY >= a.offsetTop - 100) current = a.id;
+  });
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('onclick')?.includes(`'${current}'`));
+  });
+});
+</script>
+</body>
+</html>

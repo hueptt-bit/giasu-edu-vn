@@ -641,7 +641,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
 
         <div class="post-divider"></div>
         <div style="display:flex;gap:10px;align-items:center;">
-          <button class="btn-submit-post">
+          <button class="btn-submit-post" onclick="submitPost()">
             <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             Đăng tin
           </button>
@@ -1072,7 +1072,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
       </div>
       <div class="modal-actions">
         <button class="btn-modal-cancel" onclick="closeApplyModal()">Huỷ</button>
-        <button class="btn-modal-submit">Gửi hồ sơ ứng tuyển</button>
+        <button class="btn-modal-submit" onclick="submitApply()">Gửi hồ sơ ứng tuyển</button>
       </div>
     </div>
   </div>
@@ -1253,6 +1253,28 @@ function setPersona(p) {
 
   // Always show listing when persona changes
   demoSwitch('list');
+}
+
+/* ── TOAST HELPER ── */
+function showToast(msg, color) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:'+color+';color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);display:flex;align-items:center;gap:8px;white-space:nowrap;';
+  t.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>'+msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 3500);
+}
+
+/* ── SUBMIT POST ── */
+function submitPost() {
+  hidePostForm();
+  demoSwitch('list');
+  showToast('Tin đã đăng! Đang chờ duyệt (~5 phút)', '#16A34A');
+}
+
+/* ── SUBMIT APPLY ── */
+function submitApply() {
+  closeApplyModal();
+  showToast('Đã gửi hồ sơ! Phụ huynh sẽ xem xét sớm.', '#1565C0');
 }
 
 /* ── MON KHAC ── */

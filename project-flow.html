@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sơ đồ Flow Chi tiết — giasu.edu.vn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #1e293b; min-height: 100vh; }
+
+/* TOP BAR */
+.top-bar {
+  background: white; border-bottom: 1px solid #e2e8f0;
+  padding: 12px 24px; display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 200;
+}
+.top-bar a { color: #64748b; text-decoration: none; font-size: 13px; }
+.top-bar a:hover { color: #0D2D6B; }
+.top-bar .sep { color: #cbd5e1; }
+.top-bar .title { font-size: 14px; font-weight: 700; color: #0D2D6B; }
+.back-btn {
+  display: flex; align-items: center; gap: 6px;
+  color: #64748b; font-size: 13px; text-decoration: none;
+  padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0;
+  background: white; margin-left: auto;
+}
+.back-btn:hover { background: #f8fafc; }
+
+/* MAIN */
+.main { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+h1 { font-size: 22px; font-weight: 800; color: #0D2D6B; margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: #64748b; margin-bottom: 28px; }
+
+/* LANE HEADER */
+.lane-headers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 0;
+  position: sticky;
+  top: 53px;
+  z-index: 100;
+  background: #F8FAFC;
+  padding: 8px 0 12px;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 8px;
+}
+.lane-header {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 14px; border-radius: 10px;
+  font-size: 13px; font-weight: 700; text-align: center;
+}
+.lane-header.ph { background: #EFF6FF; color: #1D4ED8; border: 1.5px solid #BFDBFE; }
+.lane-header.ai { background: #F5F3FF; color: #6D28D9; border: 1.5px solid #DDD6FE; }
+.lane-header.gs { background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0; }
+.lane-header.port { background: #FFFBEB; color: #92400E; border: 1.5px solid #FDE68A; }
+
+/* PHASE DIVIDER */
+.phase-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 28px 0 16px;
+}
+.phase-divider-line { flex: 1; height: 1px; background: #E2E8F0; }
+.phase-label {
+  font-size: 11px; font-weight: 800; color: #64748B;
+  text-transform: uppercase; letter-spacing: .7px;
+  white-space: nowrap;
+}
+.phase-badge {
+  font-size: 10px; font-weight: 700; padding: 2px 7px;
+  border-radius: 5px; background: #DBEAFE; color: #1D4ED8;
+  letter-spacing: .3px;
+}
+
+/* LANE GRID */
+.lane-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+
+/* LANE COLUMN (stacked boxes with arrows) */
+.lane-col { display: flex; flex-direction: column; gap: 0; align-items: center; }
+
+/* BOXES */
+.box {
+  width: 100%; border-radius: 10px; padding: 12px 14px;
+  font-size: 12.5px; line-height: 1.5;
+  position: relative;
+}
+.box.ph { background: #EFF6FF; border: 1.5px solid #BFDBFE; color: #1e40af; }
+.box.ai { background: #F5F3FF; border: 1.5px solid #DDD6FE; color: #4c1d95; }
+.box.gs { background: #ECFDF5; border: 1.5px solid #A7F3D0; color: #064e3b; }
+.box.port { background: #FFFBEB; border: 1.5px solid #FDE68A; color: #78350f; }
+.box.neutral { background: #F8FAFC; border: 1.5px solid #E2E8F0; color: #374151; }
+.box.dark { background: #1E293B; border: 1.5px solid #1E293B; color: white; }
+
+.box-title { font-weight: 700; font-size: 13px; margin-bottom: 3px; color: inherit; }
+.box-sub { font-size: 11.5px; opacity: .75; line-height: 1.4; }
+.box-sub.italic { font-style: italic; font-size: 11px; }
+
+.tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 7px; }
+.tag { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 5px; letter-spacing: .2px; }
+.tag.ai { background: #EDE9FE; color: #5B21B6; }
+.tag.free { background: #D1FAE5; color: #065F46; }
+.tag.premium { background: #FEF3C7; color: #92400E; }
+.tag.premium-gs { background: #FFF0E6; color: #C2410C; }
+
+.box-stars { margin-top: 6px; }
+.bullet { font-size: 11.5px; margin-bottom: 2px; display: flex; gap: 5px; }
+.bullet .dot { flex-shrink: 0; color: #F57C00; }
+
+/* ARROWS WITHIN COLUMNS */
+.v-arrow { text-align: center; color: #94a3b8; font-size: 15px; padding: 5px 0; }
+.h-arrow { color: #94a3b8; font-size: 18px; padding: 0 4px; flex-shrink: 0; align-self: center; }
+
+/* HORIZONTAL FLOW (Phase 2) */
+.h-flow {
+  display: flex; align-items: flex-start;
+  gap: 0; flex-wrap: nowrap; overflow-x: auto;
+  padding: 4px 0 8px;
+}
+.h-flow::-webkit-scrollbar { height: 4px; }
+.h-flow::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
+.h-flow-item { flex-shrink: 0; max-width: 170px; min-width: 130px; }
+.h-flow-arrow { flex-shrink: 0; color: #94a3b8; font-size: 18px; padding: 0 6px; align-self: center; }
+
+/* LOOP BOX */
+.loop-container {
+  border: 1.5px dashed #0D2D6B; border-radius: 16px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.loop-header {
+  background: #0D2D6B; color: white;
+  padding: 8px 18px; font-size: 12px; font-weight: 800;
+  letter-spacing: .5px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+}
+.loop-badge {
+  background: rgba(255,255,255,.2); font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 5px;
+}
+
+.loop-section {
+  padding: 14px 18px;
+  border-bottom: 1px solid #E2E8F0;
+}
+.loop-section:last-child { border-bottom: none; }
+.loop-section-label {
+  font-size: 10px; font-weight: 800; color: #94A3B8;
+  text-transform: uppercase; letter-spacing: .7px;
+  margin-bottom: 12px;
+}
+
+/* REASSESSMENT BOX */
+.reassess-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+/* PORTFOLIO TRANSFER */
+.transfer-flow {
+  display: flex; align-items: center; gap: 0; flex-wrap: nowrap; overflow-x: auto;
+}
+
+/* PHASE 3 LOOP ROWS */
+.loop-row { display: flex; align-items: center; gap: 0; }
+
+/* BADGE INLINE */
+.upd-badge {
+  font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 5px;
+  background: #DBEAFE; color: #1D4ED8; letter-spacing: .3px; vertical-align: middle;
+}
+
+/* CONNECTING LABEL */
+.conn-label {
+  font-size: 10px; color: #94a3b8; text-align: center; padding: 2px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <svg width="30" height="19" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg">
+    <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+    <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+    <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+  </svg>
+  <span class="sep">/</span>
+  <a href="project-overview.html">Project Dashboard</a>
+  <span class="sep">/</span>
+  <span class="title">Sơ đồ Flow Chi tiết v3</span>
+  <a href="project-overview.html" class="back-btn">← Dashboard</a>
+</div>
+
+<div class="main">
+  <h1>Sơ đồ Flow Chi tiết</h1>
+  <p class="subtitle">Luồng đầy đủ theo vai trò · Pivot 11/05/2026</p>
+
+  <!-- LANE HEADERS -->
+  <div class="lane-headers">
+    <div class="lane-header ph">👨‍👩‍👧 Phụ huynh / Học viên</div>
+    <div class="lane-header ai">✦ Nền tảng &amp; AI</div>
+    <div class="lane-header gs">🎓 Gia sư</div>
+    <div class="lane-header port">🗂 Hồ sơ học sinh</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       GIAI ĐOẠN 1 — ĐĂNG KÝ & CHẨN ĐOÁN
+  ═══════════════════════════════════════════════════════ -->
+  <div class="phase-divider">
+    <div class="phase-divider-line"></div>
+    <span class="phase-label">Giai đoạn 1 — Đăng ký &amp; Chẩn đoán</span>
+    <span class="phase-badge">CẬP NHẬT</span>
+    <div class="phase-divider-line"></div>
+  </div>
+
+  <div class="lane-grid">
+
+    <!-- PH/HV -->
+    <div class="lane-col">
+      <div class="box ph">
+        <div class="box-title">Đăng ký tài khoản</div>
+        <div class="box-sub">Chọn vai trò Phụ huynh / Học viên</div>
+      </div>
+      <div class="v-arrow">↓</div>
+      <div class="box ph">
+        <div class="box-title">Chọn môn học + mục tiêu cụ thể</div>
+        <div class="box-sub italic">"IELTS · mục tiêu 7.0"</div>
+      </div>
+      <div class="v-arrow">↓</div>
+      <div class="box dark">
+        <div class="box-title">Làm Diagnostic test</div>
+        <div class="box-sub" style="color:rgba(255,255,255,.7)">Phù hợp với môn đã chọn</div>
+        <div class="tags"><span class="tag free">Free</span></div>
+      </div>
+    </div>
+
+    <!-- NỀN TẢNG & AI -->
+    <div class="lane-col">
+      <div class="box ai">
+        <div class="box-title">Phân tích kết quả</div>
+        <div class="box-sub">Xác định trình độ + điểm yếu</div>
+        <div class="tags"><span class="tag ai">AI</span></div>
+      </div>
+      <div class="v-arrow">↓</div>
+      <div class="box ai">
+        <div class="box-title">Gợi ý gia sư phù hợp</div>
+        <div class="box-sub">Dựa trên môn, mục tiêu, điểm yếu</div>
+        <div class="tags"><span class="tag ai">AI</span><span class="tag premium">Nâng cao · Premium</span></div>
+      </div>
+    </div>
+
+    <!-- GIA SƯ -->
+    <div class="lane-col">
+      <div class="box gs">
+        <div class="box-title">Đăng ký tài khoản</div>
+        <div class="box-sub">Hoàn thiện hồ sơ<br>Upload video intro 60–90s</div>
+      </div>
+      <div class="v-arrow">↓</div>
+      <div class="box neutral">
+        <div class="box-title">Nền tảng xác thực &amp; duyệt hồ sơ</div>
+        <div class="box-sub">Admin review · Tick xác thực</div>
+      </div>
+    </div>
+
+    <!-- HỒ SƠ HỌC SINH -->
+    <div class="lane-col">
+      <div class="box port">
+        <div class="bullet"><span class="dot">✦</span><span>Mục tiêu học tập</span></div>
+        <div class="bullet"><span class="dot">✦</span><span>Kết quả Diagnostic</span></div>
+        <div class="bullet"><span class="dot">✦</span><span>Điểm mạnh / yếu ban đầu</span></div>
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid #FDE68A;font-size:12px;font-weight:700;color:#92400E;">→ Baseline được lưu</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       GIAI ĐOẠN 2 — KHÁM PHÁ & KẾT NỐI
+  ═══════════════════════════════════════════════════════ -->
+  <div class="phase-divider">
+    <div class="phase-divider-line"></div>
+    <span class="phase-label">Giai đoạn 2 — Khám phá &amp; Kết nối</span>
+    <span class="phase-badge">CẬP NHẬT</span>
+    <div class="phase-divider-line"></div>
+  </div>
+
+  <div class="h-flow">
+
+    <div class="h-flow-item">
+      <div class="box ph">
+        <div class="box-title">Xem danh sách GS</div>
+        <div class="box-sub">Được AI gợi ý<br>+ tự tìm kiếm thêm</div>
+      </div>
+    </div>
+    <div class="h-flow-arrow">→</div>
+
+    <div class="h-flow-item">
+      <div class="box ph">
+        <div class="box-title">Xem profile + video intro</div>
+        <div class="box-sub">Hồ sơ chi tiết, đánh giá, video 60–90s</div>
+      </div>
+    </div>
+    <div class="h-flow-arrow">→</div>
+
+    <div class="h-flow-item">
+      <div class="box ph">
+        <div class="box-title">Nhắn tin kết nối</div>
+        <div class="box-sub">Trao đổi sơ bộ trước khi quyết định</div>
+      </div>
+    </div>
+    <div class="h-flow-arrow">→</div>
+
+    <div class="h-flow-item">
+      <div class="box ai">
+        <div class="box-title">AI gửi Student Brief cho GS</div>
+        <div class="box-sub">Tóm tắt học sinh, mục tiêu, điểm yếu</div>
+        <div class="tags"><span class="tag ai">AI</span><span class="tag premium-gs">Premium GS</span></div>
+      </div>
+    </div>
+    <div class="h-flow-arrow">→</div>
+
+    <div class="h-flow-item">
+      <div class="box neutral">
+        <div class="box-title">Buổi trao đổi ban đầu</div>
+        <div class="box-sub">Có checklist cấu trúc &amp; timeline AI</div>
+      </div>
+    </div>
+    <div class="h-flow-arrow">→</div>
+
+    <div class="h-flow-item">
+      <div class="box ai">
+        <div class="box-title">AI tạo Learning Agreement</div>
+        <div class="box-sub">Mục tiêu, lịch, BTVN, cột mốc</div>
+        <div class="tags"><span class="tag ai">AI</span></div>
+      </div>
+    </div>
+    <div class="h-flow-arrow">→</div>
+
+    <div class="h-flow-item">
+      <div class="box port">
+        <div class="bullet"><span class="dot">✦</span><span>Learning Agreement</span></div>
+        <div class="bullet"><span class="dot">✦</span><span>Lộ trình sơ bộ</span></div>
+        <div style="margin-top:8px;font-size:11.5px;color:#92400E;font-weight:600;">→ Lưu vào hồ sơ</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       GIAI ĐOẠN 3 — VÒNG LẶP BUỔI HỌC
+  ═══════════════════════════════════════════════════════ -->
+  <div class="phase-divider">
+    <div class="phase-divider-line"></div>
+    <span class="phase-label">Giai đoạn 3 — Vòng lặp buổi học</span>
+    <div class="phase-divider-line"></div>
+  </div>
+
+  <div class="loop-container">
+    <div class="loop-header">
+      ↻ Vòng lặp mỗi buổi học
+      <span class="loop-badge">Lặp lại mỗi buổi</span>
+    </div>
+
+    <!-- TRƯỚC BUỔI HỌC -->
+    <div class="loop-section">
+      <div class="loop-section-label">Trước buổi học</div>
+      <div class="h-flow" style="flex-wrap:wrap;gap:8px;">
+        <div class="h-flow-item" style="min-width:160px;max-width:200px;">
+          <div class="box gs">
+            <div class="box-title">Soạn &amp; gửi Pre-session Agenda</div>
+            <div class="box-sub">Nội dung, mục tiêu buổi học</div>
+            <div class="tags"><span class="tag free">Free</span></div>
+          </div>
+        </div>
+        <div class="h-flow-arrow">←</div>
+        <div class="h-flow-item" style="min-width:150px;max-width:200px;">
+          <div class="box neutral">
+            <div class="box-title">Nhắc lịch tự động</div>
+            <div class="box-sub">Hệ thống gửi reminder trước buổi</div>
+          </div>
+        </div>
+        <div class="h-flow-arrow">←</div>
+        <div class="h-flow-item" style="min-width:150px;max-width:200px;">
+          <div class="box ph">
+            <div class="box-title">Nhận thông báo agenda</div>
+            <div class="box-sub">PH / HV biết nội dung buổi học</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRONG BUỔI HỌC -->
+    <div class="loop-section">
+      <div class="loop-section-label">Trong buổi học</div>
+      <div class="h-flow">
+        <div class="h-flow-item" style="min-width:120px;">
+          <div class="box gs">
+            <div class="box-title">Bấm Check-in</div>
+            <div class="box-sub">Bắt đầu buổi, ghi giờ</div>
+          </div>
+        </div>
+        <div class="h-flow-arrow">→</div>
+        <div class="h-flow-item" style="min-width:150px;">
+          <div class="box ph">
+            <div class="box-title">PH nhận thông báo bắt đầu</div>
+            <div class="box-sub">Biết buổi đang diễn ra</div>
+          </div>
+        </div>
+        <div class="h-flow-arrow">→</div>
+        <div class="h-flow-item" style="min-width:120px;">
+          <div class="box dark">
+            <div class="box-title">Buổi học diễn ra</div>
+            <div class="box-sub" style="color:rgba(255,255,255,.7)">GS &amp; HV học thực tế</div>
+          </div>
+        </div>
+        <div class="h-flow-arrow">→</div>
+        <div class="h-flow-item" style="min-width:120px;">
+          <div class="box gs">
+            <div class="box-title">Bấm Check-out</div>
+            <div class="box-sub">Kết thúc, ghi nhận thời gian</div>
+          </div>
+        </div>
+        <div class="h-flow-arrow">→</div>
+        <div class="h-flow-item" style="min-width:150px;">
+          <div class="box ph">
+            <div class="box-title">PH nhận thông báo kết thúc</div>
+            <div class="box-sub">Tóm tắt nhanh buổi học</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAU BUỔI HỌC -->
+    <div class="loop-section">
+      <div class="loop-section-label">Sau buổi học</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+
+        <div class="box ph">
+          <div class="box-title">Điền Learning Journal</div>
+          <div class="box-sub">HV ghi chú cảm nhận, câu hỏi còn thắc mắc</div>
+          <div class="tags"><span class="tag free">Free</span></div>
+        </div>
+
+        <div class="box ai">
+          <div class="box-title">AI format báo cáo</div>
+          <div class="box-sub">Từ ghi chú thô của GS → bản đẹp gửi PH</div>
+          <div class="tags"><span class="tag ai">AI</span><span class="tag premium-gs">Premium GS</span></div>
+        </div>
+
+        <div class="box gs">
+          <div class="box-title">Điền Báo cáo buổi học</div>
+          <div class="box-sub">Nội dung · Điểm tốt · Cần cải thiện · BTVN</div>
+          <div style="margin-top:7px;padding-top:7px;border-top:1px solid #A7F3D0;">
+            <div style="font-size:11px;font-weight:700;color:#065F46;margin-bottom:5px;">Đánh giá tiêu chí 1–5 sao:</div>
+            <div style="font-size:10.5px;color:#065F46;font-weight:600;margin-bottom:3px;">Chung (mọi môn):</div>
+            <div style="font-size:11px;color:#064e3b;">🎯 Tập trung &nbsp; 😊 Thái độ &nbsp; 📝 BTVN</div>
+            <div style="font-size:10.5px;color:#065F46;font-weight:600;margin-top:5px;margin-bottom:3px;">Theo môn (auto-load):</div>
+            <div style="font-size:10.5px;color:#064e3b;font-style:italic;">Vd: Tiếng Anh → Phát âm · Ngữ pháp · Từ vựng · Nghe · Nói · Viết</div>
+            <div style="font-size:10.5px;color:#064e3b;font-style:italic;">Toán → Tư duy logic · Tính toán · Vận dụng · Giải bài tập</div>
+          </div>
+        </div>
+
+        <div class="box port">
+          <div class="bullet"><span class="dot">✦</span><span>Báo cáo buổi học</span></div>
+          <div class="bullet"><span class="dot">✦</span><span>Đánh giá tiêu chí</span></div>
+          <div class="bullet"><span class="dot">✦</span><span>Cập nhật điểm mạnh/yếu</span></div>
+          <div style="margin-top:8px;padding-top:6px;border-top:1px solid #FDE68A;">
+            <div style="font-size:11.5px;color:#92400E;font-weight:600;">→ PH nhận Digest báo cáo</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       GIAI ĐOẠN 4 — RE-ASSESSMENT (Mỗi ~10 buổi)
+  ═══════════════════════════════════════════════════════ -->
+  <div class="phase-divider">
+    <div class="phase-divider-line"></div>
+    <span class="phase-label">Giai đoạn 4 — Re-assessment</span>
+    <span class="phase-badge" style="background:#D1FAE5;color:#065F46;">Mỗi ~10 buổi</span>
+    <div class="phase-divider-line"></div>
+  </div>
+
+  <div class="lane-grid">
+
+    <div class="lane-col">
+      <div class="box ph">
+        <div class="box-title">Làm lại bài đánh giá</div>
+        <div class="box-sub">Re-assessment test theo môn, so sánh với baseline</div>
+      </div>
+    </div>
+
+    <div class="lane-col">
+      <div class="box ai">
+        <div class="box-title">AI phân tích tiến bộ</div>
+        <div class="box-sub">So sánh kết quả với lần trước, xác định điểm cải thiện</div>
+        <div class="tags"><span class="tag ai">AI</span></div>
+      </div>
+      <div class="v-arrow">↓</div>
+      <div class="box ai">
+        <div class="box-title">Cập nhật lộ trình học</div>
+        <div class="box-sub">Điều chỉnh plan theo pace thực tế, dự đoán "đạt tháng X"</div>
+        <div class="tags"><span class="tag ai">AI</span><span class="tag premium">Premium</span></div>
+      </div>
+    </div>
+
+    <div class="lane-col">
+      <div class="box gs">
+        <div class="box-title">Xem analytics học sinh</div>
+        <div class="box-sub">Biểu đồ tiêu chí theo thời gian, so sánh các giai đoạn</div>
+        <div class="tags"><span class="tag premium-gs">Premium GS</span></div>
+      </div>
+    </div>
+
+    <div class="lane-col">
+      <div class="box port">
+        <div class="bullet"><span class="dot">✦</span><span>Kết quả Re-assessment</span></div>
+        <div class="bullet"><span class="dot">✦</span><span>Skill tree cập nhật</span></div>
+        <div class="bullet"><span class="dot">✦</span><span>Biểu đồ tiến độ theo thời gian</span></div>
+        <div class="bullet"><span class="dot">✦</span><span>Lộ trình mới được lưu</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       GIAI ĐOẠN 5 — ĐỔI GIA SƯ / KẾT THÚC
+  ═══════════════════════════════════════════════════════ -->
+  <div class="phase-divider">
+    <div class="phase-divider-line"></div>
+    <span class="phase-label">Giai đoạn 5 — Đổi gia sư / Kết thúc</span>
+    <span class="phase-badge" style="background:#EDE9FE;color:#5B21B6;">Khi cần đổi GS</span>
+    <div class="phase-divider-line"></div>
+  </div>
+
+  <div class="h-flow">
+    <div class="h-flow-item" style="min-width:170px;">
+      <div class="box port">
+        <div class="box-title">Student Portfolio</div>
+        <div class="box-sub">Toàn bộ lịch sử theo môn: báo cáo, đánh giá, lộ trình</div>
+      </div>
+    </div>
+    <div class="h-flow-arrow">→</div>
+    <div class="h-flow-item" style="min-width:170px;">
+      <div class="box ai">
+        <div class="box-title">AI tạo Student Brief</div>
+        <div class="box-sub">Tóm tắt học sinh: trình độ, điểm yếu, lịch sử, phong cách học</div>
+        <div class="tags"><span class="tag ai">AI</span><span class="tag premium-gs">Premium GS</span></div>
+      </div>
+    </div>
+    <div class="h-flow-arrow">→</div>
+    <div class="h-flow-item" style="min-width:170px;">
+      <div class="box gs">
+        <div class="box-title">GS mới tiếp nhận</div>
+        <div class="box-sub">Đọc Brief, hiểu ngay bối cảnh — không bắt đầu lại từ đầu</div>
+      </div>
+    </div>
+    <div class="h-flow-arrow">→</div>
+    <div class="h-flow-item" style="min-width:160px;">
+      <div class="box neutral" style="border-color:#0D2D6B;background:#EEF2FF;">
+        <div class="box-title" style="color:#0D2D6B;">Quay lại Giai đoạn 2</div>
+        <div class="box-sub" style="color:#3730A3;">Trao đổi ban đầu → Learning Agreement mới</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div style="margin-top:32px;background:white;border:1px solid #e2e8f0;border-radius:12px;padding:14px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+    <span style="font-size:12px;font-weight:700;color:#0D2D6B;">Chú giải:</span>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><div style="width:14px;height:14px;border-radius:3px;background:#EFF6FF;border:1.5px solid #BFDBFE;"></div>Phụ huynh / Học viên</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><div style="width:14px;height:14px;border-radius:3px;background:#F5F3FF;border:1.5px solid #DDD6FE;"></div>Nền tảng &amp; AI</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><div style="width:14px;height:14px;border-radius:3px;background:#ECFDF5;border:1.5px solid #A7F3D0;"></div>Gia sư</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><div style="width:14px;height:14px;border-radius:3px;background:#FFFBEB;border:1.5px solid #FDE68A;"></div>Hồ sơ học sinh</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span class="tag ai" style="font-size:10px;">AI</span> Tính năng AI</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span class="tag free" style="font-size:10px;">Free</span> Tất cả người dùng</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span class="tag premium" style="font-size:10px;">Premium</span> Chỉ Premium</div>
+  </div>
+
+</div>
+</body>
+</html>

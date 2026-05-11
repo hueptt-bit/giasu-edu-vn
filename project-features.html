@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bảng Tính năng — giasu.edu.vn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f0f4f8; min-height: 100vh; }
+
+.top-bar {
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.top-bar a { color: #64748b; text-decoration: none; font-size: 13px; }
+.top-bar a:hover { color: #0D2D6B; }
+.top-bar .sep { color: #cbd5e1; }
+.top-bar .title { font-size: 14px; font-weight: 700; color: #0D2D6B; }
+.back-btn {
+  display: flex; align-items: center; gap: 6px;
+  color: #64748b; font-size: 13px; text-decoration: none;
+  padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0;
+  background: white; cursor: pointer; margin-left: auto;
+}
+.back-btn:hover { background: #f8fafc; }
+
+.container { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; }
+
+h1 { font-size: 22px; font-weight: 800; color: #0D2D6B; margin-bottom: 6px; }
+.subtitle { font-size: 14px; color: #64748b; margin-bottom: 32px; }
+
+/* TABLE WRAPPER */
+.table-wrap { overflow-x: auto; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.08); background: white; }
+table { width: 100%; border-collapse: collapse; min-width: 820px; }
+
+/* HEADER */
+thead th {
+  padding: 14px 16px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 2px solid #e2e8f0;
+  white-space: nowrap;
+}
+th.feature-col { text-align: left; min-width: 200px; background: #f8fafc; }
+th.tier-1 { background: #fef9f0; color: #92400e; border-top: 3px solid #d97706; }
+th.tier-2 { background: #f0f9ff; color: #0369a1; border-top: 3px solid #0ea5e9; }
+th.tier-3 { background: #fdf4ff; color: #7e22ce; border-top: 3px solid #a855f7; }
+th.tier-4 { background: #f0fdf4; color: #166534; border-top: 3px solid #22c55e; }
+th.tier-5 { background: #fff7ed; color: #9a3412; border-top: 3px solid #f97316; }
+
+.tier-name { font-size: 13px; font-weight: 800; display: block; margin-bottom: 2px; }
+.tier-price { font-size: 10px; font-weight: 500; opacity: .75; }
+.tier-role { font-size: 10px; font-weight: 600; margin-top: 3px; display: inline-block;
+  padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,.07); }
+
+/* SECTION ROWS */
+tr.section-row td {
+  background: #f1f5f9;
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-top: 2px solid #e2e8f0;
+}
+
+/* DATA ROWS */
+tbody tr:not(.section-row) { border-bottom: 1px solid #f1f5f9; }
+tbody tr:not(.section-row):hover { background: #fafbfc; }
+
+td.feature-name {
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  background: #f8fafc;
+  vertical-align: top;
+}
+td.feature-name .feat-sub {
+  font-size: 11px;
+  font-weight: 400;
+  color: #64748b;
+  display: block;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+td.cell {
+  padding: 11px 12px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 12.5px;
+}
+
+/* ICONS */
+.yes { color: #16a34a; font-size: 17px; }
+.no { color: #d1d5db; font-size: 17px; }
+.ai-tag {
+  display: inline-block;
+  background: #8b5cf6; color: white;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 6px; border-radius: 5px;
+  letter-spacing: .3px; margin-top: 3px;
+}
+.limited {
+  display: inline-block;
+  color: #d97706; font-size: 11px; font-weight: 600;
+  background: #fef3c7; padding: 2px 6px; border-radius: 5px;
+}
+.note-text {
+  display: block;
+  font-size: 10.5px; color: #64748b;
+  margin-top: 3px;
+}
+
+/* LEGEND */
+.legend {
+  display: flex; gap: 20px; flex-wrap: wrap;
+  background: white; border: 1px solid #e2e8f0;
+  border-radius: 12px; padding: 14px 20px; margin-top: 24px;
+  font-size: 12px; color: #475569;
+}
+.legend-item { display: flex; align-items: center; gap: 8px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <svg width="30" height="19" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg">
+    <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+    <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+    <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+  </svg>
+  <span class="sep">/</span>
+  <a href="project-overview.html">Project Overview</a>
+  <span class="sep">/</span>
+  <span class="title">Bảng Tính năng v3</span>
+  <a href="project-overview.html" class="back-btn">← Về Dashboard</a>
+</div>
+
+<div class="container">
+  <h1>Bảng Phân loại Tính năng</h1>
+  <p class="subtitle">Phân loại theo 5 loại tài khoản · Cập nhật 11/05/2026</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="feature-col">Tính năng</th>
+          <th class="tier-1">
+            <span class="tier-name">GS Chưa xác thực</span>
+            <span class="tier-price">Miễn phí</span>
+            <span class="tier-role">Gia sư</span>
+          </th>
+          <th class="tier-2">
+            <span class="tier-name">PH / HV Free</span>
+            <span class="tier-price">Miễn phí</span>
+            <span class="tier-role">Phụ huynh / Học viên</span>
+          </th>
+          <th class="tier-3">
+            <span class="tier-name">PH / HV Premium</span>
+            <span class="tier-price">59–79k/tháng</span>
+            <span class="tier-role">Phụ huynh / Học viên</span>
+          </th>
+          <th class="tier-4">
+            <span class="tier-name">GS Free</span>
+            <span class="tier-price">Miễn phí · Đã xác thực</span>
+            <span class="tier-role">Gia sư</span>
+          </th>
+          <th class="tier-5">
+            <span class="tier-name">GS Premium</span>
+            <span class="tier-price">99–149k/tháng</span>
+            <span class="tier-role">Gia sư</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- SECTION: TÌM KIẾM & HỒ SƠ -->
+        <tr class="section-row"><td colspan="6">🔍 Tìm kiếm & Hồ sơ</td></tr>
+
+        <tr>
+          <td class="feature-name">Hiển thị trong kết quả tìm kiếm
+            <span class="feat-sub">Xuất hiện khi PH/HV tìm GS</span>
+          </td>
+          <td class="cell"><span class="limited">Có tag "Chưa XN"</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Tick xác thực ✓</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Tick + Featured ⭐</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Tạo hồ sơ gia sư
+            <span class="feat-sub">Ảnh, giới thiệu, môn dạy, kinh nghiệm</span>
+          </td>
+          <td class="cell"><span class="limited">Cơ bản</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">+ Video intro</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">AI Gợi ý GS phù hợp
+            <span class="feat-sub">Dựa trên kết quả diagnostic + mục tiêu</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Featured Listing
+            <span class="feat-sub">Hiển thị nổi bật đầu trang kết quả</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Add-on 7/30 ngày</span></td>
+        </tr>
+
+        <!-- SECTION: DIAGNOSTIC & MATCHING -->
+        <tr class="section-row"><td colspan="6">🧪 Diagnostic & Matching</td></tr>
+
+        <tr>
+          <td class="feature-name">Làm Diagnostic Test
+            <span class="feat-sub">Bài test đầu vào xác định trình độ theo môn</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Xem kết quả + phân tích điểm mạnh/yếu
+            <span class="feat-sub">Sau khi hoàn thành Diagnostic Test</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+        </tr>
+
+        <!-- SECTION: NHẮN TIN & KẾT NỐI -->
+        <tr class="section-row"><td colspan="6">💬 Nhắn tin & Kết nối</td></tr>
+
+        <tr>
+          <td class="feature-name">Nhắn tin với GS / PH
+            <span class="feat-sub">Trao đổi trực tiếp qua nền tảng</span>
+          </td>
+          <td class="cell"><span class="limited">Giới hạn</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Nhắn tin trước (Preview Msg)
+            <span class="feat-sub">Gửi tin nhắn đầu tiên từ trang Profile</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+        </tr>
+
+        <!-- SECTION: BUỔI TRAO ĐỔI BAN ĐẦU -->
+        <tr class="section-row"><td colspan="6">🤝 Buổi trao đổi ban đầu & Learning Agreement</td></tr>
+
+        <tr>
+          <td class="feature-name">Tham gia buổi trao đổi ban đầu
+            <span class="feat-sub">Cùng điền checklist mục tiêu, lịch, kỳ vọng</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">AI gợi ý timeline thực tế
+            <span class="feat-sub">Dự đoán "đạt mục tiêu vào tháng X" khi trao đổi</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Learning Agreement (AI tạo)
+            <span class="feat-sub">Bản ghi nhớ học tập sau buổi trao đổi</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Bản đơn giản</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI</span></td>
+        </tr>
+
+        <!-- SECTION: QUẢN LÝ BUỔI HỌC -->
+        <tr class="section-row"><td colspan="6">📅 Quản lý buổi học</td></tr>
+
+        <tr>
+          <td class="feature-name">Đặt lịch & Quản lý lịch dạy
+            <span class="feat-sub">Lịch học cố định, xem lịch theo tuần</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Check-in / Check-out buổi học
+            <span class="feat-sub">Ghi nhận giờ bắt đầu và kết thúc buổi học</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Lập agenda trước buổi học
+            <span class="feat-sub">GS soạn nội dung, mục tiêu buổi học</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI soạn</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Yêu cầu đổi / bù buổi học
+            <span class="feat-sub">Makeup session request — xin đổi lịch khi cần</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <!-- SECTION: BÁO CÁO & ĐÁNH GIÁ -->
+        <tr class="section-row"><td colspan="6">📊 Báo cáo & Đánh giá tiêu chí</td></tr>
+
+        <tr>
+          <td class="feature-name">Điền báo cáo sau buổi học
+            <span class="feat-sub">Nội dung dạy, điểm tốt, điểm cần cải thiện, BTVN</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Đánh giá tiêu chí 1–5 sao
+            <span class="feat-sub">Tập trung / Hiểu bài / BTVN / Thái độ</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">AI format báo cáo đẹp từ ghi chú thô
+            <span class="feat-sub">GS nhập nhanh, AI tạo bản đẹp gửi PH</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Nhận báo cáo buổi học
+            <span class="feat-sub">PH/HV nhận digest sau mỗi buổi</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="limited">Tóm tắt ngắn</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Báo cáo đầy đủ</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+        </tr>
+
+        <!-- SECTION: TIẾN ĐỘ & PORTFOLIO -->
+        <tr class="section-row"><td colspan="6">📈 Tiến độ & Student Portfolio</td></tr>
+
+        <tr>
+          <td class="feature-name">Xem biểu đồ tiến độ học sinh
+            <span class="feat-sub">Đánh giá tiêu chí theo thời gian</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="limited">7 ngày gần nhất</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Toàn bộ lịch sử</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Skill tree — bản đồ kiến thức
+            <span class="feat-sub">Nhánh xanh (đã nắm) / đỏ (cần cải thiện) theo môn</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Goal & Milestone tracker
+            <span class="feat-sub">% tiến độ đến mục tiêu, các cột mốc quan trọng</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="limited">Cơ bản</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">AI dự đoán "đạt mục tiêu vào tháng X"
+            <span class="feat-sub">Phân tích pace hiện tại → ước tính thời gian</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Student Portfolio (Hồ sơ học sinh)
+            <span class="feat-sub">Lịch sử học tích lũy theo môn, dùng khi đổi GS</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Xem cơ bản</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Đầy đủ + chia sẻ</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Đọc khi nhận HV</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">+ AI Student Brief</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Re-assessment định kỳ
+            <span class="feat-sub">Đánh giá lại trình độ mỗi ~10 buổi</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <!-- SECTION: AI & CÔNG CỤ GS -->
+        <tr class="section-row"><td colspan="6">🤖 AI & Công cụ Gia sư</td></tr>
+
+        <tr>
+          <td class="feature-name">AI soạn giáo án / bài tập
+            <span class="feat-sub">Generate lesson plan và bài tập phù hợp trình độ HV</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">AI phân tích điểm yếu học sinh
+            <span class="feat-sub">Tổng hợp pattern từ nhiều buổi, gợi ý cách dạy</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="ai-tag">AI</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Analytics dashboard GS
+            <span class="feat-sub">Số buổi, tỉ lệ hoàn thành, đánh giá trung bình</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="limited">Cơ bản</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Đầy đủ</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Xuất PDF báo cáo / tài liệu
+            <span class="feat-sub">Export báo cáo, lesson plan, portfolio thành PDF</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="yes">✓</span></td>
+        </tr>
+
+        <tr>
+          <td class="feature-name">Thư viện tài liệu
+            <span class="feat-sub">Upload đề cương, bài tập, mind map cho học sinh</span>
+          </td>
+          <td class="cell"><span class="no">—</span></td>
+          <td class="cell"><span class="limited">Xem danh sách</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Tải về</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Upload</span></td>
+          <td class="cell"><span class="yes">✓</span> <span class="note-text">Upload + quản lý</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span style="color:#16a34a;font-size:17px;">✓</span> Có đầy đủ</div>
+    <div class="legend-item"><span style="color:#d1d5db;font-size:17px;">—</span> Không có</div>
+    <div class="legend-item"><span class="limited">Giới hạn</span> Có nhưng hạn chế</div>
+    <div class="legend-item"><span class="ai-tag">AI</span> Tính năng AI tăng cường</div>
+  </div>
+</div>
+
+</body>
+</html>

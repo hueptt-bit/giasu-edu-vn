@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>giasu.edu.vn — UI Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #F0F4F8; min-height: 100vh; color: #1E293B; }
+
+/* ── HEADER ── */
+.header {
+  background: linear-gradient(135deg, #0D2D6B 0%, #1a47a3 60%, #1565C0 100%);
+  padding: 48px 24px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(245,124,0,.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 30%, rgba(255,255,255,.06) 0%, transparent 50%);
+}
+.header-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+.logo-row {
+  display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;
+}
+.logo-text { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -.5px; }
+.logo-text em { font-weight: 500; font-style: normal; opacity: .55; }
+.header h1 { font-size: 32px; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 12px; }
+.header h1 em { font-style: normal; color: #FBB040; }
+.header-sub { font-size: 15px; color: rgba(255,255,255,.75); line-height: 1.6; margin-bottom: 28px; }
+.header-badges { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.badge {
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px; padding: 6px 14px;
+  font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.9);
+  display: flex; align-items: center; gap: 6px;
+}
+.badge-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ADE80; }
+
+/* ── CONTAINER ── */
+.container { max-width: 1080px; margin: 0 auto; padding: 40px 20px 64px; }
+
+/* ── SECTION ── */
+.section { margin-bottom: 40px; }
+.section-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.section-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+}
+.section-icon.blue  { background: #EFF6FF; }
+.section-icon.green { background: #F0FDF4; }
+.section-icon.amber { background: #FFFBEB; }
+.section-icon.purple{ background: #F5F3FF; }
+.section-icon.red   { background: #FEF2F2; }
+.section-title { font-size: 15px; font-weight: 800; color: #0D2D6B; }
+.section-sub   { font-size: 12.5px; color: #64748B; margin-top: 1px; }
+
+/* ── GRID ── */
+.grid { display: grid; gap: 12px; }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 900px) { .grid-4, .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+
+/* ── CARD ── */
+.card {
+  background: #fff; border-radius: 14px;
+  border: 1.5px solid #E2E8F0;
+  padding: 16px 18px;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: 6px;
+  transition: all .18s ease;
+  cursor: pointer;
+}
+.card:hover {
+  border-color: #0D2D6B;
+  box-shadow: 0 4px 20px rgba(13,45,107,.1);
+  transform: translateY(-2px);
+}
+.card-tag {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: #94A3B8;
+}
+.card-name { font-size: 14px; font-weight: 700; color: #0F172A; }
+.card-desc { font-size: 12px; color: #64748B; line-height: 1.5; }
+.card-arrow {
+  margin-top: auto; padding-top: 10px;
+  font-size: 12px; font-weight: 700; color: #0D2D6B;
+  display: flex; align-items: center; gap: 4px;
+}
+
+/* Accent colors per section */
+.card.blue:hover  { border-color: #3B82F6; }
+.card.blue  .card-arrow { color: #2563EB; }
+.card.green:hover { border-color: #16A34A; }
+.card.green .card-arrow { color: #16A34A; }
+.card.amber:hover { border-color: #D97706; }
+.card.amber .card-arrow { color: #D97706; }
+.card.purple:hover{ border-color: #7C3AED; }
+.card.purple.card-arrow { color: #7C3AED; }
+.card.red:hover   { border-color: #DC2626; }
+.card.red   .card-arrow { color: #DC2626; }
+
+/* ── HIGHLIGHT CARD (featured) ── */
+.card-featured {
+  background: linear-gradient(135deg, #0D2D6B, #1565C0);
+  border-color: transparent; color: #fff;
+}
+.card-featured:hover { border-color: transparent; box-shadow: 0 8px 28px rgba(13,45,107,.3); }
+.card-featured .card-tag { color: rgba(255,255,255,.6); }
+.card-featured .card-name { color: #fff; }
+.card-featured .card-desc { color: rgba(255,255,255,.75); }
+.card-featured .card-arrow { color: #FBB040; }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: #E2E8F0; margin: 8px 0 32px; }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center; padding: 32px 24px;
+  border-top: 1px solid #E2E8F0;
+  font-size: 12.5px; color: #94A3B8;
+}
+.footer a { color: #0D2D6B; text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo-row">
+      <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+      </svg>
+      <span class="logo-text">giasu<em>.edu.vn</em></span>
+    </div>
+    <h1>UI Design Demo</h1>
+    <p class="header-sub">Marketplace gia sư Việt Nam — kết nối có chất lượng đo được, AI hỗ trợ mọi bước học tập.</p>
+    <div class="header-badges">
+      <div class="badge"><span class="badge-dot"></span> UI Mockup — Phase 1 + 2</div>
+      <div class="badge">26 trang thiết kế</div>
+      <div class="badge">✦ AI features</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- PUBLIC PAGES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon blue">🌐</div>
+      <div>
+        <div class="section-title">Trang công khai</div>
+        <div class="section-sub">Giao diện dành cho người dùng chưa đăng nhập</div>
+      </div>
+    </div>
+    <div class="grid grid-4">
+      <a href="ui-trang-chu.html" class="card blue">
+        <div class="card-tag">Public</div>
+        <div class="card-name">Trang chủ</div>
+        <div class="card-desc">Hero, 3 trụ cột AI, tìm kiếm, CTA đăng ký</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-tim-gia-su.html" class="card blue">
+        <div class="card-tag">Public</div>
+        <div class="card-name">Tìm gia sư</div>
+        <div class="card-desc">Filter, AI match %, verified badge, toggle demo</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-profile.html" class="card blue">
+        <div class="card-tag">Public</div>
+        <div class="card-name">Profile gia sư</div>
+        <div class="card-desc">Hồ sơ chi tiết, sidebar 3 bước gửi hồ sơ học</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-diagnostic.html" class="card blue">
+        <div class="card-tag">Public · ✦ AI</div>
+        <div class="card-name">Bài test đầu vào</div>
+        <div class="card-desc">Diagnostic test, kết quả AI phân tích điểm mạnh/yếu</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-auth.html" class="card blue">
+        <div class="card-tag">Public</div>
+        <div class="card-name">Đăng nhập / Đăng ký</div>
+        <div class="card-desc">Auth flow cho PH/HV và gia sư</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-dang-ky-day.html" class="card blue">
+        <div class="card-tag">Public</div>
+        <div class="card-name">Đăng ký dạy học</div>
+        <div class="card-desc">Onboarding gia sư mới, KYC, tạo hồ sơ</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-premium.html" class="card blue">
+        <div class="card-tag">Public</div>
+        <div class="card-name">Gói Premium</div>
+        <div class="card-desc">So sánh Free/Premium, bảng tính năng AI đầy đủ</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-gioi-thieu.html" class="card blue">
+        <div class="card-tag">Public</div>
+        <div class="card-name">Giới thiệu</div>
+        <div class="card-desc">Về nền tảng, sứ mệnh, đội ngũ</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PH/HV FLOW -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon green">👨‍👩‍👧</div>
+      <div>
+        <div class="section-title">Phụ huynh / Học viên</div>
+        <div class="section-sub">Dashboard và flow học tập từ đầu đến cuối</div>
+      </div>
+    </div>
+    <div class="grid grid-3">
+      <a href="ui-dashboard-phu-huynh.html" class="card-featured card">
+        <div class="card-tag">Dashboard chính</div>
+        <div class="card-name">Dashboard Phụ huynh</div>
+        <div class="card-desc">Tổng quan khoá học, tiến độ, báo cáo AI, pipeline trạng thái</div>
+        <div class="card-arrow">Xem dashboard →</div>
+      </a>
+      <a href="ui-progress.html" class="card green">
+        <div class="card-tag">✦ AI</div>
+        <div class="card-name">Tiến độ học tập</div>
+        <div class="card-desc">Skill tree, biểu đồ theo tiêu chí, Goal tracker, Re-assessment</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-student-portfolio.html" class="card green">
+        <div class="card-tag">✦ AI</div>
+        <div class="card-name">Hồ sơ học sinh</div>
+        <div class="card-desc">Lịch sử học tích lũy theo môn, AI Student Brief</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-alignment.html" class="card green">
+        <div class="card-tag">Flow · ✦ AI</div>
+        <div class="card-name">Cam kết học tập</div>
+        <div class="card-desc">Async flow 3 bước: hồ sơ học, lịch & mục tiêu, ký cam kết</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-review.html" class="card green">
+        <div class="card-tag">Flow</div>
+        <div class="card-name">Đánh giá buổi học</div>
+        <div class="card-desc">★ Rating, quick tags, ẩn danh toggle, GS reply</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-messages.html" class="card green">
+        <div class="card-tag">Flow</div>
+        <div class="card-name">Nhắn tin</div>
+        <div class="card-desc">Chat PH/HV ↔ GS, toggle demo hai chiều</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- GS FLOW -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon amber">👨‍🏫</div>
+      <div>
+        <div class="section-title">Gia sư</div>
+        <div class="section-sub">Dashboard và bộ công cụ AI dành cho gia sư</div>
+      </div>
+    </div>
+    <div class="grid grid-3">
+      <a href="ui-dashboard-gia-su.html" class="card-featured card">
+        <div class="card-tag">Dashboard chính · Free/Premium toggle</div>
+        <div class="card-name">Dashboard Gia sư</div>
+        <div class="card-desc">Tổng quan, Yêu cầu mới, Khoá học, Nhật ký — AI notification flow</div>
+        <div class="card-arrow">Xem dashboard →</div>
+      </a>
+      <a href="ui-tutor-brief.html" class="card amber">
+        <div class="card-tag">✦ AI · Matching flow</div>
+        <div class="card-name">AI Brief học viên</div>
+        <div class="card-desc">GS đọc AI phân tích HV, lộ trình 3 phase, ký sẵn cam kết</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-course.html" class="card amber">
+        <div class="card-tag">✦ AI</div>
+        <div class="card-name">Quản lý khoá học</div>
+        <div class="card-desc">Timeline 24 buổi, khung giáo án 6 section, PH view toggle</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-session-report.html" class="card amber">
+        <div class="card-tag">✦ AI</div>
+        <div class="card-name">Báo cáo buổi học</div>
+        <div class="card-desc">GS điền báo cáo, đánh giá tiêu chí 1–5★, AI format gửi PH</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-resources.html" class="card amber">
+        <div class="card-tag">Free/Premium toggle</div>
+        <div class="card-name">Thư viện tài liệu</div>
+        <div class="card-desc">Upload, browse, filter theo môn, Free vs Premium 5GB</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-alignment.html" class="card amber">
+        <div class="card-tag">Flow · ✦ AI</div>
+        <div class="card-name">Cam kết học tập</div>
+        <div class="card-desc">GS ký sẵn async, PH pending — lock banner sau khi ký đôi</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ADMIN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon red">🔧</div>
+      <div>
+        <div class="section-title">Admin</div>
+        <div class="section-sub">Quản trị nền tảng — duyệt GS, AI pipeline, subscription</div>
+      </div>
+    </div>
+    <div class="grid grid-2">
+      <a href="ui-admin.html" class="card-featured card">
+        <div class="card-tag">Admin Dashboard</div>
+        <div class="card-name">Quản trị hệ thống</div>
+        <div class="card-desc">Duyệt GS, AI matching pipeline, Subscription MRR/ARPU, churn cohort</div>
+        <div class="card-arrow">Xem dashboard →</div>
+      </a>
+      <a href="ui-dang-tin.html" class="card red">
+        <div class="card-tag">Admin · GS</div>
+        <div class="card-name">Đăng tin / Featured</div>
+        <div class="card-desc">GS đăng tin Featured Listing add-on 7/30 ngày</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MISC -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon purple">📄</div>
+      <div>
+        <div class="section-title">Nội dung & Hỗ trợ</div>
+        <div class="section-sub">Blog, hướng dẫn sử dụng</div>
+      </div>
+    </div>
+    <div class="grid grid-4">
+      <a href="ui-blog.html" class="card purple">
+        <div class="card-tag">Content</div>
+        <div class="card-name">Blog</div>
+        <div class="card-desc">Danh sách bài viết, phân loại theo chủ đề</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-bai-viet.html" class="card purple">
+        <div class="card-tag">Content</div>
+        <div class="card-name">Bài viết chi tiết</div>
+        <div class="card-desc">Layout đọc bài, related posts, CTA cuối bài</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-huong-dan.html" class="card purple">
+        <div class="card-tag">Support</div>
+        <div class="card-name">Hướng dẫn</div>
+        <div class="card-desc">FAQ và hướng dẫn sử dụng nền tảng</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+      <a href="ui-notifications.html" class="card purple">
+        <div class="card-tag">UI Component</div>
+        <div class="card-name">Thông báo</div>
+        <div class="card-desc">Trung tâm thông báo — các loại alert và notification</div>
+        <div class="card-arrow">Xem trang →</div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>giasu.edu.vn — UI Design Mockup · Phase 1 + Phase 2 · 2026</p>
+  <p style="margin-top:6px;">26 trang thiết kế · Thuần HTML/CSS — không cần backend</p>
+</div>
+
+</body>
+</html>

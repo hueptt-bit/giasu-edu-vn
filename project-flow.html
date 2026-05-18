@@ -573,6 +573,102 @@ h1 { font-size: 22px; font-weight: 800; color: #0D2D6B; margin-bottom: 4px; }
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════
+       PHASE 3 — ASYNC MATCHING FLOW (12/05/2026)
+  ═══════════════════════════════════════════════════ -->
+  <div class="phase-divider" style="margin-top:36px;">
+    <div class="phase-divider-line"></div>
+    <span class="phase-label">Phase 3</span>
+    <span class="phase-badge" style="background:#FFF7ED;color:#C2410C;border:1px solid #FED7AA;">⚡ Async Matching — Flow mới 12/05/2026</span>
+    <div class="phase-divider-line"></div>
+  </div>
+
+  <div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:12px;padding:12px 18px;margin-bottom:16px;font-size:12.5px;color:#92400E;line-height:1.6;">
+    <strong>Thay đổi cốt lõi:</strong> Toàn bộ quy trình matching diễn ra async — không cần buổi meeting riêng trước khi học. Học viên gửi hồ sơ → AI tổng hợp → Gia sư đề xuất → Học viên xác nhận → Cả hai ký Cam kết → Buổi học đầu tiên bắt đầu trực tiếp.
+  </div>
+
+  <!-- Lane headers Phase 3 -->
+  <div class="lane-headers" style="grid-template-columns:repeat(3,1fr);position:static;border:none;padding:0;margin-bottom:12px;">
+    <div class="lane-header ph">👩‍🎓 Học viên / PH</div>
+    <div class="lane-header ai">✨ AI / Hệ thống</div>
+    <div class="lane-header gs">👨‍🏫 Gia sư</div>
+  </div>
+
+  <!-- Row 1: Student sends brief -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
+    <div class="box ph" style="background:#FFF7ED;border-color:#FED7AA;">
+      <div class="box-title">① Gửi Hồ sơ học</div>
+      <div class="box-sub">Từ modal "Đặt buổi trao đổi" trên ui-profile.html: mục tiêu · lịch rảnh · kỳ vọng HV/PH</div>
+      <div class="tags"><span class="tag free">Async · 5 phút</span></div>
+    </div>
+    <div class="box ai">
+      <div class="box-title">AI tổng hợp Brief</div>
+      <div class="box-sub">Diagnostic + hồ sơ → Brief 5 dòng → Gửi thông báo cho gia sư</div>
+      <div class="tags"><span class="tag ai">AI · Tự động</span></div>
+    </div>
+    <div class="box neutral" style="background:#F8FAFC;border:1.5px dashed #CBD5E1;">
+      <div class="box-title" style="color:#94A3B8;">Chờ — không cần online</div>
+      <div class="box-sub" style="color:#94A3B8;">Nhận thông báo khi có hồ sơ mới</div>
+    </div>
+  </div>
+
+  <!-- Row 2: Tutor reviews + proposes -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
+    <div class="box neutral" style="background:#F8FAFC;border:1.5px dashed #CBD5E1;">
+      <div class="box-title" style="color:#94A3B8;">Chờ đề xuất từ gia sư</div>
+      <div class="box-sub" style="color:#94A3B8;">Nhận thông báo khi GS phản hồi</div>
+    </div>
+    <div class="box neutral" style="background:#F8FAFC;border:1.5px dashed #CBD5E1;">
+      <div class="box-sub" style="color:#94A3B8;text-align:center;padding:8px 0;">⇐ GS điền đề xuất ⇒ AI tạo Cam kết</div>
+    </div>
+    <div class="box gs" style="background:#EFF6FF;border-color:#BFDBFE;">
+      <div class="box-title">② Xem Brief → Đề xuất</div>
+      <div class="box-sub">Xem thông tin HV · Điền lộ trình đề xuất (AI hỗ trợ) · Cam kết GS · Đề xuất 2–3 slot lịch</div>
+      <div class="tags"><span class="tag free">Async · 3 phút</span><span class="tag ai">ui-tutor-brief.html 🔨</span></div>
+    </div>
+  </div>
+
+  <!-- Row 3: Student confirms + sign -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
+    <div class="box ph" style="background:#FFF7ED;border-color:#FED7AA;">
+      <div class="box-title">③ Xác nhận & Chọn lịch</div>
+      <div class="box-sub">Xem lộ trình đề xuất · Xác nhận cam kết HV/PH · Chọn slot từ đề xuất của GS</div>
+      <div class="tags"><span class="tag free">Async · 3 phút</span></div>
+    </div>
+    <div class="box ai">
+      <div class="box-title">AI tạo Cam kết học tập</div>
+      <div class="box-sub">Tổng hợp toàn bộ dữ liệu → Draft Cam kết đầy đủ → Gửi cho cả hai bên ký</div>
+      <div class="tags"><span class="tag ai">AI · Tự động</span></div>
+    </div>
+    <div class="box neutral" style="background:#F8FAFC;border:1.5px dashed #CBD5E1;">
+      <div class="box-title" style="color:#94A3B8;">Chờ học viên xác nhận</div>
+      <div class="box-sub" style="color:#94A3B8;">Nhận thông báo khi HV chọn lịch</div>
+    </div>
+  </div>
+
+  <!-- Row 4: Async signing -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+    <div class="box ph" style="background:#FFF7ED;border-color:#FED7AA;">
+      <div class="box-title">④ Ký Cam kết ✅</div>
+      <div class="box-sub">Review Cam kết học tập → ký async · ui-alignment.html (PH/HV bước cuối)</div>
+      <div class="tags"><span class="tag free">Async · bất cứ lúc nào</span><span class="tag" style="background:#D1FAE5;color:#065F46;border-color:#A7F3D0;">Chốt 12/05</span></div>
+    </div>
+    <div class="box gs" style="background:#EFF6FF;border-color:#BFDBFE;">
+      <div class="box-title">④ GS đã pre-signed ✅</div>
+      <div class="box-sub">GS ký khi gửi đề xuất · Khi PH ký → hệ thống tự lock lịch và gửi thông báo</div>
+      <div class="tags"><span class="tag free">Pre-signed</span><span class="tag" style="background:#D1FAE5;color:#065F46;border-color:#A7F3D0;">Chốt 12/05</span></div>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div style="background:linear-gradient(135deg,#0D2D6B,#1565C0);border-radius:14px;padding:16px 22px;display:flex;align-items:center;gap:16px;margin-bottom:8px;">
+    <div style="font-size:32px;flex-shrink:0;">🚀</div>
+    <div>
+      <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:3px;">Buổi học đầu tiên — bắt đầu trực tiếp</div>
+      <div style="font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.6;">AI đã chuẩn bị agenda từ lộ trình đã chốt · Không có buổi meeting riêng · GS và HV gặp nhau là học thật</div>
+    </div>
+  </div>
+
   <!-- LEGEND -->
   <div style="margin-top:32px;background:white;border:1px solid #e2e8f0;border-radius:12px;padding:14px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
     <span style="font-size:12px;font-weight:700;color:#0D2D6B;">Chú giải:</span>

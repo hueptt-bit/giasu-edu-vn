@@ -268,6 +268,21 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
       <!-- GROUP: HÔM NAY -->
       <div class="notif-group-label">Hôm nay</div>
 
+      <!-- 0. REVIEW PROMPT — unread (mới nhất, ưu tiên cao) -->
+      <div class="notif-item unread" data-type="review" onclick="readItem(this); window.location='ui-review.html'" style="cursor:pointer;border-color:#FCD34D;background:linear-gradient(135deg,#FFFBEB,#FFFDE7);">
+        <div class="notif-dot" style="background:#F59E0B;"></div>
+        <div class="notif-avatar" style="background:linear-gradient(135deg,#F59E0B,#F57C00);font-size:18px;">⭐</div>
+        <div class="notif-body">
+          <div class="notif-title" style="color:#92400E;">Đánh giá buổi học #7 với thầy Nguyễn Văn An</div>
+          <div class="notif-desc">Thầy An vừa gửi báo cáo buổi học · Toán THPT · Hôm nay 20:45 · Chỉ 30 giây để đánh giá ✨</div>
+          <div class="notif-actions-row">
+            <a href="ui-review.html" class="notif-action primary" onclick="event.stopPropagation()" style="background:linear-gradient(135deg,#F59E0B,#F57C00);border:none;text-decoration:none;display:inline-flex;align-items:center;">⭐ Đánh giá ngay</a>
+            <button class="notif-action ghost" onclick="event.stopPropagation()">Để sau</button>
+          </div>
+          <div class="notif-time">Hôm nay · 20:47</div>
+        </div>
+      </div>
+
       <!-- 1. Đặt lịch mới — unread -->
       <div class="notif-item unread" data-type="schedule" onclick="readItem(this)">
         <div class="notif-dot"></div>

@@ -26,10 +26,10 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
 .nav-logo{display:flex;align-items:center;gap:10px;margin-right:40px;flex-shrink:0;}
 .nav-logo-icon{width:36px;height:36px;border-radius:9px;background:var(--p700);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(21,101,192,.3);}
 .nav-logo-icon svg{width:20px;height:20px;fill:white;}
-.nav-logo-text{font-size:17px;font-weight:800;color:var(--p900);letter-spacing:-.3px;}
-.nav-logo-text em{color:var(--s500);font-style:normal;}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px;line-height:1;}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.5;letter-spacing:-.2px;}
 .nav-links{display:flex;align-items:center;gap:2px;flex:1;}
-.nav-link{padding:7px 14px;border-radius:var(--r-sm);font-size:14px;font-weight:500;color:var(--n600);transition:all .15s;white-space:nowrap;}
+.nav-link{padding:6px 13px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:var(--n600);transition:all .15s;white-space:nowrap;}
 .nav-link:hover{background:var(--n100);color:var(--n800);}
 .nav-link.active{color:var(--p700);font-weight:600;background:var(--p50);}
 .nav-actions{display:flex;align-items:center;gap:8px;margin-left:auto;}
@@ -107,17 +107,35 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
 }
 .filter-select:focus{outline:none;border-color:var(--p700);box-shadow:0 0 0 3px rgba(21,101,192,.1);}
 
-/* Price range */
-.price-range-display{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:10px;
-}
-.price-val{font-size:13px;font-weight:700;color:var(--p700);}
-.range-track{position:relative;height:6px;background:var(--n200);border-radius:3px;margin:8px 0;}
-.range-fill{position:absolute;left:18%;right:25%;height:100%;background:var(--p700);border-radius:3px;}
-.range-thumb{position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;border:2.5px solid var(--p700);top:50%;transform:translateY(-50%);box-shadow:0 2px 6px rgba(0,0,0,.12);cursor:pointer;}
-.range-thumb.left{left:calc(18% - 9px);}
-.range-thumb.right{right:calc(25% - 9px);}
+/* AI match badge */
+.badge-match{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:30px;
+  font-size:10px;font-weight:800;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;
+  box-shadow:0 2px 8px rgba(124,58,237,.35);}
+.badge-featured{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:30px;
+  font-size:10px;font-weight:700;background:linear-gradient(135deg,#F57C00,#FFA726);color:#fff;
+  box-shadow:0 2px 8px rgba(245,124,0,.35);}
+
+/* AI recommendation strip */
+.ai-rec-strip{background:linear-gradient(135deg,#EDE9FE,#F5F3FF);border:1.5px solid #DDD6FE;
+  border-radius:16px;padding:16px 20px;margin-bottom:20px;}
+.ai-rec-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.ai-rec-title{font-size:14px;font-weight:800;color:#4C1D95;flex:1;}
+.ai-rec-badge{font-size:10.5px;font-weight:700;background:linear-gradient(135deg,#7C3AED,#A855F7);
+  color:#fff;padding:3px 9px;border-radius:20px;}
+.ai-rec-sub{font-size:12px;color:#6D28D9;}
+.ai-rec-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.ai-rec-card{background:#fff;border:1.5px solid #DDD6FE;border-radius:12px;padding:12px 14px;
+  display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .15s;}
+.ai-rec-card:hover{border-color:#A78BFA;box-shadow:0 4px 12px rgba(124,58,237,.1);}
+.ai-rec-av{width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0;
+  border:2px solid #EDE9FE;}
+.ai-rec-info{flex:1;min-width:0;}
+.ai-rec-name{font-size:13px;font-weight:800;color:#1E293B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ai-rec-subj{font-size:11.5px;color:#64748B;margin-top:1px;}
+.ai-rec-pct{font-size:13px;font-weight:900;color:#7C3AED;flex-shrink:0;}
+.ai-rec-lock{display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px;background:#F5F3FF;border-radius:8px;font-size:12px;color:#7C3AED;font-weight:600;}
+.ai-rec-lock a{font-weight:800;text-decoration:underline;cursor:pointer;}
 
 /* Star filter */
 .star-item{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;}
@@ -313,6 +331,11 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
 .badge-pro{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:30px;font-size:10px;font-weight:700;background:linear-gradient(135deg,var(--s500),var(--s600));color:#fff;box-shadow:0 2px 8px rgba(245,124,0,.4);}
 .badge-verified{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:30px;font-size:10px;font-weight:700;background:rgba(255,255,255,.95);color:var(--p700);}
 .badge-new{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:30px;font-size:10px;font-weight:700;background:#16A34A;color:#fff;}
+.badge-unverified{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:30px;font-size:10px;font-weight:700;background:rgba(0,0,0,.45);color:rgba(255,255,255,.8);}
+/* card overlay khi unverified mode */
+.tcard.unverified-card .tcard-cover::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.12);border-radius:inherit;}
+.tcard.unverified-card .tcard-name{color:var(--n500);}
+.tcard.unverified-card .btn-view{background:var(--n400);pointer-events:none;}
 
 /* Avatar OUTSIDE cover, overlaps via negative margin */
 .tcard-av-wrap{padding:0 16px;}
@@ -338,9 +361,16 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
 .r-score{font-size:13px;font-weight:800;color:var(--n900);}
 .r-count{font-size:11.5px;color:var(--n400);}
 .tcard-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--n100);padding-top:12px;margin-top:auto;}
-.price-num{font-size:16px;font-weight:900;color:var(--p800);}
-.price-unit{font-size:10.5px;color:var(--n400);}
-.btn-view{height:34px;padding:0 14px;border-radius:var(--r-sm);font-size:12.5px;font-weight:700;color:#fff;background:var(--p700);transition:all .15s;}
+.price-num{font-size:15px;font-weight:800;color:var(--p800);}
+.price-unit{font-size:10.5px;color:var(--n400);margin-left:2px;}
+.price-neg{font-size:12px;font-weight:600;color:var(--n400);background:var(--n100);padding:3px 8px;border-radius:6px;}
+.ai-badge{display:none;}/* shown only in Premium mode via JS */
+.name-verify{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--p700);color:#fff;font-size:8.5px;font-weight:900;margin-left:5px;vertical-align:middle;flex-shrink:0;position:relative;top:-1px;}
+.tcard-bio{font-size:11.5px;color:var(--n500);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mode-sep{width:1px;height:22px;background:var(--n200);margin:0 16px;}
+.mode-free-badge{display:none;font-size:10px;font-weight:700;background:#F0FDF4;color:#16A34A;border-radius:4px;padding:2px 6px;margin-left:8px;}
+.mode-premium-badge{display:none;font-size:10px;font-weight:700;background:#F5F3FF;color:#7C3AED;border-radius:4px;padding:2px 6px;margin-left:8px;}
+.btn-view{height:34px;padding:0 14px;border-radius:var(--r-sm);font-size:12.5px;font-weight:700;color:#fff;background:var(--p700);transition:all .15s;display:inline-flex;align-items:center;white-space:nowrap;flex-shrink:0;}
 .btn-view:hover{background:var(--p800);}
 
 /* ── STATE 2: RESULTS ── */
@@ -442,7 +472,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
 <!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-inner">
-    <a href="#" class="nav-logo">
+    <a href="ui-trang-chu.html" class="nav-logo">
       <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
         <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
         <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
@@ -457,6 +487,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
       <a href="ui-dang-tin.html" class="nav-link">Đăng tin</a>
       <a href="ui-dang-ky-day.html" class="nav-link">Đăng ký dạy</a>
       <a href="ui-blog.html" class="nav-link">Blog</a>
+      <a href="ui-huong-dan.html" class="nav-link">Hướng dẫn</a>
       <a href="ui-gioi-thieu.html" class="nav-link">Về chúng tôi</a>
     </div>
     <div class="nav-actions">
@@ -470,12 +501,19 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
 <div class="state-bar">
   <div class="state-bar-inner">
     <span class="state-bar-label">Demo state:</span>
-    <div class="state-btns">
+    <div class="state-btns" id="state-toggle">
       <button class="state-btn active" onclick="setState('empty')">Chưa tìm kiếm</button>
       <button class="state-btn" onclick="setState('results')">Có kết quả (247)</button>
       <button class="state-btn" onclick="setState('noresult')">Không tìm thấy</button>
     </div>
     <span class="state-desc" id="state-hint">Trạng thái mặc định khi user vào trang lần đầu</span>
+    <div class="mode-sep"></div>
+    <span class="state-bar-label">Chế độ:</span>
+    <div class="state-btns" id="mode-toggle">
+      <button class="state-btn active" id="mode-btn-free" onclick="setMode('free')">Free</button>
+      <button class="state-btn" id="mode-btn-premium" onclick="setMode('premium')">✦ Premium</button>
+      <button class="state-btn" id="mode-btn-unverified" onclick="setMode('unverified')" style="color:#94A3B8;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Chưa xác minh</button>
+    </div>
   </div>
 </div>
 
@@ -605,25 +643,16 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
       </div>
     </div>
 
-    <!-- 5. Mức giá -->
+    <!-- 5. Học phí — note thay thế filter -->
     <div class="filter-section">
-      <div class="filter-head" onclick="toggleFilter(this)">
-        <span class="filter-name">Học phí / giờ</span>
-        <span class="filter-toggle open">&#8964;</span>
-      </div>
-      <div class="filter-body">
-        <div class="price-range-display">
-          <span class="price-val">100.000đ</span>
-          <span style="font-size:12px;color:var(--n400);">đến</span>
-          <span class="price-val">300.000đ</span>
-        </div>
-        <div class="range-track">
-          <div class="range-fill"></div>
-          <div class="range-thumb left"></div>
-          <div class="range-thumb right"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--n400);margin-top:6px;">
-          <span>50.000đ</span><span>500.000đ+</span>
+      <div class="filter-body" style="padding:12px 20px;">
+        <div style="display:flex;align-items:flex-start;gap:8px;background:#F8FAFC;
+          border:1.5px solid var(--n200);border-radius:10px;padding:10px 12px;">
+          <span style="font-size:15px;flex-shrink:0;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--n700);margin-bottom:2px;">Học phí thỏa thuận trực tiếp</div>
+            <div style="font-size:11.5px;color:var(--n500);line-height:1.5;">Gia đình và gia sư tự thống nhất — platform không can thiệp vào học phí.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -809,37 +838,40 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
       <div class="empty-section-title">Gia sư nổi bật hôm nay</div>
       <div class="featured-grid">
         <!-- cards reuse same .tcard structure -->
-        <div class="tcard">
-          <div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span><span class="badge-verified">✓ Xác minh</span></div></div>
+        <div class="tcard" data-verified="true">
+          <div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-pro"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> PRO</span></div></div>
           <div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=68" alt="Nguyễn Văn An"></div>
           <div class="tcard-body">
-            <div class="tcard-name">Nguyễn Văn An</div>
+            <div class="tcard-name">Nguyễn Văn An<span class="name-verify">✓</span></div>
             <div class="tcard-subject">Toán · Vật Lý · cấp THPT</div>
+            <div class="tcard-bio">ĐH Bách Khoa TP.HCM · 7 năm kinh nghiệm</div>
             <div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q.3 · Q.10</span></div>
             <div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(128 đánh giá)</span></div>
-            <div class="tcard-foot"><div><div class="price-num">150.000đ</div><div class="price-unit">mỗi giờ</div></div><a href="ui-profile.html" class="btn-view">Xem chi tiết</a></div>
+            <div class="tcard-foot"><div><span class="price-num">150.000đ</span><span class="price-unit">/giờ</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div>
           </div>
         </div>
-        <div class="tcard">
-          <div class="tcard-cover tc-b"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div>
+        <div class="tcard" data-verified="true">
+          <div class="tcard-cover tc-b"><div class="tcard-badges"></div></div>
           <div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=47" alt="Trần Thị Lan"></div>
           <div class="tcard-body">
-            <div class="tcard-name">Trần Thị Lan</div>
+            <div class="tcard-name">Trần Thị Lan<span class="name-verify">✓</span></div>
             <div class="tcard-subject">Tiếng Anh giao tiếp · IELTS</div>
+            <div class="tcard-bio">ĐH Ngoại ngữ HN · IELTS 8.5 · 6 năm</div>
             <div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Toàn quốc</span></div>
             <div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">5.0</span><span class="r-count">(91 đánh giá)</span></div>
-            <div class="tcard-foot"><div><div class="price-num">200.000đ</div><div class="price-unit">mỗi giờ</div></div><a href="ui-profile.html" class="btn-view">Xem chi tiết</a></div>
+            <div class="tcard-foot"><div><span class="price-num">200.000đ</span><span class="price-unit">/giờ</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div>
           </div>
         </div>
-        <div class="tcard">
-          <div class="tcard-cover tc-d"><div class="tcard-badges"><span class="badge-new">✦ Mới</span><span class="badge-verified">✓ Xác minh</span></div></div>
+        <div class="tcard" data-verified="false">
+          <div class="tcard-cover tc-d"><div class="tcard-badges"><span class="badge-new">✦ Mới</span><span class="badge-unverified"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Chưa xác minh</span></div></div>
           <div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=44" alt="Lê Minh Thu"></div>
           <div class="tcard-body">
             <div class="tcard-name">Lê Minh Thu</div>
             <div class="tcard-subject">Lập trình · Python · Web Dev</div>
+            <div class="tcard-bio">ĐH Bách Khoa TP.HCM · 2 năm kinh nghiệm</div>
             <div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Sinh viên · Đi làm</span></div>
             <div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(55 đánh giá)</span></div>
-            <div class="tcard-foot"><div><div class="price-num">250.000đ</div><div class="price-unit">mỗi giờ</div></div><a href="ui-profile.html" class="btn-view">Xem chi tiết</a></div>
+            <div class="tcard-foot"><div><span class="price-neg">Thỏa thuận</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div>
           </div>
         </div>
       </div>
@@ -854,10 +886,10 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
             <span class="sort-label">Sắp xếp:</span>
             <select class="sort-select">
               <option>Phù hợp nhất</option>
+              <option>AI gợi ý trước</option>
               <option>Đánh giá cao nhất</option>
-              <option>Giá thấp đến cao</option>
-              <option>Giá cao đến thấp</option>
               <option>Nhiều đánh giá nhất</option>
+              <option>Mới tham gia</option>
             </select>
           </div>
         </div>
@@ -867,30 +899,68 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
           <span class="af-chip">TP. Hồ Chí Minh <span class="af-chip-x" onclick="this.parentElement.remove()">×</span></span>
           <span class="af-chip">Online <span class="af-chip-x" onclick="this.parentElement.remove()">×</span></span>
           <span class="af-chip">4★ trở lên <span class="af-chip-x" onclick="this.parentElement.remove()">×</span></span>
-          <span class="af-chip">100k–300k <span class="af-chip-x" onclick="this.parentElement.remove()">×</span></span>
+          <span class="af-chip">✦ AI recommend <span class="af-chip-x" onclick="this.parentElement.remove()">×</span></span>
           <span class="af-clear">Xoá tất cả</span>
         </div>
       </div>
 
+      <!-- AI Recommendation Strip -->
+      <div class="ai-rec-strip" id="aiRecStrip">
+        <div class="ai-rec-header">
+          <span style="font-size:16px;">✦</span>
+          <span class="ai-rec-title">AI gợi ý dựa trên <a href="ui-diagnostic.html" style="color:#6D28D9;font-weight:700;text-decoration:underline;">Diagnostic</a> của bạn — Toán · Lớp 9 · Mục tiêu THPT 2026</span>
+          <span class="ai-rec-badge">Premium</span>
+        </div>
+        <div class="ai-rec-cards" id="aiRecCards" style="filter:blur(4px)">
+          <div class="ai-rec-card">
+            <img class="ai-rec-av" src="https://i.pravatar.cc/80?img=68" alt="">
+            <div class="ai-rec-info">
+              <div class="ai-rec-name">Nguyễn Văn An</div>
+              <div class="ai-rec-subj">Toán · THPT · 4.9★</div>
+            </div>
+            <span class="ai-rec-pct">92%</span>
+          </div>
+          <div class="ai-rec-card">
+            <img class="ai-rec-av" src="https://i.pravatar.cc/80?img=32" alt="">
+            <div class="ai-rec-info">
+              <div class="ai-rec-name">Hoàng Văn Dũng</div>
+              <div class="ai-rec-subj">Toán · THCS &amp; THPT · 4.9★</div>
+            </div>
+            <span class="ai-rec-pct">87%</span>
+          </div>
+          <div class="ai-rec-card">
+            <img class="ai-rec-av" src="https://i.pravatar.cc/80?img=35" alt="">
+            <div class="ai-rec-info">
+              <div class="ai-rec-name">Vũ Đức Thành</div>
+              <div class="ai-rec-subj">Vật Lý · THPT · 4.9★</div>
+            </div>
+            <span class="ai-rec-pct">81%</span>
+          </div>
+        </div>
+        <!-- Free gate: hiện khi Free, ẩn khi Premium -->
+        <div class="ai-rec-lock" id="aiRecLock">
+          <svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5V2"/><path d="M8.5 2h7"/><path d="M14.5 16h-5"/></svg> Chưa làm Diagnostic? <a href="ui-diagnostic.html" style="color:#7C3AED;font-weight:700;">Làm test miễn phí →</a> &nbsp;·&nbsp; <svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Đã có kết quả? <a onclick="window.location='ui-premium.html'" style="color:#7C3AED;font-weight:700;">Nâng cấp Premium →</a>
+        </div>
+      </div>
+
       <div class="results-grid">
-        <!-- 9 cards, cycling covers, varied avatars -->
-        <div class="tcard"><div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=68" alt=""></div><div class="tcard-body"><div class="tcard-name">Nguyễn Văn An</div><div class="tcard-subject">Toán · Vật Lý · THPT</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q.3 · Q.10</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(128)</span></div><div class="tcard-foot"><div><div class="price-num">150.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+        <div class="tcard" data-verified="true"><div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-match ai-badge">✦ 92% phù hợp</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=68" alt=""></div><div class="tcard-body"><div class="tcard-name">Nguyễn Văn An<span class="name-verify">✓</span></div><div class="tcard-subject">Toán · Vật Lý · THPT</div><div class="tcard-bio">ĐH Bách Khoa TP.HCM · 7 năm kinh nghiệm</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q.3 · Q.10</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(128)</span></div><div class="tcard-foot"><div><span class="price-num">150.000đ</span><span class="price-unit">/giờ</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div></div></div>
 
-        <div class="tcard"><div class="tcard-cover tc-b"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=47" alt=""></div><div class="tcard-body"><div class="tcard-name">Trần Thị Lan</div><div class="tcard-subject">Tiếng Anh · IELTS</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Toàn quốc</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">5.0</span><span class="r-count">(91)</span></div><div class="tcard-foot"><div><div class="price-num">200.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+        <div class="tcard" data-verified="true"><div class="tcard-cover tc-b"><div class="tcard-badges"><span class="badge-match ai-badge">✦ 87% phù hợp</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=32" alt=""></div><div class="tcard-body"><div class="tcard-name">Hoàng Văn Dũng<span class="name-verify">✓</span></div><div class="tcard-subject">Toán · THCS &amp; THPT</div><div class="tcard-bio">ĐH Sư phạm TP.HCM · 5 năm kinh nghiệm</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q.1</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(301)</span></div><div class="tcard-foot"><div><span class="price-num">180.000đ</span><span class="price-unit">/giờ</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div></div></div>
 
-        <div class="tcard"><div class="tcard-cover tc-c"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=12" alt=""></div><div class="tcard-body"><div class="tcard-name">Phạm Hoàng Nam</div><div class="tcard-subject">Hóa Học · Sinh Học · THPT</div><div class="tcard-tags"><span class="tag home">Tại nhà</span><span class="tag">Q. Bình Thạnh</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.8</span><span class="r-count">(74)</span></div><div class="tcard-foot"><div><div class="price-num">180.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+        <div class="tcard" data-verified="false"><div class="tcard-cover tc-c"><div class="tcard-badges"><span class="badge-unverified"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Chưa xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=12" alt=""></div><div class="tcard-body"><div class="tcard-name">Phạm Hoàng Nam</div><div class="tcard-subject">Toán · Hóa Học · THPT</div><div class="tcard-bio">ĐH Khoa học Tự nhiên · 3 năm kinh nghiệm</div><div class="tcard-tags"><span class="tag home">Tại nhà</span><span class="tag">Q. Bình Thạnh</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.8</span><span class="r-count">(74)</span></div><div class="tcard-foot"><div><span class="price-neg">Thỏa thuận</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div></div></div>
 
-        <div class="tcard"><div class="tcard-cover tc-d"><div class="tcard-badges"><span class="badge-new">✦ Mới</span><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=44" alt=""></div><div class="tcard-body"><div class="tcard-name">Lê Minh Thu</div><div class="tcard-subject">Lập trình · Python · Web Dev</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Sinh viên · Đi làm</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(55)</span></div><div class="tcard-foot"><div><div class="price-num">250.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+        <div class="tcard" data-verified="false"><div class="tcard-cover tc-d"><div class="tcard-badges"><span class="badge-new">✦ Mới</span><span class="badge-unverified"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Chưa xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=44" alt=""></div><div class="tcard-body"><div class="tcard-name">Lê Minh Thu</div><div class="tcard-subject">Toán · Lập trình · THPT</div><div class="tcard-bio">ĐH Bách Khoa TP.HCM · 2 năm kinh nghiệm</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Sinh viên · THPT</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(55)</span></div><div class="tcard-foot"><div><span class="price-num">120.000đ</span><span class="price-unit">/giờ</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div></div></div>
 
-        <div class="tcard"><div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=32" alt=""></div><div class="tcard-body"><div class="tcard-name">Hoàng Văn Dũng</div><div class="tcard-subject">Toán · THCS &amp; THPT</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q.1</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(301)</span></div><div class="tcard-foot"><div><div class="price-num">300.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+        <div class="tcard" data-verified="true"><div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-featured">⭐ Nổi bật</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=35" alt=""></div><div class="tcard-body"><div class="tcard-name">Vũ Đức Thành<span class="name-verify">✓</span></div><div class="tcard-subject">Toán · Vật Lý · THPT &amp; ĐH</div><div class="tcard-bio">ĐH Sư phạm · Thạc sĩ Toán · 8 năm kinh nghiệm</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q. Tân Bình</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(178)</span></div><div class="tcard-foot"><div><span class="price-num">200.000đ</span><span class="price-unit">/giờ</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div></div></div>
 
-        <div class="tcard"><div class="tcard-cover tc-b"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=56" alt=""></div><div class="tcard-body"><div class="tcard-name">Ngô Thị Thu Hà</div><div class="tcard-subject">Vật Lý · THCS &amp; THPT</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q. Bình Tân</span></div><div class="tcard-rating"><span class="stars">★★★★</span><span class="r-score">4.5</span><span class="r-count">(29)</span></div><div class="tcard-foot"><div><div class="price-num">160.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+        <div class="tcard" data-verified="false"><div class="tcard-cover tc-b"><div class="tcard-badges"><span class="badge-unverified"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Chưa xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=56" alt=""></div><div class="tcard-body"><div class="tcard-name">Ngô Thị Thu Hà</div><div class="tcard-subject">Toán · Vật Lý · THCS &amp; THPT</div><div class="tcard-bio">ĐH KHTN TP.HCM · 4 năm kinh nghiệm</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q. Bình Tân</span></div><div class="tcard-rating"><span class="stars">★★★★</span><span class="r-score">4.5</span><span class="r-count">(29)</span></div><div class="tcard-foot"><div><span class="price-neg">Thỏa thuận</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div></div></div>
 
-        <div class="tcard"><div class="tcard-cover tc-c"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=15" alt=""></div><div class="tcard-body"><div class="tcard-name">Bùi Quang Huy</div><div class="tcard-subject">Lập trình · THPT &amp; Đại học</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Q. 12</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.8</span><span class="r-count">(95)</span></div><div class="tcard-foot"><div><div class="price-num">280.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+        <div class="tcard" data-verified="true"><div class="tcard-cover tc-c"><div class="tcard-badges"></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=15" alt=""></div><div class="tcard-body"><div class="tcard-name">Bùi Quang Huy<span class="name-verify">✓</span></div><div class="tcard-subject">Toán · THPT &amp; Đại học</div><div class="tcard-bio">ĐH Bách Khoa TP.HCM · Thạc sĩ · 6 năm</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Q. 12</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.8</span><span class="r-count">(95)</span></div><div class="tcard-foot"><div><span class="price-num">130.000đ</span><span class="price-unit">/giờ</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div></div></div>
 
-        <div class="tcard"><div class="tcard-cover tc-d"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=25" alt=""></div><div class="tcard-body"><div class="tcard-name">Phạm Thị Hương</div><div class="tcard-subject">Hóa Học · THPT</div><div class="tcard-tags"><span class="tag home">Tại nhà</span><span class="tag">Q. Gò Vấp</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.7</span><span class="r-count">(63)</span></div><div class="tcard-foot"><div><div class="price-num">150.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+        <div class="tcard" data-verified="false"><div class="tcard-cover tc-d"><div class="tcard-badges"><span class="badge-unverified"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Chưa xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=25" alt=""></div><div class="tcard-body"><div class="tcard-name">Phạm Thị Hương</div><div class="tcard-subject">Toán · Hóa Học · THPT</div><div class="tcard-bio">ĐH Sư phạm TP.HCM · 2 năm kinh nghiệm</div><div class="tcard-tags"><span class="tag home">Tại nhà</span><span class="tag">Q. Gò Vấp</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.7</span><span class="r-count">(63)</span></div><div class="tcard-foot"><div><span class="price-neg">Thỏa thuận</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div></div></div>
 
-        <div class="tcard"><div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=35" alt=""></div><div class="tcard-body"><div class="tcard-name">Vũ Đức Thành</div><div class="tcard-subject">Vật Lý · THPT &amp; Đại học</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span><span class="tag">Q. Tân Bình</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(178)</span></div><div class="tcard-foot"><div><div class="price-num">200.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+        <div class="tcard" data-verified="true"><div class="tcard-cover tc-a"><div class="tcard-badges"></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=47" alt=""></div><div class="tcard-body"><div class="tcard-name">Trần Thị Lan<span class="name-verify">✓</span></div><div class="tcard-subject">Toán · Tiếng Anh · THCS</div><div class="tcard-bio">ĐH Ngoại ngữ HN · IELTS 8.5 · 6 năm</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Toàn quốc</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">5.0</span><span class="r-count">(91)</span></div><div class="tcard-foot"><div><span class="price-num">160.000đ</span><span class="price-unit">/giờ</span></div><a href="ui-profile.html" class="btn-view">Xem hồ sơ</a></div></div></div>
       </div>
 
       <div class="pagination">
@@ -937,7 +1007,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
         <div class="nr-related-title">Gia sư Vật Lý gần khu vực lân cận</div>
         <div class="nr-related-grid">
           <div class="tcard"><div class="tcard-cover tc-a"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=35" alt=""></div><div class="tcard-body"><div class="tcard-name">Vũ Đức Thành</div><div class="tcard-subject">Vật Lý · THPT &amp; Đại học</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag">Q. Tân Bình</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.9</span><span class="r-count">(178)</span></div><div class="tcard-foot"><div><div class="price-num">200.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
-          <div class="tcard"><div class="tcard-cover tc-c"><div class="tcard-badges"><span class="badge-pro">⚡ PRO</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=12" alt=""></div><div class="tcard-body"><div class="tcard-name">Phạm Hoàng Nam</div><div class="tcard-subject">Vật Lý · Hóa · THPT</div><div class="tcard-tags"><span class="tag home">Tại nhà</span><span class="tag">Q. Bình Thạnh</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.8</span><span class="r-count">(74)</span></div><div class="tcard-foot"><div><div class="price-num">180.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
+          <div class="tcard"><div class="tcard-cover tc-c"><div class="tcard-badges"><span class="badge-pro"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> PRO</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=12" alt=""></div><div class="tcard-body"><div class="tcard-name">Phạm Hoàng Nam</div><div class="tcard-subject">Vật Lý · Hóa · THPT</div><div class="tcard-tags"><span class="tag home">Tại nhà</span><span class="tag">Q. Bình Thạnh</span></div><div class="tcard-rating"><span class="stars">★★★★★</span><span class="r-score">4.8</span><span class="r-count">(74)</span></div><div class="tcard-foot"><div><div class="price-num">180.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
           <div class="tcard"><div class="tcard-cover tc-b"><div class="tcard-badges"><span class="badge-verified">✓ Xác minh</span></div></div><div class="tcard-av-wrap"><img class="tcard-av" src="https://i.pravatar.cc/80?img=56" alt=""></div><div class="tcard-body"><div class="tcard-name">Ngô Thị Thu Hà</div><div class="tcard-subject">Vật Lý · THCS &amp; THPT</div><div class="tcard-tags"><span class="tag online">Online</span><span class="tag home">Tại nhà</span></div><div class="tcard-rating"><span class="stars">★★★★</span><span class="r-score">4.5</span><span class="r-count">(29)</span></div><div class="tcard-foot"><div><div class="price-num">160.000đ</div><div class="price-unit">mỗi giờ</div></div><button class="btn-view">Xem</button></div></div></div>
         </div>
       </div>
@@ -954,8 +1024,8 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none;}
       <p class="footer-desc">Nền tảng kết nối gia sư uy tín hàng đầu Việt Nam. Mọi gia sư đều được xác minh danh tính và bằng cấp.</p>
       <div class="footer-socials"><div class="fsoc">f</div><div class="fsoc">z</div><div class="fsoc">▶</div><div class="fsoc">in</div></div>
     </div>
-    <div><div class="fcol-title">Sản phẩm</div><a href="#" class="footer-link">Tìm gia sư</a><a href="#" class="footer-link">Đăng ký dạy</a><a href="#" class="footer-link">Cách hoạt động</a><a href="#" class="footer-link">Bảng giá</a></div>
-    <div><div class="fcol-title">Hỗ trợ</div><a href="#" class="footer-link">Trung tâm trợ giúp</a><a href="#" class="footer-link">Liên hệ</a><a href="#" class="footer-link">Hoàn tiền</a><a href="#" class="footer-link">Cộng đồng</a></div>
+    <div><div class="fcol-title">Sản phẩm</div><a href="ui-tim-gia-su.html" class="footer-link">Tìm gia sư</a><a href="ui-dang-ky-day.html" class="footer-link">Đăng ký dạy</a><a href="ui-huong-dan.html" class="footer-link">Cách hoạt động</a><a href="ui-premium.html" class="footer-link">Bảng giá</a></div>
+    <div><div class="fcol-title">Hỗ trợ</div><a href="ui-huong-dan.html" class="footer-link">Trung tâm trợ giúp</a><a href="#" class="footer-link">Liên hệ</a><a href="#" class="footer-link">Hoàn tiền</a><a href="#" class="footer-link">Cộng đồng</a></div>
     <div><div class="fcol-title">Pháp lý</div><a href="#" class="footer-link">Điều khoản sử dụng</a><a href="#" class="footer-link">Chính sách bảo mật</a><a href="#" class="footer-link">Quy chế hoạt động</a></div>
   </div>
   <div class="footer-bottom">
@@ -977,10 +1047,39 @@ function setState(s) {
   ['empty','results','noresult'].forEach(id => {
     document.getElementById('state-'+id).style.display = id===s ? 'block' : 'none';
   });
-  document.querySelectorAll('.state-btn').forEach((btn,i) => {
+  document.querySelectorAll('#state-toggle .state-btn').forEach((btn,i) => {
     btn.classList.toggle('active', ['empty','results','noresult'][i]===s);
   });
   document.getElementById('state-hint').textContent = hints[s];
+}
+
+/* ══════════════════════════════════════
+   FREE / PREMIUM MODE TOGGLE
+══════════════════════════════════════ */
+function setMode(m) {
+  const isPremium   = m === 'premium';
+  const isUnverified = m === 'unverified';
+
+  /* --- mode toggle buttons --- */
+  document.getElementById('mode-btn-free').classList.toggle('active', m==='free');
+  document.getElementById('mode-btn-premium').classList.toggle('active', isPremium);
+  document.getElementById('mode-btn-unverified').classList.toggle('active', isUnverified);
+
+  /* --- AI rec strip (Premium only) --- */
+  const recCards = document.getElementById('aiRecCards');
+  const recLock  = document.getElementById('aiRecLock');
+  if (recCards) recCards.style.filter = isPremium ? '' : 'blur(4px)';
+  if (recLock)  recLock.style.display  = isPremium ? 'none' : 'flex';
+
+  /* --- match % badges (Premium only) --- */
+  document.querySelectorAll('.ai-badge').forEach(b => {
+    b.style.display = isPremium ? '' : 'none';
+  });
+
+  /* --- Unverified mode: dim unverified cards (badge already hardcoded in HTML) --- */
+  document.querySelectorAll('.results-grid .tcard, .featured-grid .tcard').forEach(card => {
+    card.classList.toggle('unverified-card', isUnverified && card.dataset.verified !== 'true');
+  });
 }
 
 /* ══════════════════════════════════════

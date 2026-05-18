@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nâng cấp Premium — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:#0F172A;background:#F8FAFC;min-height:100vh;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:'Inter',sans-serif;}
+
+/* ── NAV ── */
+nav{background:#fff;border-bottom:1px solid #E2E8F0;padding:0 28px;height:58px;
+  display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px;}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.45;}
+.nav-back{display:flex;align-items:center;gap:5px;font-size:13px;color:#64748B;
+  padding:7px 14px;border-radius:9px;border:1px solid #E2E8F0;background:#fff;cursor:pointer;}
+.nav-back:hover{background:#F1F5F9;}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(160deg,#0D2D6B 0%,#1E4DB7 55%,#4338CA 100%);
+  padding:60px 24px 72px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(245,124,0,.18) 0%,transparent 65%);
+  top:-200px;right:-100px;pointer-events:none;}
+.hero::after{content:'';position:absolute;width:400px;height:400px;
+  background:radial-gradient(circle,rgba(124,58,237,.2) 0%,transparent 65%);
+  bottom:-150px;left:-80px;pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;
+  background:rgba(245,124,0,.2);border:1.5px solid rgba(245,124,0,.4);
+  border-radius:20px;padding:6px 16px;font-size:12px;font-weight:700;color:#FCD34D;
+  margin-bottom:20px;}
+.hero h1{font-size:36px;font-weight:900;color:#fff;letter-spacing:-.8px;line-height:1.15;
+  margin-bottom:14px;position:relative;}
+.hero h1 em{font-style:normal;color:#F57C00;}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.65);max-width:500px;margin:0 auto 32px;
+  line-height:1.6;position:relative;}
+.hero-tabs{display:inline-flex;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);
+  border-radius:14px;padding:5px;gap:0;position:relative;}
+.hero-tab{padding:9px 22px;border-radius:10px;font-size:13px;font-weight:700;
+  color:rgba(255,255,255,.55);cursor:pointer;border:none;background:transparent;
+  font-family:'Inter',sans-serif;transition:all .2s;}
+.hero-tab.active{background:#fff;color:#0D2D6B;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+
+/* ── WRAPPER ── */
+.wrapper{max-width:1000px;margin:0 auto;padding:0 20px 80px;}
+
+/* ── CONTEXT BANNER (shown when coming from gated feature) ── */
+.context-banner{background:linear-gradient(135deg,#FFF8F0,#FFFBEB);border:1.5px solid #FCD34D;
+  border-radius:16px;padding:16px 20px;margin-top:-20px;margin-bottom:28px;
+  display:flex;align-items:center;gap:14px;box-shadow:0 4px 16px rgba(245,124,0,.12);}
+.ctx-icon{font-size:28px;flex-shrink:0;}
+.ctx-text{}
+.ctx-title{font-size:14px;font-weight:800;color:#92400E;}
+.ctx-sub{font-size:12.5px;color:#B45309;margin-top:2px;}
+.ctx-dismiss{margin-left:auto;font-size:12px;color:#94A3B8;cursor:pointer;flex-shrink:0;}
+
+/* ── PRICING CARDS ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px;margin-bottom:36px;}
+.pricing-card{background:#fff;border:2px solid #E2E8F0;border-radius:20px;
+  overflow:hidden;display:flex;flex-direction:column;position:relative;
+  transition:box-shadow .2s,transform .2s;}
+.pricing-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.1);transform:translateY(-3px);}
+.pricing-card.highlighted{border-color:#7C3AED;box-shadow:0 0 0 4px rgba(124,58,237,.08);}
+.pricing-card.highlighted:hover{box-shadow:0 8px 32px rgba(124,58,237,.18),0 0 0 4px rgba(124,58,237,.08);}
+.popular-badge{position:absolute;top:0;right:0;background:linear-gradient(135deg,#7C3AED,#A855F7);
+  color:#fff;font-size:10.5px;font-weight:800;padding:6px 14px 6px 10px;
+  border-bottom-left-radius:12px;letter-spacing:.03em;}
+.card-top{padding:24px 24px 20px;}
+.card-top-accent{height:4px;margin:-24px -24px 20px;border-radius:0;}
+.tier-name{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.tier-price{display:flex;align-items:baseline;gap:4px;margin-bottom:6px;}
+.price-num{font-size:34px;font-weight:900;letter-spacing:-1px;}
+.price-unit{font-size:13px;font-weight:600;color:#94A3B8;}
+.price-note{font-size:12px;color:#94A3B8;margin-bottom:16px;}
+.card-cta{display:block;text-align:center;padding:11px;border-radius:11px;
+  font-size:14px;font-weight:800;border:2px solid transparent;transition:all .15s;cursor:pointer;}
+.cta-free{background:#F1F5F9;color:#475569;border-color:#E2E8F0;}
+.cta-free:hover{background:#E2E8F0;}
+.cta-ph{background:linear-gradient(135deg,#0D2D6B,#2563EB);color:#fff;}
+.cta-ph:hover{background:linear-gradient(135deg,#0a2456,#1d4ed8);}
+.cta-gs{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;}
+.cta-gs:hover{background:linear-gradient(135deg,#5b21b6,#6d28d9);}
+.card-divider{height:1px;background:#F1F5F9;margin:0 24px;}
+.card-features{padding:20px 24px 24px;flex:1;}
+.feature-group-label{font-size:10.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.07em;color:#94A3B8;margin-bottom:10px;margin-top:16px;}
+.feature-group-label:first-child{margin-top:0;}
+.feature-item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px;color:#374151;}
+.feature-item.yes::before{content:'✓';font-weight:800;color:#16A34A;flex-shrink:0;margin-top:.5px;}
+.feature-item.no{color:#CBD5E1;}
+.feature-item.no::before{content:'—';font-weight:700;color:#CBD5E1;flex-shrink:0;margin-top:.5px;}
+.feature-item.ai::before{content:'✦';font-weight:800;color:#7C3AED;flex-shrink:0;margin-top:.5px;}
+.feature-item strong{font-weight:700;}
+
+/* ── FEATURE COMPARISON TABLE ── */
+.compare-section{margin-bottom:40px;}
+.compare-title{font-size:18px;font-weight:900;color:#0D2D6B;margin-bottom:6px;}
+.compare-sub{font-size:13.5px;color:#64748B;margin-bottom:20px;}
+.compare-table{background:#fff;border:1.5px solid #E2E8F0;border-radius:16px;overflow:hidden;}
+.compare-head{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;background:#F8FAFC;
+  border-bottom:1.5px solid #E2E8F0;}
+.ch-cell{padding:14px 16px;font-size:12px;font-weight:800;color:#64748B;
+  text-transform:uppercase;letter-spacing:.06em;text-align:center;}
+.ch-cell:first-child{text-align:left;}
+.ch-cell.ph{color:#1D4ED8;}
+.ch-cell.gs{color:#7C3AED;}
+.compare-group{border-bottom:1.5px solid #F1F5F9;}
+.compare-group:last-child{border-bottom:none;}
+.compare-group-label{padding:10px 16px 6px;font-size:11px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.07em;color:#94A3B8;background:#FAFBFC;
+  border-bottom:1px solid #F1F5F9;}
+.compare-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  border-bottom:1px solid #F8FAFC;transition:background .1s;}
+.compare-row:last-child{border-bottom:none;}
+.compare-row:hover{background:#FAFBFC;}
+.cr-feature{padding:11px 16px;font-size:13px;color:#374151;display:flex;align-items:center;gap:7px;}
+.cr-feature .ai-tag{font-size:10px;font-weight:700;background:#EDE9FE;color:#7C3AED;
+  padding:1px 5px;border-radius:3px;}
+.cr-cell{padding:11px 16px;text-align:center;display:flex;align-items:center;justify-content:center;}
+.check-y{font-size:16px;color:#16A34A;}
+.check-n{font-size:16px;color:#E2E8F0;}
+.check-ai{font-size:13px;font-weight:800;color:#7C3AED;}
+.check-partial{font-size:11.5px;font-weight:600;color:#D97706;background:#FFFBEB;
+  padding:2px 7px;border-radius:4px;}
+
+/* ── ADD-ON CARD ── */
+.addon-section{margin-bottom:40px;}
+.addon-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.addon-card{background:#fff;border:2px solid #E2E8F0;border-radius:16px;padding:20px 22px;
+  display:flex;align-items:flex-start;gap:14px;}
+.addon-icon{font-size:28px;flex-shrink:0;}
+.addon-body{flex:1;}
+.addon-name{font-size:14px;font-weight:800;color:#0D2D6B;margin-bottom:4px;}
+.addon-desc{font-size:12.5px;color:#64748B;line-height:1.5;margin-bottom:12px;}
+.addon-price-row{display:flex;align-items:center;gap:10px;}
+.addon-price{font-size:18px;font-weight:900;color:#F57C00;}
+.addon-period{font-size:12px;color:#94A3B8;}
+.addon-cta{padding:7px 16px;background:#FFF3E0;color:#D97706;border:1.5px solid #FDE68A;
+  border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;}
+.addon-cta:hover{background:#FDE68A;}
+
+/* ── CONTEXTUAL PROMPTS ── */
+.prompts-section{margin-bottom:40px;}
+.prompt-title{font-size:18px;font-weight:900;color:#0D2D6B;margin-bottom:6px;}
+.prompt-sub{font-size:13.5px;color:#64748B;margin-bottom:20px;}
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.prompt-card{background:#fff;border:1.5px solid #E2E8F0;border-radius:14px;padding:16px 18px;
+  display:flex;gap:12px;align-items:flex-start;}
+.prompt-icon{font-size:22px;flex-shrink:0;}
+.prompt-body{}
+.prompt-context{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  color:#94A3B8;margin-bottom:4px;}
+.prompt-text{font-size:13px;color:#1E293B;font-weight:600;margin-bottom:6px;line-height:1.4;}
+.prompt-cta-inline{font-size:12px;font-weight:700;color:#7C3AED;display:flex;align-items:center;gap:4px;}
+
+/* ── FAQ ── */
+.faq-section{margin-bottom:40px;}
+.faq-title{font-size:18px;font-weight:900;color:#0D2D6B;margin-bottom:20px;}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.faq-item{background:#fff;border:1.5px solid #E2E8F0;border-radius:12px;padding:16px 18px;}
+.faq-q{font-size:13.5px;font-weight:800;color:#1E293B;margin-bottom:7px;}
+.faq-a{font-size:12.5px;color:#64748B;line-height:1.6;}
+
+/* ── BOTTOM CTA BANNER ── */
+.bottom-cta{background:linear-gradient(135deg,#0D2D6B 0%,#4338CA 100%);
+  border-radius:20px;padding:40px;text-align:center;margin-bottom:40px;position:relative;overflow:hidden;}
+.bottom-cta::before{content:'';position:absolute;width:400px;height:400px;
+  background:radial-gradient(circle,rgba(245,124,0,.15) 0%,transparent 65%);
+  top:-150px;right:-80px;pointer-events:none;}
+.bottom-cta h2{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:10px;}
+.bottom-cta p{font-size:15px;color:rgba(255,255,255,.6);margin-bottom:28px;}
+.bottom-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.cta-main{padding:14px 32px;background:#F57C00;color:#fff;border:none;border-radius:12px;
+  font-size:15px;font-weight:800;cursor:pointer;}
+.cta-main:hover{background:#C46200;}
+.cta-sec{padding:14px 28px;background:rgba(255,255,255,.1);color:#fff;
+  border:2px solid rgba(255,255,255,.25);border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;}
+.cta-sec:hover{background:rgba(255,255,255,.18);}
+
+/* ── SECTION LABEL ── */
+.section-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;
+  color:#94A3B8;margin:40px 0 16px;display:flex;align-items:center;gap:10px;}
+.section-label::after{content:'';flex:1;height:1px;background:#E2E8F0;}
+
+/* ── BILLING TOGGLE ── */
+.billing-toggle{display:flex;align-items:center;justify-content:center;gap:12px;margin:24px 0 0;}
+.bill-label{font-size:13.5px;font-weight:600;color:#64748B;}
+.bill-label.active{color:#0D2D6B;font-weight:800;}
+.toggle-switch{width:44px;height:24px;background:#CBD5E1;border-radius:12px;
+  position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.toggle-switch.on{background:#0D2D6B;}
+.toggle-knob{position:absolute;top:3px;left:3px;width:18px;height:18px;
+  background:#fff;border-radius:50%;transition:left .2s;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+.toggle-switch.on .toggle-knob{left:23px;}
+.bill-save{font-size:11px;font-weight:700;background:#DCFCE7;color:#16A34A;
+  padding:2px 7px;border-radius:5px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+      <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+      <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+    </svg>
+    <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+  </a>
+  <div style="font-size:14px;font-weight:700;color:#1E293B;">Nâng cấp tài khoản</div>
+  <button class="nav-back" onclick="history.back()">← Quay lại</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">⭐ Mở khóa toàn bộ tiềm năng</div>
+  <h1>Học có <em>kết quả đo được</em><br>với AI hỗ trợ mọi bước</h1>
+  <p class="hero-sub">Chọn gói phù hợp — dùng thử 7 ngày miễn phí, hủy bất cứ lúc nào.</p>
+  <div class="hero-tabs">
+    <button class="hero-tab active" id="tabPH" onclick="switchTab('ph')"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Phụ huynh / Học viên</button>
+    <button class="hero-tab" id="tabGS" onclick="switchTab('gs')"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Gia sư</button>
+  </div>
+  <div class="billing-toggle">
+    <span class="bill-label active" id="lblMonth">Hàng tháng</span>
+    <div class="toggle-switch" id="billToggle" onclick="toggleBilling()"><div class="toggle-knob"></div></div>
+    <span class="bill-label" id="lblYear">Hàng năm <span class="bill-save" id="billSave" style="display:none;">Tiết kiệm 20%</span></span>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <!-- CONTEXTUAL BANNER -->
+  <div class="context-banner" id="ctxBanner">
+    <span class="ctx-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+    <div class="ctx-text">
+      <div class="ctx-title">Bạn vừa chạm tính năng Premium</div>
+      <div class="ctx-sub">AI Student Brief cần gói Premium để sử dụng — nâng cấp để mở khóa ngay hôm nay.</div>
+    </div>
+    <span class="ctx-dismiss" onclick="document.getElementById('ctxBanner').style.display='none'"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+  </div>
+
+  <!-- ═══════ PRICING — PH VIEW ═══════ -->
+  <div id="viewPH">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:680px;margin:28px auto 0;">
+
+      <!-- FREE -->
+      <div class="pricing-card">
+        <div class="card-top">
+          <div class="card-top-accent" style="background:#E2E8F0;"></div>
+          <div class="tier-name" style="color:#64748B;">Free</div>
+          <div class="tier-price">
+            <span class="price-num" style="color:#1E293B;">0đ</span>
+          </div>
+          <div class="price-note">Mãi mãi miễn phí</div>
+          <div class="card-cta cta-free">Đang dùng</div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-features">
+          <div class="feature-group-label">Theo dõi học tập</div>
+          <div class="feature-item yes">Xem lịch học, lịch sử buổi</div>
+          <div class="feature-item yes">Đánh giá tiêu chí (1–5 sao)</div>
+          <div class="feature-item yes">Báo cáo sau buổi — bản tóm tắt</div>
+          <div class="feature-item no">Biểu đồ tiến độ chi tiết</div>
+          <div class="feature-item no">Goal & Milestone tracker</div>
+          <div class="feature-group-label">Tìm gia sư</div>
+          <div class="feature-item yes">Tìm kiếm & xem profile GS</div>
+          <div class="feature-item yes">Nhắn tin trực tiếp</div>
+          <div class="feature-item no">AI gợi ý GS phù hợp</div>
+          <div class="feature-group-label">Hồ sơ học sinh</div>
+          <div class="feature-item yes">Xem 3 buổi gần nhất / môn</div>
+          <div class="feature-item no">Toàn bộ lịch sử · PDF export</div>
+          <div class="feature-item no">AI Student Brief</div>
+        </div>
+      </div>
+
+      <!-- PREMIUM PH -->
+      <div class="pricing-card highlighted">
+        <div class="popular-badge">✦ Phổ biến nhất</div>
+        <div class="card-top">
+          <div class="card-top-accent" style="background:linear-gradient(90deg,#0D2D6B,#2563EB);"></div>
+          <div class="tier-name" style="color:#1D4ED8;">Premium Phụ huynh / HV</div>
+          <div class="tier-price">
+            <span class="price-num" style="color:#0D2D6B;" id="priceNumPH">69.000đ</span>
+            <span class="price-unit" id="priceUnitPH">/tháng</span>
+          </div>
+          <div class="price-note" id="priceNotePH">Dùng thử 7 ngày miễn phí</div>
+          <button class="card-cta cta-ph" onclick="showSuccess('ph')">Nâng cấp ngay →</button>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-features">
+          <div class="feature-group-label">Theo dõi học tập</div>
+          <div class="feature-item yes">Tất cả tính năng Free</div>
+          <div class="feature-item ai">Biểu đồ tiến độ AI theo tiêu chí</div>
+          <div class="feature-item ai">Goal & Milestone tracker + dự đoán</div>
+          <div class="feature-item ai">Cảnh báo sớm khi học sinh đuối</div>
+          <div class="feature-item yes">Báo cáo đầy đủ — mỗi buổi học</div>
+          <div class="feature-item ai">AI tóm tắt re-assessment mỗi 10 buổi</div>
+          <div class="feature-group-label">Tìm gia sư</div>
+          <div class="feature-item ai">AI gợi ý GS dựa trên Diagnostic</div>
+          <div class="feature-item yes">Xem điểm phù hợp % GS–HV</div>
+          <div class="feature-group-label">Hồ sơ học sinh</div>
+          <div class="feature-item yes">Toàn bộ lịch sử · PDF export</div>
+          <div class="feature-item ai">AI Student Brief — chia sẻ GS mới</div>
+          <div class="feature-item ai">AI Progress Digest hàng tuần</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Teaser chuyển tab GS -->
+    <div style="max-width:680px;margin:14px auto 0;background:#F8FAFC;border:1.5px solid #E2E8F0;
+      border-radius:12px;padding:13px 18px;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:16px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+      <span style="font-size:13px;color:#64748B;">Bạn là gia sư?</span>
+      <button onclick="switchTab('gs')" style="margin-left:auto;padding:6px 14px;background:#fff;
+        border:1.5px solid #E2E8F0;border-radius:8px;font-size:12.5px;font-weight:700;
+        color:#7C3AED;cursor:pointer;">Xem gói Gia sư →</button>
+    </div>
+  </div>
+
+  <!-- ═══════ PRICING — GS VIEW ═══════ -->
+  <div id="viewGS" style="display:none;">
+    <div class="pricing-grid">
+
+      <!-- FREE GS -->
+      <div class="pricing-card">
+        <div class="card-top">
+          <div class="card-top-accent" style="background:#E2E8F0;"></div>
+          <div class="tier-name" style="color:#64748B;">Free</div>
+          <div class="tier-price">
+            <span class="price-num" style="color:#1E293B;">0đ</span>
+          </div>
+          <div class="price-note">Mãi mãi miễn phí</div>
+          <div class="card-cta cta-free">Đang dùng</div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-features">
+          <div class="feature-group-label">Quản lý học sinh</div>
+          <div class="feature-item yes">Quản lý học sinh, lịch dạy</div>
+          <div class="feature-item yes">Ghi chú buổi học cơ bản</div>
+          <div class="feature-item yes">Đánh giá tiêu chí sau buổi</div>
+          <div class="feature-item no">Báo cáo formatted gửi PH</div>
+          <div class="feature-group-label">Công cụ soạn bài</div>
+          <div class="feature-item no">AI soạn chương trình học</div>
+          <div class="feature-item no">AI soạn giáo án</div>
+          <div class="feature-item no">AI generate bài tập</div>
+          <div class="feature-item no">PDF export báo cáo</div>
+          <div class="feature-group-label">Hiển thị hồ sơ</div>
+          <div class="feature-item yes">Profile cơ bản có thể tìm kiếm</div>
+          <div class="feature-item no">Featured listing</div>
+          <div class="feature-item no">Analytics profile views</div>
+        </div>
+      </div>
+
+      <!-- PREMIUM GS -->
+      <div class="pricing-card highlighted">
+        <div class="popular-badge">✦ Tiết kiệm thời gian</div>
+        <div class="card-top">
+          <div class="card-top-accent" style="background:linear-gradient(90deg,#6D28D9,#A855F7);"></div>
+          <div class="tier-name" style="color:#7C3AED;">Premium Gia sư</div>
+          <div class="tier-price">
+            <span class="price-num" style="color:#4C1D95;" id="priceNumGS">119.000đ</span>
+            <span class="price-unit" id="priceUnitGS">/tháng</span>
+          </div>
+          <div class="price-note" id="priceNoteGS">Dùng thử 7 ngày miễn phí</div>
+          <button class="card-cta cta-gs" onclick="showSuccess('gs')">Nâng cấp ngay →</button>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-features">
+          <div class="feature-group-label">Quản lý học sinh</div>
+          <div class="feature-item yes">Tất cả tính năng Free</div>
+          <div class="feature-item ai">AI format báo cáo — từ ghi chú thô</div>
+          <div class="feature-item yes">PDF export báo cáo chuyên nghiệp</div>
+          <div class="feature-item ai">Analytics điểm yếu học sinh</div>
+          <div class="feature-item ai">AI cảnh báo HV đuối — gợi ý điều chỉnh ngay</div>
+          <div class="feature-group-label">Công cụ soạn bài AI</div>
+          <div class="feature-item ai">AI soạn chương trình học khoá đầy đủ</div>
+          <div class="feature-item ai">AI Lộ trình học 3 phase theo mục tiêu</div>
+          <div class="feature-item ai">AI soạn giáo án theo trình độ, mục tiêu</div>
+          <div class="feature-item ai">AI generate bài tập phù hợp</div>
+          <div class="feature-item ai">AI tóm tắt re-assessment + cập nhật lộ trình</div>
+          <div class="feature-item ai">AI gợi ý điều chỉnh lộ trình</div>
+          <div class="feature-group-label">Hiển thị hồ sơ</div>
+          <div class="feature-item yes">Verified badge + Thống kê học sinh</div>
+          <div class="feature-item yes">Analytics profile views + demographics</div>
+          <div class="feature-item yes">Ưu tiên hiển thị trong AI recommend</div>
+        </div>
+      </div>
+
+      <!-- ADD-ON teaser -->
+      <div class="pricing-card" style="border-style:dashed;border-color:#FDE68A;background:#FFFBEB;">
+        <div class="card-top">
+          <div class="card-top-accent" style="background:linear-gradient(90deg,#F57C00,#FCD34D);"></div>
+          <div class="tier-name" style="color:#D97706;">Add-on · Featured Listing</div>
+          <div class="tier-price">
+            <span class="price-num" style="color:#D97706;font-size:24px;">Linh hoạt</span>
+          </div>
+          <div class="price-note">Mua lẻ theo đợt, không cần Premium</div>
+          <div class="card-cta" style="background:#FFF3E0;color:#D97706;border-color:#FDE68A;cursor:default;">Xem chi tiết ↓</div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-features">
+          <div class="feature-group-label">Tăng hiển thị hồ sơ</div>
+          <div class="feature-item yes">Featured 7 ngày — 49.000đ</div>
+          <div class="feature-item yes">Featured 30 ngày — 149.000đ</div>
+          <div class="feature-item yes">Hiển thị đầu kết quả tìm kiếm</div>
+          <div class="feature-item yes">Badge "Nổi bật" trên hồ sơ</div>
+          <div class="feature-item yes">Ưu tiên trong kết quả Diagnostic</div>
+          <div class="feature-group-label">Phù hợp khi</div>
+          <div class="feature-item yes">Mới đăng ký, cần học sinh đầu tiên</div>
+          <div class="feature-item yes">Muốn tăng lịch dạy trong thời gian ngắn</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ FEATURE COMPARISON TABLE ═══════ -->
+  <div class="section-label">So sánh chi tiết tính năng</div>
+  <div class="compare-section">
+    <div class="compare-table" id="compareTable">
+      <div class="compare-head">
+        <div class="ch-cell">Tính năng</div>
+        <div class="ch-cell">Free</div>
+        <div class="ch-cell ph" id="chPH">Premium PH</div>
+        <div class="ch-cell gs" id="chGS" style="display:none;">Premium GS</div>
+      </div>
+
+      <div class="compare-group">
+        <div class="compare-group-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg> Theo dõi học tập</div>
+        <div class="compare-row">
+          <div class="cr-feature">Xem lịch học & buổi sắp tới</div>
+          <div class="cr-cell"><span class="check-y">✓</span></div>
+          <div class="cr-cell"><span class="check-y">✓</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-y">✓</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">Báo cáo buổi học tóm tắt</div>
+          <div class="cr-cell"><span class="check-partial">3 buổi</span></div>
+          <div class="cr-cell"><span class="check-y">✓</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-y">✓</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">Biểu đồ tiến độ theo tiêu chí <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-ai">✦</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">Goal & Milestone tracker <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-ai">✦</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">Cảnh báo sớm học sinh đuối <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-ai">✦</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+      </div>
+
+      <div class="compare-group">
+        <div class="compare-group-label">🗂️ Hồ sơ học sinh</div>
+        <div class="compare-row">
+          <div class="cr-feature">Xem lịch sử buổi học</div>
+          <div class="cr-cell"><span class="check-partial">3 buổi gần nhất</span></div>
+          <div class="cr-cell"><span class="check-y">✓ Toàn bộ</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-y">✓</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">AI Student Brief <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-ai">✦</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">PDF export hồ sơ</div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-y">✓</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-y">✓</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">AI Progress Digest hàng tuần <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-ai">✦</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-n">—</span></div>
+        </div>
+      </div>
+
+      <div class="compare-group">
+        <div class="compare-group-label">✨ Tìm & Kết nối gia sư</div>
+        <div class="compare-row">
+          <div class="cr-feature">Tìm kiếm & xem profile GS</div>
+          <div class="cr-cell"><span class="check-y">✓</span></div>
+          <div class="cr-cell"><span class="check-y">✓</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-y">✓</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">AI gợi ý GS sau Diagnostic <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-ai">✦</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-n">—</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">Điểm phù hợp % GS–Học viên <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-ai">✦</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-n">—</span></div>
+        </div>
+      </div>
+
+      <div class="compare-group">
+        <div class="compare-group-label">🤖 Công cụ AI cho Gia sư</div>
+        <div class="compare-row">
+          <div class="cr-feature">AI soạn chương trình học khoá đầy đủ <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">AI Lộ trình học 3 phase theo mục tiêu <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">AI soạn giáo án theo trình độ <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">AI generate bài tập phù hợp <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">AI format báo cáo từ ghi chú thô <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">AI tóm tắt re-assessment + cập nhật lộ trình <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">AI cảnh báo HV đuối — gợi ý điều chỉnh <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="cr-feature">AI phân tích điểm yếu học sinh <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-ai">✦</span></div>
+        </div>
+      </div>
+
+      <div class="compare-group">
+        <div class="compare-group-label" id="phReassessGroup">📊 Re-assessment (PH/HV)</div>
+        <div class="compare-row">
+          <div class="cr-feature">AI tóm tắt kết quả re-assessment mỗi 10 buổi <span class="ai-tag">AI</span></div>
+          <div class="cr-cell"><span class="check-n">—</span></div>
+          <div class="cr-cell"><span class="check-ai">✦</span></div>
+          <div class="cr-cell ph-col" style="display:none;"><span class="check-n">—</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ CONTEXTUAL UPGRADE PROMPTS ═══════ -->
+  <div class="section-label">Premium xuất hiện đúng lúc</div>
+  <div class="prompts-section">
+    <div class="prompt-title">Upgrade prompt tại điểm chạm giá trị</div>
+    <div class="prompt-sub">Premium không bị nhét vào mặt bạn — nó xuất hiện đúng khi bạn cần nhất.</div>
+    <div class="prompt-grid">
+      <div class="prompt-card">
+        <span class="prompt-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg></span>
+        <div class="prompt-body">
+          <div class="prompt-context">Trong Dashboard PH · Tiến độ học tập</div>
+          <div class="prompt-text">"Biểu đồ tiến độ đầy đủ giúp bạn thấy em học tiến hay lui theo từng tiêu chí — chỉ cần 1 cái nhìn."</div>
+          <div class="prompt-cta-inline">✦ Nâng cấp để xem →</div>
+        </div>
+      </div>
+      <div class="prompt-card">
+        <span class="prompt-icon">🤖</span>
+        <div class="prompt-body">
+          <div class="prompt-context">Trong Hồ sơ học sinh · AI Brief</div>
+          <div class="prompt-text">"Khi đổi gia sư, AI tạo sẵn Student Brief giúp GS mới hiểu con bạn trong 2 phút, không cần giải thích lại từ đầu."</div>
+          <div class="prompt-cta-inline">✦ Mở khóa AI Brief →</div>
+        </div>
+      </div>
+      <div class="prompt-card">
+        <span class="prompt-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <div class="prompt-body">
+          <div class="prompt-context">Trong Tiến độ học tập · Cảnh báo</div>
+          <div class="prompt-text">"AI phát hiện học sinh đang đuối ở kỹ năng Nghe hiểu Tiếng Anh — cảnh báo sớm trước kỳ thi 6 tuần."</div>
+          <div class="prompt-cta-inline">✦ Xem chi tiết →</div>
+        </div>
+      </div>
+      <div class="prompt-card">
+        <span class="prompt-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+        <div class="prompt-body">
+          <div class="prompt-context">Trong Dashboard GS · Báo cáo</div>
+          <div class="prompt-text">"Nhập ghi chú thô sau buổi học — AI tự format thành báo cáo chuyên nghiệp gửi phụ huynh trong 10 giây."</div>
+          <div class="prompt-cta-inline">✦ Thử AI format →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ ADD-ON CARDS ═══════ -->
+  <div class="section-label">Add-on cho gia sư</div>
+  <div class="addon-section">
+    <div class="addon-cards">
+      <div class="addon-card">
+        <span class="addon-icon">⭐</span>
+        <div class="addon-body">
+          <div class="addon-name">Featured Listing — 7 ngày</div>
+          <div class="addon-desc">Hồ sơ hiển thị đầu kết quả tìm kiếm và danh sách gợi ý AI. Badge "Nổi bật" giúp phụ huynh chú ý ngay. Phù hợp khi mới đăng ký hoặc cần lấp lịch trống nhanh.</div>
+          <div class="addon-price-row">
+            <span class="addon-price">49.000đ</span>
+            <span class="addon-period">/ 7 ngày</span>
+            <button class="addon-cta">Mua ngay</button>
+          </div>
+        </div>
+      </div>
+      <div class="addon-card">
+        <span class="addon-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></span>
+        <div class="addon-body">
+          <div class="addon-name">Featured Listing — 30 ngày</div>
+          <div class="addon-desc">Tiết kiệm hơn gói 7 ngày. Duy trì vị trí nổi bật trong suốt tháng, tăng cơ hội được phụ huynh tìm thấy và nhắn tin. Kết hợp tốt với Premium GS.</div>
+          <div class="addon-price-row">
+            <span class="addon-price">149.000đ</span>
+            <span class="addon-period">/ 30 ngày</span>
+            <button class="addon-cta">Mua ngay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ FAQ ═══════ -->
+  <div class="section-label">Câu hỏi thường gặp</div>
+  <div class="faq-section">
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q">Dùng thử 7 ngày có cần nhập thẻ không?</div>
+        <div class="faq-a">Không cần thẻ để đăng ký dùng thử. Bạn chỉ nhập thông tin thanh toán khi muốn tiếp tục sau 7 ngày. Nếu không gia hạn, tài khoản tự động về Free.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Tôi có thể hủy bất cứ lúc nào không?</div>
+        <div class="faq-a">Có. Hủy trong tài khoản bất kỳ lúc nào, không cần lý do. Gói còn hiệu lực đến hết chu kỳ đã trả.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Dữ liệu của tôi có bị mất khi hết Premium không?</div>
+        <div class="faq-a">Không. Toàn bộ dữ liệu học tập được giữ lại. Bạn chỉ mất quyền truy cập tính năng AI và xem đầy đủ lịch sử, không mất dữ liệu.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Học sinh và phụ huynh có cùng gói không?</div>
+        <div class="faq-a">Học viên và phụ huynh dùng chung một tài khoản gia đình. Gói Premium PH/HV áp dụng cho cả hai. Gia sư cần gói riêng vì tính năng khác hoàn toàn.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">giasu.edu.vn có quản lý học phí không?</div>
+        <div class="faq-a">Không. Học phí là thỏa thuận riêng giữa gia đình và gia sư — platform không can thiệp. Chúng tôi chỉ cung cấp công cụ để học tốt hơn.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Add-on Featured Listing có cần Premium GS không?</div>
+        <div class="faq-a">Không cần. Featured Listing là sản phẩm độc lập, gia sư Free cũng có thể mua. Nhưng kết hợp với Premium GS sẽ tối ưu hơn vì hồ sơ có thêm verified badge và analytics.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ BOTTOM CTA ═══════ -->
+  <div class="bottom-cta">
+    <h2>Sẵn sàng thấy tiến bộ thực sự?</h2>
+    <p>Dùng thử 7 ngày miễn phí — không cần thẻ, hủy bất cứ lúc nào.</p>
+    <div class="bottom-cta-btns">
+      <button class="cta-main" onclick="showSuccess('ph')">✦ Nâng cấp Premium PH →</button>
+      <button class="cta-sec" onclick="switchTab('gs');showSuccess('gs')">Xem gói Gia sư</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div id="successOverlay" style="display:none;position:fixed;inset:0;background:rgba(13,45,107,.55);
+  backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:24px;padding:40px 44px;max-width:420px;width:90%;text-align:center;
+    box-shadow:0 24px 60px rgba(0,0,0,.2);">
+    <div style="font-size:52px;margin-bottom:16px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
+    <div style="font-size:22px;font-weight:900;color:#0D2D6B;margin-bottom:8px;" id="successTitle">Chào mừng Premium!</div>
+    <div style="font-size:14px;color:#64748B;line-height:1.6;margin-bottom:24px;" id="successSub">
+      Tài khoản của bạn đã được nâng cấp. 7 ngày dùng thử bắt đầu từ hôm nay.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="ui-dashboard-phu-huynh.html" style="display:block;padding:13px;background:#0D2D6B;color:#fff;
+        border-radius:11px;font-size:14px;font-weight:800;text-decoration:none;">Về Dashboard →</a>
+      <button onclick="closeSuccess()" style="padding:11px;background:#F1F5F9;color:#475569;border:none;
+        border-radius:11px;font-size:14px;font-weight:700;">Ở lại trang này</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let billingYearly = false;
+let currentTab = 'ph';
+
+const prices = {
+  ph: { monthly: '69.000đ', yearly: '55.000đ' },
+  gs: { monthly: '119.000đ', yearly: '95.000đ' },
+};
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tabPH').classList.toggle('active', tab === 'ph');
+  document.getElementById('tabGS').classList.toggle('active', tab === 'gs');
+  document.getElementById('viewPH').style.display = tab === 'ph' ? 'block' : 'none';
+  document.getElementById('viewGS').style.display = tab === 'gs' ? 'block' : 'none';
+  // comparison table column
+  document.getElementById('chPH').style.display = tab === 'ph' ? '' : 'none';
+  document.getElementById('chGS').style.display = tab === 'gs' ? '' : 'none';
+  document.querySelectorAll('.ph-col').forEach(el => el.style.display = tab === 'gs' ? '' : 'none');
+}
+
+function toggleBilling() {
+  billingYearly = !billingYearly;
+  const sw = document.getElementById('billToggle');
+  sw.classList.toggle('on', billingYearly);
+  document.getElementById('lblMonth').classList.toggle('active', !billingYearly);
+  document.getElementById('lblYear').classList.toggle('active', billingYearly);
+  document.getElementById('billSave').style.display = billingYearly ? 'inline' : 'none';
+  const key = billingYearly ? 'yearly' : 'monthly';
+  const period = billingYearly ? '/tháng (thanh toán năm)' : '/tháng';
+  const note = billingYearly ? 'Tiết kiệm 20% so với hàng tháng' : 'Dùng thử 7 ngày miễn phí';
+  document.getElementById('priceNumPH').textContent = prices.ph[key];
+  document.getElementById('priceUnitPH').textContent = period;
+  document.getElementById('priceNotePH').textContent = note;
+  document.getElementById('priceNumGS').textContent = prices.gs[key];
+  document.getElementById('priceUnitGS').textContent = period;
+  document.getElementById('priceNoteGS').textContent = note;
+}
+
+function showSuccess(type) {
+  const overlay = document.getElementById('successOverlay');
+  overlay.style.display = 'flex';
+  const title = type === 'gs'
+    ? 'Chào mừng Premium Gia sư!'
+    : 'Chào mừng Premium Phụ huynh!';
+  const sub = type === 'gs'
+    ? 'AI soạn bài, format báo cáo và analytics đã được kích hoạt. 7 ngày dùng thử bắt đầu từ hôm nay.'
+    : 'Biểu đồ tiến độ, AI Progress Digest và Student Brief đã được kích hoạt. Dùng thử 7 ngày.';
+  document.getElementById('successTitle').textContent = title;
+  document.getElementById('successSub').textContent = sub;
+  const link = overlay.querySelector('a');
+  link.href = type === 'gs' ? 'ui-dashboard-gia-su.html' : 'ui-dashboard-phu-huynh.html';
+  link.textContent = type === 'gs' ? 'Về Dashboard Gia sư →' : 'Về Dashboard Phụ huynh →';
+}
+
+function closeSuccess() {
+  document.getElementById('successOverlay').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

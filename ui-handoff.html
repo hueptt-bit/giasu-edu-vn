@@ -226,8 +226,8 @@ tbody tr:hover td{background:var(--n50)}
   </div>
 
   <div class="sb-section">Tổng quan</div>
-  <button class="sb-link active" onclick="scrollTo('overview')">📋 Giới thiệu</button>
-  <button class="sb-link" onclick="scrollTo('pages')">📄 Page Inventory</button>
+  <button class="sb-link active" onclick="scrollTo('overview')">📋 Giới thiệu <span class="sb-chip">v2</span></button>
+  <button class="sb-link" onclick="scrollTo('pages')">📄 Page Inventory <span class="sb-chip">21</span></button>
   <button class="sb-link" onclick="scrollTo('flows')">🗺️ Flow & Navigation</button>
 
   <div class="sb-section">Brand & Tokens</div>
@@ -261,9 +261,9 @@ tbody tr:hover td{background:var(--n50)}
   <h1>UI Handoff — giasu.edu.vn</h1>
   <p class="lead">Tài liệu thiết kế dành cho developer. Bao gồm design tokens, component library, navigation patterns và page inventory.</p>
   <div class="meta-row">
-    <span class="meta-item"><strong>Version:</strong> 1.0</span>
-    <span class="meta-item"><strong>Ngày:</strong> 08/05/2026</span>
-    <span class="meta-item"><strong>Tổng file UI:</strong> 15 trang + 3 dashboard</span>
+    <span class="meta-item"><strong>Version:</strong> 2.0</span>
+    <span class="meta-item"><strong>Cập nhật:</strong> 12/05/2026</span>
+    <span class="meta-item"><strong>Tổng file UI:</strong> 21 trang + 3 dashboard</span>
     <span class="meta-item"><strong>Stack:</strong> Vanilla HTML/CSS/JS (single-file)</span>
     <span class="meta-item"><strong>Font:</strong> Inter (Google Fonts)</span>
   </div>
@@ -273,38 +273,53 @@ tbody tr:hover td{background:var(--n50)}
     <div>Toàn bộ file UI là <strong>single-file HTML</strong> — embedded CSS và JS inline, không có build step. Mỗi dashboard là SPA mini dùng JS thuần để switch panel, không dùng framework.</div>
   </div>
 
+  <div class="callout callout-amber" style="background:#FFF7ED;border-color:#FED7AA;">
+    <span>🔄</span>
+    <div><strong>Pivot v2 — 11/05/2026:</strong> Platform không quản lý học phí — GS và PH/HV tự thỏa thuận. Doanh thu từ <strong>Premium subscription</strong> (59–79k/tháng PH · 99–149k/tháng GS) với AI features. 3 trụ cột: <strong>Chất lượng đo được</strong> (Diagnostic → re-assessment → biểu đồ tiến bộ) · <strong>AI làm việc nặng cho GS</strong> (soạn giáo án, báo cáo, bài tập) · <strong>Hồ sơ học sinh tích lũy</strong> (Student Portfolio → matching chính xác hơn).</div>
+  </div>
+
   <!-- PAGE INVENTORY -->
   <span class="anchor" id="pages"></span>
   <h2>📄 Page Inventory</h2>
-  <p>Danh sách 15 trang UI đã hoàn thiện, cộng thêm các file phụ trợ.</p>
+  <p>Danh sách 21 trang UI đã hoàn thiện — <strong>Phase 1</strong> (trang cũ đã cập nhật) + <strong>Phase 2</strong> (trang mới theo định hướng pivot).</p>
 
+  <h3>Phase 1 — Trang cũ (đã cập nhật theo pivot)</h3>
   <table>
     <thead>
-      <tr>
-        <th>File</th>
-        <th>Tên trang</th>
-        <th>Loại</th>
-        <th>Ghi chú</th>
-        <th>Trạng thái</th>
-      </tr>
+      <tr><th>File</th><th>Tên trang</th><th>Loại</th><th>Ghi chú</th><th>Trạng thái</th></tr>
     </thead>
     <tbody>
-      <tr><td><code class="code-inline">ui-trang-chu.html</code></td><td>Trang chủ</td><td><span class="badge badge-blue">Marketing</span></td><td>Hero, features, CTA, testimonials, stats</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr><td><code class="code-inline">ui-tim-gia-su.html</code></td><td>Tìm gia sư</td><td><span class="badge badge-blue">Listing</span></td><td>Filter sidebar, card grid, pagination</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr><td><code class="code-inline">ui-auth.html</code></td><td>Đăng nhập / Đăng ký</td><td><span class="badge badge-gray">Auth</span></td><td>Tab switch login/register, form validation</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr><td><code class="code-inline">ui-profile.html</code></td><td>Trang hồ sơ GS</td><td><span class="badge badge-blue">Detail</span></td><td>Gallery, rating, booking widget sticky</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr><td><code class="code-inline">ui-checkout.html</code></td><td>Thanh toán</td><td><span class="badge badge-amber">Checkout</span></td><td>Order summary, payment method, confirm</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-trang-chu.html</code></td><td>Trang chủ</td><td><span class="badge badge-blue">Marketing</span></td><td>Hero + feature preview 3 trụ cột (inline mockup), why trust, how it works, reviews</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-tim-gia-su.html</code></td><td>Tìm gia sư</td><td><span class="badge badge-blue">Listing</span></td><td>Filter sidebar, AI rec strip (Premium), match % badge, verified tick, Free/Premium/Unverified toggle</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-profile.html</code></td><td>Hồ sơ gia sư</td><td><span class="badge badge-blue">Detail</span></td><td>Video intro card + nút ▶ trên cover, cert badges xác minh, tabs: Giới thiệu · Lịch dạy · Đánh giá</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-auth.html</code></td><td>Đăng nhập / Đăng ký</td><td><span class="badge badge-gray">Auth</span></td><td>Tab switch login/register, form validation, social login</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
       <tr><td><code class="code-inline">ui-gioi-thieu.html</code></td><td>Giới thiệu</td><td><span class="badge badge-blue">Marketing</span></td><td>Mission, team, timeline, values</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
       <tr><td><code class="code-inline">ui-blog.html</code></td><td>Blog listing</td><td><span class="badge badge-blue">Content</span></td><td>Featured post, category filter, card grid</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
       <tr><td><code class="code-inline">ui-bai-viet.html</code></td><td>Bài viết chi tiết</td><td><span class="badge badge-blue">Content</span></td><td>Article layout, sidebar, related posts</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr><td><code class="code-inline">ui-dang-ky-day.html</code></td><td>Đăng ký dạy</td><td><span class="badge badge-amber">Onboarding</span></td><td>Multi-step form, subject picker, upload</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr><td><code class="code-inline">ui-dang-tin.html</code></td><td>Đăng tin học</td><td><span class="badge badge-amber">Form</span></td><td>PH tạo yêu cầu tìm GS</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-dang-ky-day.html</code></td><td>Đăng ký dạy</td><td><span class="badge badge-amber">Onboarding</span></td><td>Multi-step form, subject picker, KYC upload</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-dang-tin.html</code></td><td>Đăng tin học</td><td><span class="badge badge-amber">Form</span></td><td>PH tạo yêu cầu tìm GS, môn + mục tiêu + lịch</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
       <tr><td><code class="code-inline">ui-huong-dan.html</code></td><td>Hướng dẫn / FAQ</td><td><span class="badge badge-blue">Support</span></td><td>Accordion FAQ, search, category tabs</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr><td><code class="code-inline">ui-quen-mat-khau.html</code></td><td>Quên mật khẩu</td><td><span class="badge badge-gray">Auth</span></td><td>Email step → OTP step → Reset step</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr><td><code class="code-inline">ui-dashboard-gia-su.html</code></td><td>Dashboard Gia sư</td><td><span class="badge badge-purple">Dashboard</span></td><td>SPA: Overview, Yêu cầu, Khoá học, Tin nhắn, Lịch, Thu nhập, Hồ sơ</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr><td><code class="code-inline">ui-dashboard-phu-huynh.html</code></td><td>Dashboard Phụ huynh</td><td><span class="badge badge-purple">Dashboard</span></td><td>SPA: Overview, Tìm GS, Yêu cầu, Khoá học, Tin nhắn, Thanh toán</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr><td><code class="code-inline">ui-admin.html</code></td><td>Dashboard Admin</td><td><span class="badge badge-red">Admin</span></td><td>SPA: Overview, Xác thực GS, Duyệt tin, Users, Tài chính, Cài đặt</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
-      <tr style="opacity:.5;"><td><code class="code-inline">ui-onboarding-gia-su.html</code></td><td>Onboarding GS mới <em style="color:#94A3B8;font-size:11px;">(gộp vào ui-dang-ky-day.html)</em></td><td><span class="badge badge-amber">Deprecated</span></td><td>Redirect tự động → ui-dang-ky-day.html</td><td><span class="status-dot" style="background:#94A3B8;"></span>Đã bỏ</td></tr>
+      <tr><td><code class="code-inline">ui-quen-mat-khau.html</code></td><td>Quên mật khẩu</td><td><span class="badge badge-gray">Auth</span></td><td>Email → OTP → Reset (3 bước)</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-dashboard-gia-su.html</code></td><td>Dashboard Gia sư</td><td><span class="badge badge-purple">Dashboard</span></td><td>SPA: Overview · Yêu cầu · Khoá học · Tin nhắn · Lịch · <strong>Báo cáo & AI</strong> · Hồ sơ — Free/Premium toggle</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-dashboard-phu-huynh.html</code></td><td>Dashboard Phụ huynh</td><td><span class="badge badge-purple">Dashboard</span></td><td>SPA: Overview · Tìm GS · Yêu cầu · Khoá học · Tin nhắn · <strong>Báo cáo & AI</strong> — Free/Premium toggle, progress tracking</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-admin.html</code></td><td>Dashboard Admin</td><td><span class="badge badge-red">Admin</span></td><td>SPA: Overview · Xác thực GS · Duyệt tin · Users · Cài đặt</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr style="opacity:.5;"><td><code class="code-inline">ui-checkout.html</code></td><td>Thanh toán (cũ) <em style="color:#94A3B8;font-size:11px;">(thay bằng ui-premium.html)</em></td><td><span class="badge badge-gray">Deprecated</span></td><td>Escrow flow — không còn dùng sau pivot</td><td><span class="status-dot" style="background:#94A3B8;"></span>Deprecated</td></tr>
+      <tr style="opacity:.5;"><td><code class="code-inline">ui-onboarding-gia-su.html</code></td><td>Onboarding GS (cũ) <em style="color:#94A3B8;font-size:11px;">(gộp vào ui-dang-ky-day.html)</em></td><td><span class="badge badge-gray">Deprecated</span></td><td>Redirect → ui-dang-ky-day.html</td><td><span class="status-dot" style="background:#94A3B8;"></span>Deprecated</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:32px;">Phase 2 — Trang mới (core product loop)</h3>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Tên trang</th><th>Loại</th><th>Ghi chú</th><th>Trạng thái</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code class="code-inline">ui-diagnostic.html</code></td><td>Bài test đầu vào</td><td><span class="badge badge-green">Core Flow</span></td><td>3 màn hình: Chọn môn + mục tiêu → Làm bài (5 câu adaptive) → Kết quả + AI gợi ý GS. Free/Premium toggle.</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-alignment.html</code></td><td>Buổi trao đổi ban đầu</td><td><span class="badge badge-green">Core Flow</span></td><td>Wizard 5 bước: Thông tin HV → Mục tiêu & lịch → Cam kết 2 bên → AI timeline → Learning Agreement (ký số)</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-session-report.html</code></td><td>Báo cáo buổi học</td><td><span class="badge badge-green">Core Flow</span></td><td>GS điền ghi chú thô → AI format báo cáo đẹp → Đánh giá tiêu chí 2 tầng (chung + theo môn) → Gửi PH</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-progress.html</code></td><td>Tiến độ học sinh</td><td><span class="badge badge-green">Core Flow</span></td><td>Skill tree, biểu đồ tiến bộ theo tiêu chí, AI Progress Digest, Goal tracker, cảnh báo sớm — Free/Premium toggle</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-student-portfolio.html</code></td><td>Hồ sơ học sinh</td><td><span class="badge badge-green">Core Flow</span></td><td>Portfolio theo môn: skill chips, timeline báo cáo, điểm mạnh/yếu, AI Student Brief (Premium), chia sẻ GS mới</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
+      <tr><td><code class="code-inline">ui-premium.html</code></td><td>Nâng cấp Premium</td><td><span class="badge badge-amber">Monetization</span></td><td>Hero 2 tab (PH/GS), pricing cards, billing toggle tháng/năm, bảng so sánh, Featured Listing add-on, FAQ</td><td><span class="status-dot dot-done"></span>Chốt</td></tr>
     </tbody>
   </table>
 
@@ -324,13 +339,21 @@ tbody tr:hover td{background:var(--n50)}
       </div>
     </div>
     <div style="margin-bottom:16px">
-      <span class="badge badge-amber" style="margin-bottom:8px;display:inline-block">Phụ huynh</span>
+      <span class="badge badge-amber" style="margin-bottom:8px;display:inline-block">Phụ huynh / Học viên</span>
       <div class="flow">
         <div class="flow-node">Trang chủ</div><div class="flow-arrow">→</div>
-        <div class="flow-node">Tìm gia sư</div><div class="flow-arrow">→</div>
-        <div class="flow-node">Profile GS</div><div class="flow-arrow">→</div>
-        <div class="flow-node amber">Checkout</div><div class="flow-arrow">→</div>
+        <div class="flow-node amber">Diagnostic test</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Tìm gia sư (AI match)</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Profile GS + Video</div><div class="flow-arrow">→</div>
+        <div class="flow-node amber">Trao đổi ban đầu</div><div class="flow-arrow">→</div>
         <div class="flow-node primary">Dashboard PH</div>
+      </div>
+      <div class="flow" style="margin-top:8px;">
+        <div class="flow-node primary">Dashboard PH</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Buổi học loop</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Xem Tiến độ</div><div class="flow-arrow">→</div>
+        <div class="flow-node amber">Re-assessment (mỗi 10 buổi)</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Student Portfolio</div>
       </div>
     </div>
     <div>

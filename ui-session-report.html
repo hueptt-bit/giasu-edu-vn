@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo cáo buổi học — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8FAFC;color:#0F172A;min-height:100vh}
+
+/* ─── NAV ─── */
+nav{
+  background:white;border-bottom:1px solid #E2E8F0;
+  padding:0 28px;height:58px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.45}
+.nav-center{font-size:13.5px;font-weight:700;color:#1E293B;display:flex;align-items:center;gap:8px}
+.nav-session-badge{background:#EEF2FF;color:#0D2D6B;font-size:12px;font-weight:800;padding:3px 10px;border-radius:6px}
+.nav-exit{display:flex;align-items:center;gap:5px;font-size:13px;color:#64748B;
+  padding:7px 14px;border-radius:9px;border:1px solid #E2E8F0;background:white;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
+.nav-exit:hover{background:#F1F5F9;border-color:#CBD5E1}
+
+/* ─── LAYOUT ─── */
+.wrapper{max-width:740px;margin:0 auto;padding:28px 20px 100px}
+
+.screen{display:none}
+.screen.active{display:block}
+
+/* ─── STEP BAR ─── */
+.step-bar{display:flex;align-items:center;gap:0;background:white;border:1px solid #E2E8F0;border-radius:12px;padding:4px;margin-bottom:24px;width:fit-content}
+.step-item{padding:7px 18px;border-radius:9px;font-size:12.5px;font-weight:700;color:#94A3B8;transition:all .2s;cursor:default}
+.step-item.active{background:#0D2D6B;color:white}
+.step-item.done{color:#10B981}
+
+/* ─── STUDENT CARD ─── */
+.student-card{
+  background:linear-gradient(130deg,#0D2D6B 0%,#1a47a3 60%,#1565C0 100%);
+  border-radius:20px;padding:22px 24px;margin-bottom:20px;
+  display:flex;align-items:center;gap:16px;
+  box-shadow:0 8px 32px rgba(13,45,107,.2);
+  position:relative;overflow:hidden;
+}
+.student-card::before{
+  content:'';position:absolute;right:-40px;top:-40px;
+  width:180px;height:180px;
+  background:radial-gradient(circle,rgba(245,124,0,.18) 0%,transparent 65%);
+  pointer-events:none;
+}
+.student-avatar{width:54px;height:54px;border-radius:14px;border:2px solid rgba(255,255,255,.25);object-fit:cover;flex-shrink:0}
+.student-info{flex:1;min-width:0}
+.student-name{font-size:17px;font-weight:800;color:white;letter-spacing:-.3px}
+.student-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+.student-tag{font-size:11px;font-weight:600;color:rgba(255,255,255,.7);background:rgba(255,255,255,.12);padding:3px 9px;border-radius:5px}
+.session-num-wrap{flex-shrink:0;text-align:center}
+.session-num-big{font-size:32px;font-weight:800;color:white;line-height:1}
+.session-num-lbl{font-size:10.5px;color:rgba(255,255,255,.55);font-weight:600;margin-top:2px}
+
+/* ─── CARD ─── */
+.card{
+  background:white;border-radius:18px;border:1px solid #E8EDF4;
+  margin-bottom:14px;overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.card-head{
+  display:flex;align-items:center;gap:12px;
+  padding:18px 22px 0;
+}
+.section-num{
+  font-size:11px;font-weight:800;color:#94A3B8;
+  background:#F1F5F9;width:24px;height:24px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  letter-spacing:.5px;
+}
+.card-title{font-size:15px;font-weight:800;color:#0F172A}
+.card-sub{font-size:12px;color:#94A3B8;font-weight:500;margin-top:1px}
+.card-body{padding:16px 22px 22px}
+.card-divider{height:1px;background:#F1F5F9;margin:0 22px}
+
+/* ─── SUBJECT PILLS ─── */
+.subject-pills{display:flex;gap:7px;flex-wrap:wrap}
+.sub-pill{
+  display:flex;align-items:center;gap:5px;
+  padding:8px 14px;border-radius:10px;
+  border:1.5px solid #E8EDF4;background:#FAFBFC;
+  font-size:13px;font-weight:600;color:#475569;
+  cursor:pointer;transition:all .15s;
+}
+.sub-pill:hover{border-color:#0D2D6B;color:#0D2D6B;background:#F0F4FF}
+.sub-pill.selected{background:#0D2D6B;border-color:#0D2D6B;color:white;box-shadow:0 3px 10px rgba(13,45,107,.25)}
+.sub-pill-icon{
+  width:26px;height:26px;border-radius:7px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10.5px;font-weight:800;letter-spacing:-.3px;
+}
+
+/* ─── FORM ─── */
+.form-row{margin-bottom:14px}
+.form-row:last-child{margin-bottom:0}
+.form-label{font-size:12px;font-weight:700;color:#475569;margin-bottom:5px;display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.4px}
+.form-label .hint{color:#94A3B8;font-weight:500;text-transform:none;letter-spacing:0;margin-left:auto;font-size:11.5px}
+.form-input,.form-select,.form-textarea{
+  width:100%;padding:10px 13px;border:1.5px solid #E8EDF4;border-radius:10px;
+  font-size:13.5px;font-family:'Inter',sans-serif;outline:none;color:#1E293B;
+  background:white;transition:border-color .15s,box-shadow .15s;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  border-color:#0D2D6B;box-shadow:0 0 0 3px rgba(13,45,107,.07)
+}
+.form-input::placeholder,.form-textarea::placeholder{color:#B0BAC8}
+.form-textarea{resize:vertical;min-height:90px;line-height:1.65}
+.form-textarea.sm{min-height:68px}
+.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+
+/* ─── TIER 1 STARS ─── */
+.t1-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.t1-item{
+  background:#FAFBFC;border:1.5px solid #E8EDF4;border-radius:14px;
+  padding:14px 12px;text-align:center;transition:border-color .15s;
+}
+.t1-item.rated{border-color:#E0E7FF}
+.t1-emoji{font-size:22px;margin-bottom:6px;display:block}
+.t1-name{font-size:12px;font-weight:700;color:#374151;margin-bottom:10px}
+.t1-stars{display:flex;justify-content:center;gap:2px;margin-bottom:4px}
+.t1-star{font-size:20px;color:#E2E8F0;cursor:pointer;transition:color .1s,transform .1s;line-height:1}
+.t1-star.on{color:#F59E0B}
+.t1-star:hover{transform:scale(1.2);color:#F59E0B}
+.t1-val{font-size:11px;font-weight:700;color:#94A3B8;min-height:15px;transition:color .2s}
+.t1-val.on{color:#F57C00}
+
+/* ─── TIER 2 CRITERIA CARDS ─── */
+.t2-card{
+  background:#FAFBFC;border:1.5px solid #E8EDF4;border-radius:14px;
+  margin-bottom:10px;overflow:hidden;transition:border-color .2s,box-shadow .2s;
+}
+.t2-card:last-child{margin-bottom:0}
+.t2-card.status-good{border-color:#A7F3D0;background:#F0FDF4}
+.t2-card.status-watch{border-color:#FDE68A;background:#FFFBEB}
+.t2-card.status-bad{border-color:#FECACA;background:#FFF5F5}
+
+.t2-head{display:flex;align-items:center;gap:10px;padding:13px 16px}
+.t2-icon{
+  width:34px;height:34px;border-radius:9px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;font-family:'Inter',sans-serif;letter-spacing:-.3px;
+}
+.t2-name-col{flex:1}
+.t2-name{font-size:13.5px;font-weight:800;color:#1E293B}
+.t2-desc{font-size:11.5px;color:#94A3B8;margin-top:1px}
+.t2-status-pills{display:flex;gap:5px;flex-shrink:0}
+.t2-pill{
+  font-size:11px;font-weight:700;padding:5px 10px;border-radius:7px;
+  border:1.5px solid #E2E8F0;background:white;cursor:pointer;
+  transition:all .15s;color:#64748B;white-space:nowrap;
+}
+.t2-pill:hover{border-color:#CBD5E1}
+.t2-pill.p-good.active{background:#10B981;border-color:#10B981;color:white}
+.t2-pill.p-watch.active{background:#F59E0B;border-color:#F59E0B;color:white}
+.t2-pill.p-bad.active{background:#EF4444;border-color:#EF4444;color:white}
+
+.t2-detail{padding:0 16px 14px;display:none}
+.t2-detail.show{display:block}
+.t2-field{margin-bottom:10px}
+.t2-field:last-child{margin-bottom:0}
+.t2-field-label{
+  font-size:11px;font-weight:700;color:#94A3B8;
+  text-transform:uppercase;letter-spacing:.4px;
+  margin-bottom:5px;display:flex;align-items:center;gap:5px;
+}
+.t2-field-label.green{color:#059669}
+.t2-field-label.red{color:#DC2626}
+.t2-field-label.amber{color:#D97706}
+.t2-field-label.blue{color:#2563EB}
+.t2-field textarea{
+  width:100%;padding:9px 12px;border:1.5px solid #E8EDF4;border-radius:9px;
+  font-size:13px;font-family:'Inter',sans-serif;outline:none;resize:none;
+  min-height:64px;line-height:1.6;color:#1E293B;background:white;
+  transition:border-color .15s;
+}
+.t2-field textarea:focus{border-color:#0D2D6B}
+.t2-field textarea::placeholder{color:#B0BAC8}
+.t2-field textarea.green-focus:focus{border-color:#10B981}
+.t2-field textarea.red-focus:focus{border-color:#EF4444}
+.t2-field textarea.blue-focus:focus{border-color:#2563EB}
+
+/* ─── PRIVATE NOTE ─── */
+.private-wrap{position:relative}
+.private-tag{
+  position:absolute;top:10px;right:12px;
+  font-size:10px;font-weight:700;color:#94A3B8;
+  background:#F1F5F9;border:1px solid #E2E8F0;
+  padding:2px 8px;border-radius:5px;pointer-events:none;letter-spacing:.3px;
+}
+
+/* ─── AUTO-SAVE INDICATOR ─── */
+.autosave-bar{display:flex;align-items:center;gap:7px;margin-bottom:16px;padding:0 2px;height:18px;}
+.autosave-dot{width:7px;height:7px;border-radius:50%;background:#CBD5E1;flex-shrink:0;transition:background .3s}
+.autosave-dot.saving{background:#F59E0B;animation:pulseSave .7s ease-in-out infinite alternate}
+.autosave-dot.saved{background:#16A34A}
+.autosave-text{font-size:11.5px;color:#94A3B8;font-weight:600;transition:color .2s}
+.autosave-text.saved{color:#15803D}
+@keyframes pulseSave{from{opacity:.35}to{opacity:1}}
+
+/* ─── BOTTOM BAR ─── */
+.bottom-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+  border-top:1px solid #E2E8F0;padding:12px 28px;
+  display:flex;align-items:center;gap:10px;z-index:50;
+}
+.btn-ghost{
+  padding:11px 18px;border:1.5px solid #E2E8F0;border-radius:10px;
+  background:white;color:#64748B;font-size:13.5px;font-weight:600;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;white-space:nowrap;
+}
+.btn-ghost:hover{border-color:#0D2D6B;color:#0D2D6B}
+.btn-primary{
+  flex:1;padding:12px;background:#0D2D6B;color:white;border:none;
+  border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:background .15s;
+}
+.btn-primary:hover{background:#1a47a3}
+.btn-green{
+  flex:1;padding:12px;background:#10B981;color:white;border:none;
+  border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:background .15s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn-green:hover{background:#059669}
+.btn-outline-navy{
+  padding:11px 18px;border:1.5px solid #0D2D6B;border-radius:10px;
+  background:white;color:#0D2D6B;font-size:13.5px;font-weight:700;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;white-space:nowrap;
+}
+.btn-outline-navy:hover{background:#EEF2FF}
+
+/* ─── SCREEN 2: PREVIEW ─── */
+.account-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.account-label{font-size:12px;font-weight:600;color:#94A3B8}
+.acc-toggle{display:flex;gap:0;background:#F1F5F9;border-radius:10px;padding:4px;border:1px solid #E2E8F0}
+.acc-btn{padding:6px 16px;border-radius:7px;font-size:12.5px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'Inter',sans-serif;transition:all .2s}
+.acc-btn.active-free{background:white;color:#0D2D6B;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.acc-btn.active-premium{background:linear-gradient(135deg,#F5F3FF,#EDE9FE);color:#7C3AED;box-shadow:0 1px 4px rgba(124,58,237,.15)}
+.acc-chip{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px}
+.chip-free{background:#E2E8F0;color:#64748B}
+.chip-premium{background:linear-gradient(90deg,#7C3AED,#A855F7);color:white}
+
+/* AI section */
+.ai-section{margin-bottom:18px}
+.ai-btn{
+  width:100%;padding:13px;border:none;border-radius:12px;cursor:pointer;font-family:'Inter',sans-serif;
+  background:linear-gradient(135deg,#7C3AED,#A855F7);color:white;
+  font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 4px 16px rgba(124,58,237,.28);transition:opacity .15s,transform .15s;
+}
+.ai-btn:hover{opacity:.92;transform:translateY(-1px)}
+.ai-btn-sub{font-size:11.5px;color:#94A3B8;text-align:center;margin-top:7px}
+.ai-lock{background:linear-gradient(135deg,#FAFBFC,#F1F5F9);border:1.5px dashed #CBD5E1;border-radius:14px;padding:22px;text-align:center}
+.ai-lock-icon{font-size:30px;margin-bottom:10px}
+.ai-lock-title{font-size:14px;font-weight:800;color:#1E293B;margin-bottom:6px}
+.ai-lock-desc{font-size:12.5px;color:#64748B;line-height:1.65;margin-bottom:16px;max-width:340px;margin-left:auto;margin-right:auto}
+.upgrade-btn-purple{background:linear-gradient(135deg,#7C3AED,#A855F7);color:white;border:none;border-radius:10px;padding:11px 24px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 4px 14px rgba(124,58,237,.3)}
+.gen-anim{display:none;align-items:center;gap:10px;padding:14px 16px;background:#F5F3FF;border-radius:10px;border:1px solid #DDD6FE;margin-top:10px}
+.gen-anim.show{display:flex}
+.gen-dot{width:7px;height:7px;border-radius:50%;background:#7C3AED;animation:bounce .7s infinite ease-in-out}
+.gen-dot:nth-child(2){animation-delay:.12s}
+.gen-dot:nth-child(3){animation-delay:.24s}
+@keyframes bounce{0%,80%,100%{transform:scale(.5)}40%{transform:scale(1)}}
+.gen-txt{font-size:13px;font-weight:600;color:#7C3AED}
+
+/* Report preview */
+.preview-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.preview-title{font-size:16px;font-weight:800;color:#0D2D6B}
+.view-toggle{display:flex;background:#F1F5F9;border-radius:8px;padding:3px;gap:0}
+.vt-btn{padding:5px 14px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'Inter',sans-serif;transition:all .15s}
+.vt-btn.active{background:white;color:#0D2D6B;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+.report-card{background:white;border-radius:18px;border:1px solid #E8EDF4;overflow:hidden;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.report-card-head{background:linear-gradient(130deg,#0D2D6B,#1565C0);padding:22px 26px}
+.rc-title{font-size:16px;font-weight:800;color:white;margin-bottom:4px}
+.rc-meta{font-size:12.5px;color:rgba(255,255,255,.6)}
+.rc-body{padding:22px 26px}
+.rc-section{margin-bottom:20px}
+.rc-section:last-child{margin-bottom:0}
+.rc-section-label{font-size:10.5px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.rc-section-label::after{content:'';flex:1;height:1px;background:#F1F5F9}
+.rc-text{font-size:13.5px;color:#374151;line-height:1.75}
+.ai-badge-inline{display:inline-flex;align-items:center;gap:4px;background:#7C3AED;color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;margin-bottom:10px}
+.rc-eval-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F8FAFC}
+.rc-eval-row:last-child{border-bottom:none}
+.rc-eval-name{font-size:13px;color:#374151;font-weight:600;display:flex;align-items:center;gap:5px}
+.rc-stars{display:flex;gap:2px;font-size:13px}
+.rc-status-tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:5px}
+.tag-good{background:#D1FAE5;color:#065F46}
+.tag-watch{background:#FEF3C7;color:#92400E}
+.tag-bad{background:#FEE2E2;color:#9B1C1C}
+.rc-hw-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:14px 16px}
+.rc-hw-label{font-size:11px;font-weight:700;color:#92400E;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px}
+.rc-hw-text{font-size:13.5px;color:#1E293B;line-height:1.65}
+.rc-hw-due{font-size:11.5px;color:#D97706;font-weight:700;margin-top:7px;display:flex;align-items:center;gap:4px}
+.rc-note-box{background:#F0FDF4;border:1px solid #A7F3D0;border-radius:12px;padding:14px 16px;font-size:13.5px;color:#065F46;line-height:1.7}
+.rc-footer{background:#F8FAFC;padding:12px 26px;font-size:11.5px;color:#94A3B8;border-top:1px solid #F1F5F9}
+
+/* ─── AI SUGGEST STRIP ─── */
+.ai-suggest-strip{
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(135deg,#F5F3FF,#EDE9FE);
+  border:1px solid #DDD6FE;border-radius:10px;
+  padding:9px 12px;margin-bottom:12px;gap:10px;
+}
+.ai-suggest-txt{font-size:12px;color:#6D28D9;font-weight:600;line-height:1.4;flex:1}
+.ai-suggest-btn{
+  background:linear-gradient(135deg,#7C3AED,#A855F7);color:white;
+  border:none;border-radius:8px;padding:7px 14px;
+  font-size:12px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;white-space:nowrap;flex-shrink:0;
+  display:flex;align-items:center;gap:5px;
+  box-shadow:0 2px 8px rgba(124,58,237,.28);transition:opacity .15s,transform .1s;
+}
+.ai-suggest-btn:hover{opacity:.9;transform:translateY(-1px)}
+.ai-suggest-btn.loading{opacity:.6;cursor:default}
+.ai-suggest-dots{display:inline-flex;gap:3px;align-items:center}
+.ai-suggest-dot{width:4px;height:4px;border-radius:50%;background:white;animation:bounce .7s infinite ease-in-out}
+.ai-suggest-dot:nth-child(2){animation-delay:.12s}
+.ai-suggest-dot:nth-child(3){animation-delay:.24s}
+.ai-suggest-locked{
+  background:#F8FAFC;border-color:#E2E8F0;cursor:default;
+}
+.ai-suggest-locked .ai-suggest-txt{color:#94A3B8}
+.ai-suggest-locked .ai-suggest-btn{
+  background:#CBD5E1;box-shadow:none;cursor:default;pointer-events:none;
+}
+
+/* ─── STATUS PILL ICONS ─── */
+.ps-ic{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:16px;height:16px;border-radius:4px;
+  font-size:10px;font-weight:900;font-family:'Inter',sans-serif;
+  flex-shrink:0;line-height:1;transition:all .15s;
+}
+.ps-ic.good-ic{background:#D1FAE5;color:#059669}
+.ps-ic.watch-ic{background:#FEF3C7;color:#D97706}
+.ps-ic.bad-ic{background:#FEE2E2;color:#DC2626}
+.t2-pill.p-good.active .ps-ic.good-ic{background:rgba(255,255,255,.28);color:white}
+.t2-pill.p-watch.active .ps-ic.watch-ic{background:rgba(255,255,255,.28);color:white}
+.t2-pill.p-bad.active .ps-ic.bad-ic{background:rgba(255,255,255,.28);color:white}
+
+/* ─── FIELD LABEL ICONS ─── */
+.fl-ic{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:16px;height:16px;border-radius:4px;
+  font-size:10.5px;font-weight:800;font-family:'Inter',sans-serif;
+  flex-shrink:0;line-height:1;
+}
+
+/* ─── AGENDA PRE-FILL ─── */
+.agenda-bar{
+  display:flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#F0F9FF,#E0F2FE);
+  border:1px solid #BAE6FD;border-radius:10px;
+  padding:9px 13px;margin-bottom:14px;
+}
+.agenda-bar-ic{
+  width:28px;height:28px;border-radius:8px;flex-shrink:0;
+  background:#0284C7;color:white;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;
+}
+.agenda-bar-txt{flex:1;font-size:12px;color:#0369A1;font-weight:600;line-height:1.4}
+.agenda-bar-sub{font-size:11px;color:#7DD3FC;font-weight:500}
+.agenda-bar-edit{font-size:11.5px;font-weight:700;color:#0284C7;cursor:pointer;text-decoration:underline;white-space:nowrap;background:none;border:none;font-family:'Inter',sans-serif;padding:0}
+.agenda-bar-edit:hover{color:#0369A1}
+
+/* ─── AI INLINE ASSIST ─── */
+.ai-inline-assist{
+  display:flex;align-items:center;gap:7px;margin-top:6px;
+}
+.ai-inline-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  background:linear-gradient(135deg,#7C3AED,#A855F7);color:white;
+  border:none;border-radius:7px;padding:5px 11px;
+  font-size:11.5px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;
+  box-shadow:0 2px 8px rgba(124,58,237,.22);transition:opacity .15s;
+}
+.ai-inline-btn:hover{opacity:.88}
+.ai-inline-hint{font-size:11px;color:#94A3B8;font-weight:500}
+.ai-inline-lock{
+  display:inline-flex;align-items:center;gap:5px;
+  background:#F1F5F9;color:#94A3B8;
+  border:1px dashed #CBD5E1;border-radius:7px;padding:5px 11px;
+  font-size:11.5px;font-weight:600;
+}
+
+/* ─── GLOBAL MODE BANNER ─── */
+.mode-banner{
+  display:flex;align-items:center;gap:10px;
+  background:white;border:1.5px solid #E2E8F0;
+  border-radius:14px;padding:10px 16px;margin-bottom:18px;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.mode-banner-label{font-size:12px;font-weight:600;color:#94A3B8;flex:1}
+.mode-banner-label strong{color:#1E293B;font-weight:700}
+.mode-banner.is-free{border-color:#E2E8F0;background:#FAFBFC}
+.mode-banner.is-premium{border-color:#A78BFA;background:linear-gradient(135deg,#EDE9FE,#F5F3FF);box-shadow:0 2px 12px rgba(124,58,237,.12)}
+.mode-indicator{
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+}
+.mode-indicator.free{background:#94A3B8}
+.mode-indicator.premium{background:#7C3AED;box-shadow:0 0 0 3px rgba(124,58,237,.18)}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:#1E293B;color:white;padding:11px 18px;border-radius:11px;
+  font-size:13.5px;font-weight:600;pointer-events:none;
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1);z-index:999;white-space:nowrap;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:600px){
+  .t2-status-pills{flex-direction:column;gap:4px}
+  .form-grid-2,.form-grid-4{grid-template-columns:1fr 1fr}
+  .t1-grid{grid-template-columns:repeat(3,1fr)}
+  .student-card{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="ui-trang-chu.html" class="nav-logo">
+    <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0">
+      <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+      <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+    </svg>
+    <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+  </a>
+  <div class="nav-center">
+    Báo cáo buổi học
+    <span class="nav-session-badge" id="navBadge">#12</span>
+  </div>
+  <a href="ui-dashboard-gia-su.html" class="nav-exit" style="text-decoration:none">← Dashboard GS</a>
+</nav>
+
+<div class="wrapper">
+
+<!-- ══════ SCREEN 1 ══════ -->
+<div class="screen active" id="s1">
+
+  <!-- ✦ AI TRIGGER BANNER — nhắc viết báo cáo 25 phút sau buổi -->
+  <div style="background:linear-gradient(135deg,#4C1D95,#5B21B6);border-radius:12px;padding:12px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;">
+    <div style="width:36px;height:36px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">✦</div>
+    <div style="flex:1;">
+      <div style="font-size:13px;font-weight:700;color:#fff;">AI nhắc viết báo cáo — Buổi học kết thúc 25 phút trước</div>
+      <div style="font-size:11.5px;color:rgba(255,255,255,.65);margin-top:2px;">Nội dung đã được điền sẵn từ kế hoạch buổi học · Chỉ cần kiểm tra và điều chỉnh</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+      <div style="height:28px;padding:0 12px;background:rgba(255,255,255,.2);border-radius:7px;display:flex;align-items:center;font-size:11.5px;color:#fff;font-weight:600;white-space:nowrap;">Nguyễn Văn An · Toán · Buổi #7</div>
+      <button id="draftDemoBtn" onclick="toggleDraftDemo()" style="height:26px;padding:0 10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:6px;font-size:11px;color:rgba(255,255,255,.8);font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="11" x2="15.01" y2="11"/><line x1="18" y1="13" x2="18.01" y2="13"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg> Xem form trống</button>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+    <div class="step-bar" style="margin-bottom:0">
+      <div class="step-item active">① Điền báo cáo</div>
+      <div class="step-item" id="step2">② Xem trước & Gửi</div>
+    </div>
+    <div class="autosave-bar" id="autosaveBar" style="margin-bottom:0">
+      <span class="autosave-dot" id="autosaveDot"></span>
+      <span class="autosave-text" id="autosaveText">Chưa có thay đổi</span>
+    </div>
+  </div>
+
+  <!-- Mode demo toggle -->
+  <div class="mode-banner is-free" id="modeBanner">
+    <div class="mode-indicator free" id="modeIndicator"></div>
+    <div class="mode-banner-label"><strong id="modeLabelMain">Tài khoản Miễn phí</strong> <span id="modeLabelSub" style="color:#94A3B8">— Một số tính năng AI bị khoá</span></div>
+    <div class="acc-toggle">
+      <button class="acc-btn active-free" id="s1BtnFree" onclick="setS1Mode('free')">Miễn phí <span class="acc-chip chip-free">FREE</span></button>
+      <button class="acc-btn" id="s1BtnPrem" onclick="setS1Mode('premium')">Cao cấp <span class="acc-chip chip-premium">PRO</span></button>
+    </div>
+  </div>
+
+  <!-- Student -->
+  <div class="student-card">
+    <img class="student-avatar" src="https://i.pravatar.cc/150?img=31" alt="Nguyễn Văn An">
+    <div class="student-info">
+      <div class="student-name">Nguyễn Văn An</div>
+      <div class="student-tags">
+        <span class="student-tag" id="subjectTagNav">Toán học</span>
+        <span class="student-tag">Luyện thi THPT</span>
+        <span class="student-tag">Từ 12/03/2026</span>
+      </div>
+    </div>
+    <div class="session-num-wrap">
+      <div class="session-num-big" id="sessionNumBig">12</div>
+      <div class="session-num-lbl">buổi học</div>
+    </div>
+  </div>
+
+  <!-- 01 Thông tin buổi học -->
+  <div class="card">
+    <div class="card-head">
+      <div class="section-num">01</div>
+      <div>
+        <div class="card-title">Thông tin buổi học</div>
+        <div class="card-sub">Môn học, ngày giờ</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-label">Môn học</div>
+        <div class="subject-pills" id="subjectPills">
+          <div class="sub-pill selected" data-sub="toan" onclick="selectSub(this)"><div class="sub-pill-icon" style="background:#EEF2FF;color:#4F46E5">∑</div>Toán</div>
+          <div class="sub-pill" data-sub="anh" onclick="selectSub(this)"><div class="sub-pill-icon" style="background:#FFF7ED;color:#EA580C">Anh</div>Tiếng Anh</div>
+          <div class="sub-pill" data-sub="ly" onclick="selectSub(this)"><div class="sub-pill-icon" style="background:#F0FDF4;color:#16A34A">φ</div>Vật lý</div>
+          <div class="sub-pill" data-sub="hoa" onclick="selectSub(this)"><div class="sub-pill-icon" style="background:#FDF4FF;color:#9333EA">Hz</div>Hóa học</div>
+          <div class="sub-pill" data-sub="van" onclick="selectSub(this)"><div class="sub-pill-icon" style="background:#FFF1F2;color:#BE123C">Vn</div>Ngữ văn</div>
+          <div class="sub-pill" data-sub="code" onclick="selectSub(this)"><div class="sub-pill-icon" style="background:#F0F9FF;color:#0284C7">&lt;/&gt;</div>Lập trình</div>
+        </div>
+      </div>
+      <div class="form-grid-4" style="margin-top:4px">
+        <div class="form-row" style="grid-column:span 2">
+          <div class="form-label">Ngày học</div>
+          <input type="date" class="form-input" id="sessionDate" value="2026-05-11">
+        </div>
+        <div class="form-row">
+          <div class="form-label">Bắt đầu</div>
+          <input type="time" class="form-input" value="19:00">
+        </div>
+        <div class="form-row">
+          <div class="form-label">Kết thúc</div>
+          <input type="time" class="form-input" value="20:30">
+        </div>
+      </div>
+      <div class="form-row" style="max-width:120px">
+        <div class="form-label">Buổi số</div>
+        <input type="number" class="form-input" id="sessionNum" value="12" min="1" oninput="syncNum()">
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 Nội dung -->
+  <div class="card">
+    <div class="card-head">
+      <div class="section-num">02</div>
+      <div>
+        <div class="card-title">Nội dung buổi học</div>
+        <div class="card-sub">Tự động lấy từ kế hoạch · Chỉnh lại cho đúng thực tế</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- Agenda pre-fill bar -->
+      <div class="agenda-bar" id="agendaBar">
+        <div class="agenda-bar-ic">AI</div>
+        <div style="flex:1">
+          <div class="agenda-bar-txt">Đã điền sẵn từ kế hoạch buổi học</div>
+          <div class="agenda-bar-sub">Chỉnh lại nội dung nếu cần — không ảnh hưởng đến kế hoạch gốc</div>
+        </div>
+        <button class="agenda-bar-edit" onclick="document.getElementById('agendaBar').style.display='none'">Ẩn ×</button>
+      </div>
+
+      <div class="form-row">
+        <div class="form-label">Chủ đề <span style="color:#EF4444;font-size:10px">*</span></div>
+        <input type="text" class="form-input" id="topicInput" placeholder="Vd: Giải phương trình bậc hai — luyện dạng thi THPT" value="Giải phương trình và hệ phương trình bậc hai">
+      </div>
+      <div class="form-row">
+        <div class="form-label">Ghi chú nhanh của gia sư <span class="hint">Chỉ để AI đọc → không gửi PH</span></div>
+        <textarea class="form-textarea sm" id="rawNotes" placeholder="Ghi vội những gì xảy ra trong buổi học — AI sẽ dựa vào đây để soạn báo cáo...">An làm được 8/10 bài cơ bản, bài tổng hợp còn lúng túng. Hướng dẫn lập bảng xét dấu delta. Hay quên bước kiểm tra nghiệm.</textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-label">Nội dung gửi Phụ huynh <span class="hint">Đã được AI soạn sẵn</span></div>
+        <textarea class="form-textarea" id="contentInput" placeholder="Mô tả những gì đã dạy, phương pháp, kiến thức trọng tâm...">Hôm nay An và thầy ôn tập chuyên sâu phần giải phương trình và hệ phương trình bậc hai. An hoàn thành tốt 8/10 bài tập cơ bản và thể hiện sự tiến bộ rõ rệt. Thầy đã hướng dẫn thêm phương pháp lập bảng xét dấu delta cho các bài tổng hợp.</textarea>
+        <div class="ai-inline-assist" id="aiInlineAssist" style="display:none">
+          <button class="ai-inline-btn" onclick="aiRewriteContent()">✨ AI viết lại</button>
+          <span class="ai-inline-hint">Dựa trên ghi chú phía trên · Giọng văn thân thiện với phụ huynh</span>
+        </div>
+        <div class="ai-inline-assist" id="aiInlineLock">
+          <div class="ai-inline-lock"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> AI viết lại — tính năng Premium</div>
+          <button class="agenda-bar-edit" onclick="setS1Mode('premium')">Nâng cấp →</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-label">Bài tập về nhà <span class="hint">Hiện riêng trong báo cáo PH</span></div>
+        <textarea class="form-textarea sm" id="hwInput" placeholder="Bài tập giao về nhà...">SGK Đại số 10: bài 3.14→3.20 trang 78. Làm thêm đề thi thử trang 94 phần phương trình.</textarea>
+      </div>
+      <div class="form-row" style="max-width:180px">
+        <div class="form-label">Hạn nộp BTVN</div>
+        <input type="date" class="form-input" id="hwDue" value="2026-05-14">
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 Đánh giá -->
+  <div class="card">
+    <div class="card-head">
+      <div class="section-num">03</div>
+      <div>
+        <div class="card-title">Đánh giá học sinh</div>
+        <div class="card-sub">Dữ liệu lưu vào Student Portfolio</div>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- Tier 1 -->
+      <div class="form-label" style="margin-bottom:10px">TIÊU CHÍ CHUNG</div>
+      <div class="t1-grid">
+        <div class="t1-item" id="t1-focus">
+          <span class="t1-emoji"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+          <div class="t1-name">Tập trung</div>
+          <div class="t1-stars">
+            <span class="t1-star on" onclick="rateT1('focus',1)">★</span>
+            <span class="t1-star on" onclick="rateT1('focus',2)">★</span>
+            <span class="t1-star on" onclick="rateT1('focus',3)">★</span>
+            <span class="t1-star on" onclick="rateT1('focus',4)">★</span>
+            <span class="t1-star" onclick="rateT1('focus',5)">★</span>
+          </div>
+          <div class="t1-val on" id="v-focus">Tốt</div>
+        </div>
+        <div class="t1-item" id="t1-attitude">
+          <span class="t1-emoji"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
+          <div class="t1-name">Thái độ</div>
+          <div class="t1-stars">
+            <span class="t1-star on" onclick="rateT1('attitude',1)">★</span>
+            <span class="t1-star on" onclick="rateT1('attitude',2)">★</span>
+            <span class="t1-star on" onclick="rateT1('attitude',3)">★</span>
+            <span class="t1-star on" onclick="rateT1('attitude',4)">★</span>
+            <span class="t1-star on" onclick="rateT1('attitude',5)">★</span>
+          </div>
+          <div class="t1-val on" id="v-attitude">Xuất sắc</div>
+        </div>
+        <div class="t1-item" id="t1-hw">
+          <span class="t1-emoji"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+          <div class="t1-name">BTVN</div>
+          <div class="t1-stars">
+            <span class="t1-star on" onclick="rateT1('hw',1)">★</span>
+            <span class="t1-star on" onclick="rateT1('hw',2)">★</span>
+            <span class="t1-star on" onclick="rateT1('hw',3)">★</span>
+            <span class="t1-star" onclick="rateT1('hw',4)">★</span>
+            <span class="t1-star" onclick="rateT1('hw',5)">★</span>
+          </div>
+          <div class="t1-val on" id="v-hw">Ổn</div>
+        </div>
+      </div>
+
+      <!-- Tier 2 -->
+      <div class="form-label" style="margin-top:22px;margin-bottom:10px">
+        TIÊU CHÍ THEO MÔN — <span id="t2SubjectLabel">TOÁN HỌC</span>
+      </div>
+      <div id="t2Container"></div>
+
+    </div>
+  </div>
+
+  <!-- 04 Ghi chú riêng -->
+  <div class="card">
+    <div class="card-head">
+      <div class="section-num">04</div>
+      <div>
+        <div class="card-title">Ghi chú riêng</div>
+        <div class="card-sub">Chỉ gia sư thấy — không gửi phụ huynh</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="private-wrap">
+        <textarea class="form-textarea" id="privateNote" placeholder="Điểm cần theo dõi, nhắn nhủ nội bộ, kế hoạch buổi sau...">An làm bài khá chủ động nhưng hay bỏ qua bước kiểm tra nghiệm. Nhắc lại buổi sau. Mẹ nhắn muốn tập trung hơn phần hình học.</textarea>
+        <div class="private-tag"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Riêng tư</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /s1 -->
+
+
+<!-- ══════ SCREEN 2 ══════ -->
+<div class="screen" id="s2">
+
+  <div class="step-bar">
+    <div class="step-item done">✓ Điền báo cáo</div>
+    <div class="step-item active">② Xem trước & Gửi</div>
+  </div>
+
+  <!-- Account toggle -->
+  <div class="account-row">
+    <span class="account-label">Chế độ tài khoản gia sư</span>
+    <div class="acc-toggle">
+      <button class="acc-btn" id="btnFree" onclick="setMode('free')">Miễn phí <span class="acc-chip chip-free">FREE</span></button>
+      <button class="acc-btn active-premium" id="btnPremium" onclick="setMode('premium')">Cao cấp <span class="acc-chip chip-premium">PREMIUM</span></button>
+    </div>
+  </div>
+
+  <!-- AI section -->
+  <div id="aiPremiumWrap" class="ai-section">
+    <button class="ai-btn" id="aiBtn" onclick="generateAI()">✨ AI soạn báo cáo cho Phụ huynh</button>
+    <div class="ai-btn-sub">AI tổng hợp nội dung, đánh giá tiêu chí → báo cáo chuyên nghiệp 1 click</div>
+    <div class="gen-anim" id="genAnim">
+      <div class="gen-dot"></div><div class="gen-dot"></div><div class="gen-dot"></div>
+      <div class="gen-txt">AI đang soạn báo cáo cho phụ huynh...</div>
+    </div>
+  </div>
+
+  <div id="aiLockWrap" class="ai-lock" style="display:none;margin-bottom:18px">
+    <div class="ai-lock-icon">✨</div>
+    <div class="ai-lock-title">AI soạn báo cáo tự động</div>
+    <div class="ai-lock-desc">Tính năng dành cho gia sư Premium — AI tổng hợp và format báo cáo chuyên nghiệp gửi phụ huynh chỉ với 1 click, tiết kiệm 10–15 phút mỗi buổi.</div>
+    <button class="upgrade-btn-purple" onclick="setMode('premium')">Nâng cấp Premium GS — 99k/tháng →</button>
+  </div>
+
+  <!-- Preview -->
+  <div class="preview-header-row">
+    <div class="preview-title">Báo cáo gửi Phụ huynh</div>
+    <div class="view-toggle">
+      <button class="vt-btn active" id="vtPH" onclick="setView('ph')">Góc PH</button>
+      <button class="vt-btn" id="vtRaw" onclick="setView('raw')">Bản thô</button>
+    </div>
+  </div>
+
+  <!-- PH preview -->
+  <div id="viewPH" class="report-card">
+    <div class="report-card-head">
+      <div class="rc-title" id="rcTitle"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Báo cáo buổi học #12 — Toán học</div>
+      <div class="rc-meta" id="rcMeta">Học sinh: Nguyễn Văn An · 11/05/2026 · 19:00–20:30</div>
+    </div>
+    <div class="rc-body">
+      <div class="rc-section">
+        <div class="rc-section-label">Nội dung buổi học</div>
+        <div class="rc-text" id="rcContent">Hôm nay An và thầy đã ôn tập chuyên sâu phần <strong>giải phương trình và hệ phương trình bậc hai</strong>. An hoàn thành tốt 8/10 bài tập cơ bản, thể hiện tiến bộ rõ rệt. Thầy đã hướng dẫn phương pháp phân tích đề và lập bảng xét dấu delta cho các bài tổng hợp.</div>
+      </div>
+      <div class="rc-section">
+        <div class="rc-section-label">Đánh giá</div>
+        <div id="rcEvalRows"></div>
+      </div>
+      <div class="rc-section">
+        <div class="rc-hw-box">
+          <div class="rc-hw-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg> Bài tập về nhà</div>
+          <div class="rc-hw-text" id="rcHW">SGK Đại số 10: bài 3.14→3.20 trang 78. Làm thêm đề thi thử trang 94 phần phương trình.</div>
+          <div class="rc-hw-due">⏰ Hạn nộp: Thứ Năm, 14/05/2026</div>
+        </div>
+      </div>
+      <div class="rc-section">
+        <div class="rc-section-label">Nhận xét tổng quan</div>
+        <div class="rc-note-box" id="rcNote">An đang tiến bộ đúng hướng và có thái độ học tích cực. Cần chú ý thêm thói quen kiểm tra nghiệm sau khi giải. Buổi tới sẽ chuyển sang bất đẳng thức và giá trị lớn nhất/nhỏ nhất.</div>
+      </div>
+    </div>
+    <div class="rc-footer">giasu.edu.vn · Gia sư: Nguyễn Minh Tuấn</div>
+  </div>
+
+  <!-- Raw preview -->
+  <div id="viewRaw" class="report-card" style="display:none">
+    <div class="report-card-head">
+      <div class="rc-title">Bản thô — chưa qua AI</div>
+      <div class="rc-meta">Nội dung GS nhập trực tiếp</div>
+    </div>
+    <div class="rc-body">
+      <div class="rc-section">
+        <div class="rc-section-label">Nội dung</div>
+        <div class="rc-text" id="rawContent" style="white-space:pre-wrap;font-size:13px"></div>
+      </div>
+      <div class="rc-section">
+        <div class="rc-hw-box">
+          <div class="rc-hw-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg> BTVN</div>
+          <div class="rc-hw-text" id="rawHW" style="white-space:pre-wrap;font-size:13px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /s2 -->
+
+<!-- ══════ SCREEN 3 — SESSION WRAP-UP ══════ -->
+<div class="screen" id="s3">
+  <div class="step-bar">
+    <div class="step-item done">✓ Điền báo cáo</div>
+    <div class="step-item done">✓ Gửi Phụ huynh</div>
+    <div class="step-item active">③ Chốt buổi học</div>
+  </div>
+
+  <!-- Success banner -->
+  <div style="background:linear-gradient(135deg,#16A34A,#15803D);border-radius:16px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px;">
+    <div style="width:48px;height:48px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+    <div>
+      <div style="font-size:16px;font-weight:800;color:#fff;">Báo cáo đã gửi thành công!</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.8);margin-top:2px;">Phụ huynh sẽ nhận báo cáo buổi #12 ngay bây giờ · 11/05 · 21:05</div>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.2);">
+        <span style="font-size:14px;">⭐</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.75);">Phụ huynh sẽ nhận thông báo để đánh giá buổi học này</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick note for next session -->
+  <div style="background:#fff;border:1.5px solid #E2E8F0;border-radius:16px;padding:20px 22px;margin-bottom:14px;">
+    <div style="font-size:13.5px;font-weight:800;color:#1E293B;margin-bottom:4px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Ghi chú nhanh cho buổi tới</div>
+    <div style="font-size:12px;color:#64748B;margin-bottom:12px;">AI sẽ đọc để chuẩn bị nội dung buổi #13 · Không gửi phụ huynh</div>
+    <textarea id="wrapup-note" rows="3" placeholder="VD: An làm tốt phần phương trình nhưng hay bỏ bước kiểm tra nghiệm. Buổi sau tập trung bất đẳng thức và min/max. Mẹ nhắn muốn thêm hình học..." style="width:100%;padding:10px 12px;border:1.5px solid #E2E8F0;border-radius:10px;font-size:13px;font-family:inherit;resize:vertical;color:#334155;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#0D2D6B'" onblur="this.style.borderColor='#E2E8F0'"></textarea>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+      <span style="font-size:11.5px;color:#94A3B8;">Lưu vào Student Portfolio của Nguyễn Văn An</span>
+      <button onclick="document.getElementById('wrapup-save-ok').style.display='inline'" style="height:30px;padding:0 14px;background:#0D2D6B;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">Lưu ghi chú</button>
+    </div>
+    <span id="wrapup-save-ok" style="display:none;font-size:12px;color:#16A34A;font-weight:600;">✓ Đã lưu vào Portfolio</span>
+  </div>
+
+  <!-- BTVN confirm -->
+  <div style="background:#fff;border:1.5px solid #E2E8F0;border-radius:16px;padding:18px 22px;margin-bottom:14px;">
+    <div style="font-size:13.5px;font-weight:800;color:#1E293B;margin-bottom:12px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg> Xác nhận BTVN đã giao</div>
+    <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#F8FAFC;border-radius:10px;border-left:3px solid #F59E0B;">
+      <span style="font-size:16px;margin-top:1px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+      <div style="flex:1;">
+        <div style="font-size:13px;color:#334155;font-weight:600;">SGK Đại số 10: bài 3.14→3.20 trang 78</div>
+        <div style="font-size:12px;color:#64748B;margin-top:2px;">Làm thêm đề thi thử trang 94 phần phương trình</div>
+        <div style="font-size:11.5px;color:#F59E0B;font-weight:700;margin-top:4px;">⏰ Hạn: Thứ Năm 14/05</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-shrink:0;margin-top:2px;">
+        <button id="btvn-sms-btn" onclick="this.style.background='#16A34A';this.style.color='#fff';this.textContent='✓ Đã nhắn'" style="height:28px;padding:0 10px;background:#fff;border:1.5px solid #E2E8F0;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap;">Nhắn HV</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RE-ASSESSMENT MILESTONE (hiện khi đủ 10 buổi) ── -->
+  <div id="reassessment-card" style="background:linear-gradient(135deg,#FFFBEB,#FEF9EC);border:2px solid #FCD34D;border-radius:16px;padding:0;margin-bottom:14px;overflow:hidden;">
+    <div style="background:linear-gradient(135deg,#92400E,#B45309);padding:9px 18px;display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:16px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+        <span style="font-size:13px;font-weight:800;color:#fff;">Cột mốc 10 buổi! — Đến lúc đánh giá lại tiến độ</span>
+      </div>
+      <span style="font-size:11px;background:rgba(255,255,255,.25);color:#fff;padding:2px 9px;border-radius:20px;font-weight:700;">Buổi #10</span>
+    </div>
+    <div style="padding:14px 18px;">
+      <div style="font-size:13px;color:#78350F;line-height:1.55;margin-bottom:12px;">
+        Sau <strong>10 buổi học</strong>, hệ thống đề xuất làm lại bài test ngắn để đo tiến bộ thực tế và cập nhật lộ trình nếu cần. Dữ liệu sẽ tự cập nhật vào <strong>Student Portfolio</strong> của học sinh.
+      </div>
+      <!-- Progress summary -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;">
+        <div style="background:#fff;border:1.5px solid #FDE68A;border-radius:10px;padding:10px;text-align:center;">
+          <div style="font-size:20px;font-weight:900;color:#D97706;">+18%</div>
+          <div style="font-size:11px;color:#92400E;margin-top:2px;">Điểm tổng thể</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid #FDE68A;border-radius:10px;padding:10px;text-align:center;">
+          <div style="font-size:20px;font-weight:900;color:#D97706;">3/5</div>
+          <div style="font-size:11px;color:#92400E;margin-top:2px;">Mục tiêu đạt</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid #FDE68A;border-radius:10px;padding:10px;text-align:center;">
+          <div style="font-size:20px;font-weight:900;color:#D97706;">74%</div>
+          <div style="font-size:11px;color:#92400E;margin-top:2px;">Khả năng đích</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <a href="ui-diagnostic.html" style="flex:1;min-width:160px;height:38px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;border-radius:10px;font-size:13px;font-weight:800;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 3px 10px rgba(217,119,6,.3);">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Giao Re-assessment test
+        </a>
+        <a href="ui-alignment.html" style="height:38px;padding:0 16px;background:#fff;color:#B45309;border:2px solid #FCD34D;border-radius:10px;font-size:12.5px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:6px;white-space:nowrap;">
+          <svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Cập nhật Cam kết/Lộ trình
+        </a>
+      </div>
+      <div style="font-size:11px;color:#A16207;margin-top:10px;display:flex;align-items:center;gap:5px;">
+        <span><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg> Bỏ qua nếu chưa cần thiết — hệ thống sẽ nhắc lại sau 2 buổi</span>
+        <button onclick="document.getElementById('reassessment-card').style.display='none'" style="margin-left:auto;font-size:11px;color:#A16207;background:none;border:none;cursor:pointer;text-decoration:underline;">Bỏ qua</button>
+      </div>
+    </div>
+  </div>
+  <!-- Demo toggle: show/hide re-assessment card -->
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:7px 12px;background:#FEF9EC;border:1px solid #FDE68A;border-radius:9px;">
+    <span style="font-size:11px;color:#A16207;font-weight:600;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4"/><path d="M5 19.5C5.5 18 6 15 6 12c0-.7.12-1.37.34-2"/><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/><path d="M12 10a5 5 0 0 0-5 5c0 1.25.72 2.37 1.5 3.3"/><path d="M12 10a5 5 0 0 1 5 5c0 1.25-.72 2.37-1.5 3.3"/><path d="M17 22h5v-1a3 3 0 0 0-3-3h-2"/><path d="M7 22H2v-1a3 3 0 0 1 3-3h2"/></svg> Demo:</span>
+    <button onclick="var c=document.getElementById('reassessment-card');c.style.display=c.style.display==='none'?'block':'none';" style="height:26px;padding:0 12px;border-radius:6px;font-size:11.5px;font-weight:700;background:#D97706;color:#fff;border:none;cursor:pointer;">Toggle Milestone 10 buổi</button>
+    <span style="font-size:11px;color:#A16207;">(hiện tự động khi báo cáo buổi thứ 10, 20, 30...)</span>
+  </div>
+
+  <!-- Next session -->
+  <div style="background:#fff;border:1.5px solid #E2E8F0;border-radius:16px;padding:18px 22px;margin-bottom:20px;">
+    <div style="font-size:13.5px;font-weight:800;color:#1E293B;margin-bottom:12px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Buổi học tiếp theo</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#EFF6FF;border-radius:10px;border:1px solid #BFDBFE;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:40px;height:40px;background:#3B82F6;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">📆</div>
+        <div>
+          <div style="font-size:13.5px;font-weight:700;color:#1E40AF;">Buổi #13 · Thứ Năm 14/05 · 19:00–20:30</div>
+          <div style="font-size:12px;color:#3B82F6;">Nguyễn Văn An · Toán học · Online Zoom</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button style="height:30px;padding:0 10px;background:#fff;border:1.5px solid #BFDBFE;border-radius:7px;font-size:11.5px;color:#1E40AF;font-weight:600;cursor:pointer;">Đổi lịch</button>
+        <button onclick="this.style.background='#1E40AF';this.style.color='#fff';this.textContent='✓ Đã nhắc'" style="height:30px;padding:0 10px;background:#3B82F6;border:none;border-radius:7px;font-size:11.5px;color:#fff;font-weight:700;cursor:pointer;white-space:nowrap;">Nhắc HV</button>
+      </div>
+    </div>
+    <!-- AI nudge -->
+    <div style="margin-top:10px;padding:10px 14px;background:#F5F3FF;border-radius:10px;border-left:3px solid #7C3AED;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+      <div>
+        <span style="font-size:12.5px;font-weight:700;color:#5B21B6;">✦ AI đã soạn sẵn nội dung buổi #13</span>
+        <span style="font-size:12px;color:#7C3AED;"> — Bất đẳng thức & Giá trị min/max dựa trên ghi chú hôm nay</span>
+      </div>
+      <a href="ui-course.html" style="height:30px;padding:0 12px;background:#7C3AED;color:#fff;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;display:flex;align-items:center;white-space:nowrap;">Xem ngay →</a>
+    </div>
+  </div>
+
+  <!-- CTA row -->
+  <div style="display:flex;gap:10px;margin-bottom:20px;">
+    <a href="ui-course.html" style="flex:1;height:44px;background:#0D2D6B;color:#fff;border-radius:12px;font-size:14px;font-weight:800;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Soạn nội dung buổi #13</a>
+    <a href="ui-dashboard-gia-su.html" style="height:44px;padding:0 20px;background:#fff;color:#64748B;border:1.5px solid #E2E8F0;border-radius:12px;font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:6px;">← Dashboard</a>
+  </div>
+</div><!-- /s3 -->
+
+</div><!-- /wrapper -->
+
+<!-- Bottom bars -->
+<div class="bottom-bar" id="bar1">
+  <button class="btn-ghost" onclick="saveDraft()"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Lưu nháp</button>
+  <button class="btn-primary" onclick="goPreview()">Xem trước báo cáo →</button>
+</div>
+<div class="bottom-bar" id="bar2" style="display:none">
+  <button class="btn-ghost" onclick="goBack()">← Sửa</button>
+  <button class="btn-outline-navy" onclick="savePort()"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Portfolio</button>
+  <button class="btn-green" onclick="sendReport()"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Gửi Phụ huynh</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════ AI SUGGESTIONS ═══════════════
+const AI_SUGGESTIONS = {
+  toan: {
+    logic:   { issue: 'Học sinh chưa biết cách phân tích đề — hay đọc xong đề là tính ngay mà không xác định dạng bài. Mắc lỗi khi gặp bài có nhiều bước suy luận liên tiếp.', fix: 'Luyện thói quen đọc đề 2 lần và gạch chân dữ kiện trước khi tính. Cho làm 5–7 bài dạng "phân tích đề" — ghi ra bài yêu cầu gì, cho gì, cần dùng kiến thức nào. Ưu tiên bài từ đề thi thật để học sinh quen với cách đặt vấn đề.' },
+    calc:    { issue: 'Hay nhầm dấu khi chuyển vế và tính toán biểu thức phức tạp. Tốc độ tính chậm, hay bỏ qua bước trung gian nên khó kiểm tra lại.', fix: 'Yêu cầu viết đầy đủ từng bước, không nhảy cóc. Giao 10 bài thuần tính toán mỗi tối (không cần giải bài toán đầy đủ). Tập thói quen kiểm tra nghiệm bằng cách thế lại vào phương trình gốc.' },
+    formula: { issue: 'Chưa nhớ chắc công thức — đặc biệt công thức lượng giác và đạo hàm. Biết công thức nhưng chưa biết khi nào nên dùng cái nào.', fix: 'Làm flashcard 20 công thức trọng tâm, ôn mỗi ngày 5 phút. Buổi tới luyện dạng bài nhận dạng công thức — chỉ cần ghi ra công thức phù hợp, không cần giải hết. Chú trọng điều kiện áp dụng từng công thức.' },
+    solve:   { issue: 'Biết hướng giải nhưng hay bị tắc ở nửa bài — đặc biệt bài dạng tổng hợp kết hợp nhiều kiến thức. Chưa hoàn thành hết bài trong thời gian quy định.', fix: 'Chia nhỏ bài thành từng bước và làm từng bước một, không nhìn vào toàn bài. Luyện 3 bài/ngày ở mức độ vừa trước khi nâng khó. Buổi tới ôn lại dạng bài hay bị tắc nhất.' },
+  },
+  anh: {
+    pronun:  { issue: 'Phát âm sai một số âm đặc trưng: /θ/, /ð/, /æ/, cuối từ hay bị nuốt âm. Trọng âm từ nhiều âm tiết chưa chính xác.', fix: 'Luyện minimal pairs 10 phút/ngày (think/sink, this/dis). Shadowing theo podcast chậm 15 phút/ngày. Buổi tới tập trọng tâm vào 5 âm khó nhất — ghi âm để học sinh tự nghe lại.' },
+    grammar: { issue: 'Hay nhầm thì hiện tại hoàn thành và quá khứ đơn. Cấu trúc câu bị động và mệnh đề quan hệ còn chưa vững khi viết.', fix: 'Làm 20 bài tập điền thì tập trung vào present perfect vs past simple. Viết 5 câu mỗi ngày dùng cấu trúc bị động. Buổi tới drill mệnh đề quan hệ qua bài tập fill-in và transformation.' },
+    vocab:   { issue: 'Vốn từ còn hạn chế ở nhóm từ học thuật và từ đồng nghĩa. Hay dùng lại cùng một từ trong bài viết, chưa biết cách paraphrase.', fix: 'Học 10 từ mới/ngày theo chủ đề (topic vocabulary). Dùng app Anki để ôn flashcard. Tập paraphrase — mỗi ngày viết lại 3 câu bằng từ khác mà giữ nguyên nghĩa.' },
+    listen:  { issue: 'Nghe không theo kịp tốc độ nói thông thường, hay bị mất đầu câu. Gặp khó khăn với giọng bản ngữ và từ nối (linking words).', fix: 'Nghe BBC Learning English 15 phút/ngày — bắt đầu bản slow English. Luyện dictation 1 đoạn ngắn mỗi tối. Tập nhận diện linked speech: "want to" → "wanna", "going to" → "gonna".' },
+    speak:   { issue: 'Hay dừng giữa chừng khi tìm từ, câu nói chưa liền mạch. Phát âm khi nói còn khác nhiều so với khi luyện đơn lẻ.', fix: 'Luyện nói 1 chủ đề quen 2 phút không dừng mỗi ngày (tự ghi âm). Học 10 filler phrases: "I mean", "What I\'m trying to say is...". Buổi tới tăng thời gian speaking lên 30 phút với role-play tình huống thực tế.' },
+    write:   { issue: 'Bố cục bài viết chưa rõ ràng, đoạn thân bài thiếu topic sentence. Câu văn dài hay bị run-on sentence hoặc fragment.', fix: 'Luyện viết theo mẫu PEEL (Point – Evidence – Explanation – Link). Giao viết 1 đoạn/ngày (80–100 từ) tập trung vào cấu trúc. Buổi tới chữa bài viết cũ — tập trung đánh dấu câu sai cấu trúc.' },
+  },
+  ly: {
+    theory:  { issue: 'Thuộc công thức nhưng chưa hiểu bản chất vật lý đằng sau — dễ áp dụng sai khi đề thay đổi điều kiện. Hay nhầm đơn vị và chiều dương.', fix: 'Ôn lại lý thuyết bằng cách giải thích bằng lời, không dùng công thức. Vẽ sơ đồ lực/sơ đồ mạch điện trước khi tính. Buổi tới ôn lý thuyết qua câu hỏi "tại sao" thay vì "tính bao nhiêu".' },
+    exercise:{ issue: 'Gặp khó khăn với bài tổng hợp nhiều giai đoạn chuyển động/nhiều vật. Hay bỏ sót điều kiện biên và trường hợp đặc biệt.', fix: 'Luyện kỹ năng phân tích bài — vẽ hình, ghi rõ dữ kiện, ẩn số trước khi tính. Làm 3 bài mức trung bình mỗi ngày, chú trọng bài có nhiều vật/giai đoạn.' },
+    lab:     { issue: 'Chưa liên hệ được lý thuyết với thực tế — đặc biệt giải thích đồ thị và phân tích kết quả thí nghiệm.', fix: 'Xem video thí nghiệm minh họa trên YouTube (1 video/tuần). Luyện đọc và vẽ đồ thị v-t, s-t. Buổi tới luyện dạng câu hỏi "giải thích hiện tượng" thường gặp trong đề thi.' },
+  },
+  hoa: {
+    theory:  { issue: 'Hay nhầm tính chất của các nhóm chất, đặc biệt hóa hữu cơ. Chưa nắm chắc chuỗi phản ứng và điều kiện phản ứng.', fix: 'Lập bảng so sánh tính chất các nhóm chất (axit, bazơ, muối, oxit). Học thuộc chuỗi phản ứng theo sơ đồ tư duy. Buổi tới drill nhận biết chất qua tính chất đặc trưng.' },
+    exercise:{ issue: 'Tính sai khi bài có nhiều phản ứng liên tiếp, hay bị nhầm bảo toàn electron trong bài oxi hóa-khử.', fix: 'Luyện phương pháp bảo toàn khối lượng và bảo toàn electron riêng biệt. 5 bài tính theo phương trình/ngày. Buổi tới ôn oxi hóa-khử với sơ đồ nhường-nhận electron rõ ràng.' },
+    lab:     { issue: 'Chưa nhớ thuốc thử nhận biết các chất và hiện tượng đặc trưng của từng phản ứng.', fix: 'Lập bảng thuốc thử — chất cần nhận biết, thuốc thử dùng, hiện tượng quan sát. Ôn 5 phản ứng nhận biết phổ biến nhất. Xem video thí nghiệm để ghi nhớ màu sắc, kết tủa.' },
+  },
+  van: {
+    feel:    { issue: 'Đọc tác phẩm nhưng chưa cảm nhận được tầng nghĩa sâu — hay dừng lại ở nội dung bề mặt. Chưa liên kết được hình ảnh nghệ thuật với chủ đề tác phẩm.', fix: 'Đọc lại đoạn trích và gạch chân từ ngữ, hình ảnh đặc sắc, giải thích từng hình ảnh. Luyện câu hỏi "tại sao tác giả dùng từ/hình ảnh này?". Buổi tới phân tích 1 đoạn thơ theo từng lớp nghĩa.' },
+    write:   { issue: 'Bài viết thiếu mạch lạc — luận điểm chưa rõ, dẫn chứng đưa vào không ăn khớp với luận điểm. Phần mở bài và kết bài còn chung chung.', fix: 'Lập dàn ý TRƯỚC khi viết — bắt buộc. Luyện viết từng phần riêng: 1 mở bài hay/ngày, 1 đoạn thân bài có đủ luận điểm-dẫn chứng-phân tích. Buổi tới chữa bài viết cũ theo cấu trúc.' },
+    analyze: { issue: 'Phân tích nhân vật chỉ dừng lại ở liệt kê hành động, chưa đi sâu vào tâm lý, mâu thuẫn nội tâm và ý nghĩa biểu tượng.', fix: 'Luyện sơ đồ phân tích nhân vật: hoàn cảnh → hành động → tâm lý → ý nghĩa. Ôn lại 3 nhân vật trọng tâm trong chương trình. Buổi tới so sánh 2 nhân vật để luyện phân tích chiều sâu.' },
+  },
+  code: {
+    algo:    { issue: 'Khi gặp bài mới, hay bí ngay từ đầu — không biết tiếp cận từ đâu. Chưa biết phân rã bài toán lớn thành các bài toán nhỏ hơn.', fix: 'Luyện tư duy top-down: viết pseudocode trước khi code. Mỗi ngày giải 1 bài LeetCode Easy và giải thích cách tiếp cận bằng lời. Buổi tới ôn các pattern cơ bản: two-pointer, sliding window, prefix sum.' },
+    coding:  { issue: 'Code chạy được nhưng còn dài dòng, đặt tên biến chưa rõ nghĩa, thiếu comment. Chưa biết tận dụng built-in functions và thư viện chuẩn.', fix: 'Refactor lại code cũ: đặt tên biến mô tả, tách function nhỏ. Học 10 built-in Python thường dùng. Buổi tới code review cùng nhau — tập thói quen viết clean code từ đầu.' },
+    debug:   { issue: 'Khi code bị lỗi, hay đoán mò và sửa ngẫu nhiên thay vì trace từng bước. Chưa quen dùng debugger và print statement có hệ thống.', fix: 'Học quy trình debug: đọc error message → xác định dòng lỗi → print giá trị biến → trace logic. Luyện debug 2 đoạn code có lỗi/ngày. Buổi tới tập dùng debugger trong VS Code.' },
+  },
+};
+
+// ═══════════════ DATA ═══════════════
+const TIER2_DATA = {
+  toan:[
+    {key:'logic',   ic:{bg:'#EEF2FF',color:'#4F46E5',sym:'≡'},  name:'Tư duy logic',       desc:'Suy luận, phân tích đề bài'},
+    {key:'calc',    ic:{bg:'#F0FDF4',color:'#16A34A',sym:'±'},   name:'Tính toán',           desc:'Độ chính xác khi tính'},
+    {key:'formula', ic:{bg:'#FEF3C7',color:'#B45309',sym:'ƒ'},   name:'Vận dụng công thức',  desc:'Chọn và áp dụng đúng công thức'},
+    {key:'solve',   ic:{bg:'#EFF6FF',color:'#2563EB',sym:'✓'},   name:'Giải bài tập',        desc:'Hoàn thành bài được giao'},
+  ],
+  anh:[
+    {key:'pronun',  ic:{bg:'#FFF1F2',color:'#BE123C',sym:'Rp'},  name:'Phát âm',     desc:'Độ chính xác phát âm'},
+    {key:'grammar', ic:{bg:'#F0F9FF',color:'#0369A1',sym:'Aa'},  name:'Ngữ pháp',    desc:'Dùng đúng cấu trúc'},
+    {key:'vocab',   ic:{bg:'#F5F3FF',color:'#6D28D9',sym:'W'},   name:'Từ vựng',     desc:'Vận dụng từ phù hợp'},
+    {key:'listen',  ic:{bg:'#ECFDF5',color:'#047857',sym:'♫'},   name:'Nghe hiểu',   desc:'Bắt được nội dung nghe'},
+    {key:'speak',   ic:{bg:'#FFF7ED',color:'#C2410C',sym:'◎'},   name:'Kỹ năng nói', desc:'Lưu loát, tự tin'},
+    {key:'write',   ic:{bg:'#EFF6FF',color:'#1D4ED8',sym:'✎'},   name:'Kỹ năng viết',desc:'Diễn đạt văn bản rõ ràng'},
+  ],
+  ly:[
+    {key:'theory',  ic:{bg:'#EFF6FF',color:'#1D4ED8',sym:'Σ'},   name:'Nắm lý thuyết',   desc:'Công thức, định luật'},
+    {key:'exercise',ic:{bg:'#F0FDF4',color:'#15803D',sym:'✓'},   name:'Giải bài tập',     desc:'Vận dụng vào bài cụ thể'},
+    {key:'lab',     ic:{bg:'#FDF4FF',color:'#9333EA',sym:'⚗'},   name:'Hiểu thực nghiệm', desc:'Liên hệ lý thuyết thực tế'},
+  ],
+  hoa:[
+    {key:'theory',  ic:{bg:'#EFF6FF',color:'#1D4ED8',sym:'Σ'},   name:'Nắm lý thuyết',   desc:'Hiểu phản ứng, tính chất'},
+    {key:'exercise',ic:{bg:'#F0FDF4',color:'#15803D',sym:'✓'},   name:'Giải bài tập',     desc:'Tính toán hóa học'},
+    {key:'lab',     ic:{bg:'#FDF4FF',color:'#9333EA',sym:'⚗'},   name:'Hiểu thực nghiệm', desc:'Nhận biết chất, phản ứng'},
+  ],
+  van:[
+    {key:'feel',    ic:{bg:'#FFF1F2',color:'#BE123C',sym:'♡'},   name:'Cảm thụ văn học',   desc:'Cảm nhận và phân tích'},
+    {key:'write',   ic:{bg:'#EFF6FF',color:'#1D4ED8',sym:'✎'},   name:'Kỹ năng viết văn',  desc:'Bài văn hoàn chỉnh'},
+    {key:'analyze', ic:{bg:'#ECFDF5',color:'#15803D',sym:'⊕'},   name:'Phân tích tác phẩm',desc:'Nhân vật, chủ đề, nghệ thuật'},
+  ],
+  code:[
+    {key:'algo',   ic:{bg:'#EEF2FF',color:'#4F46E5',sym:'∧'},    name:'Tư duy thuật toán',desc:'Phân tích, thiết kế giải thuật'},
+    {key:'coding', ic:{bg:'#F5F3FF',color:'#7C3AED',sym:'<>'},   name:'Viết code',         desc:'Cú pháp, cấu trúc rõ ràng'},
+    {key:'debug',  ic:{bg:'#FFF1F2',color:'#DC2626',sym:'⊘'},    name:'Debug & tối ưu',    desc:'Tìm và sửa lỗi'},
+  ],
+};
+
+const SUB_NAMES = {toan:'Toán học',anh:'Tiếng Anh',ly:'Vật lý',hoa:'Hóa học',van:'Ngữ văn',code:'Lập trình'};
+const SUB_ICONS = {toan:{bg:'#EEF2FF',c:'#4F46E5',s:'∑'},anh:{bg:'#FFF7ED',c:'#EA580C',s:'Anh'},ly:{bg:'#F0FDF4',c:'#16A34A',s:'φ'},hoa:{bg:'#FDF4FF',c:'#9333EA',s:'Hz'},van:{bg:'#FFF1F2',c:'#BE123C',s:'Vn'},code:{bg:'#F0F9FF',c:'#0284C7',s:'</>'}};
+
+// ═══════════════ STATE ═══════════════
+const t1Ratings = {focus:4, attitude:5, hw:3};
+const t2Status  = {}; // key → 'good'|'watch'|'bad'
+const t2Notes   = {}; // key_good, key_issue, key_fix
+
+let currentSub = 'toan';
+let gsMode = 'free';
+let s1Mode = 'free'; // default: show free state first
+let aiDone = false;
+
+const T1_LABELS = {1:'Yếu',2:'Cần cải thiện',3:'Ổn',4:'Tốt',5:'Xuất sắc'};
+
+// ═══════════════ INIT ═══════════════
+renderTier2();
+// Apply free mode UI on load (after DOM ready)
+setTimeout(() => setS1Mode('free'), 0);
+
+// ═══════════════ SUBJECT ═══════════════
+function selectSub(el) {
+  document.querySelectorAll('.sub-pill').forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');
+  currentSub = el.dataset.sub;
+  const ic = SUB_ICONS[currentSub], name = SUB_NAMES[currentSub];
+  document.getElementById('subjectTagNav').textContent = name;
+  document.getElementById('t2SubjectLabel').textContent = name.toUpperCase();
+  renderTier2();
+}
+
+// ═══════════════ TIER 1 ═══════════════
+function rateT1(key, val) {
+  t1Ratings[key] = val;
+  const wrap = document.getElementById('t1-' + key);
+  wrap.querySelectorAll('.t1-star').forEach((s,i) => s.classList.toggle('on', i < val));
+  const vEl = document.getElementById('v-' + key);
+  vEl.textContent = T1_LABELS[val];
+  vEl.className = 't1-val on';
+  wrap.classList.add('rated');
+}
+
+// ═══════════════ TIER 2 ═══════════════
+function renderTier2() {
+  const items = TIER2_DATA[currentSub] || [];
+  const container = document.getElementById('t2Container');
+  container.innerHTML = items.map(item => buildT2Card(item)).join('');
+}
+
+function buildT2Card(item) {
+  const st = t2Status[item.key] || '';
+  const cardClass = st === 'good' ? 'status-good' : st === 'watch' ? 'status-watch' : st === 'bad' ? 'status-bad' : '';
+  const detailShow = st ? 'show' : '';
+
+  let detailHTML = '';
+  if (st === 'good') {
+    detailHTML = `
+      <div class="t2-field">
+        <div class="t2-field-label green">✓ Điểm nổi bật buổi này</div>
+        <textarea class="green-focus" placeholder="Mô tả cụ thể điểm tốt... (không bắt buộc)" oninput="saveNote('${item.key}','good',this.value)">${t2Notes[item.key+'_good']||''}</textarea>
+      </div>`;
+  } else if (st === 'watch') {
+    detailHTML = `
+      <div class="t2-field">
+        <div class="t2-field-label amber"><span class="fl-ic" style="background:#FEF3C7;color:#D97706">~</span> Cần chú ý điều gì</div>
+        <textarea placeholder="Mô tả điểm cần theo dõi thêm..." oninput="saveNote('${item.key}','watch',this.value)">${t2Notes[item.key+'_watch']||''}</textarea>
+      </div>`;
+  } else if (st === 'bad') {
+    const hasSuggestion = AI_SUGGESTIONS[currentSub] && AI_SUGGESTIONS[currentSub][item.key];
+    let aiStrip = '';
+    if (hasSuggestion) {
+      if (s1Mode === 'premium') {
+        aiStrip = `
+        <div class="ai-suggest-strip" id="aistrip-${item.key}">
+          <div class="ai-suggest-txt">✨ AI có thể gợi ý nội dung cho tiêu chí này dựa trên môn <strong>${SUB_NAMES[currentSub]}</strong></div>
+          <button class="ai-suggest-btn" id="aibtn-${item.key}" onclick="aiSuggest('${item.key}')">
+            <span id="aibtn-icon-${item.key}">✨</span> Gợi ý
+          </button>
+        </div>`;
+      } else {
+        aiStrip = `
+        <div class="ai-suggest-strip ai-suggest-locked">
+          <div class="ai-suggest-txt"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Gợi ý AI theo tiêu chí — tính năng <strong>Premium</strong></div>
+          <button class="ai-suggest-btn" onclick="setS1Mode('premium')">Nâng cấp →</button>
+        </div>`;
+      }
+    }
+    detailHTML = `${aiStrip}
+      <div class="t2-field">
+        <div class="t2-field-label red"><span class="fl-ic" style="background:#FEE2E2;color:#DC2626">!</span> Chưa làm được gì</div>
+        <textarea id="ta-issue-${item.key}" class="red-focus" placeholder="Mô tả cụ thể phần còn yếu, lỗi hay gặp..." oninput="saveNote('${item.key}','issue',this.value)">${t2Notes[item.key+'_issue']||''}</textarea>
+      </div>
+      <div class="t2-field">
+        <div class="t2-field-label blue"><span class="fl-ic" style="background:#EFF6FF;color:#2563EB">→</span> Hướng khắc phục</div>
+        <textarea id="ta-fix-${item.key}" class="blue-focus" placeholder="Phương pháp, bài tập, cách luyện tập cụ thể..." oninput="saveNote('${item.key}','fix',this.value)">${t2Notes[item.key+'_fix']||''}</textarea>
+      </div>`;
+  }
+
+  return `
+  <div class="t2-card ${cardClass}" id="t2c-${item.key}">
+    <div class="t2-head">
+      <div class="t2-icon" style="background:${item.ic.bg};color:${item.ic.color}">${item.ic.sym}</div>
+      <div class="t2-name-col">
+        <div class="t2-name">${item.name}</div>
+        <div class="t2-desc">${item.desc}</div>
+      </div>
+      <div class="t2-status-pills">
+        <button class="t2-pill p-good ${st==='good'?'active':''}" onclick="setT2('${item.key}','good')"><span class="ps-ic good-ic">✓</span>Tốt</button>
+        <button class="t2-pill p-watch ${st==='watch'?'active':''}" onclick="setT2('${item.key}','watch')"><span class="ps-ic watch-ic">~</span>Theo dõi</button>
+        <button class="t2-pill p-bad ${st==='bad'?'active':''}" onclick="setT2('${item.key}','bad')"><span class="ps-ic bad-ic">!</span>Cần cải thiện</button>
+      </div>
+    </div>
+    <div class="t2-detail ${detailShow}" id="t2d-${item.key}">${detailHTML}</div>
+  </div>`;
+}
+
+// ═══════════════ S1 FREE/PREMIUM ═══════════════
+function setS1Mode(mode) {
+  s1Mode = mode;
+  const isFree = mode === 'free';
+
+  // Toggle buttons
+  document.getElementById('s1BtnFree').className = 'acc-btn' + (isFree ? ' active-free' : '');
+  document.getElementById('s1BtnPrem').className = 'acc-btn' + (!isFree ? ' active-premium' : '');
+
+  // Mode banner
+  const banner = document.getElementById('modeBanner');
+  const indicator = document.getElementById('modeIndicator');
+  const labelMain = document.getElementById('modeLabelMain');
+  const labelSub  = document.getElementById('modeLabelSub');
+  if (banner) {
+    banner.className = 'mode-banner ' + (isFree ? 'is-free' : 'is-premium');
+    indicator.className = 'mode-indicator ' + (isFree ? 'free' : 'premium');
+    labelMain.textContent = isFree ? 'Tài khoản Miễn phí' : 'Tài khoản Cao cấp';
+    labelSub.textContent  = isFree ? '— Một số tính năng AI bị khoá' : '— Tất cả tính năng AI đã mở khoá';
+    labelSub.style.color  = isFree ? '#94A3B8' : '#7C3AED';
+  }
+
+  // Sync AI inline assist in Section 02
+  const assist = document.getElementById('aiInlineAssist');
+  const lock   = document.getElementById('aiInlineLock');
+  if (assist) assist.style.display = isFree ? 'none' : 'flex';
+  if (lock)   lock.style.display   = isFree ? 'flex' : 'none';
+
+  // Also sync Screen 2 toggle
+  gsMode = mode;
+  renderTier2();
+}
+
+// ═══════════════ AI INLINE REWRITE ═══════════════
+function aiRewriteContent() {
+  if (s1Mode === 'free') return;
+  const btn = document.querySelector('.ai-inline-btn');
+  if (!btn || btn.dataset.loading) return;
+  const raw = (document.getElementById('rawNotes')?.value || '').trim();
+  const topic = (document.getElementById('topicInput')?.value || 'buổi học').trim();
+  btn.dataset.loading = '1';
+  btn.textContent = '✨ Đang viết...';
+  btn.style.opacity = '.65';
+  setTimeout(() => {
+    const stuName = 'An';
+    const rewritten = `Hôm nay ${stuName} và thầy có một buổi học hiệu quả về chủ đề <strong>${topic}</strong>. ${stuName} thể hiện sự nỗ lực và tiến bộ trong phần bài tập cơ bản. Thầy đã hướng dẫn thêm phương pháp tiếp cận các dạng bài tổng hợp và các kỹ thuật kiểm tra kết quả. Buổi tiếp theo sẽ tiếp tục củng cố phần này và nâng dần mức độ khó.`;
+    const el = document.getElementById('contentInput');
+    if (el) el.value = rewritten.replace(/<strong>|<\/strong>/g,'');
+    btn.innerHTML = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Đã viết lại — chỉnh nếu cần';
+    delete btn.dataset.loading;
+    btn.style.opacity = '1';
+    showToast('✨ AI đã viết lại nội dung — bạn có thể chỉnh tiếp');
+  }, 1400);
+}
+
+// ═══════════════ AI SUGGEST ═══════════════
+function aiSuggest(key) {
+  if (s1Mode === 'free') return;
+  const btn = document.getElementById('aibtn-' + key);
+  const icon = document.getElementById('aibtn-icon-' + key);
+  if (!btn || btn.classList.contains('loading')) return;
+
+  btn.classList.add('loading');
+  btn.disabled = true;
+  icon.innerHTML = `<span class="ai-suggest-dots"><span class="ai-suggest-dot"></span><span class="ai-suggest-dot"></span><span class="ai-suggest-dot"></span></span>`;
+
+  setTimeout(() => {
+    const sug = (AI_SUGGESTIONS[currentSub] || {})[key];
+    if (sug) {
+      const taIssue = document.getElementById('ta-issue-' + key);
+      const taFix   = document.getElementById('ta-fix-'   + key);
+      if (taIssue) { taIssue.value = sug.issue; saveNote(key, 'issue', sug.issue); }
+      if (taFix)   { taFix.value   = sug.fix;   saveNote(key, 'fix',   sug.fix);   }
+    }
+    btn.classList.remove('loading');
+    btn.disabled = false;
+    icon.innerHTML = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+    btn.textContent = ' Đã gợi ý — chỉnh lại nếu cần';
+    btn.prepend(icon);
+    showToast('✨ AI đã gợi ý — bạn có thể chỉnh lại cho phù hợp với học sinh');
+  }, 1200);
+}
+
+function setT2(key, status) {
+  // Toggle off if already selected
+  if (t2Status[key] === status) {
+    t2Status[key] = '';
+  } else {
+    t2Status[key] = status;
+  }
+  // Re-render just this card
+  const items = TIER2_DATA[currentSub] || [];
+  const item = items.find(i => i.key === key);
+  if (!item) return;
+  const old = document.getElementById('t2c-' + key);
+  if (old) old.outerHTML = buildT2Card(item);
+}
+
+function saveNote(key, type, val) {
+  t2Notes[key + '_' + type] = val;
+}
+
+// ═══════════════ AI AUTO-DRAFT DEMO ═══════════════
+const _AI_DRAFT = {
+  topic:   'Giải phương trình và hệ phương trình bậc hai',
+  notes:   'An làm được 8/10 bài cơ bản, bài tổng hợp còn lúng túng. Hướng dẫn lập bảng xét dấu delta. Hay quên bước kiểm tra nghiệm.',
+  content: 'Hôm nay An và thầy ôn tập chuyên sâu phần giải phương trình và hệ phương trình bậc hai. An hoàn thành tốt 8/10 bài tập cơ bản và thể hiện sự tiến bộ rõ rệt. Thầy đã hướng dẫn thêm phương pháp lập bảng xét dấu delta cho các bài tổng hợp.',
+  hw:      'SGK Đại số 10: bài 3.14→3.20 trang 78. Làm thêm đề thi thử trang 94 phần phương trình.',
+  private: 'An làm bài khá chủ động nhưng hay bỏ qua bước kiểm tra nghiệm. Nhắc lại buổi sau. Mẹ nhắn muốn tập trung hơn phần hình học.'
+};
+
+let _draftFilled = true;
+function toggleDraftDemo() {
+  const btn = document.getElementById('draftDemoBtn');
+  const agBar = document.getElementById('agendaBar');
+  if (_draftFilled) {
+    // Switch to empty
+    document.getElementById('topicInput').value = '';
+    document.getElementById('rawNotes').value = '';
+    document.getElementById('contentInput').value = '';
+    document.getElementById('hwInput').value = '';
+    const pn = document.getElementById('privateNote');
+    if (pn) pn.value = '';
+    if (agBar) agBar.style.display = 'none';
+    btn.textContent = '✨ AI điền sẵn từ kế hoạch';
+    btn.style.background = 'rgba(255,255,255,.25)';
+    _draftFilled = false;
+  } else {
+    // Animate fill
+    btn.textContent = 'Đang điền...';
+    btn.disabled = true;
+    if (agBar) { agBar.style.display = 'flex'; }
+    const fields = [
+      ['topicInput',   _AI_DRAFT.topic,   100],
+      ['rawNotes',     _AI_DRAFT.notes,   300],
+      ['contentInput', _AI_DRAFT.content, 550],
+      ['hwInput',      _AI_DRAFT.hw,      800],
+    ];
+    fields.forEach(function([id, val, delay]) {
+      setTimeout(function() {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.transition = 'background .3s';
+        el.style.background = '#F0FDF4';
+        el.value = val;
+        triggerAutoSave();
+        setTimeout(function() { el.style.background = ''; }, 800);
+      }, delay);
+    });
+    setTimeout(function() {
+      const pn = document.getElementById('privateNote');
+      if (pn) { pn.value = _AI_DRAFT.private; }
+      btn.innerHTML = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="11" x2="15.01" y2="11"/><line x1="18" y1="13" x2="18.01" y2="13"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg> Xem form trống';
+      btn.style.background = 'rgba(255,255,255,.12)';
+      btn.disabled = false;
+      _draftFilled = true;
+      showToast('✦ AI đã điền sẵn từ kế hoạch buổi học — kiểm tra và điều chỉnh nếu cần');
+    }, 1050);
+  }
+}
+
+// ═══════════════ AUTO-SAVE ═══════════════
+let _autoSaveTimer = null;
+
+function _setAutoSaveState(state, timeStr) {
+  const dot = document.getElementById('autosaveDot');
+  const txt = document.getElementById('autosaveText');
+  if (!dot) return;
+  if (state === 'saving') {
+    dot.className = 'autosave-dot saving';
+    txt.className = 'autosave-text';
+    txt.textContent = 'Đang lưu nháp...';
+  } else if (state === 'saved') {
+    dot.className = 'autosave-dot saved';
+    txt.className = 'autosave-text saved';
+    txt.textContent = 'Đã lưu nháp lúc ' + (timeStr || _nowHHMM());
+  }
+}
+
+function _nowHHMM() {
+  const d = new Date();
+  return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+
+function triggerAutoSave() {
+  clearTimeout(_autoSaveTimer);
+  _setAutoSaveState('saving');
+  _autoSaveTimer = setTimeout(function() {
+    _setAutoSaveState('saved', _nowHHMM());
+  }, 700);
+}
+
+// Wire auto-save to all inputs inside S1
+document.addEventListener('DOMContentLoaded', function() {
+  const s1 = document.getElementById('s1');
+  if (s1) {
+    s1.addEventListener('input', triggerAutoSave);
+    s1.addEventListener('change', triggerAutoSave);
+  }
+});
+
+// ═══════════════ MISSING ACTIONS ═══════════════
+function saveDraft() {
+  _setAutoSaveState('saved', _nowHHMM());
+  showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Đã lưu nháp — bạn có thể tiếp tục sau');
+}
+
+function savePort() {
+  showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Đã lưu vào Student Portfolio của học sinh');
+}
+
+function sendReport() {
+  const btn = document.querySelector('#bar2 .btn-green');
+  if (!btn || btn.dataset.sending) return;
+  btn.dataset.sending = '1';
+  btn.disabled = true;
+  btn.innerHTML = '<span style="display:inline-flex;gap:4px;align-items:center"><span class="gen-dot"></span><span class="gen-dot"></span><span class="gen-dot"></span></span> Đang gửi...';
+
+  setTimeout(() => {
+    // Hide bottom bar
+    document.getElementById('bar2').style.display = 'none';
+    // Navigate to S3 wrap-up screen
+    showScreen('s3');
+    showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Báo cáo đã gửi đến phụ huynh thành công!');
+    // Reset button state for next use
+    btn.disabled = false;
+    btn.innerHTML = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Gửi Phụ huynh';
+    delete btn.dataset.sending;
+  }, 700);
+}
+
+// ═══════════════ NAV ═══════════════
+function syncNum() {
+  const n = document.getElementById('sessionNum').value;
+  document.getElementById('sessionNumBig').textContent = n;
+  document.getElementById('navBadge').textContent = '#' + n;
+}
+
+function goPreview() {
+  // Sync data to preview
+  const sub = SUB_NAMES[currentSub];
+  const num = document.getElementById('sessionNum').value;
+  const dateRaw = document.getElementById('sessionDate').value;
+  const dateStr = dateRaw ? new Date(dateRaw + 'T00:00').toLocaleDateString('vi-VN') : '';
+  document.getElementById('rcTitle').textContent = `<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Báo cáo buổi học #${num} — ${sub}`;
+  document.getElementById('rcMeta').textContent = `Học sinh: Nguyễn Văn An · ${dateStr} · 19:00–20:30`;
+  document.getElementById('rcHW').textContent = document.getElementById('hwInput').value;
+  document.getElementById('rawContent').textContent = document.getElementById('contentInput').value;
+  document.getElementById('rawHW').textContent = document.getElementById('hwInput').value;
+  renderEvalRows();
+
+  showScreen('s2');
+  document.getElementById('bar1').style.display = 'none';
+  document.getElementById('bar2').style.display = 'flex';
+  document.getElementById('step2').classList.add('active');
+  aiDone = false;
+  document.getElementById('aiBtn').textContent = '✨ AI soạn báo cáo cho Phụ huynh';
+  document.getElementById('genAnim').classList.remove('show');
+  setMode(gsMode);
+}
+
+function goBack() {
+  showScreen('s1');
+  document.getElementById('bar1').style.display = 'flex';
+  document.getElementById('bar2').style.display = 'none';
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════ EVAL ROWS IN PREVIEW ═══════════════
+function starsHTML(val) {
+  return [1,2,3,4,5].map(i =>
+    `<span style="color:${i<=val?'#F59E0B':'#E2E8F0'};font-size:13px">★</span>`
+  ).join('');
+}
+
+function renderEvalRows() {
+  let html = `
+    <div class="rc-eval-row"><div class="rc-eval-name"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Tập trung</div><div class="rc-stars">${starsHTML(t1Ratings.focus)}</div></div>
+    <div class="rc-eval-row"><div class="rc-eval-name"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> Thái độ</div><div class="rc-stars">${starsHTML(t1Ratings.attitude)}</div></div>
+    <div class="rc-eval-row"><div class="rc-eval-name"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Hoàn thành BTVN</div><div class="rc-stars">${starsHTML(t1Ratings.hw)}</div></div>
+  `;
+  // Tier 2 with status tags
+  const items = TIER2_DATA[currentSub] || [];
+  items.forEach(item => {
+    const st = t2Status[item.key];
+    if (!st) return;
+    const tagCls = st==='good'?'tag-good':st==='watch'?'tag-watch':'tag-bad';
+    const tagTxt = st==='good'?'Tốt':st==='watch'?'Cần theo dõi':'Cần cải thiện';
+    let detail = '';
+    if (st === 'bad' && t2Notes[item.key+'_fix']) {
+      detail = `<div style="font-size:11.5px;color:#64748B;margin-top:3px"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg> ${t2Notes[item.key+'_fix']}</div>`;
+    }
+    html += `<div class="rc-eval-row" style="flex-direction:column;align-items:flex-start;gap:3px">
+      <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+        <div class="rc-eval-name">${item.emoji} ${item.name}</div>
+        <span class="rc-status-tag ${tagCls}">${tagTxt}</span>
+      </div>${detail}
+    </div>`;
+  });
+  document.getElementById('rcEvalRows').innerHTML = html;
+}
+
+// ═══════════════ MODE ═══════════════
+function setMode(mode) {
+  gsMode = mode;
+  const isFree = mode === 'free';
+  document.getElementById('btnFree').className = 'acc-btn' + (isFree?' active-free':'');
+  document.getElementById('btnPremium').className = 'acc-btn' + (!isFree?' active-premium':'');
+  document.getElementById('aiPremiumWrap').style.display = isFree ? 'none' : 'block';
+  document.getElementById('aiLockWrap').style.display = isFree ? 'block' : 'none';
+  document.getElementById('rcAIBadge').style.display = isFree ? 'none' : 'block';
+  if (isFree) {
+    document.getElementById('rcContent').innerHTML = document.getElementById('contentInput').value;
+    document.getElementById('rcNote').style.display = 'none';
+  } else {
+    document.getElementById('rcNote').style.display = 'block';
+  }
+}
+
+// ═══════════════ AI GENERATE ═══════════════
+function generateAI() {
+  if (aiDone) return;
+  const btn = document.getElementById('aiBtn');
+  const anim = document.getElementById('genAnim');
+  btn.style.opacity = '.6';
+  btn.textContent = 'Đang xử lý...';
+  anim.classList.add('show');
+  setTimeout(() => {
+    anim.classList.remove('show');
+    btn.style.opacity = '1';
+    btn.innerHTML = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Đã soạn xong · Nhấn để soạn lại';
+    aiDone = true;
+    const topic = document.getElementById('topicInput').value || 'bài học hôm nay';
+    document.getElementById('rcContent').innerHTML =
+      `Hôm nay An và thầy đã ôn tập chuyên sâu phần <strong>${topic}</strong>. An hoàn thành tốt các bài tập cơ bản, thể hiện tiến bộ rõ so với buổi trước. Thầy đã hướng dẫn phương pháp phân tích đề và xử lý các dạng bài tổng hợp phức tạp hơn.`;
+    document.getElementById('rcNote').innerHTML =
+      `An đang tiến bộ đúng hướng và có thái độ học rất tích cực. Điểm cần tập trung trong tuần tới: <strong>thói quen kiểm tra lại kết quả sau khi giải</strong>. Hoàn thành BTVN sẽ giúp củng cố bài và chuẩn bị tốt cho buổi học tiếp.`;
+    showToast('✨ AI đã soạn xong báo cáo');
+  }, 1800);
+}
+
+// ═══════════════ VIEW TOGGLE ═══════════════
+function setView(v) {
+  document.getElementById('viewPH').style.display = v==='ph'?'block':'none';
+  document.getElementById('viewRaw').style.display = v==='raw'?'block':'none';
+  document.getElementById('vtPH').classList.toggle('active', v==='ph');
+  document.getElementById('vtRaw').classList.toggle('active', v==='raw');
+}
+
+// ═══════════════ ACTIONS ═══════════════
+function saveDraft()  { showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Đã lưu nháp'); }
+function savePort()   { showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Đã lưu vào Student Portfolio'); }
+function sendReport() {
+  showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Đã gửi báo cáo đến Phụ huynh!');
+  setTimeout(function() {
+    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+    var s3 = document.getElementById('s3');
+    if (s3) s3.classList.add('active');
+    var bar2 = document.getElementById('bar2');
+    if (bar2) bar2.style.display = 'none';
+    window.scrollTo(0, 0);
+  }, 800);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// ═══════════════ PH VIEW MODE (?view=ph) ═══════════════
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('view') !== 'ph') return;
+
+  // ── helper: star row ──
+  function starRow(icon, label, val) {
+    var stars = '';
+    for (var i = 1; i <= 5; i++) stars += '<span style="color:' + (i <= val ? '#F59E0B' : '#E2E8F0') + ';font-size:14px">★</span>';
+    var lbl = ['','Yếu','Cần cải thiện','Ổn','Tốt','Xuất sắc'][val];
+    var lc  = val >= 4 ? '#059669' : val >= 3 ? '#D97706' : '#DC2626';
+    var lb  = val >= 4 ? '#F0FDF4' : val >= 3 ? '#FFFBEB' : '#FEF2F2';
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #F1F5F9;">' +
+      '<span style="font-size:13px;color:#334155;font-weight:600;">' + icon + ' ' + label + '</span>' +
+      '<div style="display:flex;align-items:center;gap:7px;">' + stars +
+      '<span style="font-size:11px;font-weight:700;color:' + lc + ';background:' + lb + ';padding:2px 8px;border-radius:5px;">' + lbl + '</span></div></div>';
+  }
+
+  // Switch to s2 and hide GS chrome
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var s2 = document.getElementById('s2');
+  if (s2) s2.classList.add('active');
+  ['bar1','bar2'].forEach(function(id){ var el=document.getElementById(id); if(el) el.style.display='none'; });
+  if (s2) {
+    s2.querySelectorAll('.account-row,#aiPremiumWrap,#aiLockWrap,.step-bar,.view-toggle,.btn-ghost').forEach(function(el){ el.style.display='none'; });
+  }
+
+  // Nav
+  var nc = document.querySelector('.nav-center');
+  if (nc) nc.innerHTML =
+    '<a href="ui-dashboard-phu-huynh.html" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#64748B;text-decoration:none;padding:6px 12px;border-radius:8px;border:1px solid #E2E8F0;background:#fff;font-weight:600;margin-right:10px;">← Dashboard</a>' +
+    '<span style="font-size:13.5px;font-weight:700;color:#1E293B;">Báo cáo buổi học</span>' +
+    '<span class="nav-session-badge">#1</span>' +
+    '<span style="font-size:11.5px;color:#059669;background:#F0FDF4;border:1px solid #BBF7D0;padding:3px 9px;border-radius:6px;font-weight:600;margin-left:6px;">👁 Chế độ xem PH</span>';
+
+  // Replace viewPH with full PH report
+  var vph = document.getElementById('viewPH');
+  if (!vph) return;
+  vph.style.cssText = 'background:transparent;border:none;box-shadow:none;padding:0';
+
+  // ── Tier 2 Free (only status tags) ──
+  var t2Free =
+    '<div style="font-size:12px;font-weight:700;color:#64748B;margin-bottom:10px;">Tiêu chí môn Toán</div>' +
+    [
+      {ic:'≡', nm:'Tư duy logic',          st:'good'},
+      {ic:'±', nm:'Tính toán',             st:'bad'},
+      {ic:'ƒ', nm:'Vận dụng công thức',    st:'watch'},
+      {ic:'✓', nm:'Giải bài tập',          st:'good'},
+    ].map(function(r){
+      var sc = r.st==='good' ? 'background:#F0FDF4;color:#059669;' : r.st==='watch' ? 'background:#FFFBEB;color:#D97706;' : 'background:#FEF2F2;color:#DC2626;';
+      var sl = r.st==='good' ? '✓ Tốt' : r.st==='watch' ? '~ Theo dõi' : '! Cần cải thiện';
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #F1F5F9;">' +
+        '<span style="font-size:13px;color:#334155;font-weight:600;">' + r.ic + ' ' + r.nm + '</span>' +
+        '<span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;' + sc + '">' + sl + '</span></div>';
+    }).join('');
+
+  // ── Tier 2 Premium (with AI notes) ──
+  var t2Prem =
+    '<div style="font-size:12px;font-weight:700;color:#64748B;margin-bottom:10px;">Tiêu chí môn Toán</div>' +
+    [
+      {ic:'≡', nm:'Tư duy logic',       st:'good',  note:'Minh Anh phân tích đề khá tốt — biết xác định dạng bài trước khi tính. Duy trì thói quen này.'},
+      {ic:'±', nm:'Tính toán',          st:'bad',   issue:'Hay nhầm dấu khi chuyển vế, bỏ qua bước trung gian nên khó kiểm tra lại.',   fix:'Yêu cầu viết đầy đủ từng bước, không nhảy cóc. Giao 10 bài thuần tính toán mỗi tối. Luyện thói quen thế nghiệm vào phương trình gốc để kiểm tra.'},
+      {ic:'ƒ', nm:'Vận dụng công thức', st:'watch', note:'Biết công thức nhưng đôi khi chưa chọn đúng thời điểm áp dụng — cần thêm bài nhận dạng dạng.'},
+      {ic:'✓', nm:'Giải bài tập',       st:'good',  note:'Hoàn thành 8/10 bài trong thời gian quy định, tiến bộ rõ so với buổi thử nghiệm.'},
+    ].map(function(r){
+      var sc = r.st==='good' ? 'background:#F0FDF4;color:#059669;' : r.st==='watch' ? 'background:#FFFBEB;color:#D97706;' : 'background:#FEF2F2;color:#DC2626;';
+      var sl = r.st==='good' ? '✓ Tốt' : r.st==='watch' ? '~ Theo dõi' : '! Cần cải thiện';
+      var detail = '';
+      if (r.note)  detail = '<div style="font-size:12px;color:#059669;background:#F0FDF4;border-radius:7px;padding:7px 10px;margin-top:5px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> ' + r.note + '</div>';
+      if (r.issue) detail =
+        '<div style="font-size:12px;color:#DC2626;background:#FEF2F2;border-radius:7px;padding:7px 10px;margin-top:5px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ' + r.issue + '</div>' +
+        '<div style="font-size:12px;color:#1D4ED8;background:#EFF6FF;border-radius:7px;padding:7px 10px;margin-top:4px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg> Hướng khắc phục: ' + r.fix + '</div>';
+      return '<div style="padding:8px 0;border-bottom:1px solid #F1F5F9;">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+          '<span style="font-size:13px;color:#334155;font-weight:600;">' + r.ic + ' ' + r.nm + '</span>' +
+          '<span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;' + sc + '">' + sl + '</span>' +
+        '</div>' + detail + '</div>';
+    }).join('');
+
+  vph.innerHTML =
+    // ── Context banner ──
+    '<div style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border:1.5px solid #BFDBFE;border-radius:14px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">' +
+      '<div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#1565C0,#42A5F5);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></div>' +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="font-size:13.5px;font-weight:800;color:#1E293B;">Báo cáo từ GS Nguyễn Văn An · Buổi #1 · Toán THPT</div>' +
+        '<div style="font-size:12px;color:#1565C0;margin-top:3px;">Thứ 2, 19/05/2026 · 17:00–18:30 · Đã gửi lúc 19:05</div>' +
+      '</div>' +
+      '<a href="ui-progress.html" style="flex-shrink:0;height:32px;padding:0 14px;background:#1565C0;color:#fff;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg> Xem tiến độ</a>' +
+    '</div>' +
+
+    // ── Demo toggle ──
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:8px 12px;">' +
+      '<span style="font-size:11.5px;color:#64748B;font-weight:600;flex-shrink:0;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="11" x2="15.01" y2="11"/><line x1="18" y1="13" x2="18.01" y2="13"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg> Demo:</span>' +
+      '<button id="phBtnFree" onclick="phMode(\'free\')"  style="height:30px;padding:0 14px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;background:#0D2D6B;color:#fff;transition:all .15s;">GS Thường</button>' +
+      '<button id="phBtnPrem" onclick="phMode(\'prem\')"  style="height:30px;padding:0 14px;border-radius:8px;font-size:12px;font-weight:700;border:1.5px solid #E2E8F0;color:#64748B;cursor:pointer;background:#fff;transition:all .15s;">GS Cao cấp ✨</button>' +
+      '<span id="phModeHint" style="font-size:11px;color:#94A3B8;margin-left:4px;">GS không dùng AI</span>' +
+    '</div>' +
+
+    // ── Report card ──
+    '<div id="phCard" style="background:#fff;border-radius:18px;border:1px solid #E8EDF4;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);">' +
+
+      // Header dark
+      '<div id="phCardHead" style="background:linear-gradient(130deg,#0D2D6B,#1a47a3,#1565C0);padding:20px 24px;">' +
+        '<div style="font-size:15.5px;font-weight:800;color:#fff;letter-spacing:-.3px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Báo cáo buổi học #1 — Toán THPT</div>' +
+        '<div style="font-size:12px;color:rgba(255,255,255,.65);margin-top:4px;">Học sinh: Nguyễn Minh Anh · 19/05/2026 · 17:00–18:30</div>' +
+        '<div id="phAIBadge" style="display:none;margin-top:10px;background:linear-gradient(135deg,#7C3AED,#9333EA);color:#fff;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:8px;width:fit-content;">✨ Báo cáo GS Cao cấp — có AI phân tích</div>' +
+      '</div>' +
+
+      '<div style="padding:20px 24px;">' +
+
+        // Nội dung
+        '<div style="font-size:10.5px;font-weight:700;color:#94A3B8;letter-spacing:.9px;text-transform:uppercase;margin-bottom:8px;">Nội dung buổi học</div>' +
+        '<div id="phContent" style="font-size:13.5px;color:#334155;line-height:1.75;margin-bottom:20px;">Buổi đầu tiên tập trung vào <strong>Hàm số bậc hai và đồ thị</strong>. Minh Anh nắm được định nghĩa và cách vẽ đồ thị cơ bản. Thầy hướng dẫn phương pháp xác định trục đối xứng, đỉnh parabol và chiều mở của đồ thị.</div>' +
+
+        '<div style="height:1px;background:#F1F5F9;margin-bottom:20px;"></div>' +
+
+        // Tiêu chí - Tier 1
+        '<div style="font-size:10.5px;font-weight:700;color:#94A3B8;letter-spacing:.9px;text-transform:uppercase;margin-bottom:12px;">Đánh giá tiêu chí</div>' +
+        '<div style="background:#F8FAFC;border-radius:12px;padding:14px 16px;margin-bottom:12px;">' +
+          '<div style="font-size:12px;font-weight:700;color:#64748B;margin-bottom:8px;">Tiêu chí chung</div>' +
+          starRow('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>', 'Tập trung',        4) +
+          starRow('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>', 'Thái độ',          5) +
+          starRow('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', 'Hoàn thành BTVN',  3) +
+        '</div>' +
+
+        // Tiêu chí Tier 2 — Free (tags only)
+        '<div id="phT2Free" style="background:#F8FAFC;border-radius:12px;padding:14px 16px;margin-bottom:12px;">' + t2Free + '</div>' +
+        // Tiêu chí Tier 2 — Premium (AI notes)
+        '<div id="phT2Prem" style="display:none;background:#F8FAFC;border-radius:12px;padding:14px 16px;margin-bottom:12px;">' + t2Prem + '</div>' +
+
+        // BTVN
+        '<div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border-radius:12px;padding:14px 16px;margin-bottom:12px;">' +
+          '<div style="font-size:12px;font-weight:700;color:#D97706;margin-bottom:6px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg> Bài tập về nhà</div>' +
+          '<div style="font-size:13px;color:#334155;line-height:1.6;">SGK Đại số 10: bài 3.1→3.8 trang 65. Vẽ đồ thị 3 hàm số bậc hai được giao trên cùng hệ trục tọa độ.</div>' +
+          '<div style="font-size:12px;color:#D97706;font-weight:700;margin-top:7px;">⏰ Hạn nộp: Thứ 4, 21/05/2026</div>' +
+        '</div>' +
+
+        // Nhận xét
+        '<div style="font-size:10.5px;font-weight:700;color:#94A3B8;letter-spacing:.9px;text-transform:uppercase;margin-bottom:8px;">Nhận xét tổng quan</div>' +
+        '<div id="phNote" style="background:#F0FDF4;border-radius:12px;padding:14px 16px;font-size:13.5px;color:#334155;line-height:1.75;">' +
+          'Minh Anh có tinh thần học tốt và hoàn thành bài được giao. Buổi tiếp theo sẽ tiếp tục luyện vẽ đồ thị và giải bài tổng hợp hàm số bậc hai.' +
+        '</div>' +
+
+        // AI Insights — Premium only
+        '<div id="phAI" style="display:none;margin-top:16px;">' +
+          '<div style="font-size:10.5px;font-weight:700;color:#94A3B8;letter-spacing:.9px;text-transform:uppercase;margin-bottom:8px;">AI Phân tích · Nhận xét chi tiết</div>' +
+          '<div style="background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border:1.5px solid #DDD6FE;border-radius:14px;padding:16px 18px;">' +
+            '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">' +
+              '<span style="font-size:20px;">✨</span>' +
+              '<span style="font-size:13.5px;font-weight:800;color:#5B21B6;">Tổng kết từ AI</span>' +
+            '</div>' +
+            '<p style="font-size:13.5px;color:#334155;line-height:1.75;margin-bottom:14px;">Minh Anh đang xây dựng nền tảng tốt — điểm mạnh ở <strong>tư duy logic</strong> và <strong>thái độ học</strong>. Điểm cần ưu tiên trong 2 tuần tới là <strong>độ chính xác tính toán</strong>: lỗi nhầm dấu khi chuyển vế đang ảnh hưởng đến kết quả bài tổng hợp.</p>' +
+            '<div style="background:#fff;border-radius:10px;padding:12px 14px;border:1px solid #DDD6FE;margin-bottom:10px;">' +
+              '<div style="font-size:12px;font-weight:800;color:#5B21B6;margin-bottom:6px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Điểm cần tập trung</div>' +
+              '<div style="font-size:13px;color:#334155;line-height:1.6;"><strong>Viết đầy đủ từng bước tính toán</strong> — không nhảy cóc, đặc biệt bước chuyển vế đa thức. Dự kiến cải thiện trong 3–4 buổi tới.</div>' +
+            '</div>' +
+            '<div style="background:#fff;border-radius:10px;padding:12px 14px;border:1px solid #DDD6FE;">' +
+              '<div style="font-size:12px;font-weight:800;color:#059669;margin-bottom:6px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> So với baseline (buổi đầu)</div>' +
+              '<div style="font-size:13px;color:#334155;line-height:1.6;">Đây là buổi học đầu tiên — chưa có dữ liệu so sánh. Sau 3 buổi AI sẽ tự động phân tích xu hướng tiến độ theo từng tiêu chí.</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+      '</div>' +
+      '<div style="padding:11px 24px;background:#F8FAFC;border-top:1px solid #F1F5F9;display:flex;align-items:center;justify-content:space-between;">' +
+        '<span style="font-size:11.5px;color:#94A3B8;">giasu.edu.vn · GS Nguyễn Văn An</span>' +
+        '<span id="phFooterBadge" style="font-size:11px;color:#94A3B8;">Gói Thường</span>' +
+      '</div>' +
+    '</div>';
+
+  // ── Toggle function ──
+  window.phMode = function(m) {
+    var isFree = m === 'free';
+    var btnF = document.getElementById('phBtnFree');
+    var btnP = document.getElementById('phBtnPrem');
+    btnF.style.cssText = 'height:30px;padding:0 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;' + (isFree ? 'border:none;background:#0D2D6B;color:#fff;' : 'border:1.5px solid #E2E8F0;background:#fff;color:#64748B;');
+    btnP.style.cssText = 'height:30px;padding:0 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;' + (!isFree ? 'border:none;background:linear-gradient(135deg,#7C3AED,#9333EA);color:#fff;' : 'border:1.5px solid #E2E8F0;background:#fff;color:#64748B;');
+
+    document.getElementById('phModeHint').innerHTML  = isFree ? 'GS không dùng AI' : '<span style="color:#7C3AED;font-weight:700;">✨ GS Cao cấp — có AI phân tích</span>';
+    document.getElementById('phAIBadge').style.display  = isFree ? 'none' : 'block';
+    document.getElementById('phT2Free').style.display   = isFree ? 'block' : 'none';
+    document.getElementById('phT2Prem').style.display   = isFree ? 'none' : 'block';
+    document.getElementById('phAI').style.display       = isFree ? 'none' : 'block';
+    document.getElementById('phFooterBadge').innerHTML  = isFree ? 'Gói Thường' : '<span style="color:#7C3AED;font-weight:700;">✨ Gói Cao cấp</span>';
+    document.getElementById('phNote').innerHTML = isFree
+      ? 'Minh Anh có tinh thần học tốt và hoàn thành bài được giao. Buổi tiếp theo sẽ tiếp tục luyện vẽ đồ thị và giải bài tổng hợp hàm số bậc hai.'
+      : 'Minh Anh đang tiến bộ đúng hướng với thái độ học rất tích cực. <strong>Điểm cần chú ý:</strong> thói quen kiểm tra lại kết quả sau khi giải — đặc biệt phần chuyển vế đa thức. Buổi tới sẽ tập trung vào bài tập tổng hợp hàm số kết hợp giải phương trình bậc hai.';
+  };
+})();
+</script>
+</body>
+</html>

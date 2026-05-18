@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cam kết học tập — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:#0F172A;background:#F8FAFC;min-height:100vh;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:'Inter',sans-serif;}
+
+/* ── NAV ── */
+nav{background:#fff;border-bottom:1px solid #E2E8F0;padding:0 28px;height:58px;
+  display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px;}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.45;}
+.nav-center{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:#1E293B;}
+.nav-pill{font-size:11px;font-weight:700;border-radius:20px;padding:3px 9px;}
+.nav-pill.waiting{background:#FEF9C3;color:#A16207;border:1px solid #FDE047;}
+.nav-pill.done{background:#F0FDF4;color:#16A34A;border:1px solid #BBF7D0;}
+.nav-back{display:flex;align-items:center;gap:5px;font-size:13px;color:#64748B;
+  padding:7px 14px;border-radius:9px;border:1px solid #E2E8F0;background:#fff;
+  cursor:pointer;transition:all .15s;}
+.nav-back:hover{background:#F1F5F9;border-color:#CBD5E1;}
+
+/* ── WRAPPER ── */
+.wrapper{max-width:820px;margin:0 auto;padding:24px 20px 80px;}
+
+/* ── MODE TOGGLE ── */
+.mode-banner{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #E2E8F0;
+  border-radius:14px;padding:10px 16px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.mode-banner.is-premium{border-color:#A78BFA;background:linear-gradient(135deg,#EDE9FE,#F5F3FF);}
+.mode-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.mode-dot.free{background:#94A3B8;}
+.mode-dot.premium{background:#7C3AED;box-shadow:0 0 0 3px rgba(124,58,237,.18);}
+.mode-label{flex:1;font-size:12px;font-weight:600;color:#94A3B8;}
+.mode-label strong{color:#1E293B;}
+.acc-toggle{display:flex;gap:0;background:#F1F5F9;border-radius:10px;padding:4px;border:1px solid #E2E8F0;}
+.acc-btn{padding:6px 14px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;
+  border:none;background:transparent;color:#64748B;font-family:'Inter',sans-serif;transition:all .2s;}
+.acc-btn.active-free{background:#fff;color:#0D2D6B;box-shadow:0 1px 4px rgba(0,0,0,.1);}
+.acc-btn.active-prem{background:linear-gradient(135deg,#F5F3FF,#EDE9FE);color:#7C3AED;box-shadow:0 1px 4px rgba(124,58,237,.15);}
+.acc-chip{font-size:10px;font-weight:700;padding:2px 5px;border-radius:3px;margin-left:3px;}
+.chip-free{background:#E2E8F0;color:#64748B;}
+.chip-prem{background:linear-gradient(90deg,#7C3AED,#A855F7);color:#fff;}
+
+/* ── ASYNC FLOW STRIP ── */
+.async-strip{display:flex;align-items:center;background:#fff;border:1.5px solid #E2E8F0;
+  border-radius:14px;padding:13px 20px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.async-step{display:flex;align-items:center;gap:8px;flex:1;}
+.async-dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;flex-shrink:0;}
+.async-dot.done{background:#D1FAE5;border:2px solid #10B981;color:#059669;}
+.async-dot.current{background:#FEF9C3;border:2px solid #F59E0B;color:#D97706;animation:pulse-soft 2s ease-in-out infinite;}
+@keyframes pulse-soft{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.25)}50%{box-shadow:0 0 0 5px rgba(245,158,11,0)}}
+.async-step-info{flex:1;}
+.async-step-label{font-size:12px;font-weight:700;color:#1E293B;}
+.async-step-date{font-size:10.5px;color:#94A3B8;margin-top:1px;}
+.async-arr{color:#CBD5E1;font-size:13px;padding:0 12px;flex-shrink:0;}
+
+/* ── PARTICIPANTS ── */
+.participants{display:flex;align-items:center;gap:0;background:#fff;border:1.5px solid #E2E8F0;
+  border-radius:16px;padding:16px 20px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.participant{display:flex;align-items:center;gap:10px;flex:1;}
+.participant.right{justify-content:flex-end;flex-direction:row-reverse;}
+.p-av{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:800;color:#fff;flex-shrink:0;}
+.p-name{font-size:13.5px;font-weight:800;color:#1E293B;}
+.p-role{font-size:11.5px;color:#64748B;font-weight:500;margin-top:1px;}
+.p-divider{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 20px;flex-shrink:0;}
+.p-divider-line{width:1px;height:28px;background:#E2E8F0;}
+.p-divider-icon{width:32px;height:32px;border-radius:50%;background:#F8FAFC;border:1.5px solid #E2E8F0;
+  display:flex;align-items:center;justify-content:center;font-size:14px;}
+.session-info{font-size:11px;font-weight:600;color:#94A3B8;text-align:center;margin-top:4px;}
+
+/* ── STEPPER ── */
+.stepper{display:flex;align-items:center;background:#fff;border:1.5px solid #E2E8F0;
+  border-radius:14px;padding:14px 20px;margin-bottom:22px;gap:0;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.step-item{display:flex;align-items:center;gap:8px;flex:1;cursor:pointer;position:relative;}
+.step-item:last-child{flex:none;}
+.step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;flex-shrink:0;transition:all .2s;}
+.step-num.pending{background:#F1F5F9;color:#94A3B8;border:1.5px solid #E2E8F0;}
+.step-num.active{background:#0D2D6B;color:#fff;border:1.5px solid #0D2D6B;box-shadow:0 2px 8px rgba(13,45,107,.25);}
+.step-num.done{background:#16A34A;color:#fff;border:1.5px solid #16A34A;}
+.step-label{font-size:12px;font-weight:600;color:#94A3B8;line-height:1.3;}
+.step-label.active{color:#0D2D6B;font-weight:700;}
+.step-label.done{color:#16A34A;}
+.step-connector{flex:1;height:2px;background:#E2E8F0;margin:0 8px;border-radius:1px;min-width:20px;}
+.step-connector.done{background:#16A34A;}
+
+/* ── CARD ── */
+.card{background:#fff;border-radius:18px;border:1px solid #E8EDF4;margin-bottom:16px;
+  overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.card-head{display:flex;align-items:center;gap:12px;padding:18px 22px 0;}
+.card-num{font-size:11px;font-weight:800;color:#94A3B8;background:#F1F5F9;width:24px;height:24px;
+  border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.card-title{font-size:15px;font-weight:800;color:#0F172A;}
+.card-sub{font-size:12px;color:#94A3B8;font-weight:500;margin-top:1px;}
+.card-body{padding:16px 22px 22px;}
+
+/* ── PANELS ── */
+.step-panel{display:none;}
+.step-panel.active{display:block;}
+
+/* ── READ-ONLY FIELDS ── */
+.ro-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.ro-field{background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:12px;padding:12px 14px;}
+.ro-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8;margin-bottom:5px;}
+.ro-value{font-size:13.5px;font-weight:700;color:#1E293B;}
+.ro-sub{font-size:11.5px;color:#64748B;margin-top:2px;}
+.ro-badge{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;
+  padding:3px 8px;border-radius:4px;margin-top:6px;}
+.ro-badge.gs{background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;}
+.ro-badge.confirmed{background:#F0FDF4;color:#15803D;border:1px solid #BBF7D0;}
+
+.confirmed-note{display:flex;align-items:center;gap:7px;background:#F0FDF4;border:1px solid #BBF7D0;
+  border-radius:10px;padding:9px 14px;margin-bottom:16px;font-size:12px;font-weight:700;color:#065F46;}
+
+/* ── READ-ONLY STEP BANNER ── */
+.ro-step-banner{display:flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,#F0F4FF,#EEF2FF);
+  border:1px solid #C7D2FE;border-radius:12px;
+  padding:10px 14px;margin-bottom:16px;}
+.ro-step-banner-icon{font-size:15px;flex-shrink:0;}
+.ro-step-banner-text{flex:1;font-size:12px;color:#3730A3;line-height:1.45;}
+.ro-step-banner-text strong{font-weight:800;color:#1e1b4b;}
+.ro-step-banner-link{font-size:11.5px;font-weight:700;color:#4F46E5;text-decoration:none;white-space:nowrap;
+  background:#fff;border:1.5px solid #C7D2FE;border-radius:7px;padding:4px 10px;flex-shrink:0;}
+.ro-step-banner-link:hover{background:#EEF2FF;}
+
+/* ── STEP 1: STUDENT INFO ── */
+.diag-summary{background:linear-gradient(135deg,#0D2D6B 0%,#1a47a3 60%,#1565C0 100%);
+  border-radius:16px;padding:20px 22px;margin-bottom:16px;
+  display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;}
+.diag-summary::before{content:'';position:absolute;right:-30px;top:-30px;width:180px;height:180px;
+  background:radial-gradient(circle,rgba(245,124,0,.15) 0%,transparent 65%);pointer-events:none;}
+.diag-av{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;flex-shrink:0;}
+.diag-info{flex:1;}
+.diag-name{font-size:17px;font-weight:800;color:#fff;}
+.diag-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px;}
+.diag-tag{font-size:11px;font-weight:600;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);
+  padding:3px 9px;border-radius:5px;}
+.diag-tag.goal{background:rgba(245,124,0,.25);color:#FDBA74;}
+.diag-level{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;}
+.diag-level-score{font-size:28px;font-weight:800;color:#fff;line-height:1;}
+.diag-level-lbl{font-size:10px;color:rgba(255,255,255,.55);font-weight:600;}
+
+.skill-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.skill-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:8px;font-size:12px;font-weight:700;}
+.skill-chip.good{background:#F0FDF4;border:1.5px solid #A7F3D0;color:#065F46;}
+.skill-chip.watch{background:#FFFBEB;border:1.5px solid #FDE68A;color:#92400E;}
+.skill-chip.bad{background:#FFF5F5;border:1.5px solid #FECACA;color:#991B1B;}
+
+/* ── STEP 3: EXPECTATIONS ── */
+.expect-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.expect-col{border:1.5px solid #E2E8F0;border-radius:14px;padding:18px;}
+.expect-col.gs{border-color:#BFDBFE;background:#F0F8FF;}
+.expect-col.ph{border-color:#FDE68A;background:#FFFBEB;}
+.expect-col-head{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.expect-col-av{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#fff;flex-shrink:0;}
+.expect-col-name{font-size:13px;font-weight:800;color:#1E293B;}
+.expect-col-role{font-size:11px;color:#64748B;}
+.expect-item{display:flex;gap:9px;align-items:flex-start;margin-bottom:10px;}
+.expect-check{width:18px;height:18px;border-radius:5px;flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;}
+.expect-check.checked{background:#0D2D6B;border:1.5px solid #0D2D6B;color:#fff;}
+.expect-check.checked::after{content:'✓';font-size:10px;font-weight:800;}
+.expect-text{font-size:12.5px;color:#374151;line-height:1.55;font-weight:500;}
+.btvn-row{display:flex;align-items:center;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid #E2E8F0;}
+.btvn-label{font-size:12.5px;font-weight:700;color:#374151;flex:1;}
+.btvn-val{font-size:12.5px;font-weight:700;color:#0D2D6B;}
+
+/* ── STEP 4: AI TIMELINE ── */
+.ai-timeline-banner{background:linear-gradient(135deg,#4C1D95,#6D28D9,#7C3AED);border-radius:18px;
+  padding:22px 24px;margin-bottom:16px;position:relative;overflow:hidden;
+  box-shadow:0 8px 28px rgba(109,40,217,.28);}
+.ai-timeline-banner::before{content:'';position:absolute;right:-20px;top:-20px;width:160px;height:160px;
+  background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 65%);pointer-events:none;}
+.ai-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.ai-ic{width:38px;height:38px;background:rgba(255,255,255,.15);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.ai-title{font-size:14.5px;font-weight:800;color:#fff;}
+.ai-sub{font-size:11.5px;color:rgba(255,255,255,.6);margin-top:1px;}
+.confidence-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.confidence-val{font-size:44px;font-weight:800;color:#fff;line-height:1;}
+.confidence-meta{flex:1;}
+.confidence-label{font-size:13px;font-weight:700;color:#DDD6FE;margin-bottom:4px;}
+.confidence-bar-wrap{background:rgba(255,255,255,.15);border-radius:10px;height:8px;overflow:hidden;}
+.confidence-bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#A78BFA,#E9D5FF);transition:width 1s ease;}
+.ai-insight-text{font-size:13px;color:rgba(255,255,255,.88);line-height:1.7;margin-bottom:14px;}
+.ai-insight-text strong{color:#fff;}
+.ai-insight-text .warn{color:#FCA5A5;}
+.ai-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.ai-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.18);color:#fff;
+  border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:8px 14px;
+  font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:background .15s;}
+.ai-btn:hover{background:rgba(255,255,255,.28);}
+.ai-btn.primary{background:#fff;color:#6D28D9;border-color:transparent;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+.ai-btn.primary:hover{background:#F5F3FF;}
+
+/* Timeline visual */
+.timeline-track{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;gap:14px;padding-bottom:20px;position:relative;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item::before{content:'';position:absolute;left:15px;top:28px;bottom:0;width:2px;background:#E2E8F0;}
+.tl-item:last-child::before{display:none;}
+.tl-dot{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;position:relative;z-index:1;}
+.tl-dot.done{background:#D1FAE5;border:2px solid #10B981;color:#059669;}
+.tl-dot.active{background:#0D2D6B;border:2px solid #0D2D6B;color:#fff;box-shadow:0 2px 8px rgba(13,45,107,.3);}
+.tl-dot.future{background:#F1F5F9;border:2px solid #CBD5E1;color:#94A3B8;}
+.tl-dot.warn{background:#FEF3C7;border:2px solid #F59E0B;color:#D97706;}
+.tl-content{flex:1;padding-top:4px;}
+.tl-date{font-size:11px;font-weight:700;color:#94A3B8;letter-spacing:.3px;margin-bottom:2px;}
+.tl-title{font-size:13.5px;font-weight:800;color:#1E293B;margin-bottom:3px;}
+.tl-desc{font-size:12px;color:#64748B;line-height:1.55;}
+.tl-tag{display:inline-flex;align-items:center;gap:3px;margin-top:5px;font-size:11px;font-weight:700;
+  padding:3px 8px;border-radius:5px;}
+.tl-tag.milestone{background:#EEF2FF;color:#3730A3;}
+.tl-tag.risk{background:#FEF3C7;color:#92400E;}
+.tl-tag.check{background:#D1FAE5;color:#065F46;}
+
+/* Free gate for timeline */
+.ai-lock-overlay{background:linear-gradient(135deg,#F8FAFC,#F1F5F9);border:1.5px dashed #CBD5E1;
+  border-radius:16px;padding:28px;text-align:center;}
+.ai-lock-icon{font-size:28px;margin-bottom:10px;}
+.ai-lock-title{font-size:15px;font-weight:800;color:#1E293B;margin-bottom:6px;}
+.ai-lock-desc{font-size:13px;color:#64748B;line-height:1.65;margin-bottom:16px;max-width:360px;margin-left:auto;margin-right:auto;}
+.upgrade-btn{background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;border:none;
+  border-radius:10px;padding:11px 24px;font-size:13.5px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;box-shadow:0 4px 14px rgba(124,58,237,.3);}
+
+/* Risk factors */
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0;}
+.risk-card{border-radius:12px;padding:14px 16px;}
+.risk-card.ok{background:#F0FDF4;border:1.5px solid #A7F3D0;}
+.risk-card.warn{background:#FFFBEB;border:1.5px solid #FDE68A;}
+.risk-card.bad{background:#FFF5F5;border:1.5px solid #FECACA;}
+.risk-ic{font-size:18px;margin-bottom:6px;}
+.risk-name{font-size:12.5px;font-weight:800;color:#1E293B;margin-bottom:3px;}
+.risk-desc{font-size:11.5px;color:#64748B;line-height:1.5;}
+
+/* ── STEP 5: LEARNING AGREEMENT ── */
+.agreement-card{background:#fff;border:1.5px solid #E2E8F0;border-radius:18px;overflow:hidden;margin-bottom:16px;}
+.agreement-header{background:linear-gradient(135deg,#0D2D6B,#1565C0);padding:22px 26px;
+  display:flex;align-items:center;justify-content:space-between;}
+.agreement-logo{display:flex;align-items:center;gap:8px;}
+.agreement-logo-text{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.2px;}
+.agreement-logo-text em{font-weight:500;font-style:normal;opacity:.5;}
+.agreement-title{font-size:20px;font-weight:800;color:#fff;margin:8px 0 4px;letter-spacing:-.3px;}
+.agreement-date{font-size:12px;color:rgba(255,255,255,.6);}
+.agreement-id{font-size:10px;color:rgba(255,255,255,.4);font-family:monospace;margin-top:2px;}
+.agreement-section{padding:20px 26px;border-bottom:1px solid #F1F5F9;}
+.agreement-section:last-of-type{border-bottom:none;}
+.ag-sec-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#94A3B8;margin-bottom:12px;}
+.ag-row{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start;}
+.ag-key{font-size:12.5px;color:#64748B;font-weight:600;min-width:150px;flex-shrink:0;}
+.ag-val{font-size:12.5px;color:#1E293B;font-weight:700;flex:1;line-height:1.5;}
+.ag-bullet{font-size:12px;color:#374151;display:flex;gap:7px;align-items:flex-start;margin-bottom:6px;line-height:1.55;}
+.ag-bullet::before{content:'•';color:#0D2D6B;font-weight:800;margin-top:1px;flex-shrink:0;}
+.ai-gen-strip{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#F5F3FF,#EDE9FE);
+  border:1px solid #C4B5FD;border-radius:10px;padding:10px 14px;margin-bottom:16px;}
+.ai-gen-dot{width:8px;height:8px;border-radius:50%;background:#7C3AED;animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.ai-gen-text{font-size:12px;font-weight:700;color:#5B21B6;}
+
+/* ── SIGNATURE AREA ── */
+.sig-area{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px 26px;}
+.sig-block{border:1.5px solid #E2E8F0;border-radius:14px;padding:16px;text-align:center;}
+.sig-block.signed{border-color:#A7F3D0;background:#F0FDF4;}
+.sig-block.waiting{border-color:#FDE68A;background:#FFFBEB;}
+.sig-name{font-size:13.5px;font-weight:800;color:#1E293B;margin-bottom:2px;}
+.sig-role{font-size:11.5px;color:#64748B;margin-bottom:12px;}
+.sig-pad{height:56px;border:1.5px dashed #CBD5E1;border-radius:10px;background:#F8FAFC;
+  display:flex;align-items:center;justify-content:center;margin-bottom:10px;cursor:pointer;transition:all .15s;}
+.sig-pad:hover:not(.nosign){border-color:#0D2D6B;background:#F0F8FF;}
+.sig-pad.signed-display{border-style:solid;border-color:#A7F3D0;background:#D1FAE5;cursor:default;}
+.sig-pad.waiting-display{border-style:dashed;border-color:#FDE047;background:#FEFCE8;cursor:pointer;}
+.sig-pad-hint{font-size:11.5px;color:#94A3B8;font-weight:600;}
+.sig-pad-name{font-size:14px;font-weight:800;color:#065F46;font-style:italic;}
+.sig-waiting-text{font-size:12px;font-weight:700;color:#A16207;}
+.sig-date{font-size:11px;color:#94A3B8;margin-bottom:8px;}
+.sig-btn{width:100%;height:36px;border-radius:9px;border:none;font-size:12.5px;font-weight:700;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;}
+.sig-btn.unsigned{background:#0D2D6B;color:#fff;}
+.sig-btn.unsigned:hover{background:#1a47a3;}
+.sig-btn.already-signed{background:#D1FAE5;color:#065F46;cursor:default;}
+.sig-btn.ph-sign{background:linear-gradient(135deg,#F57C00,#FFA726);color:#fff;
+  box-shadow:0 4px 14px rgba(245,124,0,.3);}
+.sig-btn.ph-sign:hover{background:linear-gradient(135deg,#E65100,#F57C00);}
+
+/* ── LOCK BANNER ── */
+.lock-banner{background:linear-gradient(135deg,#052e16,#14532d);border-radius:16px;padding:20px 24px;
+  margin-bottom:16px;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;
+  box-shadow:0 6px 20px rgba(5,46,22,.3);}
+.lock-banner::before{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;
+  background:radial-gradient(circle,rgba(74,222,128,.12) 0%,transparent 65%);}
+.lock-icon-big{font-size:30px;flex-shrink:0;}
+.lock-info{flex:1;}
+.lock-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px;}
+.lock-sub{font-size:12.5px;color:rgba(255,255,255,.65);line-height:1.55;}
+.lock-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.lock-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);color:#fff;
+  border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:8px 14px;
+  font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:background .15s;text-decoration:none;}
+.lock-btn:hover{background:rgba(255,255,255,.25);}
+
+/* ── NAV BUTTONS ── */
+.step-nav{display:flex;align-items:center;justify-content:space-between;margin-top:24px;padding-top:20px;border-top:1px solid #E2E8F0;}
+.btn-back{display:flex;align-items:center;gap:7px;height:42px;padding:0 20px;border-radius:11px;
+  border:1.5px solid #E2E8F0;background:#fff;font-size:13.5px;font-weight:700;color:#64748B;cursor:pointer;transition:all .15s;}
+.btn-back:hover{border-color:#0D2D6B;color:#0D2D6B;}
+.btn-next{display:flex;align-items:center;gap:7px;height:42px;padding:0 24px;border-radius:11px;
+  border:none;background:#0D2D6B;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;transition:all .15s;}
+.btn-next:hover{background:#1a47a3;}
+.btn-next.finish{background:linear-gradient(135deg,#16A34A,#15803D);box-shadow:0 4px 14px rgba(22,163,74,.3);}
+.btn-next.finish:hover{background:linear-gradient(135deg,#15803D,#14532D);}
+.step-progress-text{font-size:12px;font-weight:600;color:#94A3B8;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);
+  background:#1E293B;color:#fff;padding:11px 18px;border-radius:11px;
+  font-size:13.5px;font-weight:600;pointer-events:none;z-index:999;white-space:nowrap;
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* ── SUCCESS ── */
+.success-screen{display:none;text-align:center;padding:48px 24px;}
+.success-screen.active{display:block;}
+.success-icon{font-size:52px;margin-bottom:16px;}
+.success-title{font-size:22px;font-weight:900;color:#0F172A;letter-spacing:-.4px;margin-bottom:8px;}
+.success-sub{font-size:14px;color:#64748B;line-height:1.65;max-width:420px;margin:0 auto 28px;}
+.success-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.success-btn{display:inline-flex;align-items:center;gap:6px;height:42px;padding:0 22px;border-radius:11px;
+  font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;border:none;}
+.success-btn.primary{background:#0D2D6B;color:#fff;}
+.success-btn.ghost{background:#fff;color:#0D2D6B;border:1.5px solid #E2E8F0;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+      <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+      <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+    </svg>
+    <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+  </a>
+  <div class="nav-center">
+    <svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Cam kết học tập
+    <span class="nav-pill waiting" id="navPill"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Chờ xác nhận</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <a href="ui-dashboard-gia-su.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:#64748B;text-decoration:none;padding:6px 12px;border-radius:8px;border:1px solid #E2E8F0;background:#fff;">← GS</a>
+    <a href="ui-dashboard-phu-huynh.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:#64748B;text-decoration:none;padding:6px 12px;border-radius:8px;border:1px solid #E2E8F0;background:#fff;">← PH</a>
+  </div>
+</nav>
+
+<div class="wrapper">
+
+<!-- MODE TOGGLE -->
+<div class="mode-banner is-free" id="modeBanner">
+  <div class="mode-dot free" id="modeDot"></div>
+  <div class="mode-label" id="modeLabel"><strong id="modeLabelStrong">Gia sư Miễn phí</strong> <span id="modeLabelSpan" style="color:#94A3B8">— AI Lộ trình chi tiết chỉ có khi GS dùng tài khoản Cao cấp</span></div>
+  <div class="acc-toggle">
+    <button class="acc-btn active-free" id="btnFree" onclick="setMode('free')">GS Miễn phí <span class="acc-chip chip-free">FREE</span></button>
+    <button class="acc-btn" id="btnPrem" onclick="setMode('premium')">GS Cao cấp <span class="acc-chip chip-prem">PRO</span></button>
+  </div>
+</div>
+
+<!-- PARTICIPANTS -->
+<div class="participants">
+  <div class="participant">
+    <div class="p-av" style="background:linear-gradient(135deg,#1565C0,#42A5F5);">K</div>
+    <div>
+      <div class="p-name">Nguyễn Văn Khoa</div>
+      <div class="p-role"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Gia sư · Toán học</div>
+    </div>
+  </div>
+  <div class="p-divider">
+    <div class="p-divider-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></div>
+    <div class="session-info">Cam kết học tập<br>Lập ngày 12/05/2026</div>
+  </div>
+  <div class="participant right">
+    <div class="p-av" style="background:linear-gradient(135deg,#F57C00,#FFA726);">M</div>
+    <div style="text-align:right;">
+      <div class="p-name">Nguyễn Minh Anh</div>
+      <div class="p-role">👩‍<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Học viên · Lớp 9 · Hà Nội</div>
+    </div>
+  </div>
+</div>
+
+<!-- ASYNC FLOW STRIP -->
+<div class="async-strip">
+  <div class="async-step">
+    <div class="async-dot done">✓</div>
+    <div class="async-step-info">
+      <div class="async-step-label">Học viên nộp Hồ sơ học</div>
+      <div class="async-step-date">10/05/2026 · Kết quả Diagnostic đính kèm</div>
+    </div>
+  </div>
+  <div class="async-arr">→</div>
+  <div class="async-step">
+    <div class="async-dot done">✓</div>
+    <div class="async-step-info">
+      <div class="async-step-label">Gia sư gửi đề xuất lộ trình</div>
+      <div class="async-step-date">12/05/2026 · Đề xuất lịch + AI Brief</div>
+    </div>
+  </div>
+  <div class="async-arr">→</div>
+  <div class="async-step">
+    <div class="async-dot current">✍</div>
+    <div class="async-step-info">
+      <div class="async-step-label">Ký Cam kết & Bắt đầu học</div>
+      <div class="async-step-date">Đang chờ xác nhận từ phụ huynh</div>
+    </div>
+  </div>
+</div>
+
+<!-- STEPPER -->
+<div class="stepper" id="stepper">
+  <div class="step-item" onclick="goToStep(1)" id="s-item-1">
+    <div class="step-num active" id="s-num-1">1</div>
+    <div class="step-label active" id="s-lbl-1">Hồ sơ học</div>
+  </div>
+  <div class="step-connector" id="s-con-1"></div>
+  <div class="step-item" onclick="goToStep(2)" id="s-item-2">
+    <div class="step-num pending" id="s-num-2">2</div>
+    <div class="step-label" id="s-lbl-2">Lịch & Mục tiêu</div>
+  </div>
+  <div class="step-connector" id="s-con-2"></div>
+  <div class="step-item" onclick="goToStep(3)" id="s-item-3">
+    <div class="step-num pending" id="s-num-3">3</div>
+    <div class="step-label" id="s-lbl-3">Cam kết</div>
+  </div>
+  <div class="step-connector" id="s-con-3"></div>
+  <div class="step-item" onclick="goToStep(4)" id="s-item-4">
+    <div class="step-num pending" id="s-num-4">4</div>
+    <div class="step-label" id="s-lbl-4">Lộ trình AI</div>
+  </div>
+  <div class="step-connector" id="s-con-4"></div>
+  <div class="step-item" id="s-item-5">
+    <div class="step-num pending" id="s-num-5">5</div>
+    <div class="step-label" id="s-lbl-5">Ký xác nhận</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     STEP 1 — Hồ sơ học (read-only)
+══════════════════════════════════════════ -->
+<div class="step-panel active" id="step-1">
+
+  <div class="ro-step-banner">
+    <div class="ro-step-banner-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+    <div class="ro-step-banner-text"><strong>Chỉ đọc — dữ liệu từ Hồ sơ học</strong><br>Thông tin này được tổng hợp từ Hồ sơ học đã nộp và kết quả Diagnostic. Không thể chỉnh sửa tại đây.</div>
+    <a href="ui-student-portfolio.html" class="ro-step-banner-link">Xem Hồ sơ →</a>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">01</div>
+      <div>
+        <div class="card-title">Hồ sơ học sinh</div>
+        <div class="card-sub">Từ Hồ sơ học đã nộp · 10/05/2026 · Kết quả Diagnostic tự động đính kèm</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="diag-summary">
+        <div class="diag-av">M</div>
+        <div class="diag-info">
+          <div class="diag-name">Nguyễn Minh Anh</div>
+          <div class="diag-tags">
+            <span class="diag-tag">Lớp 9 · THPT Chu Văn An</span>
+            <span class="diag-tag"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22L22 2"/><path d="m2 22 10-10"/><path d="M2 12 12 2"/><path d="M2 22h20"/><path d="M12 22V12"/></svg> Toán học</span>
+            <span class="diag-tag goal"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Luyện thi THPT 8+/10</span>
+          </div>
+        </div>
+        <div class="diag-level">
+          <div class="diag-level-score">6.2</div>
+          <div class="diag-level-lbl">Điểm Diagnostic</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div style="background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:12px;padding:14px 16px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8;margin-bottom:6px;">Trình độ hiện tại</div>
+          <div style="font-size:15px;font-weight:800;color:#1E293B;">Trung bình khá</div>
+          <div style="font-size:11.5px;color:#64748B;margin-top:2px;">Tương đương lớp 8.5</div>
+        </div>
+        <div style="background:#F0FDF4;border:1.5px solid #A7F3D0;border-radius:12px;padding:14px 16px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#059669;margin-bottom:6px;">Điểm mạnh</div>
+          <div style="font-size:13px;font-weight:700;color:#065F46;">Vận dụng công thức</div>
+          <div style="font-size:11.5px;color:#059669;margin-top:2px;">Đại số · Hình học cơ bản</div>
+        </div>
+        <div style="background:#FFF5F5;border:1.5px solid #FECACA;border-radius:12px;padding:14px 16px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#991B1B;margin-bottom:6px;">Cần cải thiện</div>
+          <div style="font-size:13px;font-weight:700;color:#991B1B;">Tư duy logic</div>
+          <div style="font-size:11.5px;color:#DC2626;margin-top:2px;">Hình học không gian · Chứng minh</div>
+        </div>
+      </div>
+
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8;margin-bottom:10px;">Kỹ năng chi tiết từ Diagnostic</div>
+      <div class="skill-chips">
+        <div class="skill-chip good">✓ Đại số — 7.5/10</div>
+        <div class="skill-chip good">✓ Xác suất — 7.2/10</div>
+        <div class="skill-chip watch">~ Hàm số — 6.1/10</div>
+        <div class="skill-chip watch">~ Lượng giác — 5.8/10</div>
+        <div class="skill-chip bad">! Tư duy logic — 4.9/10</div>
+        <div class="skill-chip bad">! Hình học không gian — 5.2/10</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div style="font-size:16px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+      <div>
+        <div class="card-title">Ghi chú từ Phụ huynh</div>
+        <div class="card-sub">Nộp kèm Hồ sơ học · 10/05/2026</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div style="background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:12px;padding:14px 16px;font-size:13px;color:#374151;line-height:1.7;">
+        Minh Anh học tốt khi có ví dụ thực tế, không thích học thuộc lòng công thức. Em hay mất tập trung sau 60 phút đầu.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /step-1 -->
+
+
+<!-- ══════════════════════════════════════════
+     STEP 2 — Lịch & Mục tiêu (read-only)
+══════════════════════════════════════════ -->
+<div class="step-panel" id="step-2">
+
+  <div class="ro-step-banner">
+    <div class="ro-step-banner-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+    <div class="ro-step-banner-text"><strong>Chỉ đọc — dữ liệu từ Hồ sơ học & đề xuất GS</strong><br>Mục tiêu và lịch học được xác nhận từ trước. Để thay đổi, cần trao đổi trực tiếp với gia sư.</div>
+    <a href="ui-messages.html" class="ro-step-banner-link">Nhắn tin GS →</a>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">02</div>
+      <div>
+        <div class="card-title">Mục tiêu học tập</div>
+        <div class="card-sub">Từ Hồ sơ học · Đã xác nhận với gia sư</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="ro-grid">
+        <div class="ro-field">
+          <div class="ro-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Mục tiêu ngắn hạn</div>
+          <div class="ro-value">Đạt 8+/10 trong kỳ thi giữa kỳ 2</div>
+          <div class="ro-sub">Tháng 7/2026</div>
+        </div>
+        <div class="ro-field">
+          <div class="ro-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg> Mục tiêu dài hạn</div>
+          <div class="ro-value">Đạt 8+/10 thi THPT Quốc gia 2027</div>
+          <div class="ro-sub">Kỳ thi tháng 6/2027</div>
+        </div>
+        <div class="ro-field">
+          <div class="ro-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg> Xuất phát điểm</div>
+          <div class="ro-value">6.2 / 10</div>
+          <div class="ro-sub">Diagnostic 12/05/2026</div>
+        </div>
+        <div class="ro-field">
+          <div class="ro-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Kỳ hạn mục tiêu</div>
+          <div class="ro-value">30/09/2026</div>
+          <div class="ro-sub">~4.5 tháng từ hôm nay</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">03</div>
+      <div>
+        <div class="card-title">Lịch học & Hình thức</div>
+        <div class="card-sub">Đề xuất từ GS Nguyễn Văn Khoa · 12/05/2026 · Học viên đồng ý</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="ro-grid" style="margin-bottom:12px;">
+        <div class="ro-field">
+          <div class="ro-label">📆 Ngày học trong tuần</div>
+          <div class="ro-value">Thứ 3 · Thứ 5 · Thứ 7</div>
+          <div class="ro-sub">3 buổi / tuần</div>
+          <div class="ro-badge gs"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> GS đề xuất</div>
+        </div>
+        <div class="ro-field">
+          <div class="ro-label">⏰ Giờ học cố định</div>
+          <div class="ro-value">19:00 – 20:30</div>
+          <div class="ro-sub">90 phút / buổi</div>
+          <div class="ro-badge gs"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> GS đề xuất</div>
+        </div>
+        <div class="ro-field">
+          <div class="ro-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>️ Hình thức học</div>
+          <div class="ro-value">Online</div>
+          <div class="ro-sub">Zoom / Google Meet</div>
+          <div class="ro-badge confirmed">✓ Đã xác nhận</div>
+        </div>
+        <div class="ro-field">
+          <div class="ro-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Buổi học đầu tiên</div>
+          <div class="ro-value">14/05/2026</div>
+          <div class="ro-sub">Thứ 5 tới · 19:00 – 20:30</div>
+        </div>
+        <div class="ro-field">
+          <div class="ro-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg> Tổng số buổi · Thời gian</div>
+          <div class="ro-value">24 buổi</div>
+          <div class="ro-sub">~2 tháng · kết thúc ~14/07/2026</div>
+          <div class="ro-badge gs"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> GS đề xuất</div>
+        </div>
+      </div>
+      <!-- Học phí note -->
+      <div style="background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="font-size:18px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;color:#92400E;">Học phí: Hai bên tự thỏa thuận riêng</div>
+          <div style="font-size:11.5px;color:#B45309;margin-top:2px;">Không ghi nhận trên nền tảng — GS và phụ huynh / học viên tự chốt và xử lý ngoài giasư.edu.vn</div>
+        </div>
+      </div>
+      <div style="background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+        <div style="font-size:18px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;color:#1D4ED8;">Lịch học cố định sau khi ký</div>
+          <div style="font-size:11.5px;color:#3B82F6;margin-top:2px;">Thứ 3, Thứ 5, Thứ 7 · 19:00–20:30 — tự động thêm vào lịch của cả hai bên</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /step-2 -->
+
+
+<!-- ══════════════════════════════════════════
+     STEP 3 — Cam kết đôi bên (read-only)
+══════════════════════════════════════════ -->
+<div class="step-panel" id="step-3">
+
+  <div class="ro-step-banner">
+    <div class="ro-step-banner-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+    <div class="ro-step-banner-text"><strong>Chỉ đọc — đã thống nhất trong đề xuất của GS</strong><br>Nội dung cam kết này đã được cả hai bên đồng ý. Sẽ được ghi cố định vào Cam kết học tập sau khi ký.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">04</div>
+      <div>
+        <div class="card-title">Cam kết đôi bên</div>
+        <div class="card-sub">Đã thống nhất qua đề xuất của GS · 12/05/2026 · Sẽ được ghi vào Cam kết học tập</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="confirmed-note">
+        ✓ Cả hai bên đã xác nhận nội dung này trong đề xuất của GS Nguyễn Văn Khoa · 12/05/2026
+      </div>
+      <div class="expect-grid">
+        <!-- GS side -->
+        <div class="expect-col gs">
+          <div class="expect-col-head">
+            <div class="expect-col-av" style="background:linear-gradient(135deg,#1565C0,#42A5F5);">K</div>
+            <div>
+              <div class="expect-col-name">GS Nguyễn Văn Khoa</div>
+              <div class="expect-col-role">Cam kết từ gia sư</div>
+            </div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-check checked"></div>
+            <div class="expect-text">Soạn giáo án theo trình độ thực tế của học viên, điều chỉnh sau mỗi 3–4 buổi</div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-check checked"></div>
+            <div class="expect-text">Gửi báo cáo sau mỗi buổi học trong vòng 2 giờ</div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-check checked"></div>
+            <div class="expect-text">Thông báo trước 24h nếu phải huỷ hoặc dời buổi học</div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-check checked"></div>
+            <div class="expect-text">Hỗ trợ giải đáp câu hỏi ngoài giờ học qua tin nhắn (không quá 20 phút/ngày)</div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-check checked"></div>
+            <div class="expect-text">Cung cấp đề luyện tập phù hợp mỗi tuần</div>
+          </div>
+          <div class="btvn-row">
+            <div class="btvn-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Giao BTVN mỗi buổi</div>
+            <div class="btvn-val">20–30 phút</div>
+          </div>
+        </div>
+
+        <!-- PH/HV side -->
+        <div class="expect-col ph">
+          <div class="expect-col-head">
+            <div class="expect-col-av" style="background:linear-gradient(135deg,#F57C00,#FFA726);">H</div>
+            <div>
+              <div class="expect-col-name">Chị Hương (Phụ huynh)</div>
+              <div class="expect-col-role">Cam kết từ phụ huynh & học viên</div>
+            </div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-check checked"></div>
+            <div class="expect-text">Học viên vào học đúng giờ, chuẩn bị sách vở trước buổi học 5 phút</div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-check checked"></div>
+            <div class="expect-text">Hoàn thành BTVN trước buổi học tiếp theo</div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-check checked"></div>
+            <div class="expect-text">Thông báo trước 24h nếu cần huỷ buổi học</div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-check checked"></div>
+            <div class="expect-text">Phụ huynh xem báo cáo và phản hồi ít nhất 1 lần/tuần</div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-check checked"></div>
+            <div class="expect-text">Học viên không dùng điện thoại trong giờ học</div>
+          </div>
+          <div class="btvn-row">
+            <div class="btvn-label"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg> Báo cáo nhận mỗi</div>
+            <div class="btvn-val">Sau buổi + tổng hợp tuần</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /step-3 -->
+
+
+<!-- ══════════════════════════════════════════
+     STEP 4 — Lộ trình AI
+══════════════════════════════════════════ -->
+<div class="step-panel" id="step-4">
+
+  <!-- Premium: Full AI timeline -->
+  <div id="timelinePremium">
+    <div class="ai-timeline-banner">
+      <div class="ai-head">
+        <div class="ai-ic">✨</div>
+        <div>
+          <div class="ai-title">AI Dự đoán Lộ trình học</div>
+          <div class="ai-sub">Phân tích từ Diagnostic 6.2/10 · Mục tiêu 8+/10 · 3 buổi/tuần · 90 phút/buổi</div>
+        </div>
+      </div>
+      <div class="confidence-row">
+        <div class="confidence-val">78%</div>
+        <div class="confidence-meta">
+          <div class="confidence-label">Khả năng đạt mục tiêu đúng hạn (tháng 9/2026)</div>
+          <div class="confidence-bar-wrap"><div class="confidence-bar-fill" style="width:78%"></div></div>
+        </div>
+      </div>
+      <div class="ai-insight-text">
+        Với điểm xuất phát <strong>6.2/10</strong> và tốc độ học <strong>3 buổi/tuần</strong>, Minh Anh cần khoảng <strong>4–4.5 tháng</strong> để đạt mục tiêu 8+/10 ổn định. Điểm rủi ro lớn nhất là <span class="warn">Tư duy logic (4.9/10)</span> — đây là tiêu chí chiếm ~35% đề thi THPT. Nếu không có đột phá ở kỹ năng này trong 6 tuần đầu, timeline có thể kéo dài thêm 3–4 tuần.
+      </div>
+      <div class="ai-actions">
+        <button class="ai-btn primary" onclick="showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Timeline đã ghi vào Cam kết học tập')">✓ Đã ghi vào Cam kết</button>
+        <button class="ai-btn" onclick="showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Đang xuất PDF...')"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Xuất PDF</button>
+        <button class="ai-btn" onclick="showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Đã copy')"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Copy</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div style="font-size:16px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/></svg></div>
+        <div>
+          <div class="card-title">Lộ trình chi tiết</div>
+          <div class="card-sub">5 giai đoạn · Checkpoint sau mỗi 10 buổi</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="timeline-track">
+          <div class="tl-item">
+            <div class="tl-dot done">✓</div>
+            <div class="tl-content">
+              <div class="tl-date">ĐIỂM XUẤT PHÁT · 12/05/2026</div>
+              <div class="tl-title">Diagnostic hoàn thành</div>
+              <div class="tl-desc">Trình độ 6.2/10. Điểm mạnh: Đại số 7.5, Vận dụng công thức. Cần tập trung: Tư duy logic 4.9, Hình học không gian 5.2.</div>
+              <span class="tl-tag check">✓ Đã hoàn thành</span>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot active">→</div>
+            <div class="tl-content">
+              <div class="tl-date">GIAI ĐOẠN 1 · 5/2026 – 6/2026 · 12 buổi</div>
+              <div class="tl-title">Nền tảng & Tư duy logic</div>
+              <div class="tl-desc">Củng cố kiến thức lớp 8–9. Tập trung xây nền tảng tư duy logic qua bài toán thực tiễn. Mục tiêu đưa Tư duy logic từ 4.9 → 6.5.</div>
+              <span class="tl-tag milestone"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Checkpoint Buổi 12: Tư duy logic ≥ 6/10</span>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot future">2</div>
+            <div class="tl-content">
+              <div class="tl-date">GIAI ĐOẠN 2 · 6/2026 – 7/2026 · 12 buổi</div>
+              <div class="tl-title">Chuyên sâu theo chủ điểm yếu</div>
+              <div class="tl-desc">Hình học không gian, chứng minh, bài tổng hợp khó. Luyện đề mức trung bình-khó. Dự kiến đạt 7.5–7.8/10.</div>
+              <span class="tl-tag milestone"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Checkpoint Buổi 24: điểm tổng ≥ 7.5</span>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot future">3</div>
+            <div class="tl-content">
+              <div class="tl-date">GIAI ĐOẠN 3 · 7/2026 – 8/2026 · 12 buổi</div>
+              <div class="tl-title">Luyện đề thi & Chiến thuật làm bài</div>
+              <div class="tl-desc">Làm đề thi thử THPT theo thời gian. Phân tích lỗi sai. Luyện chiến thuật phân bổ thời gian. Mục tiêu 8.0–8.3/10.</div>
+              <span class="tl-tag risk"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Rủi ro: nếu Tư duy logic chưa đạt 6.5, cần điều chỉnh plan</span>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot future"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
+            <div class="tl-content">
+              <div class="tl-date">MỤC TIÊU · Tháng 9/2026</div>
+              <div class="tl-title">Đạt 8+/10 ổn định trong điều kiện thi thật</div>
+              <div class="tl-desc">Xác nhận qua 3 lần làm đề thử đạt ≥8/10. Chuẩn bị tốt cho kỳ thi THPT Quốc gia 2027.</div>
+              <span class="tl-tag milestone"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Mục tiêu cuối cùng</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div style="font-size:16px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div>
+          <div class="card-title">Yếu tố rủi ro & Điều kiện thành công</div>
+          <div class="card-sub">AI phân tích dựa trên dữ liệu Diagnostic</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="risk-grid">
+          <div class="risk-card bad">
+            <div class="risk-ic">🧠</div>
+            <div class="risk-name">Tư duy logic còn yếu</div>
+            <div class="risk-desc">4.9/10 — cần đạt 6.5 trong 6 tuần đầu. Nếu không, timeline kéo dài 3–4 tuần.</div>
+          </div>
+          <div class="risk-card warn">
+            <div class="risk-ic">⏱️</div>
+            <div class="risk-name">Tập trung cuối buổi</div>
+            <div class="risk-desc">PH ghi nhận hay mất tập trung sau 60 phút. Nên chia buổi 45+45 với nghỉ giải lao.</div>
+          </div>
+          <div class="risk-card ok">
+            <div class="risk-ic">💪</div>
+            <div class="risk-name">Vận dụng công thức tốt</div>
+            <div class="risk-desc">Điểm mạnh quan trọng. Tận dụng để xây confidence và tiếp cận bài tổng hợp.</div>
+          </div>
+          <div class="risk-card ok">
+            <div class="risk-ic"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="risk-name">3 buổi/tuần — đủ tốc độ</div>
+            <div class="risk-desc">Tần suất này cho phép ôn tập đủ giữa các buổi mà không quá tải học viên.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Free: locked timeline -->
+  <div id="timelineFree" style="display:none;">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-num">04</div>
+        <div>
+          <div class="card-title">AI Timeline Dự đoán</div>
+          <div class="card-sub">Phân tích lộ trình học dựa trên mục tiêu và pace học</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+          <div style="font-size:24px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div>
+            <div style="font-size:13.5px;font-weight:800;color:#1E293B;">Ước tính cơ bản</div>
+            <div style="font-size:12.5px;color:#64748B;margin-top:3px;">Dựa trên 3 buổi/tuần từ 6.2/10 lên 8+/10 — khoảng <strong style="color:#0D2D6B;">4–5 tháng</strong> (không tính rủi ro cụ thể)</div>
+          </div>
+        </div>
+        <!-- Free: AI draft đơn giản (3 mốc, không có risk analysis) -->
+        <div style="border:1.5px solid #BFDBFE;border-radius:12px;overflow:hidden;margin-top:4px;">
+          <div style="background:#EFF6FF;padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #BFDBFE;">
+            <span style="font-size:13px;font-weight:700;color:#1E40AF;">✦ AI đề xuất lộ trình sơ bộ</span>
+            <span style="font-size:10.5px;font-weight:700;background:#DBEAFE;color:#1D4ED8;border-radius:4px;padding:2px 7px;">Miễn phí</span>
+            <span style="font-size:11px;color:#64748B;margin-left:auto;">Không có phân tích rủi ro · Điền thủ công bên dưới</span>
+          </div>
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:28px;height:28px;border-radius:50%;background:#DBEAFE;border:2px solid #3B82F6;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#1D4ED8;flex-shrink:0;">1</div>
+              <div>
+                <div style="font-size:12.5px;font-weight:700;color:#1E293B;">Tháng 1–2 · Nền tảng</div>
+                <div style="font-size:12px;color:#64748B;margin-top:2px;">Ôn lại kiến thức cơ bản · Điền yếu tố cụ thể tại đây</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:28px;height:28px;border-radius:50%;background:#F0FDF4;border:2px solid #16A34A;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#15803D;flex-shrink:0;">2</div>
+              <div>
+                <div style="font-size:12.5px;font-weight:700;color:#1E293B;">Tháng 3–4 · Luyện đề</div>
+                <div style="font-size:12px;color:#64748B;margin-top:2px;">Làm đề thi thử · Điều chỉnh theo tiến độ thực tế</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:28px;height:28px;border-radius:50%;background:#FEF3C7;border:2px solid #F59E0B;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#D97706;flex-shrink:0;">3</div>
+              <div>
+                <div style="font-size:12.5px;font-weight:700;color:#1E293B;">Tháng 5 · Chạy nước rút</div>
+                <div style="font-size:12px;color:#64748B;margin-top:2px;">Đề thi thật · Kỹ thuật thi · Tâm lý thi</div>
+              </div>
+            </div>
+          </div>
+          <div style="background:#F8FAFC;padding:10px 16px;border-top:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;">
+            <span style="font-size:11.5px;color:#64748B;flex:1;">Nâng cấp để AI phân tích rủi ro chi tiết + % khả năng đạt mục tiêu</span>
+            <button onclick="setMode('premium')" style="height:28px;padding:0 12px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">Xem Premium →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /step-4 -->
+
+
+<!-- ══════════════════════════════════════════
+     STEP 5 — Ký xác nhận (async)
+══════════════════════════════════════════ -->
+<div class="step-panel" id="step-5">
+
+  <div class="ai-gen-strip">
+    <div class="ai-gen-dot"></div>
+    <div class="ai-gen-text">✨ AI đã tổng hợp từ Hồ sơ học + Đề xuất GS · Tài liệu này chỉ có hiệu lực sau khi cả hai bên ký</div>
+  </div>
+
+  <!-- Lock banner — hidden, shows after both sign -->
+  <div class="lock-banner" id="lockBanner" style="display:none;">
+    <div class="lock-icon-big"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+    <div class="lock-info">
+      <div class="lock-title">Cam kết đã được khoá · Hiệu lực từ 14/05/2026</div>
+      <div class="lock-sub">Cả hai bên đã ký · Lịch học Thứ 3, Thứ 5, Thứ 7 · 19:00–20:30 đã được xác nhận · Buổi học đầu tiên: 14/05/2026</div>
+    </div>
+    <div class="lock-actions">
+      <a href="ui-dashboard-phu-huynh.html" class="lock-btn"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Dashboard PH</a>
+      <a href="ui-dashboard-gia-su.html" class="lock-btn"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Dashboard GS</a>
+      <button class="lock-btn" onclick="showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Đang xuất PDF...')"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> PDF</button>
+    </div>
+  </div>
+
+  <div class="agreement-card">
+    <!-- Header -->
+    <div class="agreement-header">
+      <div>
+        <div class="agreement-logo">
+          <svg width="28" height="18" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg">
+            <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+            <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+            <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+          </svg>
+          <span class="agreement-logo-text">giasu<em>.edu.vn</em></span>
+        </div>
+        <div class="agreement-title">Cam kết học tập</div>
+        <div class="agreement-date">Ngày lập: 12/05/2026 · Hiệu lực đến: 30/09/2026</div>
+        <div class="agreement-id">Mã hồ sơ: LA-2026-0512-KA-001 · Được tạo bởi AI giasu.edu.vn</div>
+      </div>
+      <div style="display:flex;gap:10px;" id="agreePremActions">
+        <button onclick="showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Đang xuất PDF...')" style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Xuất PDF</button>
+        <button onclick="showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Đã copy link chia sẻ')" style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Chia sẻ</button>
+      </div>
+    </div>
+
+    <!-- Section 1: Parties -->
+    <div class="agreement-section">
+      <div class="ag-sec-title">Các bên tham gia</div>
+      <div class="ag-row"><div class="ag-key"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Gia sư</div><div class="ag-val">Nguyễn Văn Khoa · MSKH: GS-00412</div></div>
+      <div class="ag-row"><div class="ag-key">👩‍<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Học viên</div><div class="ag-val">Nguyễn Minh Anh · Lớp 9 · THPT Chu Văn An</div></div>
+      <div class="ag-row"><div class="ag-key"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Phụ huynh</div><div class="ag-val">Chị Nguyễn Thị Hương · SĐT 0912 345 678</div></div>
+    </div>
+
+    <!-- Section 2: Goals -->
+    <div class="agreement-section">
+      <div class="ag-sec-title">Mục tiêu học tập</div>
+      <div class="ag-row"><div class="ag-key">Môn học</div><div class="ag-val">Toán học (luyện thi THPT)</div></div>
+      <div class="ag-row"><div class="ag-key">Mục tiêu ngắn hạn</div><div class="ag-val">Đạt 8+/10 trong kỳ thi giữa kỳ 2 (tháng 7/2026)</div></div>
+      <div class="ag-row"><div class="ag-key">Mục tiêu dài hạn</div><div class="ag-val">Đạt 8+/10 thi THPT Quốc gia 2027</div></div>
+      <div class="ag-row"><div class="ag-key">Điểm xuất phát</div><div class="ag-val">6.2/10 (Diagnostic 12/05/2026)</div></div>
+      <div class="ag-row"><div class="ag-key">AI dự đoán</div><div class="ag-val" id="agreeTimeline">— (Nâng cấp Premium để xem)</div></div>
+    </div>
+
+    <!-- Section 3: Schedule -->
+    <div class="agreement-section">
+      <div class="ag-sec-title">Lịch học</div>
+      <div class="ag-row"><div class="ag-key">Tần suất</div><div class="ag-val">3 buổi/tuần — Thứ 3, Thứ 5, Thứ 7</div></div>
+      <div class="ag-row"><div class="ag-key">Giờ học</div><div class="ag-val">19:00 – 20:30 (90 phút/buổi)</div></div>
+      <div class="ag-row"><div class="ag-key">Hình thức</div><div class="ag-val">Online qua Zoom / Google Meet</div></div>
+      <div class="ag-row"><div class="ag-key">Bắt đầu từ</div><div class="ag-val">14/05/2026 (Thứ 5)</div></div>
+      <div class="ag-row"><div class="ag-key">Tổng số buổi</div><div class="ag-val">24 buổi · dự kiến kết thúc ~14/07/2026</div></div>
+    </div>
+
+    <!-- Section 4: Commitments -->
+    <div class="agreement-section">
+      <div class="ag-sec-title">Cam kết đôi bên</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#1565C0;margin-bottom:8px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Gia sư cam kết</div>
+          <div class="ag-bullet">Soạn giáo án phù hợp trình độ, điều chỉnh sau mỗi 3–4 buổi</div>
+          <div class="ag-bullet">Gửi báo cáo sau mỗi buổi trong vòng 2 giờ</div>
+          <div class="ag-bullet">Báo trước 24h nếu cần huỷ/dời buổi học</div>
+          <div class="ag-bullet">Giao BTVN 20–30 phút/buổi</div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#D97706;margin-bottom:8px;">👩‍<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Học viên & PH cam kết</div>
+          <div class="ag-bullet">Vào học đúng giờ, chuẩn bị sách vở trước 5 phút</div>
+          <div class="ag-bullet">Hoàn thành BTVN trước buổi tiếp theo</div>
+          <div class="ag-bullet">Báo trước 24h nếu cần huỷ buổi</div>
+          <div class="ag-bullet">PH xem báo cáo và phản hồi ≥1 lần/tuần</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5: Reporting -->
+    <div class="agreement-section">
+      <div class="ag-sec-title">Báo cáo & Đánh giá tiến độ</div>
+      <div class="ag-row"><div class="ag-key">Báo cáo định kỳ</div><div class="ag-val">Sau mỗi buổi học + tổng hợp tuần (Chủ nhật)</div></div>
+      <div class="ag-row"><div class="ag-key">Re-assessment</div><div class="ag-val">Sau mỗi 10 buổi học — đánh giá lại toàn diện</div></div>
+      <div class="ag-row"><div class="ag-key">Checkpoint đầu tiên</div><div class="ag-val">Buổi thứ 12 (dự kiến tháng 6/2026)</div></div>
+    </div>
+
+    <!-- Signatures — async -->
+    <div class="sig-area">
+      <!-- GS: already signed when sending proposal -->
+      <div class="sig-block signed" id="sig-gs">
+        <div class="sig-name">Nguyễn Văn Khoa</div>
+        <div class="sig-role">Gia sư · Đã ký khi gửi đề xuất</div>
+        <div class="sig-pad signed-display nosign" id="sig-pad-gs">
+          <div class="sig-pad-name">Nguyễn Văn Khoa</div>
+        </div>
+        <div class="sig-date" id="sig-date-gs"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Ký ngày 12/05/2026 · 20:14</div>
+        <button class="sig-btn already-signed" id="sig-btn-gs"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Đã ký xác nhận</button>
+      </div>
+
+      <!-- PH: waiting for signature -->
+      <div class="sig-block waiting" id="sig-ph">
+        <div class="sig-name">Chị Nguyễn Thị Hương</div>
+        <div class="sig-role">Phụ huynh · Xác nhận thay mặt học viên</div>
+        <div class="sig-pad waiting-display" id="sig-pad-ph" onclick="signDocument('ph')">
+          <div class="sig-waiting-text"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Đang chờ chữ ký · Nhấn để ký</div>
+        </div>
+        <div class="sig-date" id="sig-date-ph">Chưa ký</div>
+        <button class="sig-btn ph-sign" id="sig-btn-ph" onclick="signDocument('ph')"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Xác nhận & Ký tên</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /step-5 -->
+
+<!-- SUCCESS SCREEN -->
+<div class="success-screen" id="successScreen">
+  <div class="success-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
+  <div class="success-title">Cam kết đã có hiệu lực!</div>
+  <div class="success-sub">Cả hai bên đã ký xác nhận. Lịch học Thứ 3, Thứ 5, Thứ 7 · 19:00–20:30 đã được khoá. Buổi học đầu tiên với GS Nguyễn Văn Khoa: <strong>14/05/2026</strong>.</div>
+  <div class="success-actions">
+    <a href="ui-dashboard-phu-huynh.html" class="success-btn primary"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Dashboard Phụ huynh</a>
+    <a href="ui-dashboard-gia-su.html" class="success-btn primary" style="background:linear-gradient(135deg,#0D2D6B,#1565C0);"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Dashboard Gia sư</a>
+    <a href="ui-progress.html" class="success-btn ghost"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg> Xem tiến độ</a>
+  </div>
+</div>
+
+<!-- STEP NAVIGATION -->
+<div class="step-nav" id="stepNav">
+  <button class="btn-back" id="btnBack" onclick="prevStep()" style="visibility:hidden;">← Quay lại</button>
+  <div class="step-progress-text" id="progressText">Bước 1 / 5</div>
+  <button class="btn-next" id="btnNext" onclick="nextStep()">Tiếp theo →</button>
+</div>
+
+</div><!-- /wrapper -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+let currentStep = 1;
+const totalSteps = 5;
+let signedGs = true;   // GS pre-signed when sending proposal
+let signedPh = false;
+let currentMode = 'free';
+
+// ── MODE ──
+function setMode(mode) {
+  currentMode = mode;
+  const isPrem = mode === 'premium';
+
+  document.getElementById('btnFree').className = 'acc-btn' + (!isPrem ? ' active-free' : '');
+  document.getElementById('btnPrem').className = 'acc-btn' + (isPrem ? ' active-prem' : '');
+
+  const banner = document.getElementById('modeBanner');
+  const dot = document.getElementById('modeDot');
+  banner.className = 'mode-banner ' + (isPrem ? 'is-premium' : 'is-free');
+  dot.className = 'mode-dot ' + (isPrem ? 'premium' : 'free');
+  document.getElementById('modeLabelStrong').textContent = isPrem ? 'Gia sư Cao cấp' : 'Gia sư Miễn phí';
+  document.getElementById('modeLabelSpan').textContent = isPrem
+    ? '— GS Cao cấp: AI Lộ trình chi tiết đã được ghi vào Cam kết'
+    : '— AI Lộ trình chi tiết chỉ có khi GS dùng tài khoản Cao cấp';
+  document.getElementById('modeLabelSpan').style.color = isPrem ? '#7C3AED' : '#94A3B8';
+
+  // Timeline toggle
+  document.getElementById('timelinePremium').style.display = isPrem ? '' : 'none';
+  document.getElementById('timelineFree').style.display = isPrem ? 'none' : '';
+
+  // Agreement: show/hide AI timeline info
+  document.getElementById('agreeTimeline').textContent = isPrem
+    ? '78% khả năng đạt mục tiêu tháng 9/2026 · ~4 tháng (36 buổi)'
+    : '— (Nâng cấp Premium để xem)';
+
+  // PDF + share buttons
+  const actions = document.getElementById('agreePremActions');
+  if (actions) actions.style.display = isPrem ? 'flex' : 'none';
+}
+
+// ── STEP NAVIGATION ──
+function goToStep(n) {
+  if (n > currentStep) return;
+  if (n < 1 || n > totalSteps) return;
+  currentStep = n;
+  updateUI();
+}
+
+function nextStep() {
+  if (currentStep < totalSteps) {
+    currentStep++;
+    updateUI();
+    window.scrollTo({top:0, behavior:'smooth'});
+  } else {
+    // Final step — check PH signature
+    if (!signedPh) {
+      showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Phụ huynh cần ký xác nhận trước khi hoàn tất');
+      return;
+    }
+    finishAlignment();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    updateUI();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+}
+
+function updateUI() {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('step-' + currentStep);
+  if (panel) panel.classList.add('active');
+
+  for (let i = 1; i <= totalSteps; i++) {
+    const num = document.getElementById('s-num-' + i);
+    const lbl = document.getElementById('s-lbl-' + i);
+    const con = document.getElementById('s-con-' + i);
+    if (!num) continue;
+
+    if (i < currentStep) {
+      num.className = 'step-num done';
+      num.textContent = '✓';
+      lbl.className = 'step-label done';
+    } else if (i === currentStep) {
+      num.className = 'step-num active';
+      num.textContent = i;
+      lbl.className = 'step-label active';
+    } else {
+      num.className = 'step-num pending';
+      num.textContent = i;
+      lbl.className = 'step-label';
+    }
+
+    if (con) {
+      con.className = 'step-connector' + (i < currentStep ? ' done' : '');
+    }
+  }
+
+  const btnBack = document.getElementById('btnBack');
+  btnBack.style.visibility = currentStep > 1 ? 'visible' : 'hidden';
+
+  const btnNext = document.getElementById('btnNext');
+  if (currentStep === totalSteps) {
+    btnNext.className = 'btn-next finish';
+    btnNext.innerHTML = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Hoàn tất &amp; Khoá lịch';
+  } else {
+    btnNext.className = 'btn-next';
+    btnNext.textContent = 'Tiếp theo →';
+  }
+
+  document.getElementById('progressText').textContent = `Bước ${currentStep} / ${totalSteps}`;
+}
+
+// ── FINISH ──
+function finishAlignment() {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('stepNav').style.display = 'none';
+  document.getElementById('stepper').style.display = 'none';
+  document.getElementById('successScreen').classList.add('active');
+  showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Cam kết đã khoá · Lịch học bắt đầu 14/05/2026');
+}
+
+// ── SIGNATURE — async: only PH needs to sign ──
+function signDocument(party) {
+  if (party !== 'ph') return;
+  signedPh = true;
+
+  const pad = document.getElementById('sig-pad-ph');
+  const btn = document.getElementById('sig-btn-ph');
+  const dateEl = document.getElementById('sig-date-ph');
+  const block = document.getElementById('sig-ph');
+
+  // Update PH block to signed state
+  block.className = 'sig-block signed';
+  pad.className = 'sig-pad signed-display nosign';
+  pad.innerHTML = '<div class="sig-pad-name">Nguyễn Thị Hương</div>';
+  btn.className = 'sig-btn already-signed';
+  btn.innerHTML = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Đã ký xác nhận';
+  dateEl.innerHTML = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Ký ngày 12/05/2026 · ' + new Date().toLocaleTimeString('vi-VN', {hour:'2-digit',minute:'2-digit'});
+
+  // Update nav pill
+  document.getElementById('navPill').innerHTML = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Đã ký';
+  document.getElementById('navPill').className = 'nav-pill done';
+
+  // Show lock banner
+  const lockBanner = document.getElementById('lockBanner');
+  if (lockBanner) {
+    lockBanner.style.display = 'flex';
+    lockBanner.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+
+  // Update async strip dot
+  const asyncDot = document.querySelector('.async-dot.current');
+  if (asyncDot) {
+    asyncDot.className = 'async-dot done';
+    asyncDot.textContent = '✓';
+  }
+
+  showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Đã ký xác nhận · Cam kết có hiệu lực từ 14/05/2026');
+
+  setTimeout(() => showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Nhấn "Hoàn tất" để khoá lịch học'), 2500);
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerHTML = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── INIT ──
+setMode('free');
+updateUI();
+</script>
+</body>
+</html>

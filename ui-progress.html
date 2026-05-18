@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiến độ học tập — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8FAFC;color:#0F172A;min-height:100vh}
+
+/* NAV */
+nav{background:white;border-bottom:1px solid #E2E8F0;padding:0 28px;height:58px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.45}
+.nav-center{font-size:13.5px;font-weight:700;color:#1E293B;display:flex;align-items:center;gap:8px}
+.nav-back{display:flex;align-items:center;gap:5px;font-size:13px;color:#64748B;
+  padding:7px 14px;border-radius:9px;border:1px solid #E2E8F0;background:white;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
+.nav-back:hover{background:#F1F5F9;border-color:#CBD5E1}
+
+/* LAYOUT */
+.wrapper{max-width:780px;margin:0 auto;padding:24px 20px 80px}
+
+/* MODE BANNER */
+.mode-banner{display:flex;align-items:center;gap:10px;background:white;
+  border:1.5px solid #E2E8F0;border-radius:14px;padding:10px 16px;margin-bottom:18px;
+  box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.mode-banner.is-premium{border-color:#A78BFA;background:linear-gradient(135deg,#EDE9FE,#F5F3FF);box-shadow:0 2px 12px rgba(124,58,237,.12)}
+.mode-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.mode-dot.free{background:#94A3B8}
+.mode-dot.premium{background:#7C3AED;box-shadow:0 0 0 3px rgba(124,58,237,.18)}
+.mode-label{flex:1;font-size:12px;font-weight:600;color:#94A3B8}
+.mode-label strong{color:#1E293B}
+.mode-label.prem{color:#6D28D9}
+.acc-toggle{display:flex;gap:0;background:#F1F5F9;border-radius:10px;padding:4px;border:1px solid #E2E8F0}
+.acc-btn{padding:6px 14px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;
+  border:none;background:transparent;color:#64748B;font-family:'Inter',sans-serif;transition:all .2s}
+.acc-btn.active-free{background:white;color:#0D2D6B;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.acc-btn.active-prem{background:linear-gradient(135deg,#F5F3FF,#EDE9FE);color:#7C3AED;box-shadow:0 1px 4px rgba(124,58,237,.15)}
+.acc-chip{font-size:10px;font-weight:700;padding:2px 5px;border-radius:3px;margin-left:3px}
+.chip-free{background:#E2E8F0;color:#64748B}
+.chip-prem{background:linear-gradient(90deg,#7C3AED,#A855F7);color:white}
+
+/* STUDENT HEADER */
+.student-header{background:linear-gradient(130deg,#0D2D6B 0%,#1a47a3 60%,#1565C0 100%);
+  border-radius:20px;padding:22px 24px;margin-bottom:18px;
+  display:flex;align-items:center;gap:16px;
+  box-shadow:0 8px 32px rgba(13,45,107,.2);position:relative;overflow:hidden}
+.student-header::before{content:'';position:absolute;right:-40px;top:-40px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(245,124,0,.18) 0%,transparent 65%);pointer-events:none}
+.stu-avatar{width:58px;height:58px;border-radius:15px;border:2px solid rgba(255,255,255,.25);object-fit:cover;flex-shrink:0}
+.stu-info{flex:1;min-width:0}
+.stu-name{font-size:18px;font-weight:800;color:white;letter-spacing:-.3px}
+.stu-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+.stu-tag{font-size:11px;font-weight:600;color:rgba(255,255,255,.7);background:rgba(255,255,255,.12);padding:3px 9px;border-radius:5px}
+.stu-tag.goal{background:rgba(245,124,0,.25);color:#FDBA74}
+.stu-stats{display:flex;gap:18px;flex-shrink:0}
+.stu-stat{text-align:center}
+.stu-stat-val{font-size:26px;font-weight:800;color:white;line-height:1}
+.stu-stat-lbl{font-size:10px;color:rgba(255,255,255,.5);font-weight:600;margin-top:2px}
+
+/* CARD */
+.card{background:white;border-radius:18px;border:1px solid #E8EDF4;margin-bottom:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card-head{display:flex;align-items:center;gap:12px;padding:18px 22px 0}
+.section-num{font-size:11px;font-weight:800;color:#94A3B8;background:#F1F5F9;
+  width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:.5px}
+.card-title{font-size:15px;font-weight:800;color:#0F172A}
+.card-sub{font-size:12px;color:#94A3B8;font-weight:500;margin-top:1px}
+.card-body{padding:16px 22px 22px}
+
+/* AI DIGEST */
+.ai-digest-card{background:linear-gradient(135deg,#4C1D95,#6D28D9,#7C3AED);
+  border-radius:18px;padding:22px 24px;margin-bottom:14px;position:relative;overflow:hidden;
+  box-shadow:0 8px 28px rgba(109,40,217,.3)}
+.ai-digest-card::before{content:'';position:absolute;right:-30px;top:-30px;width:180px;height:180px;
+  background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 65%);pointer-events:none}
+.ai-digest-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ai-digest-ic{width:36px;height:36px;background:rgba(255,255,255,.15);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ai-digest-title{font-size:14px;font-weight:800;color:white}
+.ai-digest-sub{font-size:11.5px;color:rgba(255,255,255,.6);margin-top:1px}
+.ai-digest-text{font-size:13.5px;color:rgba(255,255,255,.92);line-height:1.75;margin-bottom:14px}
+.ai-digest-text strong{color:white;font-weight:700}
+.ai-digest-actions{display:flex;gap:8px;flex-wrap:wrap}
+.ai-digest-btn{display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.18);color:white;border:1px solid rgba(255,255,255,.25);
+  border-radius:9px;padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:background .15s;white-space:nowrap}
+.ai-digest-btn:hover{background:rgba(255,255,255,.28)}
+.ai-digest-btn.primary{background:white;color:#6D28D9;border-color:transparent;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.ai-digest-btn.primary:hover{background:#F5F3FF}
+.ai-lock-card{background:linear-gradient(135deg,#F8FAFC,#F1F5F9);border:1.5px dashed #CBD5E1;
+  border-radius:18px;padding:28px;text-align:center;margin-bottom:14px}
+.ai-lock-icon{font-size:28px;margin-bottom:10px}
+.ai-lock-title{font-size:15px;font-weight:800;color:#1E293B;margin-bottom:6px}
+.ai-lock-desc{font-size:13px;color:#64748B;line-height:1.65;margin-bottom:18px;max-width:360px;margin-left:auto;margin-right:auto}
+.upgrade-btn{background:linear-gradient(135deg,#7C3AED,#A855F7);color:white;border:none;
+  border-radius:10px;padding:11px 24px;font-size:13.5px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;box-shadow:0 4px 14px rgba(124,58,237,.3)}
+
+/* SKILL SUMMARY BAR */
+.skill-sum-chip{display:flex;align-items:center;gap:7px;border-radius:10px;padding:9px 14px;flex:1;min-width:130px}
+.skill-sum-chip.good{background:#F0FDF4;border:1.5px solid #A7F3D0}
+.skill-sum-chip.watch{background:#FFFBEB;border:1.5px solid #FDE68A}
+.skill-sum-chip.bad{background:#FFF5F5;border:1.5px solid #FECACA}
+.skill-sum-ic{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0}
+.skill-sum-ic.good{background:#D1FAE5;color:#065F46}
+.skill-sum-ic.watch{background:#FEF3C7;color:#92400E}
+.skill-sum-ic.bad{background:#FEE2E2;color:#991B1B}
+.skill-sum-count{font-size:20px;font-weight:800;line-height:1}
+.skill-sum-count.good{color:#059669}
+.skill-sum-count.watch{color:#D97706}
+.skill-sum-count.bad{color:#DC2626}
+.skill-sum-lbl{font-size:11px;font-weight:600;line-height:1.3;margin-top:1px}
+.skill-sum-lbl.good{color:#065F46}
+.skill-sum-lbl.watch{color:#92400E}
+.skill-sum-lbl.bad{color:#991B1B}
+
+/* SKILL STATUS CARDS */
+.skill-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.skill-card{background:#FAFBFC;border:1.5px solid #E8EDF4;border-radius:14px;padding:14px 16px;transition:border-color .2s}
+.skill-card.is-good{background:#F0FDF4;border-color:#A7F3D0}
+.skill-card.is-watch{background:#FFFBEB;border-color:#FDE68A}
+.skill-card.is-bad{background:#FFF5F5;border-color:#FECACA}
+.skill-card-head{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.skill-card-ic{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+.skill-card-name{font-size:13.5px;font-weight:800;color:#1E293B;flex:1}
+.skill-status-chip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap}
+.chip-good{background:#10B981;color:white}
+.chip-watch{background:#F59E0B;color:white}
+.chip-bad{background:#EF4444;color:white}
+.chip-none{background:#E2E8F0;color:#94A3B8}
+/* Session dot timeline */
+.dot-timeline{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px}
+.s-dot{width:16px;height:16px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;cursor:default;flex-shrink:0}
+.s-dot.good{background:#D1FAE5;color:#065F46}
+.s-dot.watch{background:#FEF3C7;color:#92400E}
+.s-dot.bad{background:#FEE2E2;color:#991B1B}
+.s-dot.none{background:#F1F5F9;color:#CBD5E1}
+.skill-summary{font-size:11.5px;color:#64748B;font-weight:500;line-height:1.4;margin-bottom:10px}
+.skill-summary strong{font-weight:700}
+/* Note blocks from session report */
+.skill-note{border-radius:9px;padding:10px 12px;margin-top:2px}
+.skill-note + .skill-note{margin-top:6px}
+.skill-note.note-good{background:#D1FAE5;border-left:3px solid #10B981}
+.skill-note.note-watch{background:#FEF3C7;border-left:3px solid #F59E0B}
+.skill-note.note-bad-issue{background:#FEE2E2;border-left:3px solid #EF4444}
+.skill-note.note-bad-fix{background:#EFF6FF;border-left:3px solid #2563EB}
+.skill-note-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.skill-note.note-good .skill-note-label{color:#059669}
+.skill-note.note-watch .skill-note-label{color:#D97706}
+.skill-note.note-bad-issue .skill-note-label{color:#DC2626}
+.skill-note.note-bad-fix .skill-note-label{color:#2563EB}
+.skill-note-text{font-size:12.5px;color:#1E293B;line-height:1.55}
+.skill-note-meta{font-size:10.5px;color:#94A3B8;margin-top:5px;font-weight:500}
+
+/* CHART TABS */
+.chart-tabs{display:flex;gap:0;background:#F1F5F9;border-radius:10px;padding:3px;margin-bottom:16px;overflow-x:auto}
+.chart-tab{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;
+  border:none;background:transparent;color:#64748B;font-family:'Inter',sans-serif;transition:all .15s;white-space:nowrap}
+.chart-tab.active{background:white;color:#0D2D6B;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.chart-canvas-wrap{position:relative;height:190px}
+.chart-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.chart-legend-item{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:#374151}
+.chart-legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+
+/* EARLY WARNINGS */
+.warn-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:600px){.warn-grid{grid-template-columns:1fr}}
+.warn-card{border-radius:14px;padding:14px 16px}
+.warn-card.ok{background:#F0FDF4;border:1.5px solid #A7F3D0}
+.warn-card.watch{background:#FFFBEB;border:1.5px solid #FDE68A}
+.warn-card.bad{background:#FFF5F5;border:1.5px solid #FECACA}
+.warn-ic{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;margin-bottom:8px}
+.warn-ic.ok{background:#D1FAE5;color:#065F46}
+.warn-ic.watch{background:#FEF3C7;color:#92400E}
+.warn-ic.bad{background:#FEE2E2;color:#991B1B}
+.warn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.warn-label.ok{color:#065F46}
+.warn-label.watch{color:#92400E}
+.warn-label.bad{color:#991B1B}
+.warn-name{font-size:13.5px;font-weight:800;color:#1E293B;margin-bottom:3px}
+.warn-desc{font-size:12px;color:#64748B;line-height:1.5}
+.warn-ai-note{font-size:11.5px;font-weight:600;margin-top:8px;padding:7px 10px;border-radius:8px;line-height:1.4}
+.warn-ai-note.ok{background:#D1FAE5;color:#065F46}
+.warn-ai-note.watch{background:#FEF3C7;color:#92400E}
+.warn-ai-note.bad{background:#FEE2E2;color:#991B1B}
+.warn-lock{opacity:.45;filter:blur(2px);pointer-events:none;user-select:none}
+.warn-premium-gate{display:none;position:absolute;inset:0;background:rgba(248,250,252,.85);
+  border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;backdrop-filter:blur(2px)}
+.warn-premium-gate .gate-icon{font-size:22px}
+.warn-premium-gate .gate-txt{font-size:12px;font-weight:700;color:#1E293B}
+.warn-gate-wrap{position:relative}
+
+/* GOALS */
+.goal-card{background:white;border:1.5px solid #E8EDF4;border-radius:16px;padding:18px 20px;margin-bottom:12px}
+.goal-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.goal-ic{width:38px;height:38px;background:#FFF7ED;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.goal-name{font-size:14px;font-weight:800;color:#0F172A}
+.goal-deadline{font-size:11.5px;color:#94A3B8;font-weight:500;margin-top:2px}
+.goal-progress-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.goal-bar{flex:1;height:10px;background:#F1F5F9;border-radius:5px;overflow:hidden}
+.goal-bar-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#0D2D6B,#1565C0);transition:width 1s ease}
+.goal-pct{font-size:13px;font-weight:800;color:#0D2D6B;min-width:36px}
+.goal-milestones{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.milestone{font-size:11px;font-weight:600;padding:4px 9px;border-radius:6px}
+.milestone.done{background:#D1FAE5;color:#065F46}
+.milestone.active{background:#EEF2FF;color:#3730A3;border:1px solid #C7D2FE}
+.milestone.pending{background:#F1F5F9;color:#94A3B8}
+
+/* AI GOAL CHECK */
+.ai-goal-check{background:linear-gradient(135deg,#FFFBEB,#FFF8E1);border:1.5px solid #FDE68A;border-radius:14px;padding:16px 18px;margin-top:12px}
+.ai-goal-check.locked{background:#F8FAFC;border-color:#E2E8F0}
+.ai-goal-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ai-goal-ic{width:28px;height:28px;background:#F59E0B;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:white;font-weight:800;flex-shrink:0}
+.ai-goal-title{font-size:13px;font-weight:800;color:#92400E}
+.ai-goal-title.locked{color:#94A3B8}
+.confidence-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.confidence-big{font-size:28px;font-weight:800;color:#D97706;line-height:1}
+.confidence-lbl{font-size:11.5px;color:#92400E;font-weight:600;line-height:1.4}
+.ai-goal-text{font-size:13px;color:#78350F;line-height:1.65}
+.ai-goal-text strong{color:#92400E}
+.ai-adjust-strip{background:#FEF3C7;border-radius:10px;padding:10px 12px;margin-top:10px;
+  display:flex;align-items:flex-start;gap:8px}
+.ai-adjust-ic{font-size:14px;flex-shrink:0;margin-top:1px}
+.ai-adjust-txt{font-size:12.5px;color:#92400E;line-height:1.55}
+
+/* AI PATH */
+.path-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #F1F5F9}
+.path-item:last-child{border-bottom:none}
+.path-num{width:26px;height:26px;border-radius:8px;background:#EEF2FF;color:#3730A3;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.path-content{flex:1}
+.path-title{font-size:13.5px;font-weight:700;color:#1E293B;margin-bottom:3px}
+.path-desc{font-size:12.5px;color:#64748B;line-height:1.55}
+.path-tag{display:inline-flex;align-items:center;gap:3px;margin-top:5px;
+  font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px}
+.path-tag.urgent{background:#FEE2E2;color:#991B1B}
+.path-tag.normal{background:#EEF2FF;color:#3730A3}
+.path-tag.good{background:#D1FAE5;color:#065F46}
+
+/* NEXT SESSION BRIEF */
+.brief-card{background:linear-gradient(135deg,#F0F9FF,#E0F2FE);border:1.5px solid #BAE6FD;border-radius:16px;padding:18px 20px}
+.brief-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.brief-ic{width:34px;height:34px;background:#0284C7;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:white;flex-shrink:0}
+.brief-title{font-size:14px;font-weight:800;color:#0369A1}
+.brief-sub{font-size:11.5px;color:#7DD3FC;font-weight:500;margin-top:1px}
+.brief-item{display:flex;gap:9px;padding:8px 0;border-bottom:1px solid rgba(186,230,253,.5)}
+.brief-item:last-child{border-bottom:none}
+.brief-dot{width:6px;height:6px;border-radius:50%;background:#0284C7;margin-top:6px;flex-shrink:0}
+.brief-text{font-size:13px;color:#0C4A6E;line-height:1.55}
+.brief-text strong{color:#075985;font-weight:700}
+
+/* DIGEST SEND */
+.digest-card{background:white;border:1.5px solid #E8EDF4;border-radius:16px;padding:18px 20px}
+.digest-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.digest-ic{width:34px;height:34px;background:linear-gradient(135deg,#7C3AED,#A855F7);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.digest-preview{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px 16px;font-size:13px;color:#374151;line-height:1.7;margin-bottom:12px}
+.digest-preview strong{color:#0F172A;font-weight:700}
+.digest-actions{display:flex;gap:8px;flex-wrap:wrap}
+.digest-btn{display:inline-flex;align-items:center;gap:5px;padding:9px 16px;border-radius:9px;
+  font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;border:none}
+.digest-btn.primary{background:#0D2D6B;color:white}
+.digest-btn.primary:hover{background:#1a47a3}
+.digest-btn.ghost{background:white;color:#0D2D6B;border:1.5px solid #E2E8F0}
+.digest-btn.ghost:hover{border-color:#0D2D6B}
+
+/* LOCK OVERLAY */
+.prem-gate{background:linear-gradient(135deg,#F8FAFC,#F1F5F9);border:1.5px dashed #CBD5E1;
+  border-radius:16px;padding:22px;text-align:center}
+.prem-gate-icon{font-size:24px;margin-bottom:8px}
+.prem-gate-title{font-size:13.5px;font-weight:800;color:#1E293B;margin-bottom:5px}
+.prem-gate-desc{font-size:12px;color:#64748B;line-height:1.6;margin-bottom:14px}
+.prem-gate-btn{background:linear-gradient(135deg,#7C3AED,#A855F7);color:white;border:none;
+  border-radius:9px;padding:9px 20px;font-size:12.5px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;box-shadow:0 3px 12px rgba(124,58,237,.28)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);
+  background:#1E293B;color:white;padding:11px 18px;border-radius:11px;
+  font-size:13.5px;font-weight:600;pointer-events:none;z-index:999;white-space:nowrap;
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="ui-trang-chu.html" class="nav-logo">
+    <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0">
+      <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+      <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+    </svg>
+    <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+  </a>
+  <div class="nav-center">Tiến độ học tập</div>
+  <a href="ui-dashboard-phu-huynh.html" class="nav-back">← Dashboard</a>
+</nav>
+
+<div class="wrapper">
+
+<!-- MODE TOGGLE -->
+<div class="mode-banner is-free" id="modeBanner">
+  <div class="mode-dot free" id="modeDot"></div>
+  <div class="mode-label" id="modeLabel"><strong id="modeLabelStrong">Tài khoản Miễn phí</strong> <span id="modeLabelSpan" style="color:#94A3B8">— Insights AI bị khoá</span></div>
+  <div class="acc-toggle">
+    <button class="acc-btn active-free" id="btnFree" onclick="setMode('free')">Miễn phí <span class="acc-chip chip-free">FREE</span></button>
+    <button class="acc-btn" id="btnPrem" onclick="setMode('premium')">Cao cấp <span class="acc-chip chip-prem">PRO</span></button>
+  </div>
+</div>
+
+<!-- STUDENT HEADER -->
+<div class="student-header">
+  <img class="stu-avatar" src="https://i.pravatar.cc/150?img=31" alt="Nguyễn Văn An">
+  <div class="stu-info">
+    <div class="stu-name">Nguyễn Văn An</div>
+    <div class="stu-tags">
+      <span class="stu-tag">∑ Toán học</span>
+      <span class="stu-tag goal"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Luyện thi THPT đạt 8+/10</span>
+      <span class="stu-tag">Từ 12/03/2026</span>
+    </div>
+  </div>
+  <div class="stu-stats">
+    <div class="stu-stat">
+      <div class="stu-stat-val">12</div>
+      <div class="stu-stat-lbl">buổi học</div>
+    </div>
+    <div class="stu-stat" style="border-left:1px solid rgba(255,255,255,.15);padding-left:18px">
+      <div class="stu-stat-val">65%</div>
+      <div class="stu-stat-lbl">tiến độ</div>
+    </div>
+  </div>
+</div>
+
+<!-- ① AI PROGRESS DIGEST -->
+<div id="digestPremium" class="ai-digest-card">
+  <div class="ai-digest-header">
+    <div class="ai-digest-ic">✨</div>
+    <div>
+      <div class="ai-digest-title">AI Nhận xét Tiến độ</div>
+      <div class="ai-digest-sub">Tổng hợp từ 12 buổi học · Cập nhật sau mỗi 5 buổi</div>
+    </div>
+  </div>
+  <div class="ai-digest-text" id="digestText">
+    Sau <strong>12 buổi học</strong>, An đang tiến bộ ổn định và đúng hướng. <strong>Vận dụng công thức</strong> là điểm mạnh nổi bật nhất — điểm tăng đều từ 2 lên 5 qua các buổi, cho thấy sự chăm chỉ luyện tập ở nhà. <strong>Tính toán</strong> cũng cải thiện tốt, buổi 11 đạt điểm cao nhất từ trước đến nay.<br><br>
+    Điểm cần chú ý: <strong>Tư duy logic</strong> đang trì trệ ở mức 3–4 suốt 5 buổi gần đây — đây là tiêu chí quan trọng nhất để đạt điểm cao trong đề thi THPT. Nếu không có sự đột phá ở kỹ năng này trong 3–4 buổi tới, mục tiêu 8+/10 sẽ khó khăn hơn dự kiến.
+  </div>
+  <div class="ai-digest-actions">
+    <button class="ai-digest-btn primary" onclick="sendDigest()"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Gửi tóm tắt cho Phụ huynh</button>
+    <button class="ai-digest-btn" onclick="refreshDigest()">↻ Cập nhật nhận xét</button>
+  </div>
+</div>
+<div id="digestFree" class="ai-lock-card" style="display:none">
+  <div class="ai-lock-icon">✨</div>
+  <div class="ai-lock-title">AI Nhận xét Tiến độ</div>
+  <div class="ai-lock-desc">Tính năng Premium — AI tổng hợp toàn bộ dữ liệu buổi học và viết nhận xét chi tiết, có thể gửi ngay cho phụ huynh chỉ 1 click.</div>
+  <button class="upgrade-btn" onclick="setMode('premium')">Xem với tài khoản Cao cấp →</button>
+</div>
+
+<!-- ② SKILL OVERVIEW -->
+<div class="card">
+  <div class="card-head">
+    <div class="section-num">02</div>
+    <div>
+      <div class="card-title">Tổng quan kỹ năng</div>
+      <div class="card-sub">Đánh giá theo buổi · Xu hướng 12 buổi gần nhất</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <!-- Summary bar: counts per status -->
+    <div id="skillSummaryBar" style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap"></div>
+    <!-- Dot legend -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+      <span style="font-size:11px;font-weight:600;color:#94A3B8">Ký hiệu:</span>
+      <div style="display:flex;align-items:center;gap:4px">
+        <div style="width:14px;height:14px;border-radius:4px;background:#D1FAE5;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#065F46">✓</div>
+        <span style="font-size:11px;font-weight:600;color:#64748B">Tốt</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:4px">
+        <div style="width:14px;height:14px;border-radius:4px;background:#FEF3C7;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#92400E">~</div>
+        <span style="font-size:11px;font-weight:600;color:#64748B">Theo dõi</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:4px">
+        <div style="width:14px;height:14px;border-radius:4px;background:#FEE2E2;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#991B1B">!</div>
+        <span style="font-size:11px;font-weight:600;color:#64748B">Cần cải thiện</span>
+      </div>
+      <span style="font-size:11px;color:#94A3B8;margin-left:4px">← Buổi 1 &nbsp;···&nbsp; Buổi 12 →</span>
+    </div>
+    <div class="skill-grid" id="skillGrid"></div>
+  </div>
+</div>
+
+<!-- ③ PROGRESS CHART -->
+<div class="card">
+  <div class="card-head">
+    <div class="section-num">03</div>
+    <div>
+      <div class="card-title">Biểu đồ tiến bộ</div>
+      <div class="card-sub">Điểm theo từng tiêu chí qua 12 buổi</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="chart-legend">
+      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#10B981"></div>Tốt</div>
+      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#F59E0B"></div>Theo dõi</div>
+      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#EF4444"></div>Cần cải thiện</div>
+    </div>
+    <div class="chart-tabs" id="chartTabs"></div>
+    <div class="chart-canvas-wrap">
+      <canvas id="progressChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ④ AI EARLY WARNINGS -->
+<div class="card">
+  <div class="card-head">
+    <div class="section-num">04</div>
+    <div>
+      <div class="card-title">AI Cảnh báo sớm</div>
+      <div class="card-sub">Phát hiện xu hướng tốt / cần theo dõi / cần can thiệp ngay</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="warn-grid" id="warnGrid"></div>
+    <div id="warnGateFree" style="display:none;margin-top:10px">
+      <div class="prem-gate">
+        <div class="prem-gate-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div class="prem-gate-title">AI phân tích xu hướng chi tiết</div>
+        <div class="prem-gate-desc">Tài khoản Premium hiển thị nguyên nhân + đề xuất hành động cụ thể cho từng cảnh báo</div>
+        <button class="prem-gate-btn" onclick="setMode('premium')">Nâng cấp để xem →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑤ GOALS & AI CHECK -->
+<div class="card">
+  <div class="card-head">
+    <div class="section-num">05</div>
+    <div>
+      <div class="card-title">Mục tiêu & Lộ trình</div>
+      <div class="card-sub">Tiến độ đạt mục tiêu · AI đánh giá khả năng</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <!-- Goal card -->
+    <div class="goal-card">
+      <div class="goal-header">
+        <div class="goal-ic"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <div>
+          <div class="goal-name">Luyện thi THPT — đạt 8+/10</div>
+          <div class="goal-deadline">Mục tiêu: Tháng 9/2026 · Còn 4 tháng</div>
+        </div>
+      </div>
+      <div class="goal-progress-row">
+        <div class="goal-bar"><div class="goal-bar-fill" style="width:65%"></div></div>
+        <div class="goal-pct">65%</div>
+      </div>
+      <div class="goal-milestones">
+        <span class="milestone done">✓ Nắm cơ bản</span>
+        <span class="milestone done">✓ Bài tập trung bình</span>
+        <span class="milestone active">→ Bài tổng hợp</span>
+        <span class="milestone pending">Đề thi thử</span>
+        <span class="milestone pending">Ôn tập toàn diện</span>
+      </div>
+    </div>
+
+    <!-- AI Goal Check -->
+    <div id="aiGoalPrem">
+      <div class="ai-goal-check">
+        <div class="ai-goal-header">
+          <div class="ai-goal-ic">AI</div>
+          <div class="ai-goal-title">AI đánh giá mục tiêu</div>
+        </div>
+        <div class="confidence-row">
+          <div class="confidence-big">72%</div>
+          <div class="confidence-lbl">khả năng đạt<br>mục tiêu theo kế hoạch</div>
+        </div>
+        <div class="ai-goal-text">
+          Nếu duy trì tốc độ hiện tại, An có thể đạt mục tiêu vào <strong>tháng 9/2026</strong>. Tuy nhiên mức độ tin cậy chỉ ở 72% — chủ yếu do <strong>Tư duy logic</strong> đang chậm hơn kế hoạch. Nếu cải thiện được tiêu chí này lên 4.5+/5 trong 6 buổi tới, xác suất đạt mục tiêu sẽ tăng lên <strong>88%</strong>.
+        </div>
+        <div class="ai-adjust-strip">
+          <div class="ai-adjust-ic"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>
+          <div class="ai-adjust-txt">
+            <strong>AI đề xuất điều chỉnh:</strong> Tăng tần suất lên 3 buổi/tuần trong tháng 6–7, tập trung 40% thời gian vào dạng bài tư duy logic và bài tổng hợp. Giữ mục tiêu tháng 9 nhưng đặt checkpoint kiểm tra tháng 7.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="aiGoalFree" style="display:none">
+      <div class="ai-goal-check locked" style="opacity:.5;filter:blur(1.5px);pointer-events:none;user-select:none">
+        <div class="ai-goal-header">
+          <div class="ai-goal-ic" style="background:#CBD5E1">AI</div>
+          <div class="ai-goal-title locked">AI đánh giá mục tiêu</div>
+        </div>
+        <div class="confidence-row">
+          <div class="confidence-big" style="color:#CBD5E1">–%</div>
+          <div class="confidence-lbl" style="color:#94A3B8">khả năng đạt<br>mục tiêu</div>
+        </div>
+      </div>
+      <div style="margin-top:-8px">
+        <div class="prem-gate">
+          <div class="prem-gate-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <div class="prem-gate-title">AI dự đoán & điều chỉnh lộ trình</div>
+          <div class="prem-gate-desc">Xem xác suất đạt mục tiêu, nguyên nhân, và đề xuất điều chỉnh kế hoạch cụ thể từ AI</div>
+          <button class="prem-gate-btn" onclick="setMode('premium')">Nâng cấp để xem →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑥ AI LEARNING PATH -->
+<div class="card">
+  <div class="card-head">
+    <div class="section-num">06</div>
+    <div>
+      <div class="card-title">AI Điều chỉnh lộ trình</div>
+      <div class="card-sub">Đề xuất cụ thể dựa trên dữ liệu 12 buổi học</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div id="pathPrem">
+      <div class="path-item">
+        <div class="path-num">1</div>
+        <div class="path-content">
+          <div class="path-title">Tăng cường Tư duy logic — ưu tiên cao nhất</div>
+          <div class="path-desc">Dành 30–40% thời gian mỗi buổi cho dạng bài phân tích đề và suy luận nhiều bước. Giao thêm 5 bài dạng này mỗi tuần ở nhà.</div>
+          <span class="path-tag urgent">🔴 Ưu tiên ngay</span>
+        </div>
+      </div>
+      <div class="path-item">
+        <div class="path-num">2</div>
+        <div class="path-content">
+          <div class="path-title">Giải bài tập tổng hợp — nâng cấp độ khó</div>
+          <div class="path-desc">An đã vững bài cơ bản — sẵn sàng chuyển sang bài thi mức khó hơn. Đưa vào đề thi thử từ buổi 14.</div>
+          <span class="path-tag normal">🟡 Tuần tới</span>
+        </div>
+      </div>
+      <div class="path-item">
+        <div class="path-num">3</div>
+        <div class="path-content">
+          <div class="path-title">Duy trì Vận dụng công thức — đang rất tốt</div>
+          <div class="path-desc">Tiêu chí này đạt 5/5 trong buổi gần nhất. Chỉ cần ôn nhẹ 10–15 phút/buổi để duy trì.</div>
+          <span class="path-tag good">🟢 Duy trì</span>
+        </div>
+      </div>
+      <div class="path-item">
+        <div class="path-num">4</div>
+        <div class="path-content">
+          <div class="path-title">Tập thói quen kiểm tra nghiệm</div>
+          <div class="path-desc">GS ghi nhận An hay bỏ qua bước này. Thêm 5 phút cuối mỗi buổi chỉ để kiểm tra lại các bài đã giải — thói quen nhỏ nhưng tạo ra sự khác biệt lớn trong điểm thi.</div>
+          <span class="path-tag normal">🟡 Thói quen</span>
+        </div>
+      </div>
+    </div>
+    <div id="pathFree" style="display:none">
+      <div class="prem-gate">
+        <div class="prem-gate-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/></svg></div>
+        <div class="prem-gate-title">AI Điều chỉnh lộ trình học</div>
+        <div class="prem-gate-desc">AI phân tích xu hướng từng buổi và đưa ra kế hoạch điều chỉnh cụ thể — từng bước, theo thứ tự ưu tiên</div>
+        <button class="prem-gate-btn" onclick="setMode('premium')">Nâng cấp để xem →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑦ BUỔI HỌC TIẾP THEO -->
+<div class="card">
+  <div class="card-head">
+    <div class="section-num">07</div>
+    <div>
+      <div class="card-title">Buổi học tiếp theo</div>
+      <div class="card-sub">Thứ Năm, 15/05/2026 · 19:00 – 20:30 · Gia sư: Nguyễn Minh Tuấn</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <!-- Source attribution bar -->
+    <div style="display:flex;align-items:center;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:10px 14px;margin-bottom:14px">
+      <div style="width:30px;height:30px;border-radius:8px;background:#EFF6FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:800;color:#2563EB">GS</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12.5px;font-weight:700;color:#1E293B">Gia sư Nguyễn Minh Tuấn đã ghi sau buổi #12</div>
+        <div style="font-size:11.5px;color:#94A3B8;margin-top:1px">Nội dung bên dưới được AI tóm tắt từ báo cáo buổi học 11/05/2026</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:4px;background:#DCFCE7;border-radius:6px;padding:4px 9px;flex-shrink:0">
+        <div style="width:6px;height:6px;border-radius:50%;background:#16A34A"></div>
+        <span style="font-size:11px;font-weight:700;color:#16A34A">Đã xác nhận</span>
+      </div>
+    </div>
+
+    <div id="briefPrem">
+      <div class="brief-card">
+        <div class="brief-header">
+          <div class="brief-ic">AI</div>
+          <div>
+            <div class="brief-title">Kế hoạch buổi học tới</div>
+            <div class="brief-sub">AI tóm tắt từ ghi chú của gia sư · Dành cho học viên & phụ huynh</div>
+          </div>
+        </div>
+        <div class="brief-item">
+          <div class="brief-dot"></div>
+          <div class="brief-text"><strong>Tư duy logic — ưu tiên cao nhất:</strong> An sẽ luyện dạng bài phân tích đề và suy luận nhiều bước. Đây là kỹ năng cần cải thiện nhất để đạt mục tiêu 8+/10.</div>
+        </div>
+        <div class="brief-item">
+          <div class="brief-dot"></div>
+          <div class="brief-text"><strong>Thói quen kiểm tra nghiệm:</strong> An đã được nhắc nhở — buổi tới sẽ luyện tập độc lập để hình thành thói quen bền vững.</div>
+        </div>
+        <div class="brief-item">
+          <div class="brief-dot"></div>
+          <div class="brief-text"><strong>Thử đề thi thử THPT:</strong> lần đầu tiên làm bài trong điều kiện thi thật để cảm nhận áp lực thời gian và điều chỉnh tốc độ.</div>
+        </div>
+      </div>
+      <div style="font-size:11.5px;color:#94A3B8;margin-top:10px;text-align:center">
+        Bạn có thắc mắc về kế hoạch này? <span style="color:#2563EB;cursor:pointer;font-weight:600">Nhắn tin cho gia sư →</span>
+      </div>
+    </div>
+    <div id="briefFree" style="display:none">
+      <div class="prem-gate">
+        <div class="prem-gate-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="prem-gate-title">Xem kế hoạch buổi học tiếp theo</div>
+        <div class="prem-gate-desc">Tài khoản Premium hiển thị những gì gia sư đã lên kế hoạch cho buổi tới — giúp học viên chuẩn bị tốt hơn và chủ động hơn trong giờ học</div>
+        <button class="prem-gate-btn" onclick="setMode('premium')">Nâng cấp để xem →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑧ CHƯƠNG TRÌNH HỌC -->
+<div class="card">
+  <div class="card-head">
+    <div class="section-num">08</div>
+    <div>
+      <div class="card-title">Chương trình học</div>
+      <div class="card-sub">Toán THPT · 12 buổi · T2 &amp; T6 09:00 · GS Nguyễn Minh Tuấn</div>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <!-- Progress mini-bar -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div style="flex:1;height:8px;background:#F1F5F9;border-radius:4px;overflow:hidden;">
+        <div style="width:75%;height:100%;background:linear-gradient(90deg,#16A34A,#4ADE80);border-radius:4px;"></div>
+      </div>
+      <span style="font-size:12px;font-weight:700;color:#0F172A;white-space:nowrap;">9 / 12 buổi</span>
+    </div>
+
+    <!-- Lesson list -->
+    <div style="display:flex;flex-direction:column;gap:6px;">
+
+      <!-- Completed group: 1-9 -->
+      <div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Đã hoàn thành (9 buổi)</div>
+
+      <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:8px 10px;background:#F0FDF4;border-radius:10px;font-size:12.5px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:#DCFCE7;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#15803D;flex-shrink:0;">1–3</div>
+        <div>
+          <div style="font-weight:700;color:#0F172A;">Hàm số bậc nhất, bậc hai — Ôn tập nền tảng</div>
+          <div style="font-size:11.5px;color:#64748B;margin-top:1px;">12/03 – 20/03/2026</div>
+        </div>
+        <span style="font-size:11px;font-weight:700;color:#15803D;white-space:nowrap;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Xong</span>
+        <span style="font-size:11px;color:#64748B;"></span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:8px 10px;background:#F0FDF4;border-radius:10px;font-size:12.5px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:#DCFCE7;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#15803D;flex-shrink:0;">4–6</div>
+        <div>
+          <div style="font-weight:700;color:#0F172A;">Đạo hàm — Lý thuyết &amp; bài tập ứng dụng</div>
+          <div style="font-size:11.5px;color:#64748B;margin-top:1px;">27/03 – 10/04/2026</div>
+        </div>
+        <span style="font-size:11px;font-weight:700;color:#15803D;white-space:nowrap;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Xong</span>
+        <span style="font-size:11px;color:#64748B;"></span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:8px 10px;background:#F0FDF4;border-radius:10px;font-size:12.5px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:#DCFCE7;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#15803D;flex-shrink:0;">7–9</div>
+        <div>
+          <div style="font-weight:700;color:#0F172A;">Tích phân — Lý thuyết &amp; ứng dụng cơ bản</div>
+          <div style="font-size:11.5px;color:#64748B;margin-top:1px;">17/04 – 06/05/2026</div>
+        </div>
+        <span style="font-size:11px;font-weight:700;color:#15803D;white-space:nowrap;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Xong</span>
+        <span style="font-size:11px;color:#64748B;"></span>
+      </div>
+
+      <!-- Upcoming section -->
+      <div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.4px;margin:10px 0 4px;">Sắp tới</div>
+
+      <!-- Buổi 10 — GS đã gửi nội dung -->
+      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;padding:10px 12px;background:linear-gradient(135deg,#FFFBEB,#FFF7ED);border:1.5px solid #FCD34D;border-radius:10px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:#FEF3C7;border:2px solid #FCD34D;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#92400E;flex-shrink:0;margin-top:1px;">10</div>
+        <div>
+          <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:3px;">
+            <span style="font-size:13px;font-weight:800;color:#0F172A;">Hàm số mũ &amp; logarithm — Vận dụng cao</span>
+            <span style="background:#DCFCE7;color:#15803D;font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:20px;white-space:nowrap;">✦ GS đã gửi nội dung</span>
+          </div>
+          <div style="font-size:11.5px;color:#64748B;margin-bottom:6px;">T2 20/05/2026 · 09:00</div>
+          <!-- Sent brief preview -->
+          <div style="background:rgba(255,255,255,.75);border:1px solid #FDE68A;border-radius:8px;padding:8px 10px;font-size:12px;color:#78350F;line-height:1.6;">
+            <div><span style="font-weight:700;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Mục tiêu:</span> Vận dụng tính chất hàm mũ/log vào bài thi — chuẩn bị đề thi thử</div>
+            <div><span style="font-weight:700;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> BTVN trước buổi:</span> Ôn log tự nhiên, làm 2 bài mức vận dụng buổi trước</div>
+          </div>
+        </div>
+        <div style="flex-shrink:0;">
+          <span style="font-size:11px;font-weight:700;color:#F59E0B;background:#FFFBEB;border:1px solid #FDE68A;padding:3px 9px;border-radius:20px;white-space:nowrap;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Sắp học</span>
+        </div>
+      </div>
+
+      <!-- Buổi 11 & 12 — planned -->
+      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:8px 10px;background:#F8FAFC;border-radius:10px;font-size:12.5px;opacity:.7;">
+        <div style="width:28px;height:28px;border-radius:50%;background:#F1F5F9;border:1.5px solid #E2E8F0;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#94A3B8;flex-shrink:0;">11</div>
+        <div>
+          <div style="font-weight:600;color:#1E293B;">Luyện đề thi thử — Phần 1</div>
+          <div style="font-size:11.5px;color:#94A3B8;margin-top:1px;">T6 22/05/2026 · 09:00</div>
+        </div>
+        <span style="font-size:11px;color:#94A3B8;white-space:nowrap;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Kế hoạch</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:8px 10px;background:#F8FAFC;border-radius:10px;font-size:12.5px;opacity:.7;">
+        <div style="width:28px;height:28px;border-radius:50%;background:#F1F5F9;border:1.5px solid #E2E8F0;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#94A3B8;flex-shrink:0;">12</div>
+        <div>
+          <div style="font-weight:600;color:#1E293B;">Luyện đề thi thử — Phần 2 + Tổng kết khoá</div>
+          <div style="font-size:11.5px;color:#94A3B8;margin-top:1px;">T2 27/05/2026 · 09:00</div>
+        </div>
+        <span style="font-size:11px;color:#94A3B8;white-space:nowrap;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Kế hoạch</span>
+      </div>
+
+    </div><!-- /lesson list -->
+
+    <!-- Footer note -->
+    <div style="margin-top:14px;padding:10px 14px;background:#F1F5F9;border-radius:10px;font-size:11.5px;color:#64748B;display:flex;align-items:center;gap:7px;">
+      <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#94A3B8;stroke-width:2;fill:none;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Gia sư sẽ gửi nội dung trước mỗi buổi ít nhất 48 giờ. Bạn sẽ nhận thông báo khi có nội dung mới.
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /wrapper -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════ DATA ═══════
+const CRITERIA = [
+  {key:'logic',   name:'Tư duy logic',       sym:'≡', bg:'#EEF2FF', color:'#4F46E5'},
+  {key:'calc',    name:'Tính toán',           sym:'±', bg:'#F0FDF4', color:'#16A34A'},
+  {key:'formula', name:'Vận dụng công thức',  sym:'ƒ', bg:'#FEF3C7', color:'#B45309'},
+  {key:'solve',   name:'Giải bài tập',        sym:'✓', bg:'#EFF6FF', color:'#2563EB'},
+];
+
+// Qualitative status per session (aligned with session report: 'good'|'watch'|'bad'|'')
+const STATUS_DATA = {
+  logic:   ['bad','bad','watch','bad','watch','watch','watch','watch','good','watch','good','good'],
+  calc:    ['watch','watch','watch','good','watch','good','good','good','good','good','good','good'],
+  formula: ['bad','bad','bad','watch','watch','watch','watch','good','good','good','good','good'],
+  solve:   ['bad','bad','watch','watch','watch','good','watch','good','good','good','good','good'],
+};
+
+const SESSION_LABELS = ['B1','B2','B3','B4','B5','B6','B7','B8','B9','B10','B11','B12'];
+const STATUS_VAL  = {good:3, watch:2, bad:1, '':0};
+const STATUS_COLOR= {good:'#10B981', watch:'#F59E0B', bad:'#EF4444', '':'#E2E8F0'};
+const STATUS_LABEL= {good:'Tốt', watch:'Theo dõi', bad:'Cần cải thiện', '':'—'};
+
+// Notes from tutor's session reports (latest session per criterion)
+// Mirrors what GS wrote in ui-session-report.html
+const LATEST_NOTES = {
+  logic: {
+    session: 12, date: '11/05/2026',
+    issue: 'An hay đọc xong đề là tính ngay, không xác định dạng bài trước. Hay mắc lỗi ở bài có nhiều bước suy luận liên tiếp — không biết bắt đầu từ đâu khi gặp dữ kiện phức tạp.',
+    fix:   'Luyện thói quen đọc đề 2 lần, gạch chân dữ kiện trước khi tính. Buổi tới làm 5 bài dạng "phân tích đề" — ghi ra bài hỏi gì, cho gì, cần dùng kiến thức nào.',
+  },
+  calc: {
+    session: 12, date: '11/05/2026',
+    good: 'An tính toán chính xác hơn nhiều so với các buổi trước — hiếm khi nhầm dấu khi chuyển vế. Tốc độ tính cũng nhanh hơn rõ rệt từ buổi 9 trở đi.',
+  },
+  formula: {
+    session: 12, date: '11/05/2026',
+    good: 'Nắm vững công thức bậc hai và hệ phương trình. Buổi này An áp dụng đúng công thức trong tất cả các bài — đây là điểm mạnh nhất, cần tiếp tục duy trì.',
+  },
+  solve: {
+    session: 12, date: '11/05/2026',
+    watch: 'Hoàn thành tốt 8/10 bài cơ bản, nhưng 2 bài dạng tổng hợp kết hợp nhiều điều kiện vẫn chưa xong trong thời gian cho phép. Cần theo dõi thêm 2–3 buổi.',
+  },
+};
+
+let currentMode = 'free';
+let activeTab = 'logic';
+let chart = null;
+
+// ═══════ MODE ═══════
+function setMode(mode) {
+  currentMode = mode;
+  const isPrem = mode === 'premium';
+
+  document.getElementById('btnFree').className = 'acc-btn' + (!isPrem ? ' active-free' : '');
+  document.getElementById('btnPrem').className = 'acc-btn' + (isPrem ? ' active-prem' : '');
+
+  const banner = document.getElementById('modeBanner');
+  const dot = document.getElementById('modeDot');
+  const lbl = document.getElementById('modeLabelStrong');
+  const sub = document.getElementById('modeLabelSpan');
+  banner.className = 'mode-banner ' + (isPrem ? 'is-premium' : 'is-free');
+  dot.className = 'mode-dot ' + (isPrem ? 'premium' : 'free');
+  lbl.textContent = isPrem ? 'Tài khoản Cao cấp' : 'Tài khoản Miễn phí';
+  sub.textContent = isPrem ? '— Tất cả AI insights đã mở khoá' : '— Insights AI bị khoá';
+  sub.style.color = isPrem ? '#7C3AED' : '#94A3B8';
+
+  // Show/hide premium sections
+  toggle('digestPremium', isPrem);
+  toggle('digestFree', !isPrem);
+  toggle('aiGoalPrem', isPrem);
+  toggle('aiGoalFree', !isPrem);
+  toggle('pathPrem', isPrem);
+  toggle('pathFree', !isPrem);
+  toggle('briefPrem', isPrem);
+  toggle('briefFree', !isPrem);
+
+  // Warnings: show basic for both, AI notes only for premium
+  renderWarnings(isPrem);
+}
+
+function toggle(id, show) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = show ? '' : 'none';
+}
+
+// ═══════ SKILL SUMMARY BAR ═══════
+function renderSkillSummaryBar() {
+  // Count current status per criterion
+  const counts = {good:0, watch:0, bad:0};
+  const names  = {good:[], watch:[], bad:[]};
+  CRITERIA.forEach(c => {
+    const sessions = STATUS_DATA[c.key];
+    const cur = sessions[sessions.length - 1] || '';
+    if (counts[cur] !== undefined) { counts[cur]++; names[cur].push(c.name); }
+  });
+  const bar = document.getElementById('skillSummaryBar');
+  const cfg = [
+    {k:'good',  ic:'✓', label:'Tốt',           sub:'kỹ năng'},
+    {k:'watch', ic:'~', label:'Theo dõi',       sub:'kỹ năng'},
+    {k:'bad',   ic:'!', label:'Cần cải thiện',  sub:'kỹ năng'},
+  ];
+  bar.innerHTML = cfg.map(({k, ic, label}) => {
+    const n = counts[k];
+    const nameList = names[k].join(', ') || '—';
+    return `
+      <div class="skill-sum-chip ${k}" title="${nameList}">
+        <div class="skill-sum-ic ${k}">${ic}</div>
+        <div>
+          <div class="skill-sum-count ${k}">${n}</div>
+          <div class="skill-sum-lbl ${k}">${label}</div>
+        </div>
+        <div style="flex:1;min-width:0;font-size:11px;color:#94A3B8;line-height:1.4;padding-left:2px">${nameList}</div>
+      </div>`;
+  }).join('');
+}
+
+// ═══════ SKILL CARDS ═══════
+function renderSkillCards() {
+  const grid = document.getElementById('skillGrid');
+  grid.innerHTML = CRITERIA.map(c => {
+    const sessions = STATUS_DATA[c.key];
+    const current = sessions[sessions.length - 1] || '';
+    const cardCls = current === 'good' ? 'is-good' : current === 'watch' ? 'is-watch' : current === 'bad' ? 'is-bad' : '';
+    const chipCls = current === 'good' ? 'chip-good' : current === 'watch' ? 'chip-watch' : current === 'bad' ? 'chip-bad' : 'chip-none';
+
+    // Count stats
+    const counts = {good:0, watch:0, bad:0};
+    sessions.forEach(s => { if (counts[s] !== undefined) counts[s]++; });
+
+    // Streak: count consecutive same status from the end
+    let streak = 0, streakStatus = current;
+    for (let i = sessions.length - 1; i >= 0; i--) {
+      if (sessions[i] === streakStatus) streak++; else break;
+    }
+
+    // Trend text
+    let trendText = '';
+    if (current === 'good') {
+      trendText = streak >= 3
+        ? `<strong>${streak} buổi Tốt liên tiếp</strong> — đang ổn định`
+        : `${counts.good} buổi Tốt · Mới cải thiện`;
+    } else if (current === 'watch') {
+      trendText = streak >= 3
+        ? `<strong>Theo dõi ${streak} buổi</strong> — chưa có đột phá`
+        : `Cần thêm chú ý — ${counts.bad} buổi Cần cải thiện`;
+    } else if (current === 'bad') {
+      trendText = streak >= 3
+        ? `<strong><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Cần cải thiện ${streak} buổi</strong> — cần can thiệp`
+        : `Biến động — ${counts.good} buổi Tốt / ${counts.bad} buổi Yếu`;
+    }
+
+    // Dot timeline
+    const dotLabels = {good:'✓', watch:'~', bad:'!', '':'·'};
+    const dots = sessions.map((s, i) => `
+      <div class="s-dot ${s||'none'}" title="Buổi ${i+1}: ${STATUS_LABEL[s]||'Chưa đánh giá'}">${dotLabels[s]||'·'}</div>
+    `).join('');
+
+    // Note blocks from tutor's session report
+    const note = LATEST_NOTES[c.key];
+    let noteHTML = '';
+    if (note) {
+      const meta = `<div class="skill-note-meta">Buổi #${note.session} · ${note.date} · Nhận xét từ gia sư</div>`;
+      if (current === 'bad' && note.issue) {
+        noteHTML += `
+          <div class="skill-note note-bad-issue">
+            <div class="skill-note-label">Còn khó khăn</div>
+            <div class="skill-note-text">${note.issue}</div>
+            ${meta}
+          </div>`;
+      }
+      if (current === 'bad' && note.fix) {
+        noteHTML += `
+          <div class="skill-note note-bad-fix">
+            <div class="skill-note-label">Hướng khắc phục</div>
+            <div class="skill-note-text">${note.fix}</div>
+          </div>`;
+      }
+      if (current === 'good' && note.good) {
+        noteHTML += `
+          <div class="skill-note note-good">
+            <div class="skill-note-label">Điểm nổi bật</div>
+            <div class="skill-note-text">${note.good}</div>
+            ${meta}
+          </div>`;
+      }
+      if (current === 'watch' && note.watch) {
+        noteHTML += `
+          <div class="skill-note note-watch">
+            <div class="skill-note-label">Cần theo dõi</div>
+            <div class="skill-note-text">${note.watch}</div>
+            ${meta}
+          </div>`;
+      }
+    }
+
+    return `
+    <div class="skill-card ${cardCls}">
+      <div class="skill-card-head">
+        <div class="skill-card-ic" style="background:${c.bg};color:${c.color}">${c.sym}</div>
+        <div class="skill-card-name">${c.name}</div>
+        <div class="skill-status-chip ${chipCls}">${STATUS_LABEL[current]}</div>
+      </div>
+      <div class="dot-timeline">${dots}</div>
+      <div class="skill-summary">${trendText}</div>
+      ${noteHTML}
+    </div>`;
+  }).join('');
+}
+
+// ═══════ LINE CHART ═══════
+function renderChartTabs() {
+  const tabs = document.getElementById('chartTabs');
+  tabs.innerHTML = CRITERIA.map(c =>
+    `<button class="chart-tab ${c.key === activeTab ? 'active' : ''}" onclick="switchTab('${c.key}')">${c.name}</button>`
+  ).join('') + `<button class="chart-tab ${activeTab === 'all' ? 'active' : ''}" onclick="switchTab('all')">Tất cả</button>`;
+}
+
+function switchTab(key) {
+  activeTab = key;
+  renderChartTabs();
+  updateChart();
+}
+
+function buildChartData() {
+  const makeDataset = (key, label, color) => {
+    const statuses = STATUS_DATA[key];
+    return {
+      label,
+      data: statuses.map(s => STATUS_VAL[s] || 0),
+      backgroundColor: statuses.map(s => STATUS_COLOR[s] || '#E2E8F0'),
+      borderColor: statuses.map(s => STATUS_COLOR[s] || '#E2E8F0'),
+      borderWidth: 0,
+      borderRadius: 5,
+    };
+  };
+  if (activeTab === 'all') {
+    return { datasets: CRITERIA.map(c => makeDataset(c.key, c.name, c.color)) };
+  }
+  const c = CRITERIA.find(x => x.key === activeTab);
+  return { datasets: [makeDataset(c.key, c.name, c.color)] };
+}
+
+function initChart() {
+  const ctx = document.getElementById('progressChart').getContext('2d');
+  const data = buildChartData();
+  chart = new Chart(ctx, {
+    type: 'bar',
+    data: { labels: SESSION_LABELS, ...data },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const key = activeTab === 'all' ? CRITERIA[ctx.datasetIndex].key : activeTab;
+              const s = STATUS_DATA[key][ctx.dataIndex];
+              return ` ${STATUS_LABEL[s] || '—'}`;
+            },
+            title: ctx => `Buổi ${ctx[0].dataIndex + 1}`
+          }
+        }
+      },
+      scales: {
+        y: {
+          min: 0, max: 3,
+          ticks: {
+            stepSize: 1,
+            font: { family: 'Inter', size: 11 },
+            callback: v => v === 3 ? 'Tốt' : v === 2 ? 'Theo dõi' : v === 1 ? 'Cần cải thiện' : '',
+          },
+          grid: { color: '#F1F5F9' }
+        },
+        x: { ticks: { font: { family: 'Inter', size: 11 } }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+function updateChart() {
+  if (!chart) return;
+  const data = buildChartData();
+  chart.data.datasets = data.datasets;
+  chart.update();
+}
+
+// ═══════ WARNINGS ═══════
+const WARNINGS = [
+  {
+    type: 'bad',
+    name: 'Tư duy logic',
+    desc: 'Trì trệ ở mức 3–4 suốt 5 buổi liên tiếp',
+    aiNote: 'Cần can thiệp ngay: đây là tiêu chí quyết định điểm thi THPT. Thử thay đổi phương pháp dạy — bài toán thực tế, suy luận ngược.',
+  },
+  {
+    type: 'watch',
+    name: 'Tính toán',
+    desc: 'Buổi 10 bị giảm nhẹ, phục hồi buổi 11',
+    aiNote: 'Theo dõi thêm 2–3 buổi. Giao bài tính toán mỗi ngày để duy trì. Không cần thay đổi phương pháp.',
+  },
+  {
+    type: 'ok',
+    name: 'Vận dụng công thức',
+    desc: 'Tăng đều từ 2 lên 5/5 — tiến bộ ổn định nhất',
+    aiNote: 'Xuất sắc! Đây là điểm mạnh có thể tận dụng để xây tự tin. Dùng làm bàn đạp cho bài tổng hợp.',
+  },
+];
+
+function renderWarnings(showAI) {
+  const grid = document.getElementById('warnGrid');
+  const typeLabel = {ok:'Tốt', watch:'Theo dõi', bad:'Cần can thiệp'};
+  const typeIc    = {ok:'✓',   watch:'~',         bad:'!'};
+
+  grid.innerHTML = WARNINGS.map(w => `
+    <div class="warn-card ${w.type}">
+      <div class="warn-ic ${w.type}">${typeIc[w.type]}</div>
+      <div class="warn-label ${w.type}">${typeLabel[w.type]}</div>
+      <div class="warn-name">${w.name}</div>
+      <div class="warn-desc">${w.desc}</div>
+      ${showAI ? `<div class="warn-ai-note ${w.type}">✨ ${w.aiNote}</div>` : ''}
+    </div>
+  `).join('');
+
+  const gate = document.getElementById('warnGateFree');
+  gate.style.display = showAI ? 'none' : '';
+}
+
+// ═══════ ACTIONS ═══════
+function sendDigest() { showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Đã gửi tóm tắt cho phụ huynh'); }
+function refreshDigest() {
+  const txt = document.getElementById('digestText');
+  const orig = txt.innerHTML;
+  txt.innerHTML = '<span style="opacity:.5">✨ AI đang cập nhật nhận xét...</span>';
+  setTimeout(() => { txt.innerHTML = orig; showToast('✨ Nhận xét đã được cập nhật'); }, 1600);
+}
+function copyDigest() { showToast('<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Đã copy nội dung'); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ═══════ INIT ═══════
+renderSkillSummaryBar();
+renderSkillCards();
+renderChartTabs();
+initChart();
+renderWarnings(false);
+setTimeout(() => setMode('free'), 0);
+</script>
+</body>
+</html>

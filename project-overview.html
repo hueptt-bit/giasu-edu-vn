@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Dashboard — giasu.edu.vn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;color:#1E293B;background:#F0F4F8;min-height:100vh;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+
+/* ── HEADER ── */
+.header{background:linear-gradient(135deg,#0D2D6B 0%,#1565C0 100%);padding:28px 40px 24px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:-80px;right:-40px;width:360px;height:360px;border-radius:50%;background:rgba(245,124,0,.08);}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-text{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.logo-text em{font-weight:500;font-style:normal;opacity:.5;}
+.header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:4px;}
+.header-sub{font-size:13px;color:rgba(255,255,255,.6);}
+.header-stats{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap;}
+.hstat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 16px;backdrop-filter:blur(8px);}
+.hstat-num{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.5px;}
+.hstat-label{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;}
+.hstat.ok{border-color:rgba(74,222,128,.4);background:rgba(74,222,128,.1);}
+.hstat.warn{border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.1);}
+.hstat.amber{border-color:rgba(245,124,0,.5);background:rgba(245,124,0,.15);}
+
+/* ── TABS ── */
+.tab-bar{background:#fff;border-bottom:2px solid #E2E8F0;padding:0 40px;display:flex;gap:0;overflow-x:auto;position:sticky;top:0;z-index:200;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab{padding:14px 18px;font-size:13px;font-weight:600;color:#64748B;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:6px;}
+.tab:hover{color:#0D2D6B;}
+.tab.active{color:#0D2D6B;border-bottom-color:#0D2D6B;font-weight:800;}
+.tab-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;border-radius:9px;background:#FEE2E2;color:#DC2626;font-size:10px;font-weight:800;padding:0 5px;}
+.tab-badge.ok{background:#DCFCE7;color:#16A34A;}
+
+/* ── CONTENT PANES ── */
+.pane{display:none;max-width:1160px;margin:0 auto;padding:32px 40px 80px;}
+.pane.active{display:block;}
+
+/* ── SECTION ── */
+.sec-title{font-size:18px;font-weight:800;color:#0D2D6B;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.sec-sub{font-size:13px;color:#64748B;margin-bottom:22px;}
+.divider{height:1px;background:#E2E8F0;margin:36px 0;}
+
+/* ── PILLAR GRID ── */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}
+.pillar{background:#fff;border:1.5px solid #E2E8F0;border-radius:16px;padding:20px;position:relative;overflow:hidden;}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.pillar:nth-child(1)::before{background:#0D2D6B;}
+.pillar:nth-child(2)::before{background:#7C3AED;}
+.pillar:nth-child(3)::before{background:#F57C00;}
+.pillar-num{font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;}
+.pillar-icon{font-size:26px;margin-bottom:8px;display:block;}
+.pillar h3{font-size:14px;font-weight:800;color:#1E293B;margin-bottom:6px;}
+.pillar p{font-size:12px;color:#64748B;line-height:1.6;}
+
+/* ── REVENUE GRID ── */
+.rev-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;}
+.rev-card{background:#fff;border:1.5px solid #E2E8F0;border-radius:12px;padding:16px;text-align:center;}
+.rev-card.hl{border-color:#F57C00;background:#FFF8F0;}
+.rev-tier{font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;}
+.rev-price{font-size:20px;font-weight:800;color:#0D2D6B;}
+.rev-price small{font-size:11px;font-weight:500;color:#94A3B8;}
+.rev-who{font-size:11.5px;color:#475569;margin-top:6px;line-height:1.4;}
+
+/* ── PHASE SUMMARY CARDS ── */
+.phase-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:32px;}
+.ps-card{background:#fff;border:1.5px solid #E2E8F0;border-radius:12px;padding:14px;text-align:center;}
+.ps-card.done{border-color:#BBF7D0;background:#F0FDF4;}
+.ps-card.warn{border-color:#FED7AA;background:#FFF7ED;}
+.ps-num{font-size:22px;font-weight:900;color:#0D2D6B;letter-spacing:-.5px;}
+.ps-label{font-size:11px;color:#64748B;margin-top:3px;line-height:1.4;}
+
+/* ── JOURNEY ── */
+.journey-lane{display:flex;flex-direction:column;gap:0;}
+.phase-header{background:linear-gradient(90deg,#F8FAFC,#fff);border:1.5px solid #E2E8F0;border-radius:14px;padding:12px 18px;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.phase-num-badge{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
+.ph-ph .phase-num-badge{background:#EFF6FF;color:#1D4ED8;}
+.gs-ph .phase-num-badge{background:#ECFDF5;color:#065F46;}
+.phase-name{font-size:14px;font-weight:800;color:#1E293B;}
+.phase-desc{font-size:12px;color:#64748B;margin-top:1px;}
+.steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;padding-left:16px;}
+.step-box{background:#fff;border:1.5px solid #E2E8F0;border-radius:12px;padding:14px 15px;}
+.step-box.covered{border-left:3px solid #16A34A;}
+.step-box.partial{border-left:3px solid #F59E0B;}
+.step-box.missing{border-left:3px solid #DC2626;background:#FFF5F5;}
+.step-tag{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;margin-bottom:6px;}
+.st-page{background:#EFF6FF;color:#1D4ED8;}
+a.st-page{text-decoration:none;cursor:pointer;}
+a.st-page:hover{background:#DBEAFE;text-decoration:underline;}
+.st-ai{background:#F3E8FF;color:#7C3AED;}
+.st-free{background:#DCFCE7;color:#16A34A;}
+.st-prem{background:#FEF3C7;color:#D97706;}
+.step-name{font-size:13px;font-weight:700;color:#1E293B;margin-bottom:3px;}
+.step-detail{font-size:11.5px;color:#64748B;line-height:1.5;}
+.step-features{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px;}
+.feat-tag{font-size:10px;font-weight:600;padding:1px 6px;border-radius:5px;}
+.f-free{background:#F1F5F9;color:#475569;}
+.f-ai{background:#F3E8FF;color:#7C3AED;}
+.f-prem{background:#FEF3C7;color:#D97706;}
+
+/* ── FEATURE MAP ── */
+.feat-map{border:1.5px solid #E2E8F0;border-radius:16px;overflow:hidden;margin-bottom:24px;}
+.feat-map-head{background:#F8FAFC;border-bottom:1.5px solid #E2E8F0;padding:12px 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:0;}
+.fmh-cell{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#64748B;padding:0 8px;}
+.fmh-cell:first-child{padding-left:0;}
+.feat-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:0;border-bottom:1px solid #F1F5F9;padding:10px 20px;align-items:start;}
+.feat-row:last-child{border-bottom:none;}
+.feat-row:hover{background:#FAFBFD;}
+.feat-phase-divider{background:#F8FAFC;border-bottom:1px solid #E2E8F0;padding:8px 20px;}
+.fpd-label{font-size:11px;font-weight:800;color:#0D2D6B;text-transform:uppercase;letter-spacing:.7px;}
+.feat-name{font-size:13px;font-weight:600;color:#1E293B;padding:0;}
+.feat-name small{display:block;font-size:11px;color:#94A3B8;font-weight:400;margin-top:2px;}
+.feat-cell{padding:0 8px;}
+.feat-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px;}
+.fd-done{background:#22C55E;}
+.fd-prem{background:#F59E0B;}
+.fd-ai{background:#8B5CF6;}
+.fd-none{background:#E2E8F0;}
+.feat-chip{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:6px;display:inline-flex;align-items:center;gap:4px;}
+.fc-done{background:#DCFCE7;color:#16A34A;}
+.fc-prem{background:#FEF3C7;color:#D97706;}
+.fc-ai{background:#EDE9FE;color:#7C3AED;}
+.fc-none{background:#F1F5F9;color:#94A3B8;}
+
+/* ── PAGE STATUS GRID ── */
+.page-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+.page-card{background:#fff;border:1.5px solid #E2E8F0;border-radius:12px;padding:14px 16px;}
+.page-card.done{border-left:3px solid #22C55E;}
+.page-card.warn{border-left:3px solid #F59E0B;background:#FFFBEB;}
+.page-card.broken{border-left:3px solid #EF4444;background:#FFF5F5;}
+.page-card.deprecated{border-left:3px solid #CBD5E1;background:#F8FAFC;opacity:.7;}
+.pc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px;}
+.pc-name{font-size:13px;font-weight:800;color:#1E293B;}
+.pc-file{font-size:10.5px;font-family:monospace;color:#94A3B8;margin-top:2px;}
+.pc-badge{flex-shrink:0;font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px;white-space:nowrap;}
+.pcb-done{background:#DCFCE7;color:#16A34A;}
+.pcb-warn{background:#FEF3C7;color:#D97706;}
+.pcb-broken{background:#FEE2E2;color:#DC2626;}
+.pcb-dep{background:#F1F5F9;color:#94A3B8;}
+.pc-desc{font-size:11.5px;color:#64748B;line-height:1.5;}
+
+/* ── DEBT SECTION ── */
+.debt-card{background:#fff;border:1.5px solid #FED7AA;border-radius:16px;padding:20px 24px;margin-bottom:16px;}
+.debt-card.critical{border-color:#FECACA;}
+.debt-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;}
+.debt-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.debt-icon.c{background:#FEE2E2;}
+.debt-icon.w{background:#FEF3C7;}
+.debt-meta{flex:1;min-width:0;}
+.debt-title{font-size:15px;font-weight:800;color:#1E293B;margin-bottom:2px;}
+.debt-file{font-size:11px;font-family:monospace;color:#94A3B8;}
+.debt-priority{font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px;flex-shrink:0;}
+.dp-high{background:#FEE2E2;color:#DC2626;}
+.dp-mid{background:#FEF3C7;color:#D97706;}
+.debt-issues{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+.debt-issue{display:flex;align-items:flex-start;gap:9px;padding:9px 12px;background:#F8FAFC;border-radius:8px;}
+.di-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+.di-text{font-size:12.5px;color:#475569;line-height:1.5;}
+.di-text strong{color:#1E293B;}
+.debt-fix{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:12px 14px;}
+.debt-fix-title{font-size:11px;font-weight:800;color:#1D4ED8;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.debt-fix-items{display:flex;flex-direction:column;gap:5px;}
+.debt-fix-item{font-size:12px;color:#1E40AF;display:flex;align-items:flex-start;gap:7px;}
+
+/* ── LINKS BAR ── */
+.links-bar{display:flex;gap:10px;flex-wrap:wrap;background:#fff;border:1.5px solid #E2E8F0;border-radius:14px;padding:14px 20px;align-items:center;margin-top:8px;}
+.lb-title{font-size:12px;font-weight:800;color:#0D2D6B;margin-right:4px;}
+.lb-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;border:1.5px solid #E2E8F0;color:#475569;background:#F8FAFC;transition:all .12s;}
+.lb-btn:hover{background:#EEF2FF;border-color:#818CF8;color:#4F46E5;}
+.lb-btn.primary{background:#0D2D6B;color:#fff;border-color:#0D2D6B;}
+.lb-btn.primary:hover{background:#162f6e;}
+
+@media(max-width:900px){
+  .pillars,.rev-grid,.phase-summary{grid-template-columns:repeat(2,1fr);}
+  .steps-row{grid-template-columns:1fr;}
+  .page-grid{grid-template-columns:repeat(2,1fr);}
+  .feat-map-head,.feat-row{grid-template-columns:2fr 1fr 1fr;}
+  .feat-map-head .fmh-cell:last-child,.feat-row .feat-cell:last-child{display:none;}
+  .tab-bar{padding:0 16px;}
+  .pane{padding:24px 20px 60px;}
+  .header{padding:20px 24px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <svg width="36" height="22" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+      </svg>
+      <span class="logo-text">giasu<em>.edu.vn</em></span>
+    </div>
+    <div style="font-size:11.5px;color:rgba(255,255,255,.5);">Cập nhật 15/05/2026</div>
+  </div>
+  <div class="header-title">Project Dashboard</div>
+  <div class="header-sub">Bức tranh tổng thể — Hành trình · Tính năng · Trạng thái trang · Tech debt</div>
+  <div class="header-stats">
+    <div class="hstat ok">
+      <div class="hstat-num">24</div>
+      <div class="hstat-label">Trang UI hoàn thành</div>
+    </div>
+    <div class="hstat warn">
+      <div class="hstat-num">2</div>
+      <div class="hstat-label">Trang cần cập nhật</div>
+    </div>
+    <div class="hstat amber">
+      <div class="hstat-num">45/45</div>
+      <div class="hstat-label">Tasks hoàn thành</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-num">2</div>
+      <div class="hstat-label">Trang deprecated</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-num">Phase 1+2</div>
+      <div class="hstat-label">Build xong · Pivot 11/05</div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <div class="tab active" onclick="switchTab('overview')">🏛️ Tổng quan</div>
+  <div class="tab" onclick="switchTab('hv-journey')">👩‍🎓 Hành trình HV/PH</div>
+  <div class="tab" onclick="switchTab('gs-journey')">🎓 Hành trình GS</div>
+  <div class="tab" onclick="switchTab('features')">⚙️ Bản đồ tính năng</div>
+  <div class="tab" onclick="switchTab('pages')">📄 Tất cả trang</div>
+  <div class="tab" onclick="switchTab('debt')">⚠️ Cần cập nhật <span class="tab-badge">2</span></div>
+  <div class="tab" onclick="switchTab('flow')">🗺️ Sơ đồ Flow</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 1 — TỔNG QUAN
+═══════════════════════════════════════════════════════ -->
+<div class="pane active" id="pane-overview">
+
+  <div class="sec-title">🏛️ 3 Trụ cột sản phẩm</div>
+  <p class="sec-sub">Platform không quản lý học phí. Doanh thu từ Premium subscription với AI features.</p>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-num">Trụ cột 1</div>
+      <span class="pillar-icon">📊</span>
+      <h3>Chất lượng đo được</h3>
+      <p>Diagnostic → Tiêu chí 1–5 sao mỗi buổi → Re-assessment mỗi ~10 buổi → Biểu đồ tiến bộ thực tế. Không dựa vào cảm nhận chủ quan.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">Trụ cột 2</div>
+      <span class="pillar-icon">🤖</span>
+      <h3>AI làm việc nặng cho GS</h3>
+      <p>AI soạn giáo án, format báo cáo đẹp từ ghi chú thô, nhắc viết báo cáo 25 phút sau buổi, gợi ý timeline học, phân tích điểm yếu.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">Trụ cột 3</div>
+      <span class="pillar-icon">🗂️</span>
+      <h3>Student Portfolio</h3>
+      <p>Lịch sử học tích lũy theo môn. Khi đổi GS → AI tạo Student Brief → GS mới hiểu ngay trong 5 phút, không bắt đầu lại từ đầu.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec-title">💰 Mô hình doanh thu</div>
+  <p class="sec-sub">4 tier — Free đủ dùng cơ bản, Premium mở khóa AI và insights</p>
+  <div class="rev-grid">
+    <div class="rev-card">
+      <div class="rev-tier">Free</div>
+      <div class="rev-price">0đ</div>
+      <div class="rev-who">Cả GS và PH/HV<br>Đủ dùng cơ bản</div>
+    </div>
+    <div class="rev-card hl">
+      <div class="rev-tier">Premium PH / HV</div>
+      <div class="rev-price">59–79k <small>/tháng</small></div>
+      <div class="rev-who">Báo cáo đầy đủ<br>AI insights · biểu đồ tiến độ</div>
+    </div>
+    <div class="rev-card hl">
+      <div class="rev-tier">Premium GS</div>
+      <div class="rev-price">99–149k <small>/tháng</small></div>
+      <div class="rev-who">AI soạn bài · format báo cáo<br>Analytics · PDF export</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-tier">Add-on GS</div>
+      <div class="rev-price" style="font-size:15px;">Linh hoạt</div>
+      <div class="rev-who">Featured listing<br>7 hoặc 30 ngày</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec-title">📊 Tiến độ build theo giai đoạn</div>
+  <p class="sec-sub">Tổng 28 trang (24 xong · 2 cần update · 2 deprecated)</p>
+  <div class="phase-summary">
+    <div class="ps-card done">
+      <div class="ps-num" style="color:#16A34A;">8</div>
+      <div class="ps-label">Trang Public<br>✅ Xong</div>
+    </div>
+    <div class="ps-card done">
+      <div class="ps-num" style="color:#16A34A;">2</div>
+      <div class="ps-label">Dashboard<br>✅ Xong</div>
+    </div>
+    <div class="ps-card done">
+      <div class="ps-num" style="color:#16A34A;">8</div>
+      <div class="ps-label">Trang Phase 2<br>✅ Xong</div>
+    </div>
+    <div class="ps-card warn">
+      <div class="ps-num" style="color:#D97706;">2</div>
+      <div class="ps-label">Trang cần<br>⚠️ Update</div>
+    </div>
+    <div class="ps-card">
+      <div class="ps-num" style="color:#94A3B8;">2</div>
+      <div class="ps-label">Deprecated<br>❌ Bỏ</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec-title">🗺️ Flow cốt lõi (async matching)</div>
+  <p class="sec-sub">Pivot 11/05/2026 · Không có buổi meeting riêng · Toàn bộ kết nối diễn ra async</p>
+  <div style="background:#fff;border:1.5px solid #E2E8F0;border-radius:16px;padding:20px 24px;overflow-x:auto;">
+    <div style="display:flex;align-items:center;gap:0;min-width:max-content;font-size:12.5px;">
+      <div style="text-align:center;padding:0 10px;">
+        <div style="font-size:20px;margin-bottom:4px;">📝</div>
+        <div style="font-weight:700;color:#1E293B;">HV gửi<br>hồ sơ học</div>
+        <div style="font-size:10.5px;color:#94A3B8;margin-top:2px;">ui-profile.html</div>
+      </div>
+      <div style="color:#CBD5E1;font-size:20px;padding:0 6px;">→</div>
+      <div style="text-align:center;padding:0 10px;background:#F5F3FF;border-radius:10px;padding:10px;">
+        <div style="font-size:20px;margin-bottom:4px;">✦</div>
+        <div style="font-weight:700;color:#7C3AED;">AI tạo<br>Student Brief</div>
+        <div style="font-size:10.5px;color:#A78BFA;margin-top:2px;">Tự động</div>
+      </div>
+      <div style="color:#CBD5E1;font-size:20px;padding:0 6px;">→</div>
+      <div style="text-align:center;padding:0 10px;">
+        <div style="font-size:20px;margin-bottom:4px;">👨‍🏫</div>
+        <div style="font-weight:700;color:#1E293B;">GS xem Brief<br>→ đề xuất</div>
+        <div style="font-size:10.5px;color:#94A3B8;margin-top:2px;">ui-tutor-brief.html</div>
+      </div>
+      <div style="color:#CBD5E1;font-size:20px;padding:0 6px;">→</div>
+      <div style="text-align:center;padding:0 10px;">
+        <div style="font-size:20px;margin-bottom:4px;">✍️</div>
+        <div style="font-weight:700;color:#1E293B;">Cả hai<br>ký Cam kết</div>
+        <div style="font-size:10.5px;color:#94A3B8;margin-top:2px;">ui-alignment.html</div>
+      </div>
+      <div style="color:#CBD5E1;font-size:20px;padding:0 6px;">→</div>
+      <div style="text-align:center;padding:0 10px;background:#F0FDF4;border-radius:10px;padding:10px;">
+        <div style="font-size:20px;margin-bottom:4px;">🚀</div>
+        <div style="font-weight:700;color:#16A34A;">Buổi học đầu<br>tiên — học thật</div>
+        <div style="font-size:10.5px;color:#4ADE80;margin-top:2px;">Không cần meeting riêng</div>
+      </div>
+      <div style="color:#CBD5E1;font-size:20px;padding:0 6px;">→</div>
+      <div style="text-align:center;padding:0 10px;background:#EFF6FF;border-radius:10px;padding:10px;border:1.5px dashed #BFDBFE;">
+        <div style="font-size:20px;margin-bottom:4px;">↻</div>
+        <div style="font-weight:700;color:#1D4ED8;">Vòng lặp<br>buổi học</div>
+        <div style="font-size:10.5px;color:#60A5FA;margin-top:2px;">Agenda→Dạy→Báo cáo</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;display:flex;gap:10px;">
+    <a href="project-flow.html" class="lb-btn primary">🗺️ Xem sơ đồ flow đầy đủ ↗</a>
+    <a href="project-features.html" class="lb-btn">📊 Bảng tính năng</a>
+    <a href="index.html" class="lb-btn">🏠 Navigation Hub</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 2 — HÀNH TRÌNH HV/PH
+═══════════════════════════════════════════════════════ -->
+<div class="pane" id="pane-hv-journey">
+
+  <div class="sec-title">👩‍🎓 Hành trình Học viên / Phụ huynh</div>
+  <p class="sec-sub">5 giai đoạn · từ Discovery đến học liên tục — mỗi bước có trang UI và tính năng cụ thể</p>
+
+  <!-- Phase 1 -->
+  <div class="phase-header ph-ph">
+    <div class="phase-num-badge">1</div>
+    <div>
+      <div class="phase-name">Discovery & Đăng ký</div>
+      <div class="phase-desc">HV/PH tìm hiểu platform, tạo tài khoản, chọn môn học</div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-trang-chu.html" target="_blank">ui-trang-chu.html</a>
+      <div class="step-name">Trang chủ — Landing</div>
+      <div class="step-detail">Hero 3 trụ cột, AI Match badge, section why trust-focused. Không nhắc học phí.</div>
+      <div class="step-features"><span class="feat-tag f-free">Free</span><span class="feat-tag f-ai">AI Match teaser</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-tim-gia-su.html" target="_blank">ui-tim-gia-su.html</a>
+      <div class="step-name">Tìm gia sư</div>
+      <div class="step-detail">AI recommendation strip top 3 · Match % badge · Verified tick · Học phí/Thỏa thuận · toggle demo.</div>
+      <div class="step-features"><span class="feat-tag f-free">Tìm kiếm</span><span class="feat-tag f-ai">AI Gợi ý</span><span class="feat-tag f-prem">Premium rec</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-profile.html" target="_blank">ui-profile.html</a>
+      <div class="step-name">Xem profile GS + gửi hồ sơ học</div>
+      <div class="step-detail">Sidebar async flow 3 bước: Gửi Hồ sơ học → GS đề xuất → Ký Cam kết. Modal hồ sơ học 3 bước.</div>
+      <div class="step-features"><span class="feat-tag f-free">Profile xem</span><span class="feat-tag f-ai">AI Brief preview</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-auth.html" target="_blank">ui-auth.html</a>
+      <div class="step-name">Đăng ký / Đăng nhập</div>
+      <div class="step-detail">Đăng ký HV/PH · OTP · Social login.</div>
+      <div class="step-features"><span class="feat-tag f-free">Free</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-diagnostic.html" target="_blank">ui-diagnostic.html</a>
+      <div class="step-name">Bài test đầu vào (Diagnostic)</div>
+      <div class="step-detail">Chọn môn + mục tiêu → làm test → kết quả trình độ + điểm yếu → AI gợi ý GS phù hợp.</div>
+      <div class="step-features"><span class="feat-tag f-free">Test cơ bản</span><span class="feat-tag f-ai">AI gợi ý GS</span><span class="feat-tag f-prem">Chi tiết Premium</span></div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase-header ph-ph">
+    <div class="phase-num-badge">2</div>
+    <div>
+      <div class="phase-name">Async Matching — Kết nối với GS</div>
+      <div class="phase-desc">HV gửi hồ sơ → nhận đề xuất từ GS → chọn lịch → ký Cam kết. Toàn bộ async.</div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-profile.html" target="_blank">ui-profile.html</a>
+      <div class="step-name">Gửi Hồ sơ học cho GS</div>
+      <div class="step-detail">Modal 3 bước: thông tin + Diagnostic pre-fill → lịch rảnh → mục tiêu + AI Brief preview. Async 5 phút.</div>
+      <div class="step-features"><span class="feat-tag f-free">Async</span><span class="feat-tag f-ai">AI pre-fill</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-messages.html" target="_blank">ui-messages.html</a>
+      <div class="step-name">Nhắn tin sơ bộ</div>
+      <div class="step-detail">Trao đổi ban đầu trước khi chốt. Toggle PH/HV ↔ GS view.</div>
+      <div class="step-features"><span class="feat-tag f-free">Free</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-alignment.html" target="_blank">ui-alignment.html</a>
+      <div class="step-name">Xem đề xuất & Ký Cam kết</div>
+      <div class="step-detail">HV xem lộ trình GS đề xuất → xác nhận → ký async. GS đã pre-sign. AI lộ trình sơ bộ (Free) hoặc chi tiết (Premium).</div>
+      <div class="step-features"><span class="feat-tag f-free">Ký async</span><span class="feat-tag f-ai">AI lộ trình</span><span class="feat-tag f-prem">Chi tiết Premium</span></div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase-header ph-ph">
+    <div class="phase-num-badge">3</div>
+    <div>
+      <div class="phase-name">Vòng lặp buổi học — Theo dõi tiến độ</div>
+      <div class="phase-desc">Mỗi buổi: nhận agenda → học → nhận báo cáo + nhận xét. PH/HV có dashboard riêng.</div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-dashboard-phu-huynh.html" target="_blank">ui-dashboard-phu-huynh.html</a>
+      <div class="step-name">Dashboard PH — Tổng quan</div>
+      <div class="step-detail">Nội dung buổi học sắp tới · Báo cáo gần đây · Tiến độ panel · Free/Premium toggle.</div>
+      <div class="step-features"><span class="feat-tag f-free">Cơ bản</span><span class="feat-tag f-prem">AI Digest</span><span class="feat-tag f-ai">AI cảnh báo</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-course.html" target="_blank">ui-course.html</a>
+      <div class="step-name">Xem chương trình học</div>
+      <div class="step-detail">PH xem brief đã nhận từ GS. Timeline 12 buổi, khung nội dung chi tiết.</div>
+      <div class="step-features"><span class="feat-tag f-free">Xem</span><span class="feat-tag f-prem">Chi tiết</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-progress.html" target="_blank">ui-progress.html</a>
+      <div class="step-name">Tiến độ học sinh</div>
+      <div class="step-detail">Skill overview tiêu chí 1–5 sao · Biểu đồ theo buổi · Goals & Milestones · AI cảnh báo sớm + dự đoán (Premium).</div>
+      <div class="step-features"><span class="feat-tag f-free">Cơ bản</span><span class="feat-tag f-ai">AI insight</span><span class="feat-tag f-prem">Biểu đồ đầy đủ</span></div>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase-header ph-ph">
+    <div class="phase-num-badge">4</div>
+    <div>
+      <div class="phase-name">Re-assessment — Đo tiến bộ thực tế</div>
+      <div class="phase-desc">Mỗi ~10 buổi HV làm lại bài đánh giá. AI so sánh với baseline, cập nhật lộ trình.</div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-diagnostic.html" target="_blank">ui-diagnostic.html</a>
+      <div class="step-name">Làm lại bài test đánh giá</div>
+      <div class="step-detail">Cùng trang diagnostic nhưng ở chế độ re-assessment. So sánh kết quả với lần trước.</div>
+      <div class="step-features"><span class="feat-tag f-free">Re-test</span><span class="feat-tag f-ai">AI so sánh</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-progress.html" target="_blank">ui-progress.html</a>
+      <div class="step-name">Xem kết quả tiến bộ</div>
+      <div class="step-detail">Biểu đồ skill tree cập nhật · Cải thiện so với baseline · AI dự đoán thời điểm đạt mục tiêu (Premium).</div>
+      <div class="step-features"><span class="feat-tag f-free">Cơ bản</span><span class="feat-tag f-prem">AI dự đoán</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-student-portfolio.html" target="_blank">ui-student-portfolio.html</a>
+      <div class="step-name">Student Portfolio cập nhật</div>
+      <div class="step-detail">Lịch sử toàn bộ theo môn tích lũy. Dùng để matching GS mới nếu cần đổi.</div>
+      <div class="step-features"><span class="feat-tag f-free">Free</span></div>
+    </div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="phase-header ph-ph">
+    <div class="phase-num-badge">5</div>
+    <div>
+      <div class="phase-name">Premium Upgrade & Đổi GS</div>
+      <div class="phase-desc">HV/PH nâng cấp để mở tính năng AI, hoặc đổi GS mà không mất lịch sử học.</div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-premium.html" target="_blank">ui-premium.html</a>
+      <div class="step-name">Nâng cấp Premium</div>
+      <div class="step-detail">So sánh tier · Lợi ích cụ thể · Nút đăng ký. Thay thế ui-checkout.html cũ.</div>
+      <div class="step-features"><span class="feat-tag f-prem">Upgrade flow</span></div>
+    </div>
+    <div class="step-box covered">
+      <span class="step-tag st-page">Flow quay lại Phase 2</span>
+      <div class="step-name">Đổi gia sư</div>
+      <div class="step-detail">Student Portfolio → AI tạo Brief → Tìm GS mới → Gửi hồ sơ học có sẵn portfolio. GS mới xem ui-tutor-brief.html.</div>
+      <div class="step-features"><span class="feat-tag f-ai">AI Brief</span><span class="feat-tag f-free">Portfolio</span></div>
+    </div>
+  </div>
+
+  <div class="links-bar">
+    <span class="lb-title">📁 Tài liệu liên quan</span>
+    <a href="project-flow.html" class="lb-btn primary">Sơ đồ flow đầy đủ ↗</a>
+    <a href="ui-dashboard-phu-huynh.html" class="lb-btn">Dashboard PH ↗</a>
+    <a href="ui-diagnostic.html" class="lb-btn">Diagnostic ↗</a>
+    <a href="ui-alignment.html" class="lb-btn">Cam kết học tập ↗</a>
+    <a href="ui-progress.html" class="lb-btn">Tiến độ ↗</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 3 — HÀNH TRÌNH GS
+═══════════════════════════════════════════════════════ -->
+<div class="pane" id="pane-gs-journey">
+
+  <div class="sec-title">🎓 Hành trình Gia sư</div>
+  <p class="sec-sub">5 giai đoạn · từ Đăng ký đến dạy liên tục — mỗi bước có entry point rõ ràng. Audit 15/05/2026.</p>
+
+  <!-- Phase 1 -->
+  <div class="phase-header gs-ph">
+    <div class="phase-num-badge">1</div>
+    <div>
+      <div class="phase-name">Đăng ký & Onboarding</div>
+      <div class="phase-desc">GS tạo tài khoản, hoàn thiện hồ sơ, chờ xác thực, nhận onboarding checklist</div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-dang-ky-day.html" target="_blank">ui-dang-ky-day.html</a>
+      <div class="step-name">Đăng ký tài khoản GS</div>
+      <div class="step-detail">Thông tin cá nhân · Môn dạy · Upload CCCD · Video intro 60–90s · Gộp từ onboarding cũ.</div>
+      <div class="step-features"><span class="feat-tag f-free">Free</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-dashboard-gia-su.html" target="_blank">ui-dashboard-gia-su.html</a>
+      <div class="step-name">Onboarding checklist (gsov-empty)</div>
+      <div class="step-detail">4 bước hoàn thiện: Hồ sơ → Video → CCCD → Chờ duyệt. AI profile scoring card (+15đ video, +12đ CCCD).</div>
+      <div class="step-features"><span class="feat-tag f-free">Checklist</span><span class="feat-tag f-ai">AI scoring</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-admin.html" target="_blank">ui-admin.html</a>
+      <div class="step-name">Admin duyệt hồ sơ GS</div>
+      <div class="step-detail">Admin review · Cấp tick xác thực. Pipeline AI verify queue. Cập nhật theo pivot 15/05.</div>
+      <div class="step-features"><span class="feat-tag f-free">Admin only</span></div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase-header gs-ph">
+    <div class="phase-num-badge">2</div>
+    <div>
+      <div class="phase-name">Async Matching — Nhận học sinh mới</div>
+      <div class="phase-desc">GS nhận thông báo → xem Brief → điền đề xuất lộ trình + slot lịch → ký trước → chờ PH xác nhận</div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-dashboard-gia-su.html" target="_blank">Dashboard → tab "Yêu cầu"</a>
+      <div class="step-name">Nhận & xem yêu cầu học mới</div>
+      <div class="step-detail">Sidebar badge "3" · Overview card "Yêu cầu học mới" → "Xem tất cả →". Mỗi request có button "✦ Xem AI Brief".</div>
+      <div class="step-features"><span class="feat-tag f-free">List</span><span class="feat-tag f-ai">AI Brief link</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-tutor-brief.html" target="_blank">ui-tutor-brief.html</a>
+      <div class="step-name">Xem AI Student Brief + đề xuất</div>
+      <div class="step-detail">Diagnostic bars · AI phân tích điểm yếu · Lộ trình 3 phase AI soạn (Premium) / tự điền (Free) · Slot lịch đề xuất · GS pre-sign.</div>
+      <div class="step-features"><span class="feat-tag f-free">Free (tự điền)</span><span class="feat-tag f-ai">AI lộ trình</span><span class="feat-tag f-prem">Premium</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-alignment.html" target="_blank">ui-alignment.html + flow strip</a>
+      <div class="step-name">Flow strip "Chờ PH ký"</div>
+      <div class="step-detail">gs-flow-strip hiện đầu tiên trong gsov-filled. Demo toggle Chờ PH / PH đã ký. Link "Xem Cam kết đã gửi" → alignment.</div>
+      <div class="step-features"><span class="feat-tag f-free">Async</span></div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase-header gs-ph">
+    <div class="phase-num-badge">3</div>
+    <div>
+      <div class="phase-name">Vòng lặp buổi học</div>
+      <div class="phase-desc">Mỗi buổi: Soạn agenda → Dạy → Viết báo cáo → Gửi PH → Screen 3 wrap-up → AI soạn buổi tiếp</div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-course.html" target="_blank">ui-course.html</a>
+      <div class="step-name">Soạn kế hoạch & agenda</div>
+      <div class="step-detail">6 section: Agenda · Mục tiêu · Nội dung dạy · Bài tập · BTVN · Ghi chú. AI soạn buổi tới (Premium).</div>
+      <div class="step-features"><span class="feat-tag f-free">Soạn thủ công</span><span class="feat-tag f-ai">✦ AI soạn</span><span class="feat-tag f-prem">Premium</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-session-report.html" target="_blank">ui-session-report.html</a>
+      <div class="step-name">Viết báo cáo sau buổi (Screen 1–2)</div>
+      <div class="step-detail">AI trigger banner nhắc viết 25 phút sau buổi. Đánh giá tiêu chí 1–5 sao Tầng 1+2. AI format báo cáo (Premium). Entry: "Viết ngay" đỏ trong "Cần làm".</div>
+      <div class="step-features"><span class="feat-tag f-free">Viết thủ công</span><span class="feat-tag f-ai">AI format</span><span class="feat-tag f-prem">Premium</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-session-report.html" target="_blank">ui-session-report.html S3</a>
+      <div class="step-name">Session Wrap-up (Screen 3)</div>
+      <div class="step-detail">Ghi chú nhanh buổi tiếp → lưu Portfolio. BTVN confirm → nhắn HV. Buổi #13 sắp tới. CTA → ui-course.html. (P0-A)</div>
+      <div class="step-features"><span class="feat-tag f-ai">AI soạn ngay buổi tiếp</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-resources.html" target="_blank">ui-resources.html</a>
+      <div class="step-name">Quản lý tài liệu</div>
+      <div class="step-detail">Upload/browse/download. Free: 50MB/5 file. Premium: 5GB, folder, analytics. Entry: Sidebar "Tài liệu" (mới thêm 15/05).</div>
+      <div class="step-features"><span class="feat-tag f-free">Basic</span><span class="feat-tag f-prem">5GB Premium</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-dashboard-gia-su.html" target="_blank">Dashboard → tab "Khoá học"</a>
+      <div class="step-name">Quản lý khoá học theo HV</div>
+      <div class="step-detail">Stacked cards từng HS. Tiến độ · Tài liệu · "✦ Soạn buổi tới" → ui-course.html (fix 15/05). "📋 Viết báo cáo" → session-report.</div>
+      <div class="step-features"><span class="feat-tag f-free">Free</span><span class="feat-tag f-ai">AI soạn</span></div>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase-header gs-ph">
+    <div class="phase-num-badge">4</div>
+    <div>
+      <div class="phase-name">Re-assessment & Analytics</div>
+      <div class="phase-desc">Mỗi ~10 buổi: trigger tự động → Gửi test → Xem kết quả tiến bộ → Cập nhật lộ trình</div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-dashboard-gia-su.html" target="_blank">Dashboard gsov-filled</a>
+      <div class="step-name">Notification re-assessment</div>
+      <div class="step-detail">Card "Trần Minh Khoa đủ 10 buổi" trong mục "Cần làm". Button "Gửi test →" → ui-diagnostic.html (fix 15/05). (P0-B)</div>
+      <div class="step-features"><span class="feat-tag f-free">Auto trigger</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-progress.html" target="_blank">ui-progress.html</a>
+      <div class="step-name">Xem analytics học sinh (Premium)</div>
+      <div class="step-detail">Biểu đồ tiêu chí theo thời gian · So sánh giai đoạn · AI cảnh báo sớm. Entry: Sidebar "Báo cáo & AI" → Earnings + analytics.</div>
+      <div class="step-features"><span class="feat-tag f-prem">Premium GS</span><span class="feat-tag f-ai">AI phân tích</span></div>
+    </div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="phase-header gs-ph">
+    <div class="phase-num-badge">5</div>
+    <div>
+      <div class="phase-name">Kết thúc khoá & Phát triển</div>
+      <div class="phase-desc">Kết thúc khoá học · Mời học tiếp · Upgrade lên Premium · Tăng visibility qua Featured</div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-dashboard-gia-su.html" target="_blank">Dashboard kh-panel-tuan</a>
+      <div class="step-name">AI soạn email mời học tiếp</div>
+      <div class="step-detail">Card tím "✦ AI soạn email mời học tiếp" trên khoá học đã kết thúc. Premium. Pre-written dựa trên tiến bộ HV. (Mới 14/05)</div>
+      <div class="step-features"><span class="feat-tag f-ai">AI email</span><span class="feat-tag f-prem">Premium</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-premium.html" target="_blank">ui-premium.html</a>
+      <div class="step-name">Nâng cấp Premium GS</div>
+      <div class="step-detail">So sánh Free vs Premium GS. Lợi ích AI soạn giáo án, analytics, PDF export. 99–149k/tháng.</div>
+      <div class="step-features"><span class="feat-tag f-prem">Upgrade</span></div>
+    </div>
+    <div class="step-box covered">
+      <a class="step-tag st-page" href="ui-dang-tin.html" target="_blank">ui-dang-tin.html</a>
+      <div class="step-name">Đăng tin Featured listing</div>
+      <div class="step-detail">Add-on tăng visibility. Featured 7 hoặc 30 ngày. Amber badge trên kết quả tìm kiếm.</div>
+      <div class="step-features"><span class="feat-tag f-prem">Add-on</span></div>
+    </div>
+  </div>
+
+  <div class="links-bar">
+    <span class="lb-title">📁 Tài liệu liên quan</span>
+    <a href="ui-dashboard-gia-su.html" class="lb-btn primary">Dashboard GS ↗</a>
+    <a href="ui-tutor-brief.html" class="lb-btn">AI Tutor Brief ↗</a>
+    <a href="ui-session-report.html" class="lb-btn">Báo cáo buổi học ↗</a>
+    <a href="ui-course.html" class="lb-btn">Quản lý khoá học ↗</a>
+    <a href="ui-resources.html" class="lb-btn">Tài liệu ↗</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 4 — BẢN ĐỒ TÍNH NĂNG
+═══════════════════════════════════════════════════════ -->
+<div class="pane" id="pane-features">
+
+  <div class="sec-title">⚙️ Bản đồ tính năng theo giai đoạn</div>
+  <p class="sec-sub">Mỗi tính năng được gắn với giai đoạn, trang UI và tier (Free / Premium / AI)</p>
+
+  <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span class="feat-dot fd-done" style="width:10px;height:10px;"></span>Free — Tất cả người dùng</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span class="feat-dot fd-prem" style="width:10px;height:10px;"></span>Premium — Chỉ khi nâng cấp</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span class="feat-dot fd-ai" style="width:10px;height:10px;"></span>AI — Tính năng thông minh</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span class="feat-dot fd-none" style="width:10px;height:10px;"></span>Chưa có / Kế hoạch</div>
+  </div>
+
+  <div class="feat-map">
+    <div class="feat-map-head">
+      <div class="fmh-cell">Tính năng</div>
+      <div class="fmh-cell" style="text-align:center;">HV/PH</div>
+      <div class="fmh-cell" style="text-align:center;">GS</div>
+      <div class="fmh-cell" style="text-align:center;">Admin</div>
+    </div>
+
+    <div class="feat-phase-divider"><span class="fpd-label">Giai đoạn 1 — Khám phá & Đăng ký</span></div>
+    <div class="feat-row">
+      <div class="feat-name">Tìm kiếm gia sư<small>ui-tim-gia-su.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">AI gợi ý gia sư phù hợp<small>Dựa trên diagnostic + mục tiêu</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">✦ Premium</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Bài test đầu vào (Diagnostic)<small>ui-diagnostic.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Xác thực CCCD + tick Verified<small>Admin review</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free (apply)</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Review</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Video intro profile 60–90s<small>ui-dang-ky-day / profile</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">AI chấm điểm hồ sơ GS<small>Dashboard gsov-empty</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-ai">✦ AI</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+
+    <div class="feat-phase-divider"><span class="fpd-label">Giai đoạn 2 — Async Matching</span></div>
+    <div class="feat-row">
+      <div class="feat-name">Gửi Hồ sơ học async<small>Modal trên ui-profile.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">AI tạo Student Brief<small>Tổng hợp Diagnostic + hồ sơ</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-ai">✦ AI auto</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Xem AI Tutor Brief<small>ui-tutor-brief.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free xem</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">AI soạn lộ trình đề xuất<small>ui-tutor-brief.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">✦ Premium GS</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Nhắn tin sơ bộ<small>ui-messages.html · toggle PH/HV ↔ GS</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Cam kết học tập (Learning Agreement)<small>ui-alignment.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free ký</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free pre-sign</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">AI lộ trình học tập sơ bộ<small>ui-alignment.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free (đơn giản)</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">✦ Premium chi tiết</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+
+    <div class="feat-phase-divider"><span class="fpd-label">Giai đoạn 3 — Vòng lặp buổi học</span></div>
+    <div class="feat-row">
+      <div class="feat-name">Soạn kế hoạch buổi học (6 section)<small>ui-course.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">AI soạn giáo án buổi học<small>ui-course.html · nhắc 25p sau</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">✦ Premium GS</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Đánh giá tiêu chí 1–5 sao (Tầng 1 + 2)<small>ui-session-report.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">AI format báo cáo → gửi PH<small>ui-session-report.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Nhận</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">✦ Premium GS</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Session Wrap-up (Screen 3 + ghi chú buổi tiếp)<small>ui-session-report.html S3</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Quản lý tài liệu (upload/browse)<small>ui-resources.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ 50MB Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">5GB storage + folder + analytics<small>ui-resources.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">✦ Premium GS</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Xem báo cáo & AI Digest (PH)<small>ui-dashboard-phu-huynh.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free cơ bản</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+
+    <div class="feat-phase-divider"><span class="fpd-label">Giai đoạn 4 — Re-assessment & Tiến độ</span></div>
+    <div class="feat-row">
+      <div class="feat-name">Re-assessment trigger (10 buổi)<small>Dashboard "Cần làm"</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Biểu đồ tiến độ theo tiêu chí<small>ui-progress.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Cơ bản</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">✦ Analytics GS</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">AI dự đoán thời điểm đạt mục tiêu<small>ui-progress.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">✦ Premium PH</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">✦ Premium GS</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Student Portfolio tích lũy<small>ui-student-portfolio.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Free</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+
+    <div class="feat-phase-divider"><span class="fpd-label">Giai đoạn 5 — Phát triển & Admin</span></div>
+    <div class="feat-row">
+      <div class="feat-name">Featured listing (tăng visibility)<small>ui-dang-tin.html</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">Add-on</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">AI soạn email mời học tiếp<small>Dashboard kh-panel</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-prem">✦ Premium GS</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Duyệt & xác thực hồ sơ GS<small>ui-admin.html · sec-verify</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Done</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Pipeline AI Matching (queue monitor)<small>ui-admin.html · sec-pipeline</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-ai">✦ AI Monitor</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">Subscription Management (Free/Premium table)<small>ui-admin.html · sec-subscription</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Done 15/05</span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-name">MRR · ARPU · Churn · Cohort retention<small>ui-admin.html · sec-revenue</small></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-none">—</span></div>
+      <div class="feat-cell"><span class="feat-chip fc-done">✅ Done 15/05</span></div>
+    </div>
+  </div>
+
+  <a href="project-features.html" class="lb-btn primary" style="display:inline-flex;">📊 Xem bảng tính năng đầy đủ v3 ↗</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 5 — TẤT CẢ TRANG
+═══════════════════════════════════════════════════════ -->
+<div class="pane" id="pane-pages">
+
+  <div class="sec-title">📄 Tất cả trang — Trạng thái</div>
+  <p class="sec-sub">28 entries · 24 hoàn thành · 2 cần update · 2 deprecated</p>
+
+  <div style="font-size:12px;font-weight:700;color:#0D2D6B;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">🌐 Trang Public (không cần đăng nhập)</div>
+  <div class="page-grid" style="margin-bottom:28px;">
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Trang chủ</div><div class="pc-file">ui-trang-chu.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Hero 3 trụ cột · AI Match badge · Bỏ escrow · Why trust-focused</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Tìm gia sư</div><div class="pc-file">ui-tim-gia-su.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">AI rec strip · Match % · Verified badge · Học phí/Thỏa thuận · Toggle demo</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Profile gia sư</div><div class="pc-file">ui-profile.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Sidebar async 3 bước · Modal Hồ sơ học 3 bước · AI Brief preview</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Đăng nhập / Đăng ký</div><div class="pc-file">ui-auth.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Login · Register HV/GS · OTP · Quên mật khẩu</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Quên mật khẩu</div><div class="pc-file">ui-quen-mat-khau.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Reset flow</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Giới thiệu</div><div class="pc-file">ui-gioi-thieu.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">About · Mission · Team</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Blog</div><div class="pc-file">ui-blog.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Danh sách bài viết</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Bài viết chi tiết</div><div class="pc-file">ui-bai-viet.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Single article view</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Hướng dẫn</div><div class="pc-file">ui-huong-dan.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Help center</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Đăng ký dạy (GS)</div><div class="pc-file">ui-dang-ky-day.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Gộp onboarding GS · Thông tin · Video · CCCD</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Đăng tin featured</div><div class="pc-file">ui-dang-tin.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Featured listing 7/30 ngày · Add-on</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Nâng cấp Premium</div><div class="pc-file">ui-premium.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Thay ui-checkout.html · So sánh tier · Lợi ích</div></div>
+  </div>
+
+  <div style="font-size:12px;font-weight:700;color:#0D2D6B;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">🏠 Dashboard (cần đăng nhập)</div>
+  <div class="page-grid" style="margin-bottom:28px;">
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Dashboard GS</div><div class="pc-file">ui-dashboard-gia-su.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Flow strip · Session loop · Free/Premium toggle · Khoá học stacked · Fix 15/05</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Dashboard PH</div><div class="pc-file">ui-dashboard-phu-huynh.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Báo cáo & AI panel · Tiến độ · Bỏ thanh toán · Free/Premium toggle</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Tin nhắn</div><div class="pc-file">ui-messages.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Toggle PH/HV ↔ GS · Thread view</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Admin Dashboard</div><div class="pc-file">ui-admin.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Update 15/05: Pipeline AI · Subscription · MRR. Bỏ MoMo/VNPay.</div></div>
+  </div>
+
+  <div style="font-size:12px;font-weight:700;color:#0D2D6B;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">📋 Tính năng Phase 2 (mới build)</div>
+  <div class="page-grid" style="margin-bottom:28px;">
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Bài test đầu vào</div><div class="pc-file">ui-diagnostic.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Chọn môn → test → kết quả → AI gợi ý GS · Free/Premium toggle</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Báo cáo buổi học</div><div class="pc-file">ui-session-report.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Screen 1: form+tiêu chí · Screen 2: preview gửi PH · Screen 3: wrap-up (P0-A)</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Cam kết học tập</div><div class="pc-file">ui-alignment.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Async 3 bước · GS pre-sign · AI lộ trình Free+Premium · PH ký</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Tiến độ học sinh</div><div class="pc-file">ui-progress.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Skill tree · Biểu đồ · Goals & Milestones · AI insight · Chương trình học</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Student Portfolio</div><div class="pc-file">ui-student-portfolio.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Lịch sử toàn bộ theo môn · Dùng khi đổi GS</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Quản lý khoá học</div><div class="pc-file">ui-course.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">6 section giáo án · GS/PH toggle · Timeline 12 buổi · AI soạn (Premium)</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">AI Tutor Brief</div><div class="pc-file">ui-tutor-brief.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Diagnostic bars · AI phân tích · Lộ trình Free/Premium · Slot lịch · Pre-sign</div></div>
+    <div class="page-card done"><div class="pc-top"><div><div class="pc-name">Thư viện tài liệu</div><div class="pc-file">ui-resources.html</div></div><span class="pc-badge pcb-done">✅ Chốt</span></div><div class="pc-desc">Upload/browse/filter · Free 50MB · Premium 5GB+analytics · Mới link sidebar 15/05</div></div>
+  </div>
+
+  <div style="font-size:12px;font-weight:700;color:#0D2D6B;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">📦 Tài liệu dự án & Hệ thống</div>
+  <div class="page-grid" style="margin-bottom:28px;">
+    <div class="page-card warn"><div class="pc-top"><div><div class="pc-name">Dev Handoff</div><div class="pc-file">ui-handoff.html</div></div><span class="pc-badge pcb-warn">⚠️ Cần update</span></div><div class="pc-desc">Chưa có 5+ trang mới nhất: resources, tutor-brief, premium, messages, alignment v2</div></div>
+    <div class="page-card warn"><div class="pc-top"><div><div class="pc-name">Navigation Hub</div><div class="pc-file">index.html</div></div><span class="pc-badge pcb-warn">⚠️ Cần update</span></div><div class="pc-desc">Chưa list đầy đủ tất cả trang Phase 2 mới</div></div>
+    <div class="page-card deprecated"><div class="pc-top"><div><div class="pc-name">Checkout (deprecated)</div><div class="pc-file">ui-checkout.html</div></div><span class="pc-badge pcb-dep">❌ Deprecated</span></div><div class="pc-desc">Đã thay bởi ui-premium.html. Giữ lại để tham khảo.</div></div>
+    <div class="page-card deprecated"><div class="pc-top"><div><div class="pc-name">Onboarding GS (deprecated)</div><div class="pc-file">ui-onboarding-gia-su.html</div></div><span class="pc-badge pcb-dep">❌ Deprecated</span></div><div class="pc-desc">Đã gộp vào ui-dang-ky-day.html.</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 6 — CẦN CẬP NHẬT
+═══════════════════════════════════════════════════════ -->
+<div class="pane" id="pane-debt">
+
+  <div class="sec-title">⚠️ Trang cần cập nhật — Tech Debt</div>
+  <p class="sec-sub">3 trang chưa update theo định hướng pivot 11/05/2026. Ưu tiên theo mức độ ảnh hưởng.</p>
+
+  <!-- ui-admin.html — DONE -->
+  <div class="debt-card" style="border-color:#BBF7D0;background:#F0FDF4;">
+    <div class="debt-head">
+      <div class="debt-icon" style="background:var(--green-bg);color:var(--green);">✅</div>
+      <div class="debt-meta">
+        <div class="debt-title">Admin Dashboard</div>
+        <div class="debt-file">ui-admin.html</div>
+      </div>
+      <span class="debt-priority" style="background:var(--green-bg);color:var(--green);">✅ Đã sửa 15/05</span>
+    </div>
+    <div class="debt-issues">
+      <div class="debt-issue">
+        <span class="di-icon">✅</span>
+        <div class="di-text"><strong>Đã bỏ MoMo/VNPay:</strong> Xóa toàn bộ Xác nhận CK + Giao dịch + Hoa hồng. Checklist setup đã update sang Stripe/subscription gateway.</div>
+      </div>
+      <div class="debt-issue">
+        <span class="di-icon">✅</span>
+        <div class="di-text"><strong>Thêm Pipeline AI:</strong> Tab mới theo dõi async matching — AI đang xử lý, chờ GS nhận Brief, chờ PH ký Cam kết, lỗi AI. Cả empty/filled state.</div>
+      </div>
+      <div class="debt-issue">
+        <span class="di-icon">✅</span>
+        <div class="di-text"><strong>Thêm Subscription Management:</strong> Bảng quản lý Free/Premium GS + PH/HV, filter theo tier, sắp hết hạn, nút nhắc gia hạn.</div>
+      </div>
+      <div class="debt-issue">
+        <span class="di-icon">✅</span>
+        <div class="di-text"><strong>Thêm Doanh thu (MRR):</strong> Thay Finance → Revenue: MRR, New MRR, Churn MRR, ARPU. Breakdown GS vs PH/HV. Biểu đồ 6 tháng. Cohort retention table.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ui-handoff.html -->
+  <div class="debt-card">
+    <div class="debt-head">
+      <div class="debt-icon w">📋</div>
+      <div class="debt-meta">
+        <div class="debt-title">Dev Handoff Document</div>
+        <div class="debt-file">ui-handoff.html</div>
+      </div>
+      <span class="debt-priority dp-mid">🟡 Ưu tiên trung bình</span>
+    </div>
+    <div class="debt-issues">
+      <div class="debt-issue">
+        <span class="di-icon">❌</span>
+        <div class="di-text"><strong>Thiếu 5+ trang Phase 2 mới nhất:</strong> ui-resources.html, ui-tutor-brief.html, ui-messages.html, ui-premium.html, ui-alignment.html v2 (pivot), ui-session-report.html v2 (Screen 3) chưa được document trong handoff.</div>
+      </div>
+      <div class="debt-issue">
+        <span class="di-icon">❌</span>
+        <div class="di-text"><strong>Flow description lỗi thời:</strong> Vẫn mô tả flow cũ (có buổi trao đổi riêng). Không có mô tả async matching flow Phase 3.</div>
+      </div>
+      <div class="debt-issue">
+        <span class="di-icon">⚠️</span>
+        <div class="di-text"><strong>Deprecated pages vẫn được list:</strong> ui-checkout.html, ui-onboarding-gia-su.html vẫn trong danh sách. Cần đánh dấu deprecated.</div>
+      </div>
+      <div class="debt-issue">
+        <span class="di-icon">⚠️</span>
+        <div class="di-text"><strong>Thiếu AI features inventory:</strong> Không có danh sách đầy đủ tính năng AI nào dùng external API (OpenAI/Claude), tính năng nào là UI fake cần backend thật.</div>
+      </div>
+    </div>
+    <div class="debt-fix">
+      <div class="debt-fix-title">💡 Đề xuất cập nhật</div>
+      <div class="debt-fix-items">
+        <div class="debt-fix-item">→ Thêm 8 trang Phase 2 vào danh sách với mô tả đầy đủ</div>
+        <div class="debt-fix-item">→ Cập nhật flow diagram: xóa "buổi trao đổi đồng bộ", thêm async matching Phase 3</div>
+        <div class="debt-fix-item">→ Đánh dấu deprecated ui-checkout + ui-onboarding-gia-su</div>
+        <div class="debt-fix-item">→ Thêm section "AI Features — Backend Requirements": danh sách tính năng AI cần API thật</div>
+        <div class="debt-fix-item">→ Cập nhật page count từ 15 → 23+</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- index.html -->
+  <div class="debt-card">
+    <div class="debt-head">
+      <div class="debt-icon w">🏠</div>
+      <div class="debt-meta">
+        <div class="debt-title">Navigation Hub</div>
+        <div class="debt-file">index.html</div>
+      </div>
+      <span class="debt-priority dp-mid">🟡 Ưu tiên trung bình</span>
+    </div>
+    <div class="debt-issues">
+      <div class="debt-issue">
+        <span class="di-icon">⚠️</span>
+        <div class="di-text"><strong>Chưa có đủ trang Phase 2:</strong> Một số trang mới (ui-resources, ui-tutor-brief, ui-alignment v2, ui-session-report v2) có thể chưa được link từ navigation hub.</div>
+      </div>
+      <div class="debt-issue">
+        <span class="di-icon">⚠️</span>
+        <div class="di-text"><strong>Deprecated pages:</strong> ui-checkout, ui-onboarding-gia-su có thể vẫn hiện trong hub. Cần ẩn hoặc đánh dấu deprecated.</div>
+      </div>
+    </div>
+    <div class="debt-fix">
+      <div class="debt-fix-title">💡 Đề xuất cập nhật</div>
+      <div class="debt-fix-items">
+        <div class="debt-fix-item">→ Thêm tất cả trang Phase 2 vào section tương ứng trong hub</div>
+        <div class="debt-fix-item">→ Ẩn hoặc gạch deprecated pages (checkout, onboarding-gs)</div>
+        <div class="debt-fix-item">→ Thêm section "Project Docs" với links đến project-overview, project-flow, project-features</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div style="background:linear-gradient(135deg,#0D2D6B,#1565C0);border-radius:16px;padding:20px 24px;display:flex;align-items:center;gap:20px;margin-top:8px;">
+    <div style="font-size:40px;flex-shrink:0;">🎯</div>
+    <div>
+      <div style="font-size:16px;font-weight:800;color:#fff;margin-bottom:4px;">Thứ tự ưu tiên đề xuất</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.7;">
+        <strong style="color:#4ADE80;">✅</strong> <strong style="color:#fff;">ui-admin.html</strong> — Đã update 15/05 · Pipeline AI + Subscription + MRR &nbsp;
+        <strong style="color:#fff;">1.</strong> Update <strong style="color:#FCD34D;">ui-handoff.html</strong> — cần thiết trước khi bàn giao dev &nbsp;
+        <strong style="color:#fff;">2.</strong> Update <strong style="color:#FCD34D;">index.html</strong> — quick win, 30 phút
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 7 — SƠ ĐỒ FLOW
+═══════════════════════════════════════════════════════ -->
+<div class="pane" id="pane-flow">
+  <div class="sec-title">🗺️ Sơ đồ Flow tổng thể — HV/PH &amp; Gia sư</div>
+  <p class="sec-sub">Async matching model · Pivot 11/05/2026 · Hai làn song song với điểm giao nhau</p>
+
+  <style>
+    .flow-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;}
+    .fl-item{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;}
+    .fl-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+    .fl-ph{background:#BFDBFE;}
+    .fl-gs{background:#A7F3D0;}
+    .fl-ai{background:#DDD6FE;}
+    .fl-shared{background:#FDE68A;}
+
+    .flow-grid{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;align-items:start;}
+    .flow-lane-head{padding:10px 14px;border-radius:10px;font-size:13px;font-weight:800;text-align:center;margin-bottom:14px;}
+    .flh-ph{background:#EFF6FF;color:#1D4ED8;border:1.5px solid #BFDBFE;}
+    .flh-gs{background:#ECFDF5;color:#065F46;border:1.5px solid #A7F3D0;}
+    .flow-mid-head{text-align:center;font-size:11px;font-weight:700;color:#94A3B8;padding-top:12px;}
+
+    .flow-lane{display:flex;flex-direction:column;gap:0;}
+    .flow-mid{display:flex;flex-direction:column;gap:0;align-items:center;}
+
+    .fbox{border-radius:10px;padding:10px 13px;margin-bottom:4px;position:relative;}
+    .fbox.ph{background:#EFF6FF;border:1.5px solid #BFDBFE;}
+    .fbox.gs{background:#ECFDF5;border:1.5px solid #A7F3D0;}
+    .fbox.ai{background:#F5F3FF;border:1.5px solid #DDD6FE;}
+    .fbox.shared{background:#FFFBEB;border:1.5px dashed #FDE68A;}
+    .fbox.done{border-left:3px solid #16A34A;}
+    .fbox-title{font-size:12.5px;font-weight:700;color:#1E293B;margin-bottom:2px;}
+    .fbox-sub{font-size:11px;color:#64748B;line-height:1.4;}
+    .fbox-link{font-size:10px;font-weight:700;color:#1D4ED8;display:inline-block;margin-top:4px;text-decoration:none;}
+    .fbox-link:hover{text-decoration:underline;}
+    .fbox-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px;}
+    .ftag{font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:5px;}
+    .ftag.f{background:#D1FAE5;color:#065F46;}
+    .ftag.p{background:#FEF3C7;color:#92400E;}
+    .ftag.a{background:#EDE9FE;color:#5B21B6;}
+
+    .fv-arrow{text-align:center;color:#CBD5E1;font-size:13px;padding:3px 0;line-height:1;}
+    .fh-sync{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;}
+    .sync-dot{width:12px;height:12px;border-radius:50%;background:#F57C00;border:2px solid #fff;box-shadow:0 0 0 2px #F57C00;}
+    .sync-line{width:2px;flex:1;background:#F57C00;min-height:16px;}
+    .sync-label{font-size:9px;font-weight:800;color:#F57C00;text-align:center;white-space:nowrap;letter-spacing:.3px;}
+
+    .flow-phase-bar{background:#0D2D6B;color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:6px 14px;border-radius:7px;margin:16px 0 10px;grid-column:1/-1;}
+    .flow-row{display:contents;}
+
+    .loop-wrap{border:2px dashed #0D2D6B;border-radius:14px;padding:0;margin-bottom:4px;overflow:hidden;grid-column:1/-1;}
+    .loop-hdr{background:#0D2D6B;color:#fff;padding:8px 16px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px;}
+    .loop-lbadge{background:rgba(255,255,255,.2);font-size:9.5px;padding:2px 7px;border-radius:4px;}
+    .loop-body{display:grid;grid-template-columns:1fr 60px 1fr;padding:10px 0;}
+
+    .reassess-bar{background:#1E40AF;color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:6px 14px;border-radius:7px;margin:14px 0 10px;grid-column:1/-1;display:flex;align-items:center;gap:8px;}
+    .ra-badge{background:rgba(255,255,255,.25);font-size:9.5px;padding:2px 8px;border-radius:4px;}
+  </style>
+
+  <div class="flow-legend">
+    <div class="fl-item"><span class="fl-dot fl-ph"></span>Hành trình HV / Phụ huynh</div>
+    <div class="fl-item"><span class="fl-dot fl-gs"></span>Hành trình Gia sư</div>
+    <div class="fl-item"><span class="fl-dot fl-ai"></span>AI xử lý (tự động)</div>
+    <div class="fl-item"><span class="fl-dot fl-shared"></span>Điểm giao nhau (cả hai ký / xác nhận)</div>
+  </div>
+
+  <div class="flow-grid">
+    <!-- HEADERS -->
+    <div class="flow-lane-head flh-ph">👩‍🎓 Học viên / Phụ huynh</div>
+    <div class="flow-mid-head">SYNC</div>
+    <div class="flow-lane-head flh-gs">🎓 Gia sư</div>
+
+    <!-- ── PHASE 1 ── -->
+    <div class="flow-phase-bar">Phase 1 — Khám phá &amp; Đăng ký</div>
+
+    <div class="flow-lane">
+      <div class="fbox ph done">
+        <div class="fbox-title">Tìm gia sư phù hợp</div>
+        <div class="fbox-sub">Tìm kiếm · Lọc · Xem profile · Match %</div>
+        <a class="fbox-link" href="ui-tim-gia-su.html" target="_blank">ui-tim-gia-su.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Free</span><span class="ftag a">AI gợi ý</span><span class="ftag p">Premium rec</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox ph done">
+        <div class="fbox-title">Làm bài Diagnostic</div>
+        <div class="fbox-sub">Chọn môn → test → kết quả trình độ → điểm yếu</div>
+        <a class="fbox-link" href="ui-diagnostic.html" target="_blank">ui-diagnostic.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Free</span><span class="ftag a">AI gợi ý GS</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox ph done">
+        <div class="fbox-title">Đăng ký / Đăng nhập</div>
+        <div class="fbox-sub">Tạo tài khoản HV hoặc PH · OTP · Social login</div>
+        <a class="fbox-link" href="ui-auth.html" target="_blank">ui-auth.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Free</span></div>
+      </div>
+    </div>
+
+    <div class="flow-mid"></div>
+
+    <div class="flow-lane">
+      <div class="fbox gs done">
+        <div class="fbox-title">Đăng ký tài khoản GS</div>
+        <div class="fbox-sub">Thông tin cá nhân · Môn dạy · Video 60–90s · CCCD</div>
+        <a class="fbox-link" href="ui-dang-ky-day.html" target="_blank">ui-dang-ky-day.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Free</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox gs done">
+        <div class="fbox-title">Hoàn thiện hồ sơ &amp; Onboarding</div>
+        <div class="fbox-sub">Checklist 4 bước · AI chấm điểm hồ sơ · Chờ duyệt</div>
+        <a class="fbox-link" href="ui-dashboard-gia-su.html" target="_blank">Dashboard GS ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Checklist</span><span class="ftag a">AI scoring</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox ai">
+        <div class="fbox-title">✦ Admin duyệt hồ sơ</div>
+        <div class="fbox-sub">Review CCCD · Video · Cấp Verified tick</div>
+        <a class="fbox-link" href="ui-admin.html" target="_blank">ui-admin.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Admin only</span></div>
+      </div>
+    </div>
+
+    <!-- ── PHASE 2 ── -->
+    <div class="flow-phase-bar">Phase 2 — Async Matching (không cần meeting trực tiếp)</div>
+
+    <div class="flow-lane">
+      <div class="fbox ph done">
+        <div class="fbox-title">Xem profile &amp; Gửi Hồ sơ học</div>
+        <div class="fbox-sub">Modal 3 bước: thông tin + Diagnostic pre-fill → lịch rảnh → mục tiêu</div>
+        <a class="fbox-link" href="ui-profile.html" target="_blank">ui-profile.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Async 5 phút</span><span class="ftag a">AI pre-fill</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox ai">
+        <div class="fbox-title">✦ AI tạo Student Brief</div>
+        <div class="fbox-sub">Tổng hợp Diagnostic + hồ sơ → Brief ~4 phút</div>
+        <div class="fbox-tags"><span class="ftag a">Tự động</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox ph done">
+        <div class="fbox-title">Nhắn tin sơ bộ (tùy chọn)</div>
+        <div class="fbox-sub">Trao đổi thêm trước khi chốt. Toggle PH ↔ GS view.</div>
+        <a class="fbox-link" href="ui-messages.html" target="_blank">ui-messages.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Free</span></div>
+      </div>
+    </div>
+
+    <div class="flow-mid">
+      <div style="height:60px;"></div>
+      <div class="fh-sync">
+        <div class="sync-line"></div>
+        <div class="sync-dot"></div>
+        <div class="sync-label">AI Brief<br>gửi GS</div>
+        <div class="sync-dot"></div>
+        <div class="sync-line"></div>
+      </div>
+    </div>
+
+    <div class="flow-lane">
+      <div style="height:60px;"></div>
+      <div class="fbox gs done">
+        <div class="fbox-title">Nhận &amp; xem AI Student Brief</div>
+        <div class="fbox-sub">Diagnostic bars · AI phân tích điểm yếu · Dự đoán timeline</div>
+        <a class="fbox-link" href="ui-tutor-brief.html" target="_blank">ui-tutor-brief.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Free xem</span><span class="ftag a">AI phân tích</span><span class="ftag p">Lộ trình Premium</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox gs done">
+        <div class="fbox-title">Điền đề xuất &amp; Pre-sign</div>
+        <div class="fbox-sub">Lộ trình 3 phase · Slot lịch đề xuất · Ký trước async</div>
+        <a class="fbox-link" href="ui-tutor-brief.html" target="_blank">ui-tutor-brief.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Tự điền</span><span class="ftag a">✦ AI soạn</span><span class="ftag p">Premium GS</span></div>
+      </div>
+    </div>
+
+    <!-- Shared: Cam kết -->
+    <div class="fbox shared done" style="margin:8px 0;grid-column:1/-1;">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="font-size:20px;">✍️</div>
+        <div style="flex:1;">
+          <div class="fbox-title">Ký Cam kết học tập (async)</div>
+          <div class="fbox-sub">GS đã pre-sign → PH xem lộ trình đề xuất → PH ký xác nhận → Cam kết lock</div>
+          <a class="fbox-link" href="ui-alignment.html" target="_blank">ui-alignment.html ↗</a>
+        </div>
+        <div class="fbox-tags" style="flex-shrink:0;">
+          <span class="ftag f">Free ký</span><span class="ftag a">AI lộ trình</span><span class="ftag p">Chi tiết Premium</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PHASE 3 LOOP ── -->
+    <div class="loop-wrap">
+      <div class="loop-hdr">↻ Vòng lặp buổi học <span class="loop-lbadge">Lặp lại mỗi buổi</span></div>
+      <div class="loop-body">
+        <div class="flow-lane" style="padding:0 10px;">
+          <div class="fbox ph done" style="margin-bottom:4px;">
+            <div class="fbox-title">Nhận agenda trước buổi học</div>
+            <div class="fbox-sub">Nội dung, mục tiêu buổi học. PH/HV biết trước.</div>
+            <a class="fbox-link" href="ui-dashboard-phu-huynh.html" target="_blank">Dashboard PH ↗</a>
+          </div>
+          <div class="fv-arrow">↓</div>
+          <div class="fbox ph done" style="margin-bottom:4px;">
+            <div class="fbox-title">Nhận báo cáo sau buổi</div>
+            <div class="fbox-sub">AI Digest · Điểm mạnh/yếu · BTVN đã giao</div>
+            <a class="fbox-link" href="ui-dashboard-phu-huynh.html" target="_blank">Dashboard PH ↗</a>
+            <div class="fbox-tags"><span class="ftag f">Cơ bản</span><span class="ftag p">AI Digest Premium</span></div>
+          </div>
+          <div class="fv-arrow">↓</div>
+          <div class="fbox ph done" style="margin-bottom:0;">
+            <div class="fbox-title">Xem chương trình học</div>
+            <div class="fbox-sub">Timeline 12 buổi · Brief GS đã gửi</div>
+            <a class="fbox-link" href="ui-course.html" target="_blank">ui-course.html ↗</a>
+          </div>
+        </div>
+        <div class="flow-mid" style="padding-top:10px;">
+          <div class="fh-sync" style="height:100%;">
+            <div class="sync-line" style="min-height:40px;"></div>
+            <div class="sync-dot"></div>
+            <div class="sync-label" style="font-size:8.5px;">Báo cáo<br>↕ Agenda</div>
+            <div class="sync-dot"></div>
+            <div class="sync-line" style="min-height:40px;"></div>
+          </div>
+        </div>
+        <div class="flow-lane" style="padding:0 10px;">
+          <div class="fbox gs done" style="margin-bottom:4px;">
+            <div class="fbox-title">Soạn agenda &amp; kế hoạch</div>
+            <div class="fbox-sub">6 section: Agenda · Mục tiêu · Nội dung · Bài tập · BTVN · Ghi chú</div>
+            <a class="fbox-link" href="ui-course.html" target="_blank">ui-course.html ↗</a>
+            <div class="fbox-tags"><span class="ftag f">Thủ công</span><span class="ftag a">✦ AI soạn</span><span class="ftag p">Premium</span></div>
+          </div>
+          <div class="fv-arrow">↓</div>
+          <div class="fbox gs done" style="margin-bottom:4px;">
+            <div class="fbox-title">Viết báo cáo buổi học</div>
+            <div class="fbox-sub">S1: Đánh giá tiêu chí 1–5⭐ Tầng 1+2 · S2: Preview gửi PH</div>
+            <a class="fbox-link" href="ui-session-report.html" target="_blank">ui-session-report.html ↗</a>
+            <div class="fbox-tags"><span class="ftag f">Ghi chú</span><span class="ftag a">AI format</span><span class="ftag p">Premium</span></div>
+          </div>
+          <div class="fv-arrow">↓</div>
+          <div class="fbox gs done" style="margin-bottom:0;">
+            <div class="fbox-title">Session Wrap-up (Screen 3)</div>
+            <div class="fbox-sub">Ghi chú buổi tiếp · Xác nhận BTVN → nhắn HV · CTA soạn buổi tiếp</div>
+            <a class="fbox-link" href="ui-session-report.html" target="_blank">ui-session-report.html S3 ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PHASE 4 ── -->
+    <div class="reassess-bar">📊 Re-assessment — Mỗi ~10 buổi <span class="ra-badge">Tự động trigger</span></div>
+
+    <div class="flow-lane">
+      <div class="fbox ph done">
+        <div class="fbox-title">Làm lại bài đánh giá</div>
+        <div class="fbox-sub">Cùng trang diagnostic, chế độ re-assessment. So sánh kết quả.</div>
+        <a class="fbox-link" href="ui-diagnostic.html" target="_blank">ui-diagnostic.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Re-test</span><span class="ftag a">AI so sánh</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox ph done">
+        <div class="fbox-title">Xem tiến bộ &amp; Skill tree</div>
+        <div class="fbox-sub">Biểu đồ cải thiện · Goals &amp; Milestones · AI dự đoán mục tiêu</div>
+        <a class="fbox-link" href="ui-progress.html" target="_blank">ui-progress.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Cơ bản</span><span class="ftag p">AI dự đoán Premium</span></div>
+      </div>
+    </div>
+
+    <div class="flow-mid">
+      <div style="height:30px;"></div>
+      <div class="fh-sync">
+        <div class="sync-line"></div>
+        <div class="sync-dot"></div>
+        <div class="sync-label">Kết quả<br>re-assess</div>
+        <div class="sync-dot"></div>
+        <div class="sync-line"></div>
+      </div>
+    </div>
+
+    <div class="flow-lane">
+      <div class="fbox gs done">
+        <div class="fbox-title">Notification &amp; Gửi test</div>
+        <div class="fbox-sub">Card "Cần làm" → "Gửi test →" ui-diagnostic.html · Auto trigger 10 buổi</div>
+        <a class="fbox-link" href="ui-dashboard-gia-su.html" target="_blank">Dashboard GS ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Auto</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox gs done">
+        <div class="fbox-title">Xem analytics &amp; Cập nhật lộ trình</div>
+        <div class="fbox-sub">Biểu đồ tiêu chí theo thời gian · AI cảnh báo · Cập nhật Cam kết</div>
+        <a class="fbox-link" href="ui-progress.html" target="_blank">ui-progress.html ↗</a>
+        <div class="fbox-tags"><span class="ftag p">Premium GS</span><span class="ftag a">AI phân tích</span></div>
+      </div>
+    </div>
+
+    <!-- ── PHASE 5 ── -->
+    <div class="flow-phase-bar">Phase 5 — Phát triển &amp; Đổi GS (nếu cần)</div>
+
+    <div class="flow-lane">
+      <div class="fbox ph done">
+        <div class="fbox-title">Nâng cấp Premium PH/HV</div>
+        <div class="fbox-sub">59–79k/tháng · AI insights · Biểu đồ đầy đủ · Digest</div>
+        <a class="fbox-link" href="ui-premium.html" target="_blank">ui-premium.html ↗</a>
+        <div class="fbox-tags"><span class="ftag p">Upgrade</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox ph done">
+        <div class="fbox-title">Đổi gia sư — Portfolio transfer</div>
+        <div class="fbox-sub">Student Portfolio → AI Brief mới → Tìm GS mới → Gửi hồ sơ có sẵn portfolio</div>
+        <a class="fbox-link" href="ui-student-portfolio.html" target="_blank">ui-student-portfolio.html ↗</a>
+        <div class="fbox-tags"><span class="ftag f">Portfolio</span><span class="ftag a">AI Brief tự động</span></div>
+      </div>
+    </div>
+
+    <div class="flow-mid"></div>
+
+    <div class="flow-lane">
+      <div class="fbox gs done">
+        <div class="fbox-title">AI email mời học tiếp</div>
+        <div class="fbox-sub">Cuối khoá học · AI soạn dựa trên tiến bộ HV · Premium GS</div>
+        <a class="fbox-link" href="ui-dashboard-gia-su.html" target="_blank">Dashboard GS ↗</a>
+        <div class="fbox-tags"><span class="ftag a">AI soạn</span><span class="ftag p">Premium GS</span></div>
+      </div>
+      <div class="fv-arrow">↓</div>
+      <div class="fbox gs done">
+        <div class="fbox-title">Nâng cấp Premium GS</div>
+        <div class="fbox-sub">99–149k/tháng · AI giáo án · Analytics · PDF export · Featured</div>
+        <a class="fbox-link" href="ui-premium.html" target="_blank">ui-premium.html ↗</a>
+        <div class="fbox-tags"><span class="ftag p">Upgrade GS</span></div>
+      </div>
+    </div>
+
+  </div><!-- /flow-grid -->
+
+  <div class="links-bar" style="margin-top:24px;">
+    <span class="lb-title">📁 Liên kết</span>
+    <a href="project-flow.html" class="lb-btn primary">Sơ đồ swimlane đầy đủ (4 lane) ↗</a>
+    <a href="project-features.html" class="lb-btn">Bảng tính năng v3 ↗</a>
+  </div>
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('pane-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>

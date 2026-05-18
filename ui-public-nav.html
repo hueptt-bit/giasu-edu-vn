@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khám phá giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p900:#0D2D6B;--p700:#1565C0;--p100:#E3F2FD;--p50:#EFF6FF;
+  --s500:#F57C00;--s100:#FFF3E0;
+  --n900:#0F172A;--n700:#334155;--n500:#64748B;--n300:#CBD5E1;--n200:#E2E8F0;--n100:#F1F5F9;--n50:#F8FAFC;
+  --green:#16A34A;--gbg:#DCFCE7;
+  --r-sm:8px;--r-md:10px;--r-lg:14px;--r-xl:16px;--r-2xl:20px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.12);
+}
+body{font-family:'Inter',sans-serif;background:var(--n50);color:var(--n900);min-height:100vh;}
+
+/* ── NAVBAR ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--n200);}
+.nb{max-width:1200px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;gap:0;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:40px;flex-shrink:0;}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:var(--p900);letter-spacing:-.4px;}
+.nav-logo-text em{font-weight:500;font-style:normal;opacity:.5;}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-link{padding:7px 13px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:var(--n500);text-decoration:none;transition:all .15s;white-space:nowrap;}
+.nav-link:hover{background:var(--n100);color:var(--n900);}
+.nav-link.active{color:var(--p700);font-weight:600;background:var(--p50);}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.btn-ghost{font-size:13.5px;font-weight:600;color:var(--p700);text-decoration:none;padding:7px 16px;border-radius:var(--r-sm);transition:background .15s;}
+.btn-ghost:hover{background:var(--p50);}
+.btn-nav-primary{font-size:13.5px;font-weight:700;color:#fff;background:var(--p700);text-decoration:none;padding:8px 18px;border-radius:var(--r-sm);transition:background .15s;}
+.btn-nav-primary:hover{background:var(--p900);}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--p900) 0%,#1565C0 60%,#1976D2 100%);padding:56px 32px 52px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(245,124,0,.15) 0%,transparent 70%);top:-100px;right:-80px;pointer-events:none;}
+.hero::after{content:'';position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);bottom:-60px;left:40px;pointer-events:none;}
+.hero-inner{max-width:640px;margin:0 auto;position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.85);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:20px;letter-spacing:.3px;}
+.hero-h1{font-size:36px;font-weight:900;color:#fff;letter-spacing:-.8px;line-height:1.15;margin-bottom:14px;}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:28px;}
+.hero-ctas{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
+.btn-hero-primary{display:inline-flex;align-items:center;gap:7px;height:46px;padding:0 28px;background:#F57C00;color:#fff;font-size:14px;font-weight:800;border-radius:var(--r-md);text-decoration:none;transition:background .15s,transform .15s;box-shadow:0 4px 16px rgba(245,124,0,.4);}
+.btn-hero-primary:hover{background:#E65100;transform:translateY(-1px);}
+.btn-hero-ghost{display:inline-flex;align-items:center;gap:7px;height:46px;padding:0 24px;background:rgba(255,255,255,.12);color:#fff;font-size:14px;font-weight:600;border-radius:var(--r-md);text-decoration:none;transition:background .15s;border:1.5px solid rgba(255,255,255,.25);}
+.btn-hero-ghost:hover{background:rgba(255,255,255,.2);}
+.hero-stats{display:flex;align-items:center;justify-content:center;gap:32px;margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,.12);}
+.hstat{text-align:center;}
+.hstat-num{font-size:22px;font-weight:900;color:#fff;}
+.hstat-label{font-size:11.5px;color:rgba(255,255,255,.55);margin-top:2px;}
+
+/* ── CONTENT ── */
+.content{max-width:1200px;margin:0 auto;padding:48px 32px 64px;}
+
+/* ── SECTION ── */
+.section{margin-bottom:44px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.section-title{font-size:17px;font-weight:800;color:var(--n900);letter-spacing:-.3px;}
+.section-sub{font-size:13px;color:var(--n500);margin-top:2px;}
+.section-line{flex:1;height:1px;background:var(--n200);}
+
+/* ── CARDS ── */
+.cards{display:grid;gap:14px;}
+.cards-3{grid-template-columns:repeat(3,1fr);}
+.cards-4{grid-template-columns:repeat(4,1fr);}
+.cards-2{grid-template-columns:repeat(2,1fr);}
+
+.pcard{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s;}
+.pcard:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);}
+.pcard-accent{height:4px;flex-shrink:0;}
+.pcard-body{padding:18px 20px 14px;flex:1;}
+.pcard-icon-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.pcard-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.pcard-tag{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;}
+.pcard-title{font-size:14px;font-weight:800;color:var(--n900);margin-bottom:5px;line-height:1.3;}
+.pcard-desc{font-size:12.5px;color:var(--n500);line-height:1.55;}
+.pcard-footer{padding:12px 20px 16px;display:flex;align-items:center;justify-content:space-between;}
+.pcard-file{font-size:10.5px;color:var(--n400);font-family:monospace;}
+.pcard-cta{font-size:12.5px;font-weight:700;color:var(--p700);display:flex;align-items:center;gap:4px;}
+
+/* Flow path card — full width, horizontal */
+.flow-card{background:#fff;border-radius:var(--r-xl);border:1.5px solid var(--n200);padding:20px 24px;margin-bottom:12px;display:flex;align-items:center;gap:16px;text-decoration:none;transition:border-color .15s,box-shadow .15s;}
+.flow-card:hover{border-color:var(--p700);box-shadow:0 4px 20px rgba(21,101,192,.1);}
+.flow-num{width:36px;height:36px;border-radius:50%;background:var(--p50);color:var(--p700);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--p100);}
+.flow-arrow{font-size:18px;color:var(--n300);flex-shrink:0;}
+.flow-info{flex:1;min-width:0;}
+.flow-info-title{font-size:14px;font-weight:700;color:var(--n900);}
+.flow-info-desc{font-size:12px;color:var(--n500);margin-top:2px;}
+.flow-badge{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+
+/* Color helpers */
+.bg-blue{background:var(--p50);}.bg-amber{background:#FFF3E0;}.bg-green{background:var(--gbg);}.bg-purple{background:#F5F3FF;}.bg-teal{background:#F0FDFA;}
+.tag-blue{background:var(--p100);color:var(--p700);}.tag-amber{background:#FFF3E0;color:#E65100;}.tag-green{background:var(--gbg);color:var(--green);}.tag-purple{background:#EDE9FE;color:#6D28D9;}.tag-teal{background:#CCFBF1;color:#0D9488;}
+.accent-blue{background:var(--p700);}.accent-amber{background:var(--s500);}.accent-green{background:var(--green);}.accent-purple{background:#7C3AED;}.accent-teal{background:#0D9488;}.accent-gray{background:#94A3B8;}
+
+/* ── FLOW PATH ── */
+.flow-path{background:#fff;border-radius:var(--r-xl);border:1px solid var(--n200);overflow:hidden;}
+.flow-path-header{padding:16px 22px;border-bottom:1px solid var(--n100);display:flex;align-items:center;gap:12px;}
+.flow-path-steps{padding:12px 0;}
+.flow-step-row{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:12px;padding:10px 22px;transition:background .15s;text-decoration:none;cursor:pointer;}
+.flow-step-row:hover{background:var(--n50);}
+.flow-step-row:not(:last-child){border-bottom:1px solid #F8FAFC;}
+.step-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;margin:0 auto;}
+.step-dot-ph{background:var(--p50);color:var(--p700);border:2px solid var(--p100);}
+.step-dot-gs{background:#FFF3E0;color:#C2410C;border:2px solid #FED7AA;}
+.step-dot-done{background:var(--gbg);color:var(--green);border:2px solid #BBF7D0;}
+.step-body-title{font-size:13.5px;font-weight:700;color:var(--n900);}
+.step-body-desc{font-size:12px;color:var(--n500);margin-top:1px;}
+.step-open{font-size:12px;font-weight:700;color:var(--p700);white-space:nowrap;}
+
+/* ── PREMIUM BANNER ── */
+.premium-banner{background:linear-gradient(135deg,#4C1D95,#7C3AED,#9333EA);border-radius:var(--r-xl);padding:28px 32px;display:flex;align-items:center;gap:24px;margin-top:44px;}
+.pb-icon{width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.pb-text{flex:1;}
+.pb-title{font-size:18px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-bottom:5px;}
+.pb-desc{font-size:13.5px;color:rgba(255,255,255,.7);line-height:1.6;}
+.pb-perks{display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;}
+.pb-perk{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.85);}
+.pb-perk-dot{width:16px;height:16px;border-radius:4px;background:rgba(74,222,128,.2);color:#4ADE80;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0;}
+.pb-ctas{display:flex;flex-direction:column;gap:8px;flex-shrink:0;}
+.pb-btn-main{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:44px;padding:0 24px;background:#F59E0B;color:#fff;font-size:13.5px;font-weight:800;border-radius:var(--r-md);text-decoration:none;white-space:nowrap;transition:background .15s;box-shadow:0 4px 16px rgba(0,0,0,.25);}
+.pb-btn-main:hover{background:#D97706;}
+.pb-btn-ghost{text-align:center;font-size:12px;color:rgba(255,255,255,.5);text-decoration:none;}
+.pb-btn-ghost:hover{color:rgba(255,255,255,.8);}
+
+/* ── FOOTER ── */
+footer{background:var(--p900);padding:32px;margin-top:0;}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-left{display:flex;align-items:center;gap:10px;}
+.footer-logo-text{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.footer-logo-text em{font-weight:500;font-style:normal;opacity:.4;}
+.footer-links-row{display:flex;gap:20px;flex-wrap:wrap;}
+.footer-link{font-size:12.5px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .15s;}
+.footer-link:hover{color:rgba(255,255,255,.85);}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nb">
+    <a class="nav-logo" href="ui-trang-chu.html">
+      <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="#fff"/>
+      </svg>
+      <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="ui-trang-chu.html" class="nav-link">Trang chủ</a>
+      <a href="ui-tim-gia-su.html" class="nav-link">Tìm gia sư</a>
+      <a href="ui-dang-tin.html" class="nav-link">Đăng tin</a>
+      <a href="ui-dang-ky-day.html" class="nav-link">Đăng ký dạy</a>
+      <a href="ui-blog.html" class="nav-link">Blog</a>
+      <a href="ui-huong-dan.html" class="nav-link">Hướng dẫn</a>
+      <a href="ui-gioi-thieu.html" class="nav-link">Về chúng tôi</a>
+    </div>
+    <div class="nav-right">
+      <a href="ui-auth.html" class="btn-ghost">Đăng nhập</a>
+      <a href="ui-auth.html" class="btn-nav-primary">Đăng ký miễn phí</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🗺️ Khám phá đầy đủ · 12 trang · 2 luồng người dùng</div>
+    <h1 class="hero-h1">Toàn bộ trang<br>giasu.edu.vn</h1>
+    <p class="hero-sub">Điều hướng nhanh đến từng trang — từ trang chủ, tìm gia sư, đến dashboard và báo cáo học sinh.</p>
+    <div class="hero-ctas">
+      <a href="ui-diagnostic.html" class="btn-hero-primary">🧪 Bắt đầu với Diagnostic test</a>
+      <a href="ui-tim-gia-su.html" class="btn-hero-ghost">Duyệt gia sư →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">10.000+</div><div class="hstat-label">Gia sư đã xác minh</div></div>
+      <div class="hstat"><div class="hstat-num">4.9★</div><div class="hstat-label">Đánh giá trung bình</div></div>
+      <div class="hstat"><div class="hstat-num">58 tỉnh</div><div class="hstat-label">Phủ sóng toàn quốc</div></div>
+      <div class="hstat"><div class="hstat-num">AI</div><div class="hstat-label">Gợi ý phù hợp nhất</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ── LUỒNG PH/HV ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-blue">👨‍👩‍👧</div>
+      <div>
+        <div class="section-title">Luồng Phụ huynh / Học viên</div>
+        <div class="section-sub">Từ tìm gia sư → ký cam kết → theo dõi tiến độ</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="flow-path">
+      <div class="flow-path-steps">
+
+        <a href="ui-auth.html" class="flow-step-row">
+          <div class="step-dot step-dot-ph">1</div>
+          <div>
+            <div class="step-body-title">Đăng ký tài khoản</div>
+            <div class="step-body-desc">Chọn vai trò Phụ huynh / Học viên · Xác minh email</div>
+          </div>
+          <span class="step-open">ui-auth.html →</span>
+        </a>
+
+        <a href="ui-diagnostic.html" class="flow-step-row">
+          <div class="step-dot step-dot-ph">2</div>
+          <div>
+            <div class="step-body-title">Làm Diagnostic Test</div>
+            <div class="step-body-desc">Chọn môn + mục tiêu → bài test → kết quả trình độ → AI gợi ý gia sư phù hợp</div>
+          </div>
+          <span class="step-open">ui-diagnostic.html →</span>
+        </a>
+
+        <a href="ui-tim-gia-su.html" class="flow-step-row">
+          <div class="step-dot step-dot-ph">3</div>
+          <div>
+            <div class="step-body-title">Duyệt hồ sơ gia sư</div>
+            <div class="step-body-desc">AI gợi ý theo Diagnostic · Match % badge · Verified · Filter môn / khu vực</div>
+          </div>
+          <span class="step-open">ui-tim-gia-su.html →</span>
+        </a>
+
+        <a href="ui-profile.html" class="flow-step-row">
+          <div class="step-dot step-dot-ph">4</div>
+          <div>
+            <div class="step-body-title">Xem hồ sơ · Gửi Hồ sơ học ✦AI</div>
+            <div class="step-body-desc">Modal 3 bước: Thông tin + Diagnostic · Lịch học · Mục tiêu → GS nhận async, không cần meeting</div>
+          </div>
+          <span class="step-open">ui-profile.html →</span>
+        </a>
+
+        <a href="ui-alignment.html" class="flow-step-row">
+          <div class="step-dot step-dot-ph">5</div>
+          <div>
+            <div class="step-body-title">Ký Cam kết học tập</div>
+            <div class="step-body-desc">GS đã pre-signed · PH ký async · Hệ thống lock + chốt lịch học cố định</div>
+          </div>
+          <span class="step-open">ui-alignment.html →</span>
+        </a>
+
+        <a href="ui-dashboard-phu-huynh.html" class="flow-step-row">
+          <div class="step-dot step-dot-ph">6</div>
+          <div>
+            <div class="step-body-title">Dashboard · Theo dõi buổi học</div>
+            <div class="step-body-desc">Lịch học · Báo cáo sau mỗi buổi · AI Digest · Thông báo Re-assessment mỗi 10 buổi</div>
+          </div>
+          <span class="step-open">ui-dashboard-phu-huynh.html →</span>
+        </a>
+
+        <a href="ui-progress.html" class="flow-step-row">
+          <div class="step-dot step-dot-ph">7</div>
+          <div>
+            <div class="step-body-title">Xem tiến độ chi tiết</div>
+            <div class="step-body-desc">Skill tree · Biểu đồ từng tiêu chí · AI Progress Digest · Goal tracker · Dự đoán điểm thi</div>
+          </div>
+          <span class="step-open">ui-progress.html →</span>
+        </a>
+
+        <a href="ui-student-portfolio.html" class="flow-step-row">
+          <div class="step-dot step-dot-done">✓</div>
+          <div>
+            <div class="step-body-title">Hồ sơ học sinh tích lũy</div>
+            <div class="step-body-desc">Toàn bộ lịch sử theo môn · Khi đổi GS: AI Student Brief tóm tắt cho GS mới · Không mất đà học</div>
+          </div>
+          <span class="step-open">ui-student-portfolio.html →</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LUỒNG GIA SƯ ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-amber">👨‍🏫</div>
+      <div>
+        <div class="section-title">Luồng Gia sư</div>
+        <div class="section-sub">Từ đăng ký → nhận yêu cầu → dạy học → báo cáo</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="flow-path">
+      <div class="flow-path-steps">
+
+        <a href="ui-dang-ky-day.html" class="flow-step-row">
+          <div class="step-dot step-dot-gs">1</div>
+          <div>
+            <div class="step-body-title">Đăng ký dạy học</div>
+            <div class="step-body-desc">Multi-step form: thông tin · môn dạy · kinh nghiệm · upload chứng chỉ · xác minh</div>
+          </div>
+          <span class="step-open" style="color:#C2410C">ui-dang-ky-day.html →</span>
+        </a>
+
+        <a href="ui-dashboard-gia-su.html" class="flow-step-row">
+          <div class="step-dot step-dot-gs">2</div>
+          <div>
+            <div class="step-body-title">Nhận & xem yêu cầu kết nối</div>
+            <div class="step-body-desc">Tab Yêu cầu · Thông tin HV + Diagnostic score · Đánh giá phù hợp · Xem AI Brief</div>
+          </div>
+          <span class="step-open" style="color:#C2410C">ui-dashboard-gia-su.html →</span>
+        </a>
+
+        <a href="ui-tutor-brief.html" class="flow-step-row">
+          <div class="step-dot step-dot-gs">3</div>
+          <div>
+            <div class="step-body-title">Xem AI Brief · Lập lộ trình đề xuất</div>
+            <div class="step-body-desc">AI tóm tắt hồ sơ HV · Phân tích điểm yếu · Dự đoán timeline · Lộ trình AI soạn sẵn (Premium) hoặc tự điền (Free)</div>
+          </div>
+          <span class="step-open" style="color:#C2410C">ui-tutor-brief.html →</span>
+        </a>
+
+        <a href="ui-alignment.html" class="flow-step-row">
+          <div class="step-dot step-dot-gs">4</div>
+          <div>
+            <div class="step-body-title">Ký Cam kết học tập</div>
+            <div class="step-body-desc">GS pre-sign · Gửi đề xuất lịch + lộ trình → PH xem và ký async · Lock cam kết</div>
+          </div>
+          <span class="step-open" style="color:#C2410C">ui-alignment.html →</span>
+        </a>
+
+        <a href="ui-session-report.html" class="flow-step-row">
+          <div class="step-dot step-dot-gs">5</div>
+          <div>
+            <div class="step-body-title">Điền báo cáo sau buổi học</div>
+            <div class="step-body-desc">Đánh giá tiêu chí 1–5★ theo môn · AI viết lại báo cáo cho PH · Ghi BTVN · Gửi tự động</div>
+          </div>
+          <span class="step-open" style="color:#C2410C">ui-session-report.html →</span>
+        </a>
+
+        <a href="ui-resources.html" class="flow-step-row">
+          <div class="step-dot step-dot-gs">6</div>
+          <div>
+            <div class="step-body-title">Quản lý thư viện tài liệu</div>
+            <div class="step-body-desc">Upload · Phân loại theo môn · Chia sẻ học sinh · Folder + analytics (Premium)</div>
+          </div>
+          <span class="step-open" style="color:#C2410C">ui-resources.html →</span>
+        </a>
+
+        <a href="ui-dashboard-gia-su.html" class="flow-step-row">
+          <div class="step-dot step-dot-gs">7</div>
+          <div>
+            <div class="step-body-title">Quản lý lớp học</div>
+            <div class="step-body-desc">Lịch dạy · Danh sách học viên · Nhật ký · AI soạn giáo án · Analytics buổi học</div>
+          </div>
+          <span class="step-open" style="color:#C2410C">ui-dashboard-gia-su.html →</span>
+        </a>
+
+        <a href="ui-premium.html" class="flow-step-row">
+          <div class="step-dot" style="background:#F5F3FF;color:#7C3AED;border:2px solid #DDD6FE;font-size:13px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;">✦</div>
+          <div>
+            <div class="step-body-title">Nâng cấp GS Premium</div>
+            <div class="step-body-desc">AI soạn báo cáo + giáo án · PDF export · Featured listing · Analytics học sinh nâng cao · 99k/tháng</div>
+          </div>
+          <span class="step-open" style="color:#7C3AED">ui-premium.html →</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TRANG PUBLIC ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-blue">🌐</div>
+      <div>
+        <div class="section-title">Trang công khai</div>
+        <div class="section-sub">Không cần đăng nhập · Phù hợp để demo cho stakeholders</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="cards cards-4">
+
+      <a href="ui-trang-chu.html" class="pcard">
+        <div class="pcard-accent accent-blue"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon bg-blue">🏠</div>
+            <span class="pcard-tag tag-blue">Marketing</span>
+          </div>
+          <div class="pcard-title">Trang chủ</div>
+          <div class="pcard-desc">Hero · AI Match badge · 3 trụ cột · How it works · Reviews · CTA</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-trang-chu.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+      <a href="ui-tim-gia-su.html" class="pcard">
+        <div class="pcard-accent accent-blue"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon bg-blue">🔍</div>
+            <span class="pcard-tag tag-blue">Listing</span>
+          </div>
+          <div class="pcard-title">Tìm gia sư</div>
+          <div class="pcard-desc">AI rec strip · Match % · Verified badges · Filter · Card grid</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-tim-gia-su.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+      <a href="ui-profile.html" class="pcard">
+        <div class="pcard-accent accent-blue"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon bg-blue">👤</div>
+            <span class="pcard-tag tag-blue">Profile</span>
+          </div>
+          <div class="pcard-title">Hồ sơ gia sư</div>
+          <div class="pcard-desc">Hero redesign · KPI inline · Modal gửi hồ sơ học 3 bước · Sidebar async flow</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-profile.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+      <a href="ui-diagnostic.html" class="pcard">
+        <div class="pcard-accent accent-green"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon bg-green">🧪</div>
+            <span class="pcard-tag tag-green">AI</span>
+          </div>
+          <div class="pcard-title">Diagnostic Test</div>
+          <div class="pcard-desc">Chọn môn → làm bài → kết quả trình độ → AI gợi ý GS · Free/Premium</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-diagnostic.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+      <a href="ui-gioi-thieu.html" class="pcard">
+        <div class="pcard-accent accent-gray"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon" style="background:#F1F5F9">ℹ️</div>
+            <span class="pcard-tag" style="background:#F1F5F9;color:#475569">Marketing</span>
+          </div>
+          <div class="pcard-title">Giới thiệu</div>
+          <div class="pcard-desc">Mission · Đội ngũ · Timeline · Giá trị cốt lõi</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-gioi-thieu.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+      <a href="ui-blog.html" class="pcard">
+        <div class="pcard-accent accent-gray"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon" style="background:#F1F5F9">📝</div>
+            <span class="pcard-tag" style="background:#F1F5F9;color:#475569">Content</span>
+          </div>
+          <div class="pcard-title">Blog</div>
+          <div class="pcard-desc">Featured post · Danh sách bài viết · Filter chủ đề</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-blog.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+      <a href="ui-huong-dan.html" class="pcard">
+        <div class="pcard-accent accent-teal"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon bg-teal">❓</div>
+            <span class="pcard-tag tag-teal">Support</span>
+          </div>
+          <div class="pcard-title">Hướng dẫn / FAQ</div>
+          <div class="pcard-desc">Accordion FAQ · Tìm kiếm · Category tabs theo chủ đề</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-huong-dan.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+      <a href="ui-auth.html" class="pcard">
+        <div class="pcard-accent accent-gray"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon" style="background:#F1F5F9">🔐</div>
+            <span class="pcard-tag" style="background:#F1F5F9;color:#475569">Auth</span>
+          </div>
+          <div class="pcard-title">Đăng nhập / Đăng ký</div>
+          <div class="pcard-desc">Tab login ↔ register · Form validation · Social login</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-auth.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ── TRANG DÀNH CHO GS ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-amber">👨‍🏫</div>
+      <div>
+        <div class="section-title">Đăng ký & Quản lý — Gia sư</div>
+        <div class="section-sub">Trang dành cho gia sư muốn tham gia platform</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="cards cards-4">
+
+      <a href="ui-dang-ky-day.html" class="pcard">
+        <div class="pcard-accent accent-amber"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon bg-amber">👨‍🏫</div>
+            <span class="pcard-tag tag-amber">Gia sư</span>
+          </div>
+          <div class="pcard-title">Đăng ký dạy</div>
+          <div class="pcard-desc">Multi-step: thông tin · môn · kinh nghiệm · upload chứng chỉ</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-dang-ky-day.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+      <a href="ui-dang-tin.html" class="pcard">
+        <div class="pcard-accent accent-amber"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon bg-amber">📢</div>
+            <span class="pcard-tag tag-amber">PH</span>
+          </div>
+          <div class="pcard-title">Đăng tin tìm GS</div>
+          <div class="pcard-desc">PH tạo yêu cầu theo môn · khu vực · lịch · ngân sách mong muốn</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-dang-tin.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+      <a href="ui-premium.html" class="pcard">
+        <div class="pcard-accent accent-purple"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon bg-purple">⭐</div>
+            <span class="pcard-tag tag-purple">Premium</span>
+          </div>
+          <div class="pcard-title">Nâng cấp Premium</div>
+          <div class="pcard-desc">Hero 2 tab PH / GS · Pricing cards · Billing toggle · So sánh Free vs Premium</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-premium.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+      <a href="ui-messages.html" class="pcard">
+        <div class="pcard-accent accent-teal"></div>
+        <div class="pcard-body">
+          <div class="pcard-icon-row">
+            <div class="pcard-icon bg-teal">💬</div>
+            <span class="pcard-tag tag-teal">Messaging</span>
+          </div>
+          <div class="pcard-title">Nhắn tin</div>
+          <div class="pcard-desc">Inbox GS ↔ PH/HV · Thread view · Link sang Cam kết và hồ sơ GS</div>
+        </div>
+        <div class="pcard-footer"><span class="pcard-file">ui-messages.html</span><span class="pcard-cta">Mở →</span></div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ── PREMIUM BANNER ── -->
+  <div class="premium-banner">
+    <div class="pb-icon">✦</div>
+    <div class="pb-text">
+      <div class="pb-title">Premium · Mở khoá toàn bộ AI features</div>
+      <div class="pb-desc">AI soạn báo cáo, giáo án, phân tích điểm yếu học sinh — tiết kiệm ~9 giờ/tháng cho gia sư. Biểu đồ tiến độ, AI dự đoán điểm thi cho phụ huynh.</div>
+      <div class="pb-perks">
+        <div class="pb-perk"><div class="pb-perk-dot">✓</div>AI soạn báo cáo tự động</div>
+        <div class="pb-perk"><div class="pb-perk-dot">✓</div>Biểu đồ tiến độ chi tiết</div>
+        <div class="pb-perk"><div class="pb-perk-dot">✓</div>AI dự đoán điểm thi</div>
+        <div class="pb-perk"><div class="pb-perk-dot">✓</div>Featured listing 30 ngày</div>
+      </div>
+    </div>
+    <div class="pb-ctas">
+      <a href="ui-premium.html" class="pb-btn-main">Xem chi tiết Premium →</a>
+      <a href="ui-auth.html" class="pb-btn-ghost">Dùng thử miễn phí 7 ngày</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <svg width="32" height="20" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="rgba(255,255,255,0.2)"/>
+      </svg>
+      <span class="footer-logo-text">giasu<em>.edu.vn</em></span>
+    </div>
+    <div class="footer-links-row">
+      <a href="ui-trang-chu.html" class="footer-link">Trang chủ</a>
+      <a href="ui-tim-gia-su.html" class="footer-link">Tìm gia sư</a>
+      <a href="ui-diagnostic.html" class="footer-link">Diagnostic Test</a>
+      <a href="ui-dang-ky-day.html" class="footer-link">Đăng ký dạy</a>
+      <a href="ui-huong-dan.html" class="footer-link">Hướng dẫn</a>
+      <a href="ui-premium.html" class="footer-link">Premium</a>
+      <a href="index.html" class="footer-link">Project Hub →</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

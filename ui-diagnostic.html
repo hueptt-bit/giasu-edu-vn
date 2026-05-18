@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài test đầu vào — giasu.edu.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F1F5F9;color:#0F172A;min-height:100vh}
+
+/* NAV */
+nav{background:white;border-bottom:1px solid #E2E8F0;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-logo-text{font-size:15.5px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px}
+.nav-logo-text em{font-weight:500;font-style:normal;color:#0D2D6B;opacity:.5}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:#64748B;text-decoration:none;padding:6px 12px;border-radius:8px;border:1px solid #E2E8F0;background:white;cursor:pointer}
+.nav-back:hover{background:#F8FAFC}
+.nav-step{font-size:12.5px;color:#94A3B8;font-weight:600}
+
+/* WRAPPER */
+.wrapper{max-width:860px;margin:0 auto;padding:40px 20px 80px}
+
+/* SCREEN TOGGLE */
+.screen{display:none}
+.screen.active{display:block}
+
+/* ─── SCREEN 1: CHỌN MÔN ─── */
+.s1-title{font-size:26px;font-weight:800;color:#0D2D6B;margin-bottom:6px}
+.s1-sub{font-size:14px;color:#64748B;margin-bottom:32px}
+
+.subject-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+.subject-card{
+  background:white;border:2px solid #E2E8F0;border-radius:16px;
+  padding:22px 16px;text-align:center;cursor:pointer;
+  transition:border-color .15s,box-shadow .15s,transform .12s;
+  position:relative;
+}
+.subject-card:hover{border-color:#0D2D6B;box-shadow:0 4px 16px rgba(13,45,107,.1);transform:translateY(-2px)}
+.subject-card.selected{border-color:#0D2D6B;background:#EEF2FF;box-shadow:0 4px 16px rgba(13,45,107,.15)}
+.subject-card.selected::after{
+  content:'✓';position:absolute;top:10px;right:12px;
+  width:20px;height:20px;background:#0D2D6B;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:white;font-weight:700;
+}
+.subject-icon{font-size:36px;margin-bottom:10px;display:block}
+.subject-name{font-size:14px;font-weight:700;color:#1E293B;margin-bottom:3px}
+.subject-desc{font-size:11.5px;color:#64748B}
+
+/* GOAL INPUT */
+.goal-section{background:white;border-radius:16px;padding:24px;margin-bottom:24px;border:1px solid #E2E8F0;display:none}
+.goal-section.visible{display:block}
+.goal-label{font-size:14px;font-weight:700;color:#1E293B;margin-bottom:8px}
+.goal-sub{font-size:12.5px;color:#64748B;margin-bottom:14px}
+.goal-examples{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.goal-chip{
+  font-size:12px;padding:5px 12px;border-radius:20px;
+  border:1.5px solid #E2E8F0;background:#F8FAFC;color:#475569;
+  cursor:pointer;transition:all .12s;
+}
+.goal-chip:hover,.goal-chip.active{border-color:#0D2D6B;background:#EEF2FF;color:#0D2D6B;font-weight:600}
+.goal-input{
+  width:100%;padding:11px 14px;border:1.5px solid #E2E8F0;border-radius:10px;
+  font-size:14px;font-family:'Inter',sans-serif;outline:none;
+  transition:border-color .15s;color:#1E293B;
+}
+.goal-input:focus{border-color:#0D2D6B}
+.goal-input::placeholder{color:#94A3B8}
+
+.start-btn{
+  width:100%;padding:14px;background:#0D2D6B;color:white;
+  border:none;border-radius:12px;font-size:15px;font-weight:700;
+  cursor:pointer;transition:background .15s;display:none;
+  font-family:'Inter',sans-serif;
+}
+.start-btn.visible{display:block}
+.start-btn:hover{background:#1565C0}
+
+/* ─── SCREEN 2: BÀI TEST ─── */
+.test-header{background:white;border-radius:16px;padding:20px 24px;margin-bottom:20px;border:1px solid #E2E8F0}
+.test-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.test-subject-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#EEF2FF;color:#0D2D6B;font-size:13px;font-weight:700;
+  padding:5px 12px;border-radius:8px;
+}
+.timer{
+  display:flex;align-items:center;gap:6px;
+  font-size:14px;font-weight:700;color:#DC2626;
+  background:#FEE2E2;padding:5px 12px;border-radius:8px;
+}
+.timer.ok{color:#065F46;background:#D1FAE5}
+.timer.warn{color:#D97706;background:#FEF3C7}
+
+.progress-wrap{height:6px;background:#F1F5F9;border-radius:99px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,#0D2D6B,#3B82F6);border-radius:99px;transition:width .3s}
+
+.progress-text{display:flex;justify-content:space-between;font-size:12px;color:#64748B;margin-top:8px}
+
+/* QUESTION */
+.question-card{background:white;border-radius:16px;padding:28px;margin-bottom:16px;border:1px solid #E2E8F0}
+.q-num{font-size:12px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.q-text{font-size:17px;font-weight:700;color:#1E293B;line-height:1.6;margin-bottom:22px}
+.q-options{display:flex;flex-direction:column;gap:10px}
+.q-option{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 16px;border:1.5px solid #E2E8F0;border-radius:12px;
+  cursor:pointer;transition:all .12s;
+}
+.q-option:hover{border-color:#0D2D6B;background:#F8FAFF}
+.q-option.selected{border-color:#0D2D6B;background:#EEF2FF}
+.q-option.correct{border-color:#10B981;background:#ECFDF5}
+.q-option.wrong{border-color:#DC2626;background:#FEF2F2}
+.opt-letter{
+  width:28px;height:28px;border-radius:8px;
+  background:#F1F5F9;color:#475569;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:all .12s;
+}
+.q-option.selected .opt-letter{background:#0D2D6B;color:white}
+.q-option.correct .opt-letter{background:#10B981;color:white}
+.q-option.wrong .opt-letter{background:#DC2626;color:white}
+.opt-text{font-size:14px;color:#1E293B;font-weight:500}
+
+/* Q NAV DOTS */
+.q-dots{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
+.q-dot{
+  width:32px;height:32px;border-radius:8px;border:1.5px solid #E2E8F0;
+  background:white;font-size:12px;font-weight:700;color:#94A3B8;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .12s;
+}
+.q-dot.answered{background:#E0E7FF;border-color:#6366F1;color:#4338CA}
+.q-dot.current{background:#0D2D6B;border-color:#0D2D6B;color:white}
+
+.test-actions{display:flex;gap:12px;align-items:center}
+.btn-prev{
+  padding:11px 20px;border:1.5px solid #E2E8F0;border-radius:10px;
+  background:white;color:#64748B;font-size:14px;font-weight:600;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:all .12s;
+}
+.btn-prev:hover{border-color:#0D2D6B;color:#0D2D6B}
+.btn-next{
+  padding:11px 28px;background:#0D2D6B;color:white;border:none;
+  border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:background .15s;margin-left:auto;
+}
+.btn-next:hover{background:#1565C0}
+.btn-submit{
+  padding:11px 28px;background:#10B981;color:white;border:none;
+  border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:background .15s;margin-left:auto;display:none;
+}
+.btn-submit:hover{background:#059669}
+
+/* ─── SCREEN 3: KẾT QUẢ ─── */
+.result-hero{
+  background:linear-gradient(135deg,#0D2D6B 0%,#1565C0 100%);
+  border-radius:20px;padding:36px;margin-bottom:24px;
+  display:flex;gap:32px;align-items:center;
+}
+.score-circle{
+  width:120px;height:120px;flex-shrink:0;
+  border-radius:50%;border:5px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.15);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.score-num{font-size:32px;font-weight:800;color:white}
+.score-max{font-size:13px;color:rgba(255,255,255,.6);margin-top:-2px}
+.result-info{flex:1}
+.result-level{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(245,124,0,.9);color:white;
+  font-size:13px;font-weight:800;padding:5px 14px;border-radius:8px;
+  margin-bottom:10px;
+}
+.result-title{font-size:22px;font-weight:800;color:white;margin-bottom:8px}
+.result-desc{font-size:14px;color:rgba(255,255,255,.75);line-height:1.6}
+
+/* BREAKDOWN */
+.breakdown-card{background:white;border-radius:16px;padding:24px;margin-bottom:20px;border:1px solid #E2E8F0}
+.breakdown-title{font-size:16px;font-weight:800;color:#0D2D6B;margin-bottom:4px}
+.breakdown-sub{font-size:13px;color:#64748B;margin-bottom:20px}
+.criteria-section{margin-bottom:20px}
+.criteria-section:last-child{margin-bottom:0}
+.criteria-header{font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.criteria-header::after{content:'';flex:1;height:1px;background:#F1F5F9}
+.criteria-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.criteria-name{font-size:13px;font-weight:600;color:#374151;width:140px;flex-shrink:0}
+.criteria-bar-wrap{flex:1;height:8px;background:#F1F5F9;border-radius:99px;overflow:hidden}
+.criteria-bar{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.bar-strong{background:linear-gradient(90deg,#10B981,#34D399)}
+.bar-mid{background:linear-gradient(90deg,#F59E0B,#FCD34D)}
+.bar-weak{background:linear-gradient(90deg,#EF4444,#F87171)}
+.criteria-score{font-size:13px;font-weight:700;color:#374151;width:32px;text-align:right;flex-shrink:0}
+.criteria-label{font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;flex-shrink:0}
+.label-strong{background:#D1FAE5;color:#065F46}
+.label-mid{background:#FEF3C7;color:#92400E}
+.label-weak{background:#FEE2E2;color:#9B1C1C}
+
+/* AI INSIGHT */
+.ai-card{background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border:1.5px solid #DDD6FE;border-radius:16px;padding:20px 24px;margin-bottom:20px}
+.ai-badge{display:inline-flex;align-items:center;gap:5px;background:#7C3AED;color:white;font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;margin-bottom:10px}
+.ai-text{font-size:13.5px;color:#4C1D95;line-height:1.7}
+
+/* GS RECOMMENDATIONS */
+.rec-title{font-size:18px;font-weight:800;color:#0D2D6B;margin-bottom:6px}
+.rec-sub{font-size:13px;color:#64748B;margin-bottom:18px}
+.gs-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.gs-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.gs-card{background:white;border:1.5px solid #E2E8F0;border-radius:18px;overflow:hidden;transition:box-shadow .2s,transform .15s;cursor:pointer;display:flex;flex-direction:column}
+.gs-card:hover{box-shadow:0 8px 28px rgba(0,0,0,.12);transform:translateY(-3px)}
+.gs-card.top-pick{border-color:#F57C00;box-shadow:0 0 0 3px rgba(245,124,0,.12)}
+.gs-top-badge{font-size:10px;font-weight:700;background:#F57C00;color:white;padding:3px 10px;border-radius:0 0 8px 0;display:inline-block;position:absolute;top:0;left:0}
+/* Photo area */
+.gs-photo-wrap{position:relative;height:100px;background:linear-gradient(135deg,#0D2D6B 0%,#1e4fd8 100%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:0;flex-shrink:0}
+.gs-photo-bg{position:absolute;inset:0;opacity:.15;background:radial-gradient(circle at 70% 30%,#F57C00,transparent 60%)}
+.gs-photo{width:72px;height:72px;border-radius:50%;border:3px solid white;object-fit:cover;position:relative;z-index:1;margin-bottom:-20px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.gs-verified{position:absolute;bottom:-16px;right:calc(50% - 44px);width:20px;height:20px;background:#10B981;border-radius:50%;border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:10px;z-index:2}
+.gs-body{padding:28px 16px 16px;flex:1;display:flex;flex-direction:column}
+.gs-name{font-size:14px;font-weight:800;color:#1E293B;margin-bottom:2px;text-align:center}
+.gs-subject{font-size:11.5px;color:#64748B;margin-bottom:12px;text-align:center}
+/* Match */
+.gs-match-label{font-size:10.5px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.gs-match{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.match-bar-wrap{flex:1;height:6px;background:#F1F5F9;border-radius:99px;overflow:hidden}
+.match-bar{height:100%;border-radius:99px;background:linear-gradient(90deg,#0D2D6B,#3B82F6);transition:width 1s}
+.match-pct{font-size:13px;font-weight:800;color:#0D2D6B;flex-shrink:0}
+/* Meta row */
+.gs-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.gs-rating{font-size:12px;color:#F59E0B;font-weight:700;display:flex;align-items:center;gap:3px}
+.gs-price{font-size:11.5px;color:#475569;font-weight:600}
+.gs-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+.gs-tag{font-size:10.5px;background:#F1F5F9;color:#475569;padding:3px 8px;border-radius:6px;font-weight:500}
+.gs-avail{font-size:11px;color:#10B981;font-weight:600;display:flex;align-items:center;gap:4px;margin-bottom:12px}
+.gs-btn{
+  width:100%;padding:10px;background:#0D2D6B;color:white;border:none;
+  border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:background .15s;margin-top:auto;
+}
+.gs-btn:hover{background:#1565C0}
+.gs-card.top-pick .gs-btn{background:#F57C00}
+.gs-card.top-pick .gs-btn:hover{background:#C46200}
+
+/* SAVE CONFIRM BANNER */
+.save-confirm-banner{
+  display:flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,#F0FDF4,#DCFCE7);
+  border:2px solid #86EFAC;border-radius:14px;
+  padding:12px 16px;margin-bottom:16px;
+  animation:savedSlideIn .4s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes savedSlideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.save-confirm-icon{width:36px;height:36px;border-radius:10px;background:#16A34A;
+  display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;flex-shrink:0;}
+.save-confirm-text{flex:1;}
+.save-confirm-title{font-size:13px;font-weight:800;color:#15803D;}
+.save-confirm-sub{font-size:12px;color:#166534;margin-top:2px;line-height:1.4;}
+.save-confirm-cta{font-size:12px;font-weight:700;color:#fff;background:#15803D;
+  border:none;border-radius:8px;padding:7px 14px;cursor:pointer;white-space:nowrap;
+  font-family:'Inter',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:5px;flex-shrink:0;}
+.save-confirm-cta:hover{background:#166534;}
+
+/* RESULT ACTIONS */
+.result-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-all-gs{
+  flex:1;padding:14px;background:#0D2D6B;color:white;border:none;
+  border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:background .15s;text-align:center;
+  text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-all-gs:hover{background:#1565C0}
+.btn-save{
+  padding:14px 24px;background:white;color:#0D2D6B;border:2px solid #0D2D6B;
+  border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:all .15s;
+}
+.btn-save:hover{background:#EEF2FF}
+
+/* ─── ACCOUNT TOGGLE ─── */
+.account-toggle{
+  display:flex;align-items:center;gap:0;
+  background:#F1F5F9;border-radius:12px;padding:4px;
+  border:1.5px solid #E2E8F0;
+  width:fit-content;margin-bottom:24px;
+}
+.acc-btn{
+  padding:7px 20px;border-radius:8px;font-size:13px;font-weight:700;
+  cursor:pointer;border:none;background:transparent;color:#64748B;
+  font-family:'Inter',sans-serif;transition:all .2s;
+}
+.acc-btn.active{background:white;color:#0D2D6B;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.acc-btn.active.premium{color:#7C3AED;background:linear-gradient(135deg,#F5F3FF,#EDE9FE);box-shadow:0 1px 4px rgba(124,58,237,.15)}
+.acc-label-free{background:#E2E8F0;color:#64748B;font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;margin-left:4px}
+.acc-label-premium{background:linear-gradient(90deg,#7C3AED,#A855F7);color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;margin-left:4px}
+
+/* FREE LOCKED STATES */
+.lock-overlay{
+  position:relative;
+}
+.lock-overlay::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(241,245,249,0) 0%,rgba(241,245,249,.97) 55%);
+  border-radius:16px;pointer-events:none;z-index:2;
+  opacity:0;transition:opacity .3s;
+}
+.is-free .lock-overlay::after{ opacity:1; }
+
+.lock-cta{
+  position:absolute;bottom:0;left:0;right:0;
+  display:flex;flex-direction:column;align-items:center;
+  padding:20px;z-index:3;text-align:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.is-free .lock-cta{ opacity:1;pointer-events:auto; }
+
+.lock-icon{font-size:24px;margin-bottom:6px}
+.lock-title{font-size:14px;font-weight:800;color:#0D2D6B;margin-bottom:4px}
+.lock-desc{font-size:12px;color:#64748B;margin-bottom:12px;line-height:1.5}
+.lock-upgrade-btn{
+  background:linear-gradient(135deg,#7C3AED,#A855F7);color:white;
+  border:none;border-radius:10px;padding:10px 22px;
+  font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;
+  box-shadow:0 4px 12px rgba(124,58,237,.35);transition:transform .15s,box-shadow .15s;
+}
+.lock-upgrade-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(124,58,237,.45)}
+
+/* Blur effect for free tier content */
+.free-blur{transition:filter .3s,opacity .3s}
+.is-free .free-blur{filter:blur(4px);opacity:.4;pointer-events:none;user-select:none}
+
+/* Free teaser AI card */
+.ai-teaser{display:none}
+.is-free .ai-teaser{display:block}
+.is-free .ai-card-real{display:none}
+
+/* GS cards free state */
+.gs-cards-free-gate{
+  display:none;
+  background:white;border:1.5px solid #E2E8F0;border-radius:18px;
+  padding:32px 24px;text-align:center;margin-bottom:24px;
+}
+.is-free .gs-cards-free-gate{display:block}
+.is-free .gs-cards{display:none}
+.is-free .rec-title, .is-free .rec-sub{display:none}
+
+/* Free banner at top of result */
+.free-banner{
+  background:linear-gradient(135deg,#FFF7ED,#FEF3C7);
+  border:1.5px solid #FCD34D;border-radius:12px;
+  padding:12px 16px;margin-bottom:20px;
+  align-items:center;gap:10px;font-size:13px;color:#92400E;
+  display:none;
+}
+.is-free .free-banner{display:flex}
+.free-banner-icon{font-size:18px;flex-shrink:0}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:#1E293B;color:white;padding:12px 20px;border-radius:12px;
+  font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;
+  transition:transform .3s;z-index:999;pointer-events:none;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* STEP INDICATOR */
+.step-indicator{display:flex;align-items:center;gap:8px;margin-bottom:32px}
+.step-dot{width:8px;height:8px;border-radius:50%;background:#E2E8F0;transition:all .3s}
+.step-dot.active{background:#0D2D6B;width:24px;border-radius:4px}
+.step-dot.done{background:#10B981}
+.step-label{font-size:13px;color:#64748B;font-weight:600;margin-left:4px}
+
+@media(max-width:640px){
+  .subject-grid{grid-template-columns:repeat(2,1fr)}
+  .gs-cards{grid-template-columns:1fr}
+  .result-hero{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="ui-trang-chu.html" class="nav-logo">
+    <svg width="40" height="25" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0">
+      <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+      <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+    </svg>
+    <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+  </a>
+  <span class="nav-step" id="navStep">Bước 1 / 3</span>
+  <button class="nav-back" onclick="navBack()"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Thoát</button>
+</nav>
+
+<div class="wrapper">
+
+<!-- ══════════════════════════════════
+     SCREEN 1 — CHỌN MÔN
+══════════════════════════════════ -->
+<div class="screen active" id="s1">
+  <div class="step-indicator">
+    <div class="step-dot active" id="dot1"></div>
+    <div class="step-dot" id="dot2"></div>
+    <div class="step-dot" id="dot3"></div>
+    <span class="step-label">Chọn môn học</span>
+  </div>
+
+  <div class="s1-title">Bạn muốn học môn gì?</div>
+  <div class="s1-sub">Chọn môn học để nhận bài kiểm tra phù hợp với trình độ hiện tại</div>
+
+  <div class="subject-grid">
+    <div class="subject-card" onclick="selectSubject('toan', this)">
+      <span class="subject-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22L22 2"/><path d="m2 22 10-10"/><path d="M2 12 12 2"/><path d="M2 22h20"/><path d="M12 22V12"/></svg></span>
+      <div class="subject-name">Toán học</div>
+      <div class="subject-desc">Đại số, Giải tích, Hình học</div>
+    </div>
+    <div class="subject-card" onclick="selectSubject('anh', this)">
+      <span class="subject-icon">🇬🇧</span>
+      <div class="subject-name">Tiếng Anh</div>
+      <div class="subject-desc">Giao tiếp, IELTS, TOEIC, Học thuật</div>
+    </div>
+    <div class="subject-card" onclick="selectSubject('ly', this)">
+      <span class="subject-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+      <div class="subject-name">Vật lý</div>
+      <div class="subject-desc">Cơ học, Điện học, Quang học</div>
+    </div>
+    <div class="subject-card" onclick="selectSubject('hoa', this)">
+      <span class="subject-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5V2"/><path d="M8.5 2h7"/><path d="M14.5 16h-5"/></svg></span>
+      <div class="subject-name">Hóa học</div>
+      <div class="subject-desc">Hóa vô cơ, Hữu cơ, Phân tích</div>
+    </div>
+    <div class="subject-card" onclick="selectSubject('van', this)">
+      <span class="subject-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+      <div class="subject-name">Ngữ văn</div>
+      <div class="subject-desc">Văn học, Làm văn, Phân tích</div>
+    </div>
+    <div class="subject-card" onclick="selectSubject('code', this)">
+      <span class="subject-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+      <div class="subject-name">Lập trình</div>
+      <div class="subject-desc">Python, JavaScript, Thuật toán</div>
+    </div>
+    <div class="subject-card" id="cardOther" onclick="selectOther(this)" style="border-style:dashed;border-color:#CBD5E1;">
+      <span class="subject-icon">➕</span>
+      <div class="subject-name">Môn khác</div>
+      <div class="subject-desc">Sinh, Sử, Địa, Tiếng Nhật...</div>
+    </div>
+  </div>
+
+  <!-- OTHER SUBJECT INPUT -->
+  <div id="otherSubjectWrap" style="display:none;background:white;border-radius:16px;padding:20px;margin-bottom:16px;border:1.5px solid #0D2D6B;">
+    <div style="font-size:14px;font-weight:700;color:#1E293B;margin-bottom:10px;">Bạn muốn học môn nào?</div>
+    <input type="text" id="otherSubjectInput" class="goal-input" placeholder="Vd: Sinh học, Tiếng Nhật, Lịch sử, Địa lý..." oninput="checkOtherSubject()" style="margin-bottom:0;" />
+  </div>
+
+  <div class="goal-section" id="goalSection">
+    <div class="goal-label">Mục tiêu của bạn là gì?</div>
+    <div class="goal-sub">Mục tiêu càng cụ thể, gia sư được đề xuất càng phù hợp</div>
+    <div class="goal-examples" id="goalExamples"></div>
+    <input type="text" class="goal-input" id="goalInput" placeholder="Nhập mục tiêu..." oninput="checkGoal()" />
+  </div>
+
+  <button class="start-btn" id="startBtn" onclick="startTest()">Bắt đầu kiểm tra →</button>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 2 — BÀI TEST
+══════════════════════════════════ -->
+<div class="screen" id="s2">
+  <div class="step-indicator">
+    <div class="step-dot done"></div>
+    <div class="step-dot active"></div>
+    <div class="step-dot" id="dot3b"></div>
+    <span class="step-label">Làm bài kiểm tra</span>
+  </div>
+
+  <div class="test-header">
+    <div class="test-meta">
+      <div class="test-subject-badge" id="testSubjectBadge"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22L22 2"/><path d="m2 22 10-10"/><path d="M2 12 12 2"/><path d="M2 22h20"/><path d="M12 22V12"/></svg> Toán học</div>
+      <div class="timer ok" id="timer">⏱ 10:00</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar" style="width:20%"></div>
+    </div>
+    <div class="progress-text">
+      <span id="progressText">Câu 1 / 5</span>
+      <span id="answeredText">0 câu đã trả lời</span>
+    </div>
+  </div>
+
+  <div class="q-dots" id="qDots"></div>
+
+  <div class="question-card" id="questionCard">
+    <div class="q-num" id="qNum">Câu 1</div>
+    <div class="q-text" id="qText"></div>
+    <div class="q-options" id="qOptions"></div>
+  </div>
+
+  <div class="test-actions">
+    <button class="btn-prev" id="btnPrev" onclick="prevQ()">← Câu trước</button>
+    <button class="btn-next" id="btnNext" onclick="nextQ()">Câu tiếp →</button>
+    <button class="btn-submit" id="btnSubmit" onclick="submitTest()">Nộp bài ✓</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 3 — KẾT QUẢ
+══════════════════════════════════ -->
+<div class="screen" id="s3">
+  <div class="step-indicator">
+    <div class="step-dot done"></div>
+    <div class="step-dot done"></div>
+    <div class="step-dot active"></div>
+    <span class="step-label">Kết quả & Gợi ý gia sư</span>
+  </div>
+
+  <!-- ACCOUNT TOGGLE -->
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px;">
+    <div style="font-size:12px;color:#94A3B8;font-weight:600;">Xem giao diện theo loại tài khoản:</div>
+    <div class="account-toggle">
+      <button class="acc-btn active" id="btnFree" onclick="setAccountMode('free')">Miễn phí <span class="acc-label-free">FREE</span></button>
+      <button class="acc-btn" id="btnPremium" onclick="setAccountMode('premium')">Cao cấp <span class="acc-label-premium">PREMIUM</span></button>
+    </div>
+  </div>
+
+  <!-- FREE BANNER -->
+  <div class="free-banner">
+    <span class="free-banner-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+    <div>Bạn đang xem giao diện <strong>tài khoản Miễn phí</strong>. Nâng cấp Premium để mở khóa phân tích AI chi tiết và gợi ý gia sư phù hợp.</div>
+  </div>
+
+  <!-- SAVE CONFIRM BANNER -->
+  <div class="save-confirm-banner" id="saveConfirmBanner">
+    <div class="save-confirm-icon">✓</div>
+    <div class="save-confirm-text">
+      <div class="save-confirm-title">Đã lưu kết quả vào Hồ sơ học sinh</div>
+      <div class="save-confirm-sub">Điểm số, phân tích kỹ năng và lộ trình AI đã được ghi vào Student Portfolio. Dùng để matching gia sư và theo dõi tiến bộ về sau.</div>
+    </div>
+    <a href="ui-student-portfolio.html" class="save-confirm-cta">Xem Hồ sơ →</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="result-hero">
+    <div class="score-circle">
+      <div class="score-num" id="scoreNum">72</div>
+      <div class="score-max">/ 100</div>
+    </div>
+    <div class="result-info">
+      <div class="result-level" id="resultLevel">⭐ Trung cấp</div>
+      <div class="result-title" id="resultTitle">Trình độ tốt — còn một số điểm cần cải thiện</div>
+      <div class="result-desc" id="resultDesc">Bạn đã nắm được kiến thức nền, nhưng còn một số điểm yếu cần được gia sư hỗ trợ để tiến đến mục tiêu.</div>
+    </div>
+  </div>
+
+  <!-- AI INSIGHT — FREE teaser -->
+  <div class="ai-teaser ai-card" style="background:linear-gradient(135deg,#F8FAFC,#F1F5F9);border-color:#E2E8F0;">
+    <div class="ai-badge" style="background:#94A3B8;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> AI Phân tích</div>
+    <div class="ai-text" style="color:#94A3B8;">Nâng cấp lên Premium để nhận phân tích chi tiết điểm mạnh, điểm yếu và lộ trình học tập cá nhân hóa từ AI...</div>
+    <button class="lock-upgrade-btn" style="margin-top:12px;" onclick="setAccountMode('premium')">✨ Nâng cấp Premium — 59k/tháng</button>
+  </div>
+
+  <!-- AI INSIGHT — PREMIUM real -->
+  <div class="ai-card ai-card-real">
+    <div class="ai-badge">✨ AI Phân tích</div>
+    <div class="ai-text" id="aiText">Dựa trên kết quả kiểm tra, AI nhận thấy bạn có nền tảng khá tốt nhưng cần tập trung vào một số điểm yếu cụ thể...</div>
+  </div>
+
+  <!-- BREAKDOWN -->
+  <div style="position:relative;">
+    <div class="breakdown-card free-blur">
+      <div class="breakdown-title" id="breakdownTitle">Chi tiết theo kỹ năng</div>
+      <div class="breakdown-sub" id="breakdownSub">Phân tích điểm mạnh và điểm yếu theo từng tiêu chí</div>
+      <div id="criteriaContent"></div>
+    </div>
+    <!-- Free lock overlay on breakdown -->
+    <div class="lock-overlay" style="position:absolute;inset:0;pointer-events:none;">
+      <div class="lock-cta">
+        <div class="lock-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg></div>
+        <div class="lock-title">Phân tích kỹ năng chi tiết</div>
+        <div class="lock-desc">Xem điểm mạnh / yếu theo từng tiêu chí và lộ trình cải thiện cụ thể với tài khoản Premium.</div>
+        <button class="lock-upgrade-btn" onclick="setAccountMode('premium')">Nâng cấp để xem đầy đủ →</button>
+      </div>
+    </div>
+    <style>.is-free [style*="position:relative"] .breakdown-card{min-height:180px;overflow:hidden;max-height:180px}</style>
+  </div>
+
+  <!-- GS RECOMMENDATIONS -->
+  <div class="rec-title">Gia sư phù hợp với bạn</div>
+  <div class="rec-sub" id="recSub">3 gia sư được AI chọn lọc dựa trên kết quả kiểm tra và mục tiêu của bạn</div>
+
+  <!-- Free gate for GS cards -->
+  <div class="gs-cards-free-gate">
+    <div style="font-size:40px;margin-bottom:12px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+    <div style="font-size:16px;font-weight:800;color:#0D2D6B;margin-bottom:8px;">Gợi ý gia sư bằng AI</div>
+    <div style="font-size:13px;color:#64748B;line-height:1.6;margin-bottom:20px;max-width:320px;margin-left:auto;margin-right:auto;">AI sẽ chọn 3 gia sư phù hợp nhất dựa trên kết quả chẩn đoán và mục tiêu học tập của bạn. Tính năng dành riêng cho tài khoản Premium.</div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;">
+      <span style="background:#F1F5F9;color:#475569;font-size:11.5px;padding:4px 10px;border-radius:6px;font-weight:600;">✓ Độ phù hợp % theo AI</span>
+      <span style="background:#F1F5F9;color:#475569;font-size:11.5px;padding:4px 10px;border-radius:6px;font-weight:600;">✓ Lọc theo điểm yếu của bạn</span>
+      <span style="background:#F1F5F9;color:#475569;font-size:11.5px;padding:4px 10px;border-radius:6px;font-weight:600;">✓ Xem lịch trống ngay</span>
+    </div>
+    <button class="lock-upgrade-btn" style="font-size:14px;padding:12px 28px;" onclick="setAccountMode('premium')">✨ Nâng cấp Premium — chỉ 59k/tháng</button>
+    <div style="margin-top:12px;font-size:12px;color:#94A3B8;">Hoặc <a href="ui-tim-gia-su.html" style="color:#0D2D6B;font-weight:700;">tự tìm gia sư thủ công →</a></div>
+  </div>
+
+  <!-- Premium GS cards -->
+  <div class="gs-cards" id="gsCards"></div>
+
+  <div class="result-actions">
+    <a href="ui-tim-gia-su.html" class="btn-all-gs"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Xem tất cả gia sư phù hợp</a>
+    <button class="btn-save" onclick="saveResult()"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Lưu kết quả</button>
+  </div>
+  <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+    <a href="ui-dashboard-phu-huynh.html" style="font-size:12.5px;color:#64748B;font-weight:600;text-decoration:none;">← Về Dashboard</a>
+    <a href="ui-student-portfolio.html" style="font-size:12.5px;color:#0D2D6B;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:5px;"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Xem Hồ sơ học sinh →</a>
+  </div>
+</div>
+
+</div><!-- end wrapper -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Đã lưu vào Hồ sơ học sinh</div>
+
+<script>
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const SUBJECTS = {
+  toan: {
+    name: 'Toán học', icon: '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22L22 2"/><path d="m2 22 10-10"/><path d="M2 12 12 2"/><path d="M2 22h20"/><path d="M12 22V12"/></svg>',
+    goals: ['Đạt 8+ điểm thi THPT', 'Ôn thi đại học', 'Cải thiện kỹ năng giải tích', 'Luyện đề thi'],
+    questions: [
+      { q: 'Nghiệm của phương trình x² - 5x + 6 = 0 là:', opts: ['x = 2 và x = 3', 'x = 1 và x = 6', 'x = -2 và x = -3', 'x = 2 và x = -3'], ans: 0 },
+      { q: 'Đạo hàm của f(x) = 3x³ - 2x² + x - 5 tại x = 1 là:', opts: ['4', '6', '8', '10'], ans: 0 },
+      { q: 'Tổng của cấp số cộng 1, 3, 5, 7, ..., 99 bằng:', opts: ['2500', '2025', '2550', '1250'], ans: 0 },
+      { q: 'Nếu log₂(x) = 3 thì x bằng:', opts: ['6', '8', '9', '12'], ans: 1 },
+      { q: 'Giá trị lớn nhất của hàm số y = -x² + 4x + 1 là:', opts: ['3', '4', '5', '6'], ans: 2 },
+    ],
+    criteria: {
+      general: [
+        { name: 'Tư duy logic', score: 78, label: 'Khá' },
+        { name: 'Tính toán', score: 65, label: 'Trung bình' },
+      ],
+      subject: [
+        { name: 'Vận dụng công thức', score: 55, label: 'Cần cải thiện' },
+        { name: 'Giải bài tập', score: 70, label: 'Khá' },
+      ]
+    },
+    aiText: 'Tư duy logic của bạn khá tốt — bạn hiểu hướng giải nhưng hay mắc lỗi tính toán và vận dụng công thức chưa chắc. Gia sư nên tập trung vào luyện các dạng bài có công thức phức tạp và rèn thói quen kiểm tra lại kết quả. Với pace học 2 buổi/tuần, dự kiến bạn có thể cải thiện từ 6.5 lên 8+ điểm trong vòng 3 tháng.',
+    tutors: [
+      { name: 'Nguyễn Minh Tuấn', avatar: 'https://i.pravatar.cc/150?img=11', subject: 'Toán học · 5 năm kinh nghiệm', match: 96, rating: '4.9', reviews: 48, price: '150–200k/buổi', tags: ['Luyện thi THPT', 'Đại số', 'Giải tích'], top: true, verified: true },
+      { name: 'Trần Thị Lan Anh', avatar: 'https://i.pravatar.cc/150?img=47', subject: 'Toán · Vật lý · 4 năm', match: 91, rating: '4.8', reviews: 37, price: '120–160k/buổi', tags: ['Ôn thi ĐH', 'Toán tổng hợp'], top: false, verified: true },
+      { name: 'Lê Hoàng Nam', avatar: 'https://i.pravatar.cc/150?img=33', subject: 'Toán học · 3 năm kinh nghiệm', match: 87, rating: '4.7', reviews: 29, price: '100–140k/buổi', tags: ['Giải tích', 'Hình học'], top: false, verified: false },
+    ]
+  },
+  anh: {
+    name: 'Tiếng Anh', icon: '🇬🇧',
+    goals: ['Đạt IELTS 7.0', 'Cải thiện giao tiếp', 'Thi TOEIC 750+', 'Tiếng Anh học thuật'],
+    questions: [
+      { q: 'Choose the correct form: "She ___ to the gym every morning before work."', opts: ['go', 'goes', 'going', 'gone'], ans: 1 },
+      { q: 'The word "benevolent" is closest in meaning to:', opts: ['cruel', 'kind and generous', 'intelligent', 'strict'], ans: 1 },
+      { q: 'Which sentence is grammatically correct?', opts: ['He don\'t like coffee.', 'They doesn\'t play football.', 'She has been working here since 2020.', 'We was at the park yesterday.'], ans: 2 },
+      { q: '"Despite ___ tired, she continued to work." — Choose the correct option:', opts: ['she was', 'was', 'being', 'be'], ans: 2 },
+      { q: 'The passive form of "They built this bridge in 1990" is:', opts: ['This bridge was built in 1990.', 'This bridge has been built in 1990.', 'This bridge built in 1990.', 'This bridge is built in 1990.'], ans: 0 },
+    ],
+    criteria: {
+      general: [
+        { name: 'Ngữ pháp', score: 72, label: 'Khá' },
+        { name: 'Từ vựng', score: 68, label: 'Trung bình' },
+      ],
+      subject: [
+        { name: 'Phát âm', score: 55, label: 'Cần cải thiện' },
+        { name: 'Nghe hiểu', score: 50, label: 'Cần cải thiện' },
+        { name: 'Kỹ năng Nói', score: 48, label: 'Cần cải thiện' },
+        { name: 'Kỹ năng Viết', score: 65, label: 'Trung bình' },
+      ]
+    },
+    aiText: 'Ngữ pháp và từ vựng của bạn ở mức khá — bạn có thể xây dựng câu đúng cấu trúc. Tuy nhiên kỹ năng nghe, nói và phát âm còn khá yếu, đây là rào cản lớn nếu mục tiêu là IELTS 7.0. Gia sư nên thiết kế các buổi học tập trung vào luyện nghe và speaking thực hành. Với lộ trình 3 buổi/tuần, dự kiến đạt band 6.5 trong 3 tháng và 7.0 trong 5–6 tháng.',
+    tutors: [
+      { name: 'Phạm Hồng Nhung', avatar: 'https://i.pravatar.cc/150?img=44', subject: 'IELTS · Giao tiếp · 6 năm', match: 97, rating: '5.0', reviews: 61, price: '180–250k/buổi', tags: ['IELTS Speaking', 'Pronunciation', 'Academic'], top: true, verified: true },
+      { name: 'David Nguyễn', avatar: 'https://i.pravatar.cc/150?img=52', subject: 'Native-level English · 5 năm', match: 93, rating: '4.9', reviews: 44, price: '200–280k/buổi', tags: ['Giao tiếp', 'TOEIC', 'Business'], top: false, verified: true },
+      { name: 'Vũ Thị Mai Linh', avatar: 'https://i.pravatar.cc/150?img=25', subject: 'Tiếng Anh · IELTS · 4 năm', match: 88, rating: '4.8', reviews: 32, price: '140–180k/buổi', tags: ['IELTS', 'Listening', 'Writing'], top: false, verified: true },
+    ]
+  },
+  ly: {
+    name: 'Vật lý', icon: '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+    goals: ['Đạt 8+ điểm thi THPT', 'Ôn thi đại học', 'Hiểu sâu Vật lý đại cương', 'Luyện đề'],
+    questions: [
+      { q: 'Một vật chuyển động thẳng đều có vận tốc 20 m/s. Quãng đường vật đi được trong 5 giây là:', opts: ['50 m', '80 m', '100 m', '120 m'], ans: 2 },
+      { q: 'Công thức tính động năng của vật là:', opts: ['Eđ = mgh', 'Eđ = ½mv²', 'Eđ = mv', 'Eđ = F.s'], ans: 1 },
+      { q: 'Điện trở tương đương của 2 điện trở R₁ = 4Ω và R₂ = 6Ω mắc song song là:', opts: ['10 Ω', '2.4 Ω', '5 Ω', '1.5 Ω'], ans: 1 },
+      { q: 'Sóng ánh sáng truyền từ không khí vào nước thì đại lượng nào không thay đổi?', opts: ['Vận tốc', 'Bước sóng', 'Tần số', 'Năng lượng photon thay đổi'], ans: 2 },
+      { q: 'Một vật ném ngang từ độ cao h = 20m. Lấy g = 10 m/s². Thời gian vật rơi đến đất là:', opts: ['1 s', '2 s', '3 s', '4 s'], ans: 1 },
+    ],
+    criteria: {
+      general: [
+        { name: 'Nắm lý thuyết', score: 75, label: 'Khá' },
+        { name: 'Giải bài tập', score: 62, label: 'Trung bình' },
+      ],
+      subject: [
+        { name: 'Hiểu thực nghiệm', score: 50, label: 'Cần cải thiện' },
+      ]
+    },
+    aiText: 'Bạn nắm lý thuyết khá tốt nhưng khi vận dụng vào bài tập tổng hợp thì còn lúng túng. Kỹ năng hiểu thực nghiệm và phân tích đồ thị cần được rèn luyện thêm. Gia sư nên tập trung vào phương pháp giải bài tập theo dạng và luyện đọc đồ thị Vật lý.',
+    tutors: [
+      { name: 'Hoàng Đức Anh', avatar: 'https://i.pravatar.cc/150?img=15', subject: 'Vật lý · Toán · 5 năm', match: 94, rating: '4.9', reviews: 52, price: '160–200k/buổi', tags: ['Luyện thi THPT', 'Vật lý đại cương'], top: true, verified: true },
+      { name: 'Ngô Thị Thu Hà', avatar: 'https://i.pravatar.cc/150?img=29', subject: 'Vật lý · 4 năm kinh nghiệm', match: 89, rating: '4.8', reviews: 38, price: '130–170k/buổi', tags: ['Ôn thi ĐH', 'Cơ học', 'Điện học'], top: false, verified: true },
+      { name: 'Trần Quốc Hùng', avatar: 'https://i.pravatar.cc/150?img=57', subject: 'Vật lý · Hóa · 3 năm', match: 84, rating: '4.7', reviews: 27, price: '110–150k/buổi', tags: ['Lý thuyết', 'Bài tập'], top: false, verified: false },
+    ]
+  },
+  hoa: {
+    name: 'Hóa học', icon: '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5V2"/><path d="M8.5 2h7"/><path d="M14.5 16h-5"/></svg>',
+    goals: ['Đạt 8+ điểm thi THPT', 'Ôn thi đại học', 'Hóa hữu cơ', 'Luyện đề thi'],
+    questions: [
+      { q: 'Công thức phân tử của axit axetic là:', opts: ['CH₃OH', 'CH₃COOH', 'C₂H₅OH', 'HCOOH'], ans: 1 },
+      { q: 'Phản ứng nào sau đây là phản ứng oxi hóa - khử?', opts: ['NaOH + HCl → NaCl + H₂O', 'CaCO₃ → CaO + CO₂', 'Fe + 2HCl → FeCl₂ + H₂↑', 'AgNO₃ + NaCl → AgCl↓ + NaNO₃'], ans: 2 },
+      { q: 'Kim loại nào sau đây phản ứng mạnh nhất với nước?', opts: ['Fe', 'Cu', 'Na', 'Ag'], ans: 2 },
+      { q: 'Chất nào sau đây có phản ứng tráng gương?', opts: ['CH₃OH', 'CH₃COOH', 'HCHO', 'C₂H₅OH'], ans: 2 },
+      { q: 'Số electron trong ion Ca²⁺ là:', opts: ['20', '18', '22', '16'], ans: 1 },
+    ],
+    criteria: {
+      general: [
+        { name: 'Nắm lý thuyết', score: 70, label: 'Khá' },
+        { name: 'Giải bài tập', score: 58, label: 'Trung bình' },
+      ],
+      subject: [
+        { name: 'Hiểu thực nghiệm', score: 45, label: 'Cần cải thiện' },
+      ]
+    },
+    aiText: 'Bạn có kiến thức lý thuyết ở mức khá nhưng kỹ năng làm bài tập tính toán và hóa thực nghiệm còn yếu. Gia sư nên thiết kế các buổi học kết hợp lý thuyết — bài tập ngay sau mỗi phần để củng cố. Cần đặc biệt chú trọng phần hóa hữu cơ và phản ứng oxi hóa - khử.',
+    tutors: [
+      { name: 'Lê Thị Phương', avatar: 'https://i.pravatar.cc/150?img=41', subject: 'Hóa học · 6 năm kinh nghiệm', match: 95, rating: '4.9', reviews: 56, price: '170–220k/buổi', tags: ['Hóa hữu cơ', 'Luyện thi ĐH'], top: true, verified: true },
+      { name: 'Bùi Văn Khoa', avatar: 'https://i.pravatar.cc/150?img=60', subject: 'Hóa · Sinh · 4 năm', match: 88, rating: '4.8', reviews: 41, price: '130–160k/buổi', tags: ['Hóa vô cơ', 'Ôn thi'], top: false, verified: true },
+      { name: 'Đinh Thị Ngọc', avatar: 'https://i.pravatar.cc/150?img=36', subject: 'Hóa học · 3 năm', match: 83, rating: '4.7', reviews: 24, price: '100–140k/buổi', tags: ['Cơ bản', 'Hóa đại cương'], top: false, verified: false },
+    ]
+  },
+  van: {
+    name: 'Ngữ văn', icon: '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+    goals: ['Đạt 8+ điểm thi THPT', 'Cải thiện kỹ năng làm văn', 'Ôn thi đại học', 'Viết văn nghị luận'],
+    questions: [
+      { q: 'Tác phẩm "Truyện Kiều" được viết bởi:', opts: ['Nguyễn Du', 'Nguyễn Trãi', 'Hồ Xuân Hương', 'Tố Hữu'], ans: 0 },
+      { q: 'Biện pháp tu từ nào được sử dụng trong câu "Mặt trời của bắp thì nằm trên đồi / Mặt trời của mẹ, em nằm trên lưng"?', opts: ['So sánh', 'Nhân hóa', 'Ẩn dụ', 'Hoán dụ'], ans: 2 },
+      { q: 'Phong cách ngôn ngữ của văn bản khoa học có đặc điểm nổi bật là:', opts: ['Giàu hình ảnh', 'Chính xác, khách quan', 'Gần gũi, thân mật', 'Trang trọng, nghi thức'], ans: 1 },
+      { q: 'Trong bài thơ "Đây thôn Vĩ Dạ", tác giả là:', opts: ['Xuân Diệu', 'Huy Cận', 'Hàn Mặc Tử', 'Chế Lan Viên'], ans: 2 },
+      { q: 'Đặc trưng cơ bản nhất của thể loại truyện ngắn là:', opts: ['Dung lượng lớn, nhiều nhân vật', 'Dung lượng nhỏ, tập trung vào một khoảnh khắc', 'Có nhiều tuyến nhân vật', 'Kết thúc bất ngờ'], ans: 1 },
+    ],
+    criteria: {
+      general: [
+        { name: 'Cảm thụ văn học', score: 74, label: 'Khá' },
+        { name: 'Phân tích tác phẩm', score: 68, label: 'Trung bình' },
+      ],
+      subject: [
+        { name: 'Kỹ năng viết văn', score: 55, label: 'Cần cải thiện' },
+      ]
+    },
+    aiText: 'Bạn có khả năng cảm thụ văn học và nhận diện thể loại khá tốt, nhưng kỹ năng làm văn nghị luận còn chưa chắc — đặc biệt phần luận điểm và dẫn chứng. Gia sư nên hướng dẫn cách lập dàn ý và viết đoạn văn nghị luận theo từng bước. Cần ôn kỹ các tác phẩm trọng tâm trong chương trình.',
+    tutors: [
+      { name: 'Nguyễn Thị Hoa', avatar: 'https://i.pravatar.cc/150?img=49', subject: 'Ngữ văn · 7 năm kinh nghiệm', match: 96, rating: '5.0', reviews: 63, price: '160–210k/buổi', tags: ['Làm văn', 'Thi THPT', 'Văn nghị luận'], top: true, verified: true },
+      { name: 'Trần Văn Minh', avatar: 'https://i.pravatar.cc/150?img=7', subject: 'Văn · Sử · 5 năm', match: 90, rating: '4.8', reviews: 39, price: '130–170k/buổi', tags: ['Phân tích tác phẩm', 'Ôn thi ĐH'], top: false, verified: true },
+      { name: 'Lý Thị Thu', avatar: 'https://i.pravatar.cc/150?img=20', subject: 'Ngữ văn · 4 năm', match: 85, rating: '4.7', reviews: 28, price: '110–150k/buổi', tags: ['Cảm thụ', 'Nghị luận xã hội'], top: false, verified: false },
+    ]
+  },
+  code: {
+    name: 'Lập trình', icon: '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+    goals: ['Học Python cơ bản', 'Luyện thuật toán', 'Web development', 'Chuẩn bị đi làm'],
+    questions: [
+      { q: 'Kết quả của đoạn code sau là gì?\n\nx = [1, 2, 3, 4, 5]\nprint(x[1:4])', opts: ['[1, 2, 3]', '[2, 3, 4]', '[1, 2, 3, 4]', '[2, 3, 4, 5]'], ans: 1 },
+      { q: 'Độ phức tạp thời gian của thuật toán Bubble Sort trong trường hợp xấu nhất là:', opts: ['O(n)', 'O(n log n)', 'O(n²)', 'O(log n)'], ans: 2 },
+      { q: 'Trong Python, hàm nào dùng để đọc input từ người dùng?', opts: ['read()', 'input()', 'scan()', 'get()'], ans: 1 },
+      { q: 'Cấu trúc dữ liệu nào hoạt động theo nguyên tắc LIFO (Last In, First Out)?', opts: ['Queue', 'Stack', 'Linked List', 'Tree'], ans: 1 },
+      { q: 'Hàm đệ quy tính giai thừa: factorial(n) — điều kiện dừng là gì?', opts: ['n == 1 hoặc n == 0', 'n > 1', 'n < 0', 'Không có điều kiện dừng'], ans: 0 },
+    ],
+    criteria: {
+      general: [
+        { name: 'Tư duy thuật toán', score: 68, label: 'Trung bình' },
+        { name: 'Viết code', score: 72, label: 'Khá' },
+      ],
+      subject: [
+        { name: 'Debug & tối ưu', score: 52, label: 'Cần cải thiện' },
+      ]
+    },
+    aiText: 'Bạn viết code cơ bản khá tốt và hiểu cú pháp Python. Tuy nhiên tư duy giải thuật và kỹ năng debug còn hạn chế — đây là kỹ năng then chốt để đi làm. Gia sư nên thiết kế lộ trình học qua các bài toán thực tế, tập trung vào data structures và thuật toán tìm kiếm/sắp xếp cơ bản.',
+    tutors: [
+      { name: 'Phạm Quốc Bảo', avatar: 'https://i.pravatar.cc/150?img=3', subject: 'Python · Algorithms · 5 năm', match: 95, rating: '4.9', reviews: 47, price: '180–240k/buổi', tags: ['Python', 'LeetCode', 'Data Structures'], top: true, verified: true },
+      { name: 'Nguyễn Anh Tú', avatar: 'https://i.pravatar.cc/150?img=17', subject: 'Full-stack · 4 năm · FPT', match: 91, rating: '4.8', reviews: 35, price: '150–200k/buổi', tags: ['Web Dev', 'JavaScript', 'React'], top: false, verified: true },
+      { name: 'Trịnh Thị Lan', avatar: 'https://i.pravatar.cc/150?img=38', subject: 'Python · Data Science · 3 năm', match: 86, rating: '4.7', reviews: 26, price: '130–170k/buổi', tags: ['Thuật toán', 'Python nâng cao'], top: false, verified: true },
+    ]
+  }
+};
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let selectedSubject = null;
+let currentQ = 0;
+let answers = {};
+let timerInterval = null;
+let secondsLeft = 600;
+
+// Generic fallback for custom subjects
+const SUBJECT_OTHER = {
+  name: '', icon: '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+  goals: ['Học từ cơ bản đến nâng cao', 'Ôn thi', 'Cải thiện điểm số', 'Học để đi làm'],
+  questions: [
+    { q: 'Bạn tự đánh giá trình độ hiện tại của mình ở mức nào?', opts: ['Mới bắt đầu / Chưa biết gì', 'Biết cơ bản, còn nhiều lỗ hổng', 'Khá — nắm được phần lớn', 'Giỏi — cần nâng cao thêm'], ans: -1 },
+    { q: 'Bạn đã học môn này được bao lâu?', opts: ['Chưa học bao giờ', 'Dưới 6 tháng', '6 tháng – 2 năm', 'Trên 2 năm'], ans: -1 },
+    { q: 'Điểm yếu lớn nhất của bạn với môn này là gì?', opts: ['Không biết bắt đầu từ đâu', 'Lý thuyết chưa vững', 'Khó vận dụng vào bài tập', 'Thiếu phương pháp học hiệu quả'], ans: -1 },
+    { q: 'Bạn muốn học với tần suất như thế nào?', opts: ['1 buổi/tuần', '2 buổi/tuần', '3 buổi/tuần', 'Linh hoạt theo lịch'], ans: -1 },
+    { q: 'Bạn muốn gia sư dạy theo phong cách nào?', opts: ['Giải thích chi tiết từng bước', 'Học qua bài tập thực hành nhiều', 'Tập trung vào điểm yếu cụ thể', 'Linh hoạt theo bài học'], ans: -1 },
+  ],
+  criteria: {
+    general: [
+      { name: 'Mức độ hiểu biết', score: 65, label: 'Trung bình' },
+      { name: 'Kinh nghiệm học', score: 60, label: 'Trung bình' },
+    ],
+    subject: [
+      { name: 'Khả năng vận dụng', score: 55, label: 'Cần cải thiện' },
+    ]
+  },
+  aiText: 'Dựa trên khảo sát ban đầu, AI gợi ý gia sư có kinh nghiệm dạy học sinh với trình độ tương tự và phương pháp giảng dạy phù hợp với mục tiêu của bạn. Lộ trình cụ thể sẽ được xây dựng sau buổi trao đổi đầu tiên với gia sư.',
+  tutors: [
+    { name: 'Nguyễn Thị Thanh', avatar: 'https://i.pravatar.cc/150?img=45', subject: 'Đa môn · 6 năm kinh nghiệm', match: 92, rating: '4.9', reviews: 51, price: '140–190k/buổi', tags: ['Linh hoạt', 'Cá nhân hoá', 'Kiên nhẫn'], top: true, verified: true },
+    { name: 'Trần Văn Đức', avatar: 'https://i.pravatar.cc/150?img=12', subject: 'Gia sư tổng hợp · 4 năm', match: 87, rating: '4.8', reviews: 38, price: '120–160k/buổi', tags: ['Phương pháp rõ ràng', 'Theo sát tiến độ'], top: false, verified: true },
+    { name: 'Lê Thị Hương', avatar: 'https://i.pravatar.cc/150?img=23', subject: 'Nhiều môn · 5 năm kinh nghiệm', match: 83, rating: '4.7', reviews: 33, price: '110–150k/buổi', tags: ['Mọi lứa tuổi', 'Online'], top: false, verified: false },
+  ]
+};
+
+// ═══════════════════════════════════════
+// SCREEN 1: CHỌN MÔN
+// ═══════════════════════════════════════
+function selectSubject(key, el) {
+  selectedSubject = key;
+  document.querySelectorAll('.subject-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+
+  // Hide other-subject input if was open
+  document.getElementById('otherSubjectWrap').style.display = 'none';
+
+  const data = SUBJECTS[key];
+  const gs = document.getElementById('goalSection');
+  gs.classList.add('visible');
+
+  const ex = document.getElementById('goalExamples');
+  ex.innerHTML = data.goals.map(g => `<span class="goal-chip" onclick="setGoal('${g}',this)">${g}</span>`).join('');
+
+  document.getElementById('goalInput').value = '';
+  document.getElementById('goalInput').placeholder = `Vd: ${data.goals[0]}`;
+  document.getElementById('startBtn').classList.remove('visible');
+}
+
+function selectOther(el) {
+  selectedSubject = 'other';
+  document.querySelectorAll('.subject-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+
+  // Show custom input, hide goal section until name filled
+  document.getElementById('otherSubjectWrap').style.display = 'block';
+  document.getElementById('goalSection').classList.remove('visible');
+  document.getElementById('startBtn').classList.remove('visible');
+  document.getElementById('goalInput').value = '';
+  document.getElementById('otherSubjectInput').focus();
+}
+
+function checkOtherSubject() {
+  const name = document.getElementById('otherSubjectInput').value.trim();
+  if (name.length > 0) {
+    // Clone generic data with user's subject name
+    SUBJECTS['other'] = Object.assign({}, SUBJECT_OTHER, { name: name, icon: '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>' });
+    SUBJECTS['other'].criteria = JSON.parse(JSON.stringify(SUBJECT_OTHER.criteria));
+
+    // Show goal section
+    const gs = document.getElementById('goalSection');
+    gs.classList.add('visible');
+    const ex = document.getElementById('goalExamples');
+    ex.innerHTML = SUBJECT_OTHER.goals.map(g => `<span class="goal-chip" onclick="setGoal('${g}',this)">${g}</span>`).join('');
+    document.getElementById('goalInput').placeholder = `Vd: ${SUBJECT_OTHER.goals[0]}`;
+    document.getElementById('goalInput').value = '';
+    document.getElementById('startBtn').classList.remove('visible');
+  } else {
+    document.getElementById('goalSection').classList.remove('visible');
+    document.getElementById('startBtn').classList.remove('visible');
+  }
+}
+
+function setGoal(text, el) {
+  document.querySelectorAll('.goal-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('goalInput').value = text;
+  document.getElementById('startBtn').classList.add('visible');
+}
+
+function checkGoal() {
+  const val = document.getElementById('goalInput').value.trim();
+  if (val.length > 0) {
+    document.getElementById('startBtn').classList.add('visible');
+    document.querySelectorAll('.goal-chip').forEach(c => c.classList.remove('active'));
+  } else {
+    document.getElementById('startBtn').classList.remove('visible');
+  }
+}
+
+function startTest() {
+  if (!selectedSubject) return;
+  answers = {};
+  currentQ = 0;
+  secondsLeft = 600;
+
+  document.getElementById('navStep').textContent = 'Bước 2 / 3';
+  showScreen('s2');
+  renderTest();
+  startTimer();
+}
+
+// ═══════════════════════════════════════
+// SCREEN 2: BÀI TEST
+// ═══════════════════════════════════════
+function renderTest() {
+  const data = SUBJECTS[selectedSubject];
+  const qs = data.questions;
+  const total = qs.length;
+
+  const subjectName = selectedSubject === 'other'
+    ? (document.getElementById('otherSubjectInput').value.trim() || 'Môn khác')
+    : data.name;
+  if (selectedSubject === 'other') SUBJECTS['other'].name = subjectName;
+  document.getElementById('testSubjectBadge').textContent = data.icon + ' ' + subjectName;
+
+  // Dots
+  const dotsEl = document.getElementById('qDots');
+  dotsEl.innerHTML = qs.map((_, i) =>
+    `<div class="q-dot ${i === currentQ ? 'current' : answers[i] !== undefined ? 'answered' : ''}" onclick="jumpQ(${i})">${i+1}</div>`
+  ).join('');
+
+  // Progress
+  const pct = ((currentQ + 1) / total * 100).toFixed(0);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `Câu ${currentQ+1} / ${total}`;
+  const done = Object.keys(answers).length;
+  document.getElementById('answeredText').textContent = `${done} câu đã trả lời`;
+
+  // Question
+  const q = qs[currentQ];
+  document.getElementById('qNum').textContent = `Câu ${currentQ + 1}`;
+  document.getElementById('qText').textContent = q.q;
+
+  const opts = document.getElementById('qOptions');
+  const letters = ['A','B','C','D'];
+  opts.innerHTML = q.opts.map((o, i) =>
+    `<div class="q-option ${answers[currentQ] === i ? 'selected' : ''}" onclick="selectAnswer(${i})">
+      <div class="opt-letter">${letters[i]}</div>
+      <div class="opt-text">${o}</div>
+    </div>`
+  ).join('');
+
+  // Prev/Next
+  document.getElementById('btnPrev').style.display = currentQ === 0 ? 'none' : 'block';
+  const isLast = currentQ === total - 1;
+  document.getElementById('btnNext').style.display = isLast ? 'none' : 'block';
+  document.getElementById('btnSubmit').style.display = done === total ? 'block' : 'none';
+}
+
+function selectAnswer(i) {
+  answers[currentQ] = i;
+  renderTest();
+  // Auto advance
+  if (currentQ < SUBJECTS[selectedSubject].questions.length - 1) {
+    setTimeout(() => { currentQ++; renderTest(); }, 400);
+  }
+}
+
+function prevQ() { if (currentQ > 0) { currentQ--; renderTest(); } }
+function nextQ() {
+  if (currentQ < SUBJECTS[selectedSubject].questions.length - 1) { currentQ++; renderTest(); }
+}
+function jumpQ(i) { currentQ = i; renderTest(); }
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    const m = Math.floor(secondsLeft / 60);
+    const s = secondsLeft % 60;
+    const el = document.getElementById('timer');
+    el.textContent = `⏱ ${m}:${s.toString().padStart(2,'0')}`;
+    el.className = secondsLeft > 300 ? 'timer ok' : secondsLeft > 120 ? 'timer warn' : 'timer';
+    if (secondsLeft <= 0) { clearInterval(timerInterval); submitTest(); }
+  }, 1000);
+}
+
+function submitTest() {
+  clearInterval(timerInterval);
+  const data = SUBJECTS[selectedSubject];
+  const qs = data.questions;
+  let correct = 0;
+  qs.forEach((q, i) => { if (answers[i] === q.ans) correct++; });
+  const pct = Math.round(correct / qs.length * 100);
+  document.getElementById('navStep').textContent = 'Bước 3 / 3';
+  showScreen('s3');
+  renderResult(pct);
+  // Auto-save to profile on completion
+  setTimeout(function() {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }, 600);
+}
+
+// ═══════════════════════════════════════
+// SCREEN 3: KẾT QUẢ
+// ═══════════════════════════════════════
+function renderResult(rawPct) {
+  // Default to free mode when showing results
+  setAccountMode('free');
+
+  const data = SUBJECTS[selectedSubject];
+
+  // Score — blend actual with subject preset for richer demo
+  const score = Math.max(40, Math.min(95, Math.round(rawPct * 0.3 + 72 * 0.7)));
+
+  let level, levelEmoji, title;
+  if (score >= 85) { level = 'Nâng cao'; levelEmoji = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>'; title = 'Xuất sắc — tiếp tục phát huy!'; }
+  else if (score >= 70) { level = 'Khá'; levelEmoji = '⭐'; title = 'Trình độ tốt — còn một số điểm cần cải thiện'; }
+  else if (score >= 55) { level = 'Trung bình'; levelEmoji = '<svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>'; title = 'Nền tảng ổn — cần được hướng dẫn cụ thể hơn'; }
+  else { level = 'Cơ bản'; levelEmoji = '🌱'; title = 'Cần xây dựng nền tảng — gia sư sẽ giúp bạn!'; }
+
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('resultLevel').textContent = `${levelEmoji} ${level}`;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultDesc').textContent =
+    score >= 70
+      ? 'Bạn đã nắm được kiến thức nền. Gia sư sẽ giúp bạn vượt qua các điểm yếu cụ thể và đẩy nhanh tiến độ đến mục tiêu.'
+      : 'Đừng lo — đây là điểm xuất phát tốt để xác định đúng những gì cần học. Gia sư phù hợp sẽ xây dựng lộ trình cá nhân hóa cho bạn.';
+
+  document.getElementById('aiText').textContent = data.aiText;
+
+  // Criteria
+  const c = data.criteria;
+  const breakdownTitle = data.name + ' — Chi tiết theo kỹ năng';
+  document.getElementById('breakdownTitle').textContent = breakdownTitle;
+  document.getElementById('breakdownSub').textContent = 'Điểm mạnh và điểm yếu theo từng tiêu chí · Dữ liệu được lưu vào Hồ sơ học sinh';
+
+  function barClass(s) { return s >= 70 ? 'bar-strong' : s >= 55 ? 'bar-mid' : 'bar-weak'; }
+  function labelClass(s) { return s >= 70 ? 'label-strong' : s >= 55 ? 'label-mid' : 'label-weak'; }
+  function labelText(lbl) { return lbl; }
+
+  let html = `<div class="criteria-section">
+    <div class="criteria-header">Tiêu chí chung</div>`;
+  c.general.forEach(item => {
+    html += `<div class="criteria-row">
+      <div class="criteria-name">${item.name}</div>
+      <div class="criteria-bar-wrap"><div class="criteria-bar ${barClass(item.score)}" style="width:${item.score}%"></div></div>
+      <div class="criteria-score">${item.score}</div>
+      <div class="criteria-label ${labelClass(item.score)}">${labelText(item.label)}</div>
+    </div>`;
+  });
+  html += `</div><div class="criteria-section">
+    <div class="criteria-header">Tiêu chí theo môn — ${data.name}</div>`;
+  c.subject.forEach(item => {
+    html += `<div class="criteria-row">
+      <div class="criteria-name">${item.name}</div>
+      <div class="criteria-bar-wrap"><div class="criteria-bar ${barClass(item.score)}" style="width:${item.score}%"></div></div>
+      <div class="criteria-score">${item.score}</div>
+      <div class="criteria-label ${labelClass(item.score)}">${labelText(item.label)}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById('criteriaContent').innerHTML = html;
+
+  // Tutors
+  const goal = document.getElementById('goalInput').value || '';
+  document.getElementById('recSub').textContent =
+    `3 gia sư được AI chọn lọc dựa trên kết quả ${data.name}${goal ? ' · Mục tiêu: ' + goal : ''}`;
+  document.getElementById('gsCards').innerHTML = data.tutors.map(t => `
+    <div class="gs-card ${t.top ? 'top-pick' : ''}">
+      ${t.top ? '<div class="gs-top-badge">⭐ Phù hợp nhất</div>' : ''}
+      <div class="gs-photo-wrap">
+        <div class="gs-photo-bg"></div>
+        <img class="gs-photo" src="${t.avatar}" alt="${t.name}" onerror="this.style.display='none'">
+        ${t.verified ? '<div class="gs-verified" style="color:white;font-weight:700;">✓</div>' : ''}
+      </div>
+      <div class="gs-body">
+        <div class="gs-name">${t.name}</div>
+        <div class="gs-subject">${t.subject}</div>
+        <div class="gs-match-label">Độ phù hợp</div>
+        <div class="gs-match">
+          <div class="match-bar-wrap"><div class="match-bar" style="width:${t.match}%"></div></div>
+          <div class="match-pct">${t.match}%</div>
+        </div>
+        <div class="gs-meta">
+          <div class="gs-rating">★ ${t.rating} <span style="color:#64748B;font-weight:500">(${t.reviews})</span></div>
+          <div class="gs-price">${t.price}</div>
+        </div>
+        <div class="gs-avail">● Có lịch trống tuần này</div>
+        <div class="gs-tags">${t.tags.map(tag => `<span class="gs-tag">${tag}</span>`).join('')}</div>
+        <button class="gs-btn" onclick="window.location='ui-profile.html'">Xem hồ sơ →</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.criteria-bar').forEach(b => {
+      const w = b.style.width;
+      b.style.width = '0';
+      setTimeout(() => { b.style.width = w; }, 50);
+    });
+    document.querySelectorAll('.match-bar').forEach(b => {
+      const w = b.style.width;
+      b.style.width = '0';
+      setTimeout(() => { b.style.width = w; }, 100);
+    });
+  }, 100);
+}
+
+function saveResult() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════
+// FREE / PREMIUM TOGGLE
+// ═══════════════════════════════════════
+function setAccountMode(mode) {
+  if (mode === 'free') {
+    document.body.classList.add('is-free');
+    document.getElementById('btnFree').classList.add('active');
+    document.getElementById('btnPremium').classList.remove('active');
+    document.getElementById('btnPremium').classList.remove('premium');
+  } else {
+    document.body.classList.remove('is-free');
+    document.getElementById('btnFree').classList.remove('active');
+    document.getElementById('btnPremium').classList.add('active');
+    document.getElementById('btnPremium').classList.add('premium');
+  }
+}
+
+// ═══════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function navBack() {
+  const active = document.querySelector('.screen.active').id;
+  if (active === 's1') { window.history.back(); }
+  else if (active === 's2') { clearInterval(timerInterval); document.getElementById('navStep').textContent = 'Bước 1 / 3'; showScreen('s1'); }
+  else { document.getElementById('navStep').textContent = 'Bước 2 / 3'; showScreen('s2'); renderTest(); startTimer(); }
+}
+</script>
+</body>
+</html>

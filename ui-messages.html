@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tin nhắn | giasu.edu.vn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p900:#0D2D6B;--p800:#1239A0;--p700:#1565C0;--p600:#1976D2;
+  --p400:#42A5F5;--p300:#90CAF9;--p200:#BBDEFB;--p100:#E3F2FD;--p50:#F0F8FF;
+  --s600:#E65100;--s500:#F57C00;--s400:#FFA726;--s100:#FFF3E0;
+  --n900:#0F172A;--n800:#1E293B;--n700:#334155;--n600:#475569;
+  --n500:#64748B;--n400:#94A3B8;--n300:#CBD5E1;--n200:#E2E8F0;
+  --n100:#F1F5F9;--n50:#F8FAFC;
+  --green:#16A34A;--gbg:#DCFCE7;--glt:#F0FDF4;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;font-size:14px;color:var(--n900);background:#F8FAFC}
+
+/* ── NAVBAR ── */
+.navbar{height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--n200);display:flex;align-items:center;flex-shrink:0;z-index:100;position:relative}
+.nb-inner{max-width:100%;padding:0 24px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-text{font-size:15px;font-weight:800;color:#0D2D6B;letter-spacing:-.4px;line-height:1}
+.nav-logo-text em{font-weight:500;font-style:normal;opacity:.5}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{text-decoration:none;font-size:13.5px;font-weight:500;color:var(--n600);padding:7px 12px;border-radius:7px;transition:background .15s,color .15s}
+.nav-links a:hover{background:var(--n100);color:var(--n900)}
+.nav-links a.active{color:var(--p700);background:var(--p100)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.btn-outline{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--p700);border:1.5px solid var(--p700);background:transparent;border-radius:7px;padding:6px 16px;cursor:pointer;transition:background .15s}
+.btn-outline:hover{background:var(--p700);color:#fff}
+.btn-primary{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#fff;background:var(--p700);border:none;border-radius:7px;padding:6px 16px;cursor:pointer}
+
+/* ── VIEW TOGGLE BAR ── */
+.view-bar{height:44px;background:#fff;border-bottom:1px solid var(--n200);display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0}
+.view-label{font-size:12px;font-weight:600;color:var(--n500);margin-right:4px}
+.view-toggle{display:flex;background:var(--n100);border-radius:8px;padding:3px;gap:2px}
+.vt-btn{font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:var(--n600);background:transparent;border:none;border-radius:6px;padding:5px 14px;cursor:pointer;transition:background .15s,color .15s;white-space:nowrap}
+.vt-btn.active{background:#fff;color:var(--p700);box-shadow:0 1px 4px rgba(15,23,42,.1)}
+.view-hint{font-size:11.5px;color:var(--n400);margin-left:auto}
+
+/* ── MAIN LAYOUT ── */
+.msg-layout{display:grid;grid-template-columns:300px 1fr 300px;height:calc(100vh - 60px - 44px);overflow:hidden}
+
+/* ── INBOX PANEL ── */
+.inbox{display:flex;flex-direction:column;border-right:1px solid var(--n200);background:#fff;overflow:hidden}
+.inbox-hdr{padding:14px 16px 12px;border-bottom:1px solid var(--n100);flex-shrink:0}
+.inbox-title{font-size:15px;font-weight:800;color:var(--n900);margin-bottom:10px}
+.inbox-search{display:flex;align-items:center;gap:8px;background:var(--n50);border:1px solid var(--n200);border-radius:8px;padding:7px 12px}
+.inbox-search input{border:none;background:transparent;font-family:'Inter',sans-serif;font-size:13px;color:var(--n900);outline:none;width:100%}
+.inbox-search input::placeholder{color:var(--n400)}
+.inbox-search svg{width:14px;height:14px;color:var(--n400);flex-shrink:0}
+.inbox-list{flex:1;overflow-y:auto}
+.conv-item{display:flex;align-items:flex-start;gap:11px;padding:12px 14px;cursor:pointer;border-bottom:1px solid var(--n100);transition:background .12s;position:relative}
+.conv-item:hover{background:var(--n50)}
+.conv-item.active{background:var(--p50);border-left:3px solid var(--p700)}
+.conv-item.active .conv-name{color:var(--p800)}
+.conv-av{position:relative;flex-shrink:0}
+.conv-av img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--n200)}
+.conv-av.active img{border-color:var(--p300)}
+.conv-online{position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;background:var(--green);border:2px solid #fff}
+.conv-body{flex:1;min-width:0}
+.conv-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.conv-name{font-size:13.5px;font-weight:700;color:var(--n900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv-time{font-size:11px;color:var(--n400);flex-shrink:0;margin-left:6px}
+.conv-preview{font-size:12px;color:var(--n500);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
+.conv-preview.unread{color:var(--n800);font-weight:600}
+.conv-badges{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
+.conv-badge{font-size:10.5px;font-weight:600;padding:1.5px 7px;border-radius:20px}
+.cb-new{background:var(--p100);color:var(--p700)}
+.cb-pending{background:var(--s100);color:#C46200}
+.cb-align{background:var(--gbg);color:var(--green)}
+.unread-dot{position:absolute;top:14px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--p700)}
+
+/* ── CHAT PANEL ── */
+.chat{display:flex;flex-direction:column;overflow:hidden;background:#F8FAFC}
+.chat-hdr{background:#fff;border-bottom:1px solid var(--n200);padding:12px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.chat-hdr img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--p200)}
+.chat-hdr-info{flex:1}
+.chat-hdr-name{font-size:14px;font-weight:700;color:var(--n900)}
+.chat-hdr-sub{font-size:12px;color:var(--n500);margin-top:1px}
+.chat-hdr-actions{display:flex;gap:8px}
+.chat-icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--n200);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s}
+.chat-icon-btn:hover{background:var(--n50)}
+.chat-icon-btn svg{width:16px;height:16px;color:var(--n600)}
+.chat-flow-bar{background:var(--p900);padding:9px 18px;display:flex;align-items:center;gap:0;flex-shrink:0}
+.cf-step{display:flex;align-items:center;gap:0;flex:1}
+.cf-node{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.cf-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.cf-dot-active{background:#fff;color:var(--p900)}
+.cf-dot-done{background:var(--green);color:#fff}
+.cf-dot-pending{background:rgba(255,255,255,.15);color:rgba(255,255,255,.5)}
+.cf-label-active{color:#fff}
+.cf-label-pending{color:rgba(255,255,255,.4)}
+.cf-line{flex:1;height:1px;background:rgba(255,255,255,.2);margin:0 8px}
+.chat-messages{flex:1;overflow-y:auto;padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.msg-group{display:flex;flex-direction:column;gap:4px}
+.msg-group.sent{align-items:flex-end}
+.msg-group.recv{align-items:flex-start}
+.msg-av-row{display:flex;align-items:flex-end;gap:8px}
+.msg-av-row.sent{flex-direction:row-reverse}
+.msg-small-av{width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.msg-bubbles{display:flex;flex-direction:column;gap:3px;max-width:68%}
+.msg-bubbles.sent{align-items:flex-end}
+.msg-bubbles.recv{align-items:flex-start}
+.bubble{padding:10px 14px;border-radius:16px;font-size:13.5px;line-height:1.6;word-break:break-word}
+.bubble.sent{background:var(--p700);color:#fff;border-bottom-right-radius:4px}
+.bubble.recv{background:#fff;color:var(--n900);border:1px solid var(--n200);border-bottom-left-radius:4px}
+.msg-time{font-size:11px;color:var(--n400);padding:0 4px}
+.msg-divider{text-align:center;font-size:11.5px;color:var(--n400);font-weight:500;margin:6px 0;display:flex;align-items:center;gap:10px}
+.msg-divider::before,.msg-divider::after{content:'';flex:1;height:1px;background:var(--n200)}
+
+/* AI chip suggestions */
+.ai-suggestions{padding:12px 18px 8px;display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0;border-top:1px solid var(--n200);background:#fff}
+.ai-suggest-label{font-size:11px;font-weight:700;color:var(--s600);display:flex;align-items:center;gap:4px;width:100%;margin-bottom:4px}
+.ai-chip{font-size:12px;font-weight:500;color:var(--n700);background:var(--n50);border:1px solid var(--n200);border-radius:20px;padding:5px 12px;cursor:pointer;transition:background .12s,border-color .12s;line-height:1.3}
+.ai-chip:hover{background:var(--p50);border-color:var(--p300);color:var(--p700)}
+.ai-chip-locked{opacity:.45;cursor:default;position:relative}
+.ai-locked-tag{font-size:9.5px;font-weight:700;background:var(--s100);color:#C46200;border-radius:20px;padding:1px 5px;margin-left:4px;vertical-align:middle;border:1px solid #FED7AA}
+
+/* Chat input */
+.chat-input-wrap{background:#fff;border-top:1px solid var(--n200);padding:12px 16px;flex-shrink:0}
+.chat-input-row{display:flex;align-items:flex-end;gap:10px;background:var(--n50);border:1.5px solid var(--n200);border-radius:12px;padding:10px 14px;transition:border-color .15s}
+.chat-input-row:focus-within{border-color:var(--p400)}
+.chat-input-row textarea{flex:1;border:none;background:transparent;font-family:'Inter',sans-serif;font-size:14px;color:var(--n900);outline:none;resize:none;min-height:20px;max-height:120px;line-height:1.5}
+.chat-input-row textarea::placeholder{color:var(--n400)}
+.chat-send-btn{width:36px;height:36px;border-radius:8px;background:var(--p700);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.chat-send-btn:hover{background:var(--p800)}
+.chat-send-btn svg{width:16px;height:16px;fill:#fff}
+.chat-attach{width:32px;height:32px;border-radius:8px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.chat-attach svg{width:17px;height:17px;color:var(--n400)}
+.chat-attach:hover svg{color:var(--n600)}
+
+/* ── CONTEXT PANEL ── */
+.ctx{border-left:1px solid var(--n200);background:#fff;overflow-y:auto;display:flex;flex-direction:column;gap:0}
+.ctx-section{padding:18px 18px;border-bottom:1px solid var(--n100)}
+.ctx-sec-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--n400);margin-bottom:14px}
+
+/* mini profile */
+.ctx-profile{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ctx-profile img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid var(--p200)}
+.ctx-pname{font-size:14px;font-weight:700;color:var(--n900);margin-bottom:2px}
+.ctx-psub{font-size:12px;color:var(--n500)}
+.ctx-ptags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.ctx-ptag{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--p100);color:var(--p800)}
+.ctx-pstat{display:flex;flex-direction:column;gap:7px}
+.ctx-pstat-row{display:flex;justify-content:space-between;font-size:12.5px}
+.ctx-pstat-k{color:var(--n500)}
+.ctx-pstat-v{color:var(--n800);font-weight:600}
+.ctx-view-profile{display:block;text-align:center;margin-top:14px;font-size:12.5px;font-weight:600;color:var(--p700);text-decoration:none;padding:8px;border:1.5px solid var(--p200);border-radius:8px;transition:background .15s}
+.ctx-view-profile:hover{background:var(--p50)}
+
+/* flow steps */
+.flow-track{display:flex;flex-direction:column;gap:0}
+.ft-item{display:flex;align-items:flex-start;gap:10px;position:relative;padding-bottom:16px}
+.ft-item:last-child{padding-bottom:0}
+.ft-item:not(:last-child)::before{content:'';position:absolute;left:10px;top:22px;bottom:0;width:2px;background:var(--n200)}
+.ft-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;flex-shrink:0;z-index:1;position:relative}
+.ftd-active{background:var(--p700);color:#fff}
+.ftd-done{background:var(--green);color:#fff}
+.ftd-pending{background:var(--n100);color:var(--n400);border:2px solid var(--n200)}
+.ft-label{font-size:13px;font-weight:700;color:var(--n900);margin-bottom:1px;line-height:1.3}
+.ft-sub{font-size:11.5px;color:var(--n500);line-height:1.4}
+.ft-active-badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;background:var(--p100);color:var(--p700);padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle}
+.ft-done-badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;background:var(--gbg);color:var(--green);padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle}
+.ft-body{padding-top:2px;flex:1}
+.btn-align{display:block;width:100%;margin-top:16px;padding:10px;border-radius:9px;background:linear-gradient(135deg,#F57C00,#E65100);color:#fff;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:700;border:none;cursor:pointer;text-align:center;text-decoration:none;transition:opacity .15s}
+.btn-align:hover{opacity:.9}
+
+/* student info (GS view) */
+.student-note{background:var(--p50);border:1px solid var(--p200);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--n800);line-height:1.65}
+.student-note strong{color:var(--p800)}
+
+/* availability */
+.avail-chips{display:flex;flex-direction:column;gap:6px}
+.avail-chip{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--n700);padding:7px 10px;background:var(--n50);border-radius:8px;border:1px solid var(--n200)}
+.avail-chip svg{width:13px;height:13px;color:var(--n400);flex-shrink:0}
+
+/* premium lock */
+.premium-lock{background:var(--s100);border:1px solid #FED7AA;border-radius:10px;padding:12px 14px;text-align:center}
+.pl-icon{font-size:20px;margin-bottom:6px}
+.pl-text{font-size:12.5px;color:#92400E;font-weight:500;line-height:1.5;margin-bottom:10px}
+.pl-btn{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:linear-gradient(135deg,#F57C00,#E65100);border-radius:20px;padding:5px 16px;text-decoration:none;cursor:pointer;border:none;font-family:'Inter',sans-serif}
+
+/* ── SHOW/HIDE by view ── */
+.ph-only,.gs-only{display:none}
+body[data-view="ph"] .ph-only{display:flex}
+body[data-view="ph"] .ph-block{display:block}
+body[data-view="ph"] a.ph-block{display:inline-flex}
+body[data-view="gs"] .gs-only{display:flex}
+body[data-view="gs"] .gs-block{display:block}
+body[data-view="gs"] a.gs-block{display:inline-flex}
+.ph-block,.gs-block{display:none}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--n200);border-radius:4px}
+</style>
+</head>
+<body data-view="ph">
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nb-inner">
+    <a class="nav-logo" href="ui-trang-chu.html">
+      <svg width="38" height="24" viewBox="0 0 96 60" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0">
+        <path d="M48 30 C36 5 11 5 11 30 C11 55 36 55 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <path d="M48 30 C61 55 85 55 85 30 C85 5 61 5 48 30" fill="none" stroke="#0D2D6B" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="48" cy="30" r="7.5" fill="#F57C00"/>
+        <circle cx="48" cy="30" r="3.5" fill="#FFFFFF"/>
+      </svg>
+      <span class="nav-logo-text">giasu<em>.edu.vn</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="ui-trang-chu.html">Trang chủ</a>
+      <a href="ui-tim-gia-su.html">Tìm gia sư</a>
+      <a href="ui-dang-ky-day.html">Đăng ký dạy</a>
+      <a href="ui-blog.html">Blog</a>
+    </div>
+    <div class="nav-right">
+      <a href="ui-dashboard-phu-huynh.html" class="ph-block" style="align-items:center;gap:6px;height:34px;padding:0 14px;background:#F1F5F9;color:#334155;border:1.5px solid #E2E8F0;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">← Dashboard PH</a>
+      <a href="ui-dashboard-gia-su.html" class="gs-block" style="align-items:center;gap:6px;height:34px;padding:0 14px;background:#F1F5F9;color:#334155;border:1.5px solid #E2E8F0;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">← Dashboard GS</a>
+    </div>
+  </div>
+</nav>
+
+<!-- VIEW TOGGLE BAR -->
+<div class="view-bar">
+  <span class="view-label">Xem demo từ góc nhìn:</span>
+  <div class="view-toggle">
+    <button class="vt-btn active" id="btn-ph" onclick="setView('ph')"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Phụ huynh / Học viên</button>
+    <button class="vt-btn" id="btn-gs" onclick="setView('gs')"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Gia sư</button>
+  </div>
+  <span class="view-hint">UI thay đổi theo vai trò</span>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="msg-layout">
+
+  <!-- ═══ INBOX ═══ -->
+  <div class="inbox">
+    <div class="inbox-hdr">
+      <div class="inbox-title ph-block" style="display:block">Tin nhắn của tôi</div>
+      <div class="inbox-title gs-block">Hộp thư gia sư</div>
+      <div class="inbox-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Tìm cuộc trò chuyện…">
+      </div>
+    </div>
+    <div class="inbox-list">
+
+      <!-- PH: chỉ 1 conv với GS An -->
+      <div class="conv-item active ph-only" style="display:flex">
+        <div class="conv-av active">
+          <img src="https://i.pravatar.cc/80?img=68" alt="Nguyễn Văn An">
+          <span class="conv-online"></span>
+        </div>
+        <div class="conv-body">
+          <div class="conv-row1">
+            <span class="conv-name">Nguyễn Văn An</span>
+            <span class="conv-time">14:32</span>
+          </div>
+          <div class="conv-preview">Chào chị, tôi đã nhận được tin nhắn...</div>
+          <div class="conv-badges"><span class="conv-badge cb-align">✓ Đang trao đổi</span></div>
+        </div>
+      </div>
+      <div class="conv-item ph-only" style="display:flex">
+        <div class="conv-av">
+          <img src="https://i.pravatar.cc/80?img=12" alt="Lê Minh Tuấn">
+        </div>
+        <div class="conv-body">
+          <div class="conv-row1">
+            <span class="conv-name">Lê Minh Tuấn</span>
+            <span class="conv-time">Hôm qua</span>
+          </div>
+          <div class="conv-preview">Cảm ơn chị đã liên hệ, rất tiếc...</div>
+        </div>
+      </div>
+
+      <!-- GS: nhiều conv với students -->
+      <div class="conv-item active gs-only" style="display:flex">
+        <div class="conv-av active">
+          <img src="https://i.pravatar.cc/80?img=25" alt="Nguyễn Thị Mai">
+        </div>
+        <div class="conv-body">
+          <div class="conv-row1">
+            <span class="conv-name">Nguyễn Thị Mai (PH)</span>
+            <span class="conv-time">14:32</span>
+          </div>
+          <div class="conv-preview unread">Chào thầy, con em học lớp 11 muốn...</div>
+          <div class="conv-badges"><span class="conv-badge cb-new">Mới</span></div>
+        </div>
+        <span class="unread-dot"></span>
+      </div>
+      <div class="conv-item gs-only" style="display:flex">
+        <div class="conv-av">
+          <img src="https://i.pravatar.cc/80?img=35" alt="Trần Văn Khoa">
+          <span class="conv-online"></span>
+        </div>
+        <div class="conv-body">
+          <div class="conv-row1">
+            <span class="conv-name">Trần Văn Khoa (HV)</span>
+            <span class="conv-time">11:05</span>
+          </div>
+          <div class="conv-preview">Ok thầy, em đồng ý lịch Thứ 3 và Thứ 5</div>
+          <div class="conv-badges"><span class="conv-badge cb-align">Đã có Agreement</span></div>
+        </div>
+      </div>
+      <div class="conv-item gs-only" style="display:flex">
+        <div class="conv-av">
+          <img src="https://i.pravatar.cc/80?img=44" alt="Phạm Hồng Nhung">
+        </div>
+        <div class="conv-body">
+          <div class="conv-row1">
+            <span class="conv-name">Phạm Hồng Nhung (HV)</span>
+            <span class="conv-time">Hôm qua</span>
+          </div>
+          <div class="conv-preview">Thầy ơi tuần này em bận thi, cho em...</div>
+          <div class="conv-badges"><span class="conv-badge cb-pending">Chờ xác nhận</span></div>
+        </div>
+      </div>
+      <div class="conv-item gs-only" style="display:flex">
+        <div class="conv-av">
+          <img src="https://i.pravatar.cc/80?img=13" alt="Phạm Minh Đức">
+        </div>
+        <div class="conv-body">
+          <div class="conv-row1">
+            <span class="conv-name">Phạm Minh Đức (HV)</span>
+            <span class="conv-time">T4 vừa</span>
+          </div>
+          <div class="conv-preview">Thầy ơi bài này em chưa hiểu phần...</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /inbox -->
+
+  <!-- ═══ CHAT ═══ -->
+  <div class="chat">
+
+    <!-- Chat header — PH view: talking to tutor -->
+    <div class="chat-hdr ph-only" style="display:flex">
+      <img src="https://i.pravatar.cc/80?img=68" alt="Nguyễn Văn An">
+      <div class="chat-hdr-info">
+        <div class="chat-hdr-name">Nguyễn Văn An
+          <svg style="width:14px;height:14px;display:inline;margin-left:4px;vertical-align:middle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1565C0"/><path d="M7.5 12l3 3 6-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="chat-hdr-sub">Gia sư Toán · Vật Lý · <span style="color:var(--green);font-weight:600">● Đang online</span></div>
+      </div>
+      <div class="chat-hdr-actions">
+        <button class="chat-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l.82-.82a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 17z"/></svg></button>
+        <button class="chat-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
+      </div>
+    </div>
+
+    <!-- Chat header — GS view: talking to student -->
+    <div class="chat-hdr gs-only" style="display:flex">
+      <img src="https://i.pravatar.cc/80?img=25" alt="Nguyễn Thị Mai">
+      <div class="chat-hdr-info">
+        <div class="chat-hdr-name">Nguyễn Thị Mai <span style="font-size:12px;color:var(--n500);font-weight:500">(Phụ huynh)</span></div>
+        <div class="chat-hdr-sub">Học sinh lớp 11 · Toán &amp; Vật Lý · TP.HCM</div>
+      </div>
+      <div class="chat-hdr-actions">
+        <button class="chat-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l.82-.82a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 17z"/></svg></button>
+        <button class="chat-icon-btn" title="Mời trao đổi ban đầu" onclick="window.location='ui-alignment.html'" style="background:var(--p50);border-color:var(--p200)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--p700)" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        </button>
+        <button class="chat-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
+      </div>
+    </div>
+
+    <!-- Flow progress bar -->
+    <div class="chat-flow-bar">
+      <div class="cf-step">
+        <div class="cf-node">
+          <div class="cf-dot cf-dot-active">1</div>
+          <span class="cf-label-active">Nhắn tin</span>
+        </div>
+        <div class="cf-line"></div>
+        <div class="cf-node">
+          <div class="cf-dot cf-dot-pending">2</div>
+          <span class="cf-label-pending">Trao đổi ban đầu</span>
+        </div>
+        <div class="cf-line"></div>
+        <div class="cf-node">
+          <div class="cf-dot cf-dot-pending">3</div>
+          <span class="cf-label-pending">Learning Agreement</span>
+        </div>
+        <div class="cf-line"></div>
+        <div class="cf-node">
+          <div class="cf-dot cf-dot-pending">4</div>
+          <span class="cf-label-pending">Bắt đầu học</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Messages — PH view -->
+    <div class="chat-messages ph-block" style="display:flex;flex-direction:column;gap:14px;flex:1;overflow-y:auto;padding:20px 18px">
+      <div class="msg-divider">Hôm nay, 14:18</div>
+
+      <!-- PH first message (sent) -->
+      <div class="msg-group sent">
+        <div class="msg-av-row sent">
+          <img src="https://i.pravatar.cc/80?img=25" class="msg-small-av" alt="">
+          <div class="msg-bubbles sent">
+            <div class="bubble sent">Chào thầy Nguyễn Văn An! Em là Nguyễn Thị Mai, phụ huynh của bé Linh học lớp 11. Em thấy profile của thầy rất phù hợp, muốn hỏi thầy có đang nhận học sinh mới không ạ?</div>
+            <div class="bubble sent">Con em đang cần ôn thi THPTQG môn Toán và Lý. Mục tiêu 8+ điểm. Em muốn biết thêm về phương pháp và lịch dạy của thầy ạ.</div>
+            <div class="msg-time">14:18</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GS reply (recv) -->
+      <div class="msg-group recv">
+        <div class="msg-av-row recv">
+          <img src="https://i.pravatar.cc/80?img=68" class="msg-small-av" alt="">
+          <div class="msg-bubbles recv">
+            <div class="bubble recv">Chào chị Mai! Tôi đang có nhận thêm học sinh mới, rất vui khi nhận được tin nhắn của chị <svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+            <div class="bubble recv">Với mục tiêu 8+ THPTQG cho cả Toán và Lý thì hoàn toàn khả thi nếu em bắt đầu ôn sớm. Tôi thường dạy theo lộ trình cá nhân hóa sau khi đánh giá năng lực ban đầu.</div>
+            <div class="msg-time">14:32 · Đã đọc</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GS suggests alignment -->
+      <div class="msg-group recv">
+        <div class="msg-av-row recv">
+          <img src="https://i.pravatar.cc/80?img=68" class="msg-small-av" alt="">
+          <div class="msg-bubbles recv">
+            <div class="bubble recv" style="background:var(--p50);border-color:var(--p200)">
+              <div style="font-size:11.5px;font-weight:700;color:var(--s600);margin-bottom:5px">✦ Đề xuất buổi trao đổi ban đầu</div>
+              Chị có muốn sắp xếp một buổi trao đổi ngắn ~30 phút để tôi nắm rõ tình hình học của bé và đề xuất lộ trình cụ thể không? Buổi này miễn phí và có AI hỗ trợ tóm tắt kết quả.
+            </div>
+            <div class="msg-time">14:33</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Messages — GS view -->
+    <div class="chat-messages gs-block" style="display:flex;flex-direction:column;gap:14px;flex:1;overflow-y:auto;padding:20px 18px">
+      <div class="msg-divider">Hôm nay, 14:18</div>
+
+      <!-- Student message (recv from GS perspective) -->
+      <div class="msg-group recv">
+        <div class="msg-av-row recv">
+          <img src="https://i.pravatar.cc/80?img=25" class="msg-small-av" alt="">
+          <div class="msg-bubbles recv">
+            <div class="bubble recv">Chào thầy Nguyễn Văn An! Em là Nguyễn Thị Mai, phụ huynh của bé Linh học lớp 11. Em thấy profile của thầy rất phù hợp, muốn hỏi thầy có đang nhận học sinh mới không ạ?</div>
+            <div class="bubble recv">Con em đang cần ôn thi THPTQG môn Toán và Lý. Mục tiêu 8+ điểm. Em muốn biết thêm về phương pháp và lịch dạy của thầy ạ.</div>
+            <div class="msg-time">14:18</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GS reply (sent from GS perspective) -->
+      <div class="msg-group sent">
+        <div class="msg-av-row sent">
+          <img src="https://i.pravatar.cc/80?img=68" class="msg-small-av" alt="">
+          <div class="msg-bubbles sent">
+            <div class="bubble sent">Chào chị Mai! Tôi đang có nhận thêm học sinh mới, rất vui khi nhận được tin nhắn của chị <svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+            <div class="bubble sent">Với mục tiêu 8+ THPTQG cho cả Toán và Lý thì hoàn toàn khả thi nếu em bắt đầu ôn sớm. Tôi thường dạy theo lộ trình cá nhân hóa sau khi đánh giá năng lực ban đầu.</div>
+            <div class="msg-time">14:32</div>
+          </div>
+        </div>
+      </div>
+      <div class="msg-group sent">
+        <div class="msg-av-row sent">
+          <img src="https://i.pravatar.cc/80?img=68" class="msg-small-av" alt="">
+          <div class="msg-bubbles sent">
+            <div class="bubble sent" style="background:var(--p900)">
+              <div style="font-size:11px;font-weight:700;color:var(--p300);margin-bottom:4px">✦ Đề xuất buổi trao đổi ban đầu</div>
+              Chị có muốn sắp xếp một buổi trao đổi ngắn ~30 phút để tôi nắm rõ tình hình học của bé và đề xuất lộ trình cụ thể không? Buổi này miễn phí và có AI hỗ trợ.
+            </div>
+            <div class="msg-time">14:33</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI suggestions (PH view) -->
+    <div class="ai-suggestions ph-block" style="display:flex;flex-direction:column">
+      <div class="ai-suggest-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z"/></svg>
+        Gợi ý AI — trả lời nhanh
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="ai-chip" onclick="insertReply(this)">Vâng, em muốn đặt buổi trao đổi ạ 🙏</div>
+        <div class="ai-chip" onclick="insertReply(this)">Thầy cho em hỏi thêm về học phí ạ?</div>
+        <div class="ai-chip ai-chip-locked">Tóm tắt yêu cầu học tự động <span class="ai-locked-tag">Premium</span></div>
+      </div>
+    </div>
+
+    <!-- AI suggestions (GS view) -->
+    <div class="ai-suggestions gs-block" style="display:flex;flex-direction:column">
+      <div class="ai-suggest-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z"/></svg>
+        AI soạn phản hồi nhanh
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="ai-chip" onclick="insertReply(this)">Cảm ơn chị, tôi đang nhận thêm học sinh 👍</div>
+        <div class="ai-chip" onclick="insertReply(this)">Mời chị đặt buổi trao đổi ban đầu ạ</div>
+        <div class="ai-chip ai-chip-locked">Phân tích profile học sinh bằng AI <span class="ai-locked-tag">Premium</span></div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input-wrap">
+      <div class="chat-input-row">
+        <button class="chat-attach">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+        </button>
+        <textarea id="msg-input" rows="1" placeholder="Nhập tin nhắn…" oninput="autoResize(this)"></textarea>
+        <button class="chat-send-btn" onclick="sendMsg()">
+          <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /chat -->
+
+  <!-- ═══ CONTEXT PANEL ═══ -->
+  <div class="ctx">
+
+    <!-- PH view: Tutor mini profile -->
+    <div class="ctx-section ph-block" style="display:block">
+      <div class="ctx-sec-title">Gia sư đang nhắn tin</div>
+      <div class="ctx-profile">
+        <img src="https://i.pravatar.cc/80?img=68" alt="Nguyễn Văn An">
+        <div>
+          <div class="ctx-pname">Nguyễn Văn An</div>
+          <div class="ctx-psub">★ 4.9 · 128 đánh giá</div>
+        </div>
+      </div>
+      <div class="ctx-ptags">
+        <span class="ctx-ptag"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22L22 2"/><path d="m2 22 10-10"/><path d="M2 12 12 2"/><path d="M2 22h20"/><path d="M12 22V12"/></svg> Toán</span>
+        <span class="ctx-ptag" style="background:#EDE7F6;color:#4527A0">⚛ Vật Lý</span>
+        <span class="ctx-ptag" style="background:var(--n100);color:var(--n700)">THPT</span>
+      </div>
+      <div class="ctx-pstat">
+        <div class="ctx-pstat-row"><span class="ctx-pstat-k">Kinh nghiệm</span><span class="ctx-pstat-v">5 năm</span></div>
+        <div class="ctx-pstat-row"><span class="ctx-pstat-k">Học phí</span><span class="ctx-pstat-v">Thỏa thuận</span></div>
+        <div class="ctx-pstat-row"><span class="ctx-pstat-k">Hình thức</span><span class="ctx-pstat-v">Online / Tại nhà</span></div>
+      </div>
+      <a href="ui-profile.html" class="ctx-view-profile">Xem đầy đủ hồ sơ →</a>
+    </div>
+
+    <!-- GS view: Student info -->
+    <div class="ctx-section gs-block" style="display:block">
+      <div class="ctx-sec-title">Học sinh / Phụ huynh</div>
+      <div class="ctx-profile">
+        <img src="https://i.pravatar.cc/80?img=25" alt="Nguyễn Thị Mai">
+        <div>
+          <div class="ctx-pname">Nguyễn Thị Mai</div>
+          <div class="ctx-psub">Phụ huynh · Liên hệ lần đầu</div>
+        </div>
+      </div>
+      <div class="student-note">
+        <strong>Nhu cầu:</strong> Ôn thi THPTQG Toán + Vật Lý cho con (lớp 11)<br>
+        <strong>Mục tiêu:</strong> 8+ điểm<br>
+        <strong>Khu vực:</strong> TP. Hồ Chí Minh<br>
+        <strong>Hình thức:</strong> Linh hoạt online/offline
+      </div>
+    </div>
+
+    <!-- Flow progress — PH view -->
+    <div class="ctx-section ph-block" style="display:block">
+      <div class="ctx-sec-title">Tiến trình học</div>
+      <div class="flow-track">
+        <div class="ft-item">
+          <div class="ft-dot ftd-active">1</div>
+          <div class="ft-body">
+            <div class="ft-label">Nhắn tin <span class="ft-active-badge">Đang ở đây</span></div>
+            <div class="ft-sub">Trao đổi ban đầu với gia sư</div>
+          </div>
+        </div>
+        <div class="ft-item">
+          <div class="ft-dot ftd-pending">2</div>
+          <div class="ft-body">
+            <div class="ft-label">Buổi trao đổi ban đầu</div>
+            <div class="ft-sub">Đánh giá năng lực, thống nhất lộ trình · AI hỗ trợ</div>
+          </div>
+        </div>
+        <div class="ft-item">
+          <div class="ft-dot ftd-pending">3</div>
+          <div class="ft-body">
+            <div class="ft-label">Learning Agreement</div>
+            <div class="ft-sub">Chốt lịch, học phí, số buổi/tuần</div>
+          </div>
+        </div>
+        <div class="ft-item">
+          <div class="ft-dot ftd-pending">4</div>
+          <div class="ft-body">
+            <div class="ft-label">Bắt đầu học</div>
+            <div class="ft-sub">Theo dõi tiến độ sau mỗi buổi</div>
+          </div>
+        </div>
+      </div>
+      <a href="ui-alignment.html" class="btn-align">Đặt buổi trao đổi ban đầu →</a>
+    </div>
+
+    <!-- Flow progress — GS view -->
+    <div class="ctx-section gs-block" style="display:block">
+      <div class="ctx-sec-title">Tiến trình với học sinh này</div>
+      <div class="flow-track">
+        <div class="ft-item">
+          <div class="ft-dot ftd-active">1</div>
+          <div class="ft-body">
+            <div class="ft-label">Nhắn tin <span class="ft-active-badge">Đang ở đây</span></div>
+            <div class="ft-sub">Tin nhắn mới từ phụ huynh</div>
+          </div>
+        </div>
+        <div class="ft-item">
+          <div class="ft-dot ftd-pending">2</div>
+          <div class="ft-body">
+            <div class="ft-label">Buổi trao đổi ban đầu</div>
+            <div class="ft-sub">Mời PH/HV đặt lịch trao đổi</div>
+          </div>
+        </div>
+        <div class="ft-item">
+          <div class="ft-dot ftd-pending">3</div>
+          <div class="ft-body">
+            <div class="ft-label">Learning Agreement</div>
+            <div class="ft-sub">Chốt lịch và học phí</div>
+          </div>
+        </div>
+        <div class="ft-item">
+          <div class="ft-dot ftd-pending">4</div>
+          <div class="ft-body">
+            <div class="ft-label">Bắt đầu dạy</div>
+            <div class="ft-sub">Nhận học sinh chính thức</div>
+          </div>
+        </div>
+      </div>
+      <a href="ui-alignment.html" class="btn-align">Mời trao đổi ban đầu →</a>
+    </div>
+
+    <!-- Availability (GS view) -->
+    <div class="ctx-section gs-block" style="display:block">
+      <div class="ctx-sec-title">Khung giờ của bạn</div>
+      <div class="avail-chips">
+        <div class="avail-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Thứ 3 · 18:00 – 20:00
+        </div>
+        <div class="avail-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Thứ 5 · 18:00 – 20:00
+        </div>
+        <div class="avail-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Thứ 7 · Sáng
+        </div>
+      </div>
+    </div>
+
+    <!-- Premium upsell (PH view) -->
+    <div class="ctx-section ph-block" style="display:block">
+      <div class="premium-lock">
+        <div class="pl-icon"><svg style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div class="pl-text">Nâng cấp Premium để xem báo cáo đầy đủ, AI phân tích tiến độ và nhắc lịch tự động sau mỗi buổi học.</div>
+        <a href="ui-premium.html" class="pl-btn">Xem gói Premium</a>
+      </div>
+    </div>
+
+  </div><!-- /ctx -->
+
+</div><!-- /msg-layout -->
+
+<script>
+function setView(v) {
+  document.body.dataset.view = v;
+  document.getElementById('btn-ph').classList.toggle('active', v === 'ph');
+  document.getElementById('btn-gs').classList.toggle('active', v === 'gs');
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function insertReply(el) {
+  if(el.classList.contains('ai-chip-locked')) return;
+  const ta = document.getElementById('msg-input');
+  ta.value = el.textContent.trim();
+  ta.focus();
+  autoResize(ta);
+}
+
+function sendMsg() {
+  const ta = document.getElementById('msg-input');
+  const text = ta.value.trim();
+  if(!text) return;
+  // Just clear for demo
+  ta.value = '';
+  ta.style.height = 'auto';
+}
+</script>
+</body>
+</html>
